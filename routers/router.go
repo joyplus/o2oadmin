@@ -1,10 +1,12 @@
 package routers
 
 import (
-	"o2oadmin/controllers"
 	"github.com/astaxie/beego"
+	"github.com/beego/admin"
+	"o2oadmin/controllers"
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{})
+	admin.Run()
+	beego.Router("/", &controllers.MainController{})
 }
