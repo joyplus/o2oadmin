@@ -86,6 +86,7 @@ func (this *MerchantController) DelMerchant() {
 	}
 }
 
+//API使用
 func (this *MerchantController) GetList() {
 	page, _ := this.GetInt64("page")
 	page_size, _ := this.GetInt64("rows")
@@ -100,6 +101,8 @@ func (this *MerchantController) GetList() {
 	}
 	merchants, count := m.GetMerchantlist(page, page_size, sort)
 	this.Data["json"] = &map[string]interface{}{"total": count, "rows": &merchants}
-	this.ServeJson()
+	this.Data["content"] = "value"
+	//this.ServeJson()
+	this.TplNames = "html/test.tpl"
 
 }
