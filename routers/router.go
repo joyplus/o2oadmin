@@ -2,12 +2,12 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/beego/admin"
+	//"github.com/beego/admin"
 	"o2oadmin/controllers"
 )
 
 func init() {
-	admin.Run()
+	//admin.Run()
 	beego.Info("o2oadmin start")
 	beego.Router("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant")
 	beego.Router("/operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant")
