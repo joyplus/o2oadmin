@@ -14,7 +14,8 @@ func init() {
 	beego.Router("/operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant")
 	beego.Router("/operation/merchant/index", &controllers.MerchantController{}, "*:Index")
 
-	beego.Router("/api/merchant/getList", &controllers.MerchantController{}, "*:GetList")
+	beego.Router("/api/customer/requestOTP", &controllers.CustomerController{}, "*:RequestOTP")
+	beego.Router("/api/customer/verifyOTP", &controllers.CustomerController{}, "*:VerifyOTP")
 
 }
 

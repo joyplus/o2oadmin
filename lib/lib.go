@@ -3,7 +3,11 @@ package lib
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
+	"math/rand"
 	"strconv"
+	"strings"
+	"time"
 )
 
 //create md5 string
@@ -48,9 +52,9 @@ func GetCurrentTime() string {
 }
 
 //生成OTP
-func GenerateOTP() int {
+func GenerateOTP() string {
 	nums := generateRandomNumber(100000, 999999, 1)
-	return nums[0]
+	return fmt.Sprintf("%d", nums[0])
 }
 
 //生成count个[start,end)结束的不重复的随机数

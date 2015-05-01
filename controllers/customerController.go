@@ -1,29 +1,68 @@
 package controllers
 
 import (
-	"github.com/beego/admin/src/rbac"
+	"encoding/json"
+	"github.com/astaxie/beego"
+	"o2oadmin/lib"
 	m "o2oadmin/models"
+	"strings"
 )
 
 type CustomerController struct {
-	rbac.CommonController
+	ApiBaseController
 }
 
-//API
-func (this *CustomerController) BindByOTP() {
-	page, _ := this.GetInt64("page")
-	page_size, _ := this.GetInt64("rows")
-	sort := this.GetString("sort")
-	order := this.GetString("order")
-	if len(order) > 0 {
-		if order == "desc" {
-			sort = "-" + sort
-		}
+//API Request OTP
+func (this *CustomerController) RequestOTP() {
+	var apiRequest m.OTPRequest
+	response := new(m.ResRequestOTP)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
 	} else {
-		sort = "Id"
+		response.Header.StatusCode = lib.STATUS_SUCCESS
+		otp := lib.GenerateOTP()
+		response.SequenceNumber = lib.GetMd5String(otp)
+
+		beego.Debug(response.SequenceNumber + ":" + otp)
+
+		redisx.Put("OTP_SEQ_"+response.SequenceNumber, otp, 300)
+		go sendOTPSMS(apiRequest.MobileNumber, otp)
 	}
-	merchants, count := m.GetMerchantlist(page, page_size, sort)
-	this.Data["json"] = &map[string]interface{}{"total": count, "rows": &merchants}
+
+	this.Data["json"] = &response
 	this.ServeJson()
 
+}
+
+//API Request OTP
+func (this *CustomerController) VerifyOTP() {
+	var apiRequest m.VerifyOTPRequest
+	response := new(m.ResVerifyOTP)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+	} else {
+
+		tmpOtp := GetCacheData("OTP_SEQ_" + apiRequest.SequenceNumber)
+
+		if strings.EqualFold(tmpOtp, apiRequest.OTP) {
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+		} else {
+			response.Header.StatusCode = lib.BIZ_OTP_VERIFIED_FAILED
+		}
+	}
+
+	this.Data["json"] = &response
+	this.ServeJson()
+
+}
+
+func sendOTPSMS(sendToMobile string, otp string) {
+	err := SendTemplateSMS(sendToMobile, []string{otp, "10"}, "1")
+	if err != nil {
+		beego.Error(err.Error())
+	}
 }
