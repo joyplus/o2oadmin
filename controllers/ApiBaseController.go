@@ -58,12 +58,29 @@ func SendTemplateSMS(to string, datas []string, tempId string) (resError error) 
 
 func GetCacheData(key string) string {
 	v := redisx.Get(key)
-	switch t := v.(type) {
-	case string:
-		return t
-	case []byte:
-		return string(t)
-	default:
-		return t.(string)
+	if v != nil {
+		switch t := v.(type) {
+		case string:
+			return t
+		case []byte:
+			return string(t)
+		default:
+			return t.(string)
+		}
+	} else {
+		return ""
 	}
+
+}
+
+func GetErrorMsg(satusCode string) string {
+	return ""
+}
+
+func GetMerchantId(token string) string {
+	return ""
+}
+
+func GetUserId(token string) string {
+	return ""
 }

@@ -151,3 +151,13 @@ func DeleteFeMerchantUser(id int) (err error) {
 	}
 	return
 }
+
+func GetMerchantUserByMobile(mobileNumber string) (v *FeMerchantUser, err error) {
+
+	return nil, err
+}
+
+func UpdateSecurityToken(v *FeMerchantUser) (err error) {
+
+	return err
+}

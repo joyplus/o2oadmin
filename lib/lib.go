@@ -88,3 +88,9 @@ func generateRandomNumber(start int, end int, count int) []int {
 
 	return nums
 }
+
+//生成订单号
+func GenerateOrderNumber(purchaseType string) string {
+	nums := generateRandomNumber(10000, 99999, 1)
+	return purchaseType + GetCurrentTime() + fmt.Sprintf("%d", nums[0])
+}

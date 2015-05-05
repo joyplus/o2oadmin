@@ -17,6 +17,8 @@ func init() {
 	beego.Router("/api/customer/requestOTP", &controllers.CustomerController{}, "*:RequestOTP")
 	beego.Router("/api/customer/verifyOTP", &controllers.CustomerController{}, "*:VerifyOTP")
 
+	beego.Router("/api/resturant/getLovList", &controllers.ResturantController{}, "*:GetLovList")
+	beego.Router("/api/resturant/getMaterialListByCategory", &controllers.ResturantController{}, "*:GetMaterialListByCategory")
 }
 
 //func router() {

@@ -10,8 +10,14 @@ package models
 //	"github.com/astaxie/beego/orm"
 //)
 
+type ResturantQueryRequest struct {
+	Token       string
+	CategoryKey string
+	LovCode     string
+}
+
 type OTPRequest struct {
-	MobileNumber string
+	MobileNumber string `valid:"Mobile"` // Mobile必须为正确的手机号
 	SystemId     string
 	FuncName     string
 	Device       Device

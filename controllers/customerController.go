@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/validation"
 	"o2oadmin/lib"
 	m "o2oadmin/models"
 	"strings"
@@ -14,13 +15,27 @@ type CustomerController struct {
 
 //API Request OTP
 func (this *CustomerController) RequestOTP() {
+
+	flg := true
 	var apiRequest m.OTPRequest
 	response := new(m.ResRequestOTP)
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
 	if err != nil {
 		beego.Error(err.Error())
 		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
-	} else {
+		flg = false
+	}
+
+	if flg {
+		valid := validation.Validation{}
+		valid.Mobile(apiRequest.MobileNumber, "mobile")
+		if valid.HasErrors() {
+			response.Header.StatusCode = lib.BIZ_WRONG_MOBILE_NUMBER
+			flg = false
+		}
+	}
+
+	if flg {
 		response.Header.StatusCode = lib.STATUS_SUCCESS
 		otp := lib.GenerateOTP()
 		response.SequenceNumber = lib.GetMd5String(otp)
@@ -31,6 +46,7 @@ func (this *CustomerController) RequestOTP() {
 		go sendOTPSMS(apiRequest.MobileNumber, otp)
 	}
 
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
 	this.ServeJson()
 
@@ -50,11 +66,13 @@ func (this *CustomerController) VerifyOTP() {
 
 		if strings.EqualFold(tmpOtp, apiRequest.OTP) {
 			response.Header.StatusCode = lib.STATUS_SUCCESS
+			response.SecrityToken = lib.GetMd5String(apiRequest.SequenceNumber + lib.GetCurrentTime())
 		} else {
 			response.Header.StatusCode = lib.BIZ_OTP_VERIFIED_FAILED
+
 		}
 	}
-
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
 	this.ServeJson()
 
