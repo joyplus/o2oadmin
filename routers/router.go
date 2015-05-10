@@ -19,6 +19,11 @@ func init() {
 
 	beego.Router("/api/resturant/getLovList", &controllers.ResturantController{}, "*:GetLovList")
 	beego.Router("/api/resturant/getMaterialListByCategory", &controllers.ResturantController{}, "*:GetMaterialListByCategory")
+
+	beego.Router("/api/resturant/getSupplierList", &controllers.ResturantController{}, "*:GetSupplierList")
+	beego.Router("/api/resturant/queryPrice", &controllers.ResturantController{}, "*:QueryPrice")
+	beego.Router("/api/resturant/getRequestOrderList", &controllers.ResturantController{}, "*:GetRequestOrderList")
+
 }
 
 //func router() {

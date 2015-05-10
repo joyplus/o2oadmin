@@ -77,10 +77,10 @@ func GetErrorMsg(satusCode string) string {
 	return ""
 }
 
-func GetMerchantId(token string) string {
-	return ""
+func GetMerchantId(token string) int {
+	return 1
 }
 
-func GetUserId(token string) string {
-	return ""
+func GetUserId(token string) int {
+	return 1
 }

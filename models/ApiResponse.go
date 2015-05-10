@@ -15,29 +15,33 @@ type ResponseHeader struct {
 	ErrorMsg   string
 }
 
+type BaseResponse struct {
+	Header ResponseHeader
+}
+
 type ResRequestOTP struct {
-	Header         ResponseHeader
+	BaseResponse
 	SequenceNumber string
 }
 
 type ResVerifyOTP struct {
-	Header       ResponseHeader
+	BaseResponse
 	SecrityToken string
 }
 
 type ResLovList struct {
-	Header  ResponseHeader
+	BaseResponse
 	LovList []*FeLov
 }
 
 type ResMaterialList struct {
-	Header  ResponseHeader
+	BaseResponse
 	ResList []*ResMaterial
 }
 
 type ResMaterial struct {
 	Name             string
-	UnitPrice        float32
+	UnitPrice        float64
 	StandardType     string
 	StandardTypeName string
 	SourceRegionCode string
@@ -46,9 +50,35 @@ type ResMaterial struct {
 	BrandName        string
 	RefreshCode      string
 	RefreshName      string
-	StandardWeight   float32
+	StandardWeight   float64
 	LadderCode       string
 	LadderName       string
 	ShelfLife        int
 	PicUrl           string
+}
+
+type ResSupplierList struct {
+	BaseResponse
+	RstMap map[string][]*SupplierDetail
+}
+
+type SupplierDetail struct {
+	CategoryKey  string
+	SupplierId   string
+	SupplierName string
+	Address      string
+	Distance     int
+	OnTimeRate   float64
+	Rating       int
+}
+
+type ResRequestOrderList struct {
+	BaseResponse
+	RequestOrderList []*RequestOrder
+}
+
+type RequestOrder struct {
+	RequestDate               string
+	NumberOfSuppliers         int
+	NumberOfResponseSuppliers int
 }

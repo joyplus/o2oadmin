@@ -1,19 +1,47 @@
 package models
 
 //import (
-//	"errors"
-//	"fmt"
-//	"reflect"
-//	"strings"
 //	"time"
-
-//	"github.com/astaxie/beego/orm"
 //)
 
-type ResturantQueryRequest struct {
-	Token       string
+type BaseRequest struct {
+	Token  string
+	Device Device
+}
+
+type SupplierCategory struct {
+	SupplierId  int
 	CategoryKey string
-	LovCode     string
+}
+
+type PlaceOrderRequest struct {
+	BaseRequest
+	TransactionType string
+	ReqMap          map[string][]*PlaceOrderDetail
+}
+
+type PlaceOrderDetail struct {
+	SupplierId  int
+	MaterialIds []int
+}
+
+type PriceQueryRequest struct {
+	BaseRequest
+	PaymentDuration          int
+	RequestDeliveryTimeStart string
+	RequestDeliveryTimeEnd   string
+	MaterialList             []*BeMerchantQueryRequestDetail
+	SupplierCategoryList     []*SupplierCategory
+	Remark                   string
+}
+
+type ResturantQueryRequest struct {
+	BaseRequest
+	CategoryKey      string
+	LovCode          string
+	Distance         int
+	OnTimeRate       float64
+	SupplierPriority int
 }
 
 type OTPRequest struct {

@@ -23,6 +23,15 @@ func (this *ResturantController) GetMaterialListByCategory() {
 		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
 		flg = false
 	}
+
+	//input validation
+	merchantId := GetMerchantId(apiRequest.Token)
+	if flg {
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
 	if flg {
 		resList, err := m.GetMaterialListByCategory(apiRequest.CategoryKey)
 		if err != nil {
@@ -50,6 +59,15 @@ func (this *ResturantController) GetLovList() {
 		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
 		flg = false
 	}
+
+	//input validation
+	if flg {
+		if len(apiRequest.LovCode) == 0 {
+			response.Header.StatusCode = lib.BIZ_REQUIRED_LOVCODE
+			flg = false
+		}
+	}
+
 	if flg {
 		lovList, err := m.GetFeLovsByKey(apiRequest.LovCode)
 
@@ -62,6 +80,137 @@ func (this *ResturantController) GetLovList() {
 			response.Header.StatusCode = lib.STATUS_SUCCESS
 			response.LovList = lovList
 		}
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.ServeJson()
+}
+
+func (this *ResturantController) GetSupplierList() {
+	flg := true
+	var apiRequest m.ResturantQueryRequest
+	response := new(m.ResSupplierList)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+		flg = false
+	}
+
+	//input validation
+	merchantId := GetMerchantId(apiRequest.Token)
+	if flg {
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
+	if flg {
+		supplierPriority := apiRequest.SupplierPriority
+
+		if supplierPriority == 0 {
+			supplierPriority = lib.SUPPLIER_READY
+		}
+
+		supplierDetailList, err := m.GetSupplierListByMerchantId(merchantId, supplierPriority, apiRequest.Distance, apiRequest.OnTimeRate)
+		rstMap := make(map[string][]*m.SupplierDetail)
+
+		if err != nil {
+			beego.Error(err.Error())
+			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+		} else {
+			var tmpList []*m.SupplierDetail
+
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+			for _, supplierDetail := range supplierDetailList {
+				beego.Debug(supplierDetail)
+				tmpList = rstMap[supplierDetail.CategoryKey]
+				if tmpList != nil {
+					tmpList = append(tmpList, supplierDetail)
+				} else {
+					tmpList = []*m.SupplierDetail{supplierDetail}
+					rstMap[supplierDetail.CategoryKey] = tmpList
+				}
+			}
+			response.RstMap = rstMap
+
+		}
+
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.ServeJson()
+}
+
+//商户提交报价单
+func (this *ResturantController) QueryPrice() {
+	flg := true
+	var apiRequest m.PriceQueryRequest
+	response := new(m.BaseResponse)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+		flg = false
+	}
+
+	//input validation
+	merchantId := GetMerchantId(apiRequest.Token)
+	if flg {
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
+
+	if flg {
+		err := m.QueryPrice(merchantId, apiRequest)
+		if err != nil {
+			beego.Error(err.Error())
+			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+		} else {
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+		}
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.ServeJson()
+}
+
+func (this *ResturantController) GetRequestOrderList() {
+	flg := true
+	var apiRequest m.BaseRequest
+	response := new(m.ResRequestOrderList)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+		flg = false
+	}
+
+	//input validation
+	merchantId := GetMerchantId(apiRequest.Token)
+	if flg {
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
+	if flg {
+		requestOrderList, err := m.GetRequestOrderList(merchantId)
+
+		if err != nil {
+			beego.Error(err.Error())
+			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+		} else {
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+			response.RequestOrderList = requestOrderList
+
+		}
+
 	}
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)

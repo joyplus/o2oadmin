@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/astaxie/beego"
 	//lib "o2oadmin/lib"
+	"github.com/astaxie/beego/orm"
 	_ "o2oadmin/routers"
 )
 
@@ -11,7 +12,7 @@ import (
 func main() {
 
 	//initCache()
-
+	orm.Debug = true
 	beego.Run()
 
 }

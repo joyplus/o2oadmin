@@ -90,6 +90,9 @@ func generateRandomNumber(start int, end int, count int) []int {
 }
 
 //生成订单号
+//REQ: 询价单
+//RES: 报价单
+//TRX: 订单
 func GenerateOrderNumber(purchaseType string) string {
 	nums := generateRandomNumber(10000, 99999, 1)
 	return purchaseType + GetCurrentTime() + fmt.Sprintf("%d", nums[0])
