@@ -1,8 +1,8 @@
 package models
 
-//import (
-//	"time"
-//)
+import (
+	"time"
+)
 
 type BaseRequest struct {
 	Token  string
@@ -16,13 +16,20 @@ type SupplierCategory struct {
 
 type PlaceOrderRequest struct {
 	BaseRequest
-	TransactionType string
-	ReqMap          map[string][]*PlaceOrderDetail
+	TransactionType      string
+	PlaceOrderDetailList []*PlaceOrderDetail
+}
+
+type UpdateOrderRequest struct {
+	BaseRequest
+	OrderNumber string
 }
 
 type PlaceOrderDetail struct {
-	SupplierId  int
-	MaterialIds []int
+	SupplierId            int
+	CategoryKey           string
+	ExpectedReceiveTime   time.Time
+	TransactionDetailList []*BeTransactionDetail
 }
 
 type PriceQueryRequest struct {

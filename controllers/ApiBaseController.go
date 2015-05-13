@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"encoding/json"
 	"github.com/astaxie/beego"
 	"o2oadmin/lib"
+	m "o2oadmin/models"
 	"strings"
 )
 
@@ -73,14 +75,67 @@ func GetCacheData(key string) string {
 
 }
 
+func DeleteCacheData(key string) {
+	redisx.Delete(key)
+}
+
 func GetErrorMsg(satusCode string) string {
 	return ""
 }
 
 func GetMerchantId(token string) int {
-	return 1
+	userData := GetCacheUserData(token)
+	if userData != nil {
+		return userData.DefaultMixId
+	}
+	mixUserMatrix, err := m.GetMixUserByToken(token, lib.LOV_MERCHANT_KEY_RET)
+	if err != nil {
+		return 0
+	} else {
+		SetupCacheUserData(mixUserMatrix, token)
+		return mixUserMatrix.MixId
+	}
+
 }
 
 func GetUserId(token string) int {
 	return 1
+}
+
+func SetupCacheUserData(mixUserMatrix *m.FeMixUserMatrix, token string) {
+
+	beego.Debug(mixUserMatrix)
+	newUserData := m.UserData{UserId: mixUserMatrix.UserId}
+	newUserData.DefaultMixId = mixUserMatrix.MixId
+	newUserData.MixType = mixUserMatrix.MixType
+
+	strJson, err := json.Marshal(newUserData)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	redisx.Put("USERDATA_"+token, strJson, 86400)
+
+}
+
+func GetCacheUserData(token string) (userData *m.UserData) {
+
+	v := redisx.Get("USERDATA_" + token)
+
+	if v != nil {
+		bJson, err := lib.GetBytes(v)
+		if err != nil {
+			beego.Error(err.Error())
+			return nil
+		}
+
+		err = json.Unmarshal(bJson, &userData)
+		if err != nil {
+			beego.Error(err.Error())
+			return nil
+		}
+
+	}
+
+	return userData
 }

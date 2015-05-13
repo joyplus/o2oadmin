@@ -27,6 +27,7 @@ type ResRequestOTP struct {
 type ResVerifyOTP struct {
 	BaseResponse
 	SecrityToken string
+	MerchantId   int
 }
 
 type ResLovList struct {

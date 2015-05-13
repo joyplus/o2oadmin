@@ -162,10 +162,3 @@ func DeleteFeMaterialMaster(id int) (err error) {
 	}
 	return
 }
-
-func GetMaterialListByCategory(categoryCode string) (resList []*ResMaterial, resError error) {
-	o := orm.NewOrm()
-	_, resError = o.Raw("select m.name as name,m.standard_type as standard_type,lov.lov_value as standard_type_name,m.pic_url as pic_url from fe_material_master as m left join fe_lov as lov on m.standard_type=lov.lov_key and lov.lov_code='STANDARD_TYPE' WHERE category_key = ?", categoryCode).QueryRows(&resList)
-
-	return resList, resError
-}

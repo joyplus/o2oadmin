@@ -217,3 +217,75 @@ func (this *ResturantController) GetRequestOrderList() {
 	this.Data["json"] = &response
 	this.ServeJson()
 }
+
+//下单/试送
+func (this *ResturantController) PlaceOrder() {
+	flg := true
+	var apiRequest m.PlaceOrderRequest
+	response := new(m.BaseResponse)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+		flg = false
+	}
+
+	//input validation
+	merchantId := GetMerchantId(apiRequest.Token)
+	if flg {
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
+
+	if flg {
+		err := m.PlaceOrder(merchantId, apiRequest)
+		if err != nil {
+			beego.Error(err.Error())
+			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+		} else {
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+		}
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.ServeJson()
+}
+
+//下单/试送
+func (this *ResturantController) CancelOrder() {
+	flg := true
+	var apiRequest m.UpdateOrderRequest
+	response := new(m.BaseResponse)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+		flg = false
+	}
+
+	//input validation
+	merchantId := GetMerchantId(apiRequest.Token)
+	if flg {
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
+
+	if flg {
+		err := m.UpdateOrder(apiRequest.OrderNumber, lib.LOV_TRANSACTION_TYPE_CANCEL)
+		if err != nil {
+			beego.Error(err.Error())
+			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+		} else {
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+		}
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.ServeJson()
+}

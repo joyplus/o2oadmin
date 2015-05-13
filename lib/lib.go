@@ -1,7 +1,9 @@
 package lib
 
 import (
+	"bytes"
 	"crypto/md5"
+	"encoding/gob"
 	"encoding/hex"
 	"fmt"
 	"math/rand"
@@ -57,6 +59,16 @@ func GenerateOTP() string {
 	return fmt.Sprintf("%d", nums[0])
 }
 
+//生成OTP Sequence Number
+func GenerateSequenceNumberForOTP(otp string) string {
+	return GetMd5String(otp)
+}
+
+//生成Security token
+func GenerateSecurityToken(mobileNumber string) string {
+	return GetMd5String(mobileNumber + GetCurrentTime())
+}
+
 //生成count个[start,end)结束的不重复的随机数
 func generateRandomNumber(start int, end int, count int) []int {
 	//范围检查
@@ -96,4 +108,24 @@ func generateRandomNumber(start int, end int, count int) []int {
 func GenerateOrderNumber(purchaseType string) string {
 	nums := generateRandomNumber(10000, 99999, 1)
 	return purchaseType + GetCurrentTime() + fmt.Sprintf("%d", nums[0])
+}
+
+func ConvertStrToInt(s string) int {
+
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		i = 0
+	}
+
+	return i
+}
+
+func GetBytes(key interface{}) ([]byte, error) {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(key)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
 }

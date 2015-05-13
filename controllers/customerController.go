@@ -38,11 +38,12 @@ func (this *CustomerController) RequestOTP() {
 	if flg {
 		response.Header.StatusCode = lib.STATUS_SUCCESS
 		otp := lib.GenerateOTP()
-		response.SequenceNumber = lib.GetMd5String(otp)
+		response.SequenceNumber = lib.GenerateSequenceNumberForOTP(otp)
 
 		beego.Debug(response.SequenceNumber + ":" + otp)
 
 		redisx.Put("OTP_SEQ_"+response.SequenceNumber, otp, 300)
+		redisx.Put("OTP_MOBILE_"+response.SequenceNumber, apiRequest.MobileNumber, 300)
 		go sendOTPSMS(apiRequest.MobileNumber, otp)
 	}
 
@@ -65,8 +66,20 @@ func (this *CustomerController) VerifyOTP() {
 		tmpOtp := GetCacheData("OTP_SEQ_" + apiRequest.SequenceNumber)
 
 		if strings.EqualFold(tmpOtp, apiRequest.OTP) {
-			response.Header.StatusCode = lib.STATUS_SUCCESS
-			response.SecrityToken = lib.GetMd5String(apiRequest.SequenceNumber + lib.GetCurrentTime())
+
+			mobileNumber := GetCacheData("OTP_MOBILE_" + apiRequest.SequenceNumber)
+			oldToken, newToken, err := m.VerifyMerchantUserByMobile(mobileNumber)
+			if err == nil {
+				response.Header.StatusCode = lib.STATUS_SUCCESS
+				DeleteCacheData(oldToken)
+				response.MerchantId = GetMerchantId(newToken)
+				response.SecrityToken = newToken
+
+			} else {
+				beego.Error(err.Error())
+				response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+			}
+
 		} else {
 			response.Header.StatusCode = lib.BIZ_OTP_VERIFIED_FAILED
 
