@@ -18,11 +18,11 @@ var (
 )
 
 func init() {
-	redisx = lib.NewRedisxCache()
-	err := redisx.StartAndGC(`{"conn":":6379"}`)
-	if err != nil {
-		panic(err)
-	}
+	//redisx = lib.NewRedisxCache()
+	//err := redisx.StartAndGC(`{"conn":":6379"}`)
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	//configure yuntongxun
 	serverInfo = new(lib.ServerInfo)
@@ -59,6 +59,9 @@ func SendTemplateSMS(to string, datas []string, tempId string) (resError error) 
 }
 
 func GetCacheData(key string) string {
+	if redisx == nil {
+		return ""
+	}
 	v := redisx.Get(key)
 	if v != nil {
 		switch t := v.(type) {
@@ -72,11 +75,12 @@ func GetCacheData(key string) string {
 	} else {
 		return ""
 	}
-
 }
 
 func DeleteCacheData(key string) {
-	redisx.Delete(key)
+	if redisx != nil {
+		redisx.Delete(key)
+	}
 }
 
 func GetErrorMsg(satusCode string) string {
@@ -84,9 +88,9 @@ func GetErrorMsg(satusCode string) string {
 }
 
 func GetMerchantId(token string) int {
-	userData := GetCacheUserData(token)
-	if userData != nil {
-		return userData.DefaultMixId
+	merchantId := lib.ConvertStrToInt(GetCacheData("MERCHANT_ID_" + token))
+	if merchantId > 0 {
+		return merchantId
 	}
 	mixUserMatrix, err := m.GetMixUserByToken(token, lib.LOV_MERCHANT_KEY_RET)
 	if err != nil {
@@ -99,35 +103,48 @@ func GetMerchantId(token string) int {
 }
 
 func GetUserId(token string) int {
-	return 1
+	userId := lib.ConvertStrToInt(GetCacheData("USER_ID_" + token))
+	if userId > 0 {
+		return userId
+	}
+	mixUserMatrix, err := m.GetMixUserByToken(token, lib.LOV_MERCHANT_KEY_RET)
+	if err != nil {
+		return 0
+	} else {
+		SetupCacheUserData(mixUserMatrix, token)
+		return mixUserMatrix.UserId
+	}
 }
 
 func SetupCacheUserData(mixUserMatrix *m.FeMixUserMatrix, token string) {
 
-	beego.Debug(mixUserMatrix)
 	newUserData := m.UserData{UserId: mixUserMatrix.UserId}
 	newUserData.DefaultMixId = mixUserMatrix.MixId
 	newUserData.MixType = mixUserMatrix.MixType
 
-	strJson, err := json.Marshal(newUserData)
-	if err != nil {
-		panic(err.Error())
+	if redisx != nil {
+		redisx.Put("MERCHANT_ID_"+token, newUserData.DefaultMixId, 86400)
+		redisx.Put("USER_ID_"+token, newUserData.UserId, 86400)
 	}
-
-	redisx.Put("USERDATA_"+token, strJson, 86400)
 
 }
 
 func GetCacheUserData(token string) (userData *m.UserData) {
 
+	if redisx == nil {
+		return nil
+	}
 	v := redisx.Get("USERDATA_" + token)
 
 	if v != nil {
+
 		bJson, err := lib.GetBytes(v)
 		if err != nil {
 			beego.Error(err.Error())
 			return nil
 		}
+
+		beego.Debug("Get cache user data:" + string(bJson))
 
 		err = json.Unmarshal(bJson, &userData)
 		if err != nil {
@@ -138,4 +155,13 @@ func GetCacheUserData(token string) (userData *m.UserData) {
 	}
 
 	return userData
+}
+
+//func (this *ApiBaseController) ServeJson() {
+//	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+//	beego.Controller.ServeJson()
+//}
+
+func (this *ApiBaseController) SetupResponseHeader() {
+	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
 }

@@ -12,7 +12,9 @@ import (
 func main() {
 
 	//initCache()
-	orm.Debug = true
+	orm.Debug, _ = beego.AppConfig.Bool("orm_debug")
+	//logFile := beego.AppConfig.String("log_file")
+	beego.SetLogger("file", `{"filename":"o2olog","daily":true}`)
 	beego.Run()
 
 }

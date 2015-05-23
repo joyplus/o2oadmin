@@ -14,6 +14,8 @@ type ResturantController struct {
 }
 
 func (this *ResturantController) GetMaterialListByCategory() {
+
+	var merchantId int
 	flg := true
 	var apiRequest m.ResturantQueryRequest
 	response := new(m.ResMaterialList)
@@ -25,8 +27,9 @@ func (this *ResturantController) GetMaterialListByCategory() {
 	}
 
 	//input validation
-	merchantId := GetMerchantId(apiRequest.Token)
+
 	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
 		if merchantId == 0 {
 			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
 			flg = false
@@ -46,10 +49,12 @@ func (this *ResturantController) GetMaterialListByCategory() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
 
 func (this *ResturantController) GetLovList() {
+
 	flg := true
 	var apiRequest m.ResturantQueryRequest
 	response := new(m.ResLovList)
@@ -84,6 +89,7 @@ func (this *ResturantController) GetLovList() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
 
@@ -99,8 +105,9 @@ func (this *ResturantController) GetSupplierList() {
 	}
 
 	//input validation
-	merchantId := GetMerchantId(apiRequest.Token)
+	var merchantId int
 	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
 		if merchantId == 0 {
 			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
 			flg = false
@@ -141,6 +148,7 @@ func (this *ResturantController) GetSupplierList() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
 
@@ -157,8 +165,9 @@ func (this *ResturantController) QueryPrice() {
 	}
 
 	//input validation
-	merchantId := GetMerchantId(apiRequest.Token)
+	var merchantId int
 	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
 		if merchantId == 0 {
 			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
 			flg = false
@@ -177,6 +186,7 @@ func (this *ResturantController) QueryPrice() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
 
@@ -192,8 +202,9 @@ func (this *ResturantController) GetRequestOrderList() {
 	}
 
 	//input validation
-	merchantId := GetMerchantId(apiRequest.Token)
+	var merchantId int
 	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
 		if merchantId == 0 {
 			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
 			flg = false
@@ -215,6 +226,7 @@ func (this *ResturantController) GetRequestOrderList() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
 
@@ -231,8 +243,9 @@ func (this *ResturantController) PlaceOrder() {
 	}
 
 	//input validation
-	merchantId := GetMerchantId(apiRequest.Token)
+	var merchantId int
 	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
 		if merchantId == 0 {
 			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
 			flg = false
@@ -251,6 +264,7 @@ func (this *ResturantController) PlaceOrder() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
 
@@ -267,8 +281,9 @@ func (this *ResturantController) CancelOrder() {
 	}
 
 	//input validation
-	merchantId := GetMerchantId(apiRequest.Token)
+	var merchantId int
 	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
 		if merchantId == 0 {
 			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
 			flg = false
@@ -287,5 +302,6 @@ func (this *ResturantController) CancelOrder() {
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
 	this.Data["json"] = &response
+	this.SetupResponseHeader()
 	this.ServeJson()
 }
