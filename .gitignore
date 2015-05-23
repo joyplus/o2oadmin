@@ -24,3 +24,4 @@ _testmain.go
 *.prof
 *.log
 o2oadmin*
+*.tag.gz
