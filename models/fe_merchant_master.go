@@ -2,16 +2,14 @@ package models
 
 import (
 	"errors"
-	"fmt"
+	"github.com/astaxie/beego/orm"
 	"reflect"
 	"strings"
 	"time"
-
-	"github.com/astaxie/beego/orm"
 )
 
 type FeMerchantMaster struct {
-	Id           int       `orm:"column(id);auto"`
+	Id           int64     `orm:"column(id);auto"`
 	Name         string    `orm:"column(name);size(45)"`
 	MerchantType string    `orm:"column(merchant_type);size(3)"`
 	Delflg       int8      `orm:"column(delflg);null"`
@@ -40,7 +38,7 @@ func AddFeMerchantMaster(m *FeMerchantMaster) (id int64, err error) {
 
 // GetFeMerchantMasterById retrieves FeMerchantMaster by Id. Returns error if
 // Id doesn't exist
-func GetFeMerchantMasterById(id int) (v *FeMerchantMaster, err error) {
+func GetFeMerchantMasterById(id int64) (v *FeMerchantMaster, err error) {
 	o := orm.NewOrm()
 	v = &FeMerchantMaster{Id: id}
 	if err = o.Read(v); err == nil {
@@ -125,45 +123,26 @@ func GetAllFeMerchantMaster(query map[string]string, fields []string, sortby []s
 
 // UpdateFeMerchantMaster updates FeMerchantMaster by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateFeMerchantMasterById(m *FeMerchantMaster) (err error) {
+func UpdateFeMerchantMasterById(m *FeMerchantMaster) (int64, error) {
+
 	o := orm.NewOrm()
-	v := FeMerchantMaster{Id: m.Id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Update(m); err == nil {
-			fmt.Println("Number of records updated in database:", num)
-		}
+	merchant := make(orm.Params)
+	if len(m.Name) > 0 {
+		merchant["Name"] = m.Name
 	}
-	return
+
+	if len(merchant) == 0 {
+		return 0, errors.New("update field is empty")
+	}
+	var table FeMerchantMaster
+	num, err := o.QueryTable(table).Filter("Id", m.Id).Update(merchant)
+	return num, err
 }
 
 // DeleteFeMerchantMaster deletes FeMerchantMaster by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteFeMerchantMaster(id int) (err error) {
+func DeleteFeMerchantMaster(id int64) (int64, error) {
 	o := orm.NewOrm()
-	v := FeMerchantMaster{Id: id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Delete(&FeMerchantMaster{Id: id}); err == nil {
-			fmt.Println("Number of records deleted in database:", num)
-		}
-	}
-	return
-}
-
-func GetMerchantlist(page int64, page_size int64, sort string) (merchants []orm.Params, count int64) {
-	o := orm.NewOrm()
-	merchant := new(FeMerchantMaster)
-	qs := o.QueryTable(merchant)
-	var offset int64
-	if page <= 1 {
-		offset = 0
-	} else {
-		offset = (page - 1) * page_size
-	}
-	qs.Limit(page_size, offset).OrderBy(sort).Values(&merchants)
-	count, _ = qs.Count()
-	return merchants, count
+	status, err := o.Delete(&FeMerchantMaster{Id: id})
+	return status, err
 }

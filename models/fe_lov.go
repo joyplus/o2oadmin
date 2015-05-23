@@ -40,6 +40,17 @@ func GetFeLovById(id int) (v *FeLov, err error) {
 	return nil, err
 }
 
+func GetFeLovsByKey(lovKey string) ([]*FeLov, error) {
+
+	o := orm.NewOrm()
+	var lovs []*FeLov
+	_, err := o.QueryTable("FeLov").Filter("LovCode", lovKey).OrderBy("-DispOrder").All(&lovs)
+	//lovs, err := GetAllFeLov(map[string]string{"lovKey": lovKey}, []string{"lovCode", "lovValue"}, []string{"dispOrder"}, []string{"desc"},
+	//	0, 100)
+
+	return lovs, err
+}
+
 // GetAllFeLov retrieves all FeLov matches certain condition. Returns empty list if
 // no records exist
 func GetAllFeLov(query map[string]string, fields []string, sortby []string, order []string,

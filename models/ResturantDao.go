@@ -1,0 +1,252 @@
+package models
+
+import (
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	"o2oadmin/lib"
+	"time"
+)
+
+func GetMerchantlist(page int64, page_size int64, sort string) (merchants []orm.Params, count int64) {
+	beego.Debug("Enter Merchant Model.")
+	o := orm.NewOrm()
+	merchant := new(FeMerchantMaster)
+	qs := o.QueryTable(merchant)
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	qs.Limit(page_size, offset).OrderBy(sort).Values(&merchants)
+	count, _ = qs.Count()
+	beego.Debug(merchants)
+	return merchants, count
+}
+
+func GetSupplierListByMerchantId(merchantId int, priority int, distance int, onTimeRate float64) (RstList []*SupplierDetail, err error) {
+	o := orm.NewOrm()
+	var supplierList []*SupplierDetail
+	sql := "select category_key, supplier_id, name as supplier_name,address,distance,on_time_rate,rating from fe_merchant_supplier_matrix as matrix left join fe_supplier_master as supplier on matrix.supplier_id= supplier.id where 1=1 "
+	var paramList []interface{}
+	if merchantId != 0 {
+		sql += " and matrix.merchant_id=?"
+		paramList = append(paramList, merchantId)
+	}
+	if priority != 0 {
+		sql += " and priority>=?"
+		paramList = append(paramList, priority)
+	}
+
+	if distance != 0 {
+		sql += " and distance<?"
+		paramList = append(paramList, distance)
+	}
+
+	if onTimeRate != 0 {
+		sql += " and onTimeRate>?"
+		paramList = append(paramList, onTimeRate)
+	}
+
+	sql += " order by matrix.category_key,matrix.distance"
+	_, err = o.Raw(sql, paramList).QueryRows(&supplierList)
+
+	return supplierList, err
+}
+
+func QueryPrice(merchantId int, queryRequest PriceQueryRequest) (rstError error) {
+	o := orm.NewOrm()
+	rstError = o.Begin()
+
+	beego.Debug(queryRequest)
+	queryRequestHeader := BeMerchantQueryRequestHeader{MerchantId: merchantId}
+	//queryRequestHeader.MerchantId = merchantId
+	queryRequestHeader.RequestDate = time.Now().Format("2006-01-02")
+	queryRequestHeader.RequestDatetime = time.Now()
+	queryRequestHeader.PaymentDuration = queryRequest.PaymentDuration
+	queryRequestHeader.RequestDeliveryTimeStart = queryRequest.RequestDeliveryTimeStart
+	queryRequestHeader.RequestDeliveryTimeEnd = queryRequest.RequestDeliveryTimeEnd
+
+	var requestHeaderId int64
+	//三个返回参数依次为：是否新创建的，对象Id值，错误
+	//if created, id, err := o.ReadOrCreate(&queryRequestHeader, "MerchantId", "RequestDate"); err == nil {
+	//	if created {
+	//		beego.Debug("New Insert an query header Id:", id)
+	//	} else {
+	//		beego.Debug("Updae query header Id:", id)
+	//	}
+	//	rstError = err
+	//	requestHeaderId = id
+	//}
+	err := o.Read(&queryRequestHeader, "MerchantId", "RequestDate")
+	if err == orm.ErrNoRows {
+		beego.Debug("No query header for merchant id:", merchantId)
+		requestHeaderId, rstError = o.Insert(&queryRequestHeader)
+	} else if err == nil {
+		beego.Debug("Find query header for merchant id:", merchantId)
+		_, rstError = o.Update(&queryRequestHeader)
+	} else {
+		rstError = err
+	}
+
+	//if err == orm.ErrNoRows {
+	//	fmt.Println("查询不到")
+	//} else if err == orm.ErrMissPK {
+	//	fmt.Println("找不到主键")
+	//} else {
+	//	requestHeaderId = int64(queryRequestHeader.Id)
+	//}
+
+	if rstError == nil {
+		for _, queryDetail := range queryRequest.MaterialList {
+			queryDetail.HeaderId = int(requestHeaderId)
+			if created, id, err := o.ReadOrCreate(queryDetail, "HeaderId", "MaterialId"); err == nil {
+				if created {
+					beego.Debug("New Insert an query detail Id:", id)
+				} else {
+					beego.Debug("Updae query detail Id:", id)
+				}
+			} else {
+				rstError = err
+				break
+			}
+		}
+		//_, err = o.InsertMulti(100, queryRequest.MaterialList)
+	}
+
+	if rstError == nil {
+
+		for _, supplierCategory := range queryRequest.SupplierCategoryList {
+
+			resposneHeader := BeMerchantQueryResponseHeader{RequestId: int(requestHeaderId)}
+			resposneHeader.SupplierId = supplierCategory.SupplierId
+			resposneHeader.CategoryKey = supplierCategory.CategoryKey
+			if created, id, err := o.ReadOrCreate(&resposneHeader, "RequestId", "SupplierId", "CategoryKey"); err == nil {
+				if created {
+					beego.Debug("New Insert an query response header Id:", id)
+				} else {
+					beego.Debug("Updae query response header Id:", id)
+				}
+			} else {
+				rstError = err
+				break
+			}
+
+		}
+		//_, err = o.InsertMulti(100, responseHeaderList)
+	}
+
+	if rstError != nil {
+		beego.Error(rstError.Error())
+		rstError = o.Rollback()
+	} else {
+		rstError = o.Commit()
+	}
+
+	return rstError
+}
+
+func GetRequestOrderList(merchantId int) (RstList []*RequestOrder, err error) {
+	o := orm.NewOrm()
+	var requestOrderList []*RequestOrder
+	sql := "select request_date from be_merchant_query_request_header as request where 1=1 "
+	var paramList []interface{}
+	if merchantId != 0 {
+		sql += " and request.merchant_id=?"
+		paramList = append(paramList, merchantId)
+	}
+
+	sql += " order by request.request_date"
+	_, err = o.Raw(sql, paramList).QueryRows(&requestOrderList)
+
+	return requestOrderList, err
+}
+
+func PlaceOrder(merchantId int, orderRequest PlaceOrderRequest) (rstError error) {
+	o := orm.NewOrm()
+	rstError = o.Begin()
+
+	beego.Debug(orderRequest)
+
+	for _, orderDetail := range orderRequest.PlaceOrderDetailList {
+
+		var orderAmount float32
+		var transactionHeaderId int64
+
+		transactionHeader := BeTransactionHeader{MerchantId: merchantId}
+
+		transactionHeader.SupplierId = orderDetail.SupplierId
+		transactionHeader.ExpectedReceiveTime = orderDetail.ExpectedReceiveTime
+		transactionHeader.OrderTime = time.Now()
+		transactionHeader.CategoryKey = orderDetail.CategoryKey
+		transactionHeader.TrasactionStatus = lib.LOV_TRANSACTION_TYPE_SEND
+		transactionHeader.OrderNumber = lib.GenerateOrderNumber(lib.ORDER_TRANSACTION)
+		transactionHeaderId, rstError = o.Insert(&transactionHeader)
+
+		if rstError != nil {
+			break
+		}
+
+		transactionDetailList := orderDetail.TransactionDetailList
+		for _, transactionDetail := range transactionDetailList {
+			transactionDetail.TransactionId = int(transactionHeaderId)
+			fOrderQuality := float32(transactionDetail.OrderQuality)
+
+			orderAmount += fOrderQuality * transactionDetail.UnitPrice
+		}
+
+		_, rstError = o.InsertMulti(100, transactionDetailList)
+
+		if rstError != nil {
+			break
+		}
+
+		transactionHeader.OrderAmount = orderAmount
+
+		_, rstError = o.Update(&transactionHeader)
+
+	}
+
+	if rstError != nil {
+		beego.Error(rstError.Error())
+		rstError = o.Rollback()
+	} else {
+		rstError = o.Commit()
+	}
+
+	return rstError
+}
+
+func UpdateOrder(orderNumber string, transactionStatus string) (rstError error) {
+	o := orm.NewOrm()
+	rstError = o.Begin()
+
+	transactionHeader := BeTransactionHeader{OrderNumber: orderNumber}
+
+	rstError = o.Read(&transactionHeader, "OrderNumber")
+
+	if rstError == orm.ErrNoRows {
+		beego.Debug("No transaction header for order number:", orderNumber)
+
+	} else if rstError == nil {
+		beego.Debug("Find transaction header for order number:", orderNumber)
+		transactionHeader.TrasactionStatus = transactionStatus
+		_, rstError = o.Update(&transactionHeader)
+	}
+
+	if rstError != nil {
+		beego.Error(rstError.Error())
+		rstError = o.Rollback()
+	} else {
+		rstError = o.Commit()
+	}
+
+	return rstError
+}
+
+func GetMaterialListByCategory(categoryCode string) (resList []*ResMaterial, resError error) {
+	o := orm.NewOrm()
+	_, resError = o.Raw("select m.name as name,m.standard_type as standard_type,lov.lov_value as standard_type_name,m.pic_url as pic_url from fe_material_master as m left join fe_lov as lov on m.standard_type=lov.lov_key and lov.lov_code='STANDARD_TYPE' WHERE category_key = ?", categoryCode).QueryRows(&resList)
+
+	return resList, resError
+}

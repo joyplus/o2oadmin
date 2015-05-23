@@ -1,9 +1,15 @@
 package lib
 
 import (
+	"bytes"
 	"crypto/md5"
+	"encoding/gob"
 	"encoding/hex"
+	"fmt"
+	"math/rand"
 	"strconv"
+	"strings"
+	"time"
 )
 
 //create md5 string
@@ -32,4 +38,94 @@ func StringsToJson(str string) string {
 	}
 
 	return jsons
+}
+
+//生成32位md5字串
+func GetMd5String(s string) string {
+	h := md5.New()
+	h.Write([]byte(s))
+	return strings.ToUpper(hex.EncodeToString(h.Sum(nil)))
+}
+
+//得到当前时间
+func GetCurrentTime() string {
+
+	return time.Now().Format("20060102150405")
+}
+
+//生成OTP
+func GenerateOTP() string {
+	nums := generateRandomNumber(100000, 999999, 1)
+	return fmt.Sprintf("%d", nums[0])
+}
+
+//生成OTP Sequence Number
+func GenerateSequenceNumberForOTP(otp string) string {
+	return GetMd5String(otp)
+}
+
+//生成Security token
+func GenerateSecurityToken(mobileNumber string) string {
+	return GetMd5String(mobileNumber + GetCurrentTime())
+}
+
+//生成count个[start,end)结束的不重复的随机数
+func generateRandomNumber(start int, end int, count int) []int {
+	//范围检查
+	if end < start || (end-start) < count {
+		return nil
+	}
+
+	//存放结果的slice
+	nums := make([]int, 0)
+	//随机数生成器，加入时间戳保证每次生成的随机数不一样
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for len(nums) < count {
+		//生成随机数
+		num := r.Intn((end - start)) + start
+
+		//查重
+		exist := false
+		for _, v := range nums {
+			if v == num {
+				exist = true
+				break
+			}
+		}
+
+		if !exist {
+			nums = append(nums, num)
+		}
+	}
+
+	return nums
+}
+
+//生成订单号
+//REQ: 询价单
+//RES: 报价单
+//TRX: 订单
+func GenerateOrderNumber(purchaseType string) string {
+	nums := generateRandomNumber(10000, 99999, 1)
+	return purchaseType + GetCurrentTime() + fmt.Sprintf("%d", nums[0])
+}
+
+func ConvertStrToInt(s string) int {
+
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		i = 0
+	}
+
+	return i
+}
+
+func GetBytes(key interface{}) ([]byte, error) {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(key)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
 }
