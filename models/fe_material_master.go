@@ -12,7 +12,8 @@ import (
 type FeMaterialMaster struct {
 	Id                int       `orm:"column(id);auto"`
 	Name              string    `orm:"column(name);size(45)"`
-	CategoryKey       string    `orm:"column(category_key);size(3)"`
+	Description       string    `orm:"column(description);size(50);null"`
+	CategoryId        int       `orm:"column(category_id);size(11)"`
 	UnitPrice         float32   `orm:"column(unit_price);null"`
 	StandardType      string    `orm:"column(standard_type);size(3);null"`
 	Delflg            int8      `orm:"column(delflg);null"`

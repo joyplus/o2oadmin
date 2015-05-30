@@ -46,6 +46,7 @@ type ResturantQueryRequest struct {
 	BaseRequest
 	CategoryKey      string
 	CategoryId       int
+	TransactionId    int
 	LovCode          string
 	Distance         int
 	OnTimeRate       float64
