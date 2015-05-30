@@ -36,7 +36,7 @@ func (this *ResturantController) GetMaterialListByCategory() {
 		}
 	}
 	if flg {
-		resList, err := m.GetMaterialListByCategory(apiRequest.CategoryKey)
+		resList, err := m.GetMaterialListByCategory(apiRequest.CategoryId)
 		if err != nil {
 			beego.Error(err.Error())
 			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
@@ -298,6 +298,64 @@ func (this *ResturantController) CancelOrder() {
 		} else {
 			response.Header.StatusCode = lib.STATUS_SUCCESS
 		}
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.SetupResponseHeader()
+	this.ServeJson()
+}
+
+func (this *ResturantController) GetCategoryList() {
+
+	response := new(m.ResCategoryList)
+	resList, err := m.GetCategoryList("")
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+	} else {
+		response.Header.StatusCode = lib.STATUS_SUCCESS
+		response.ResList = resList
+	}
+
+	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)
+	this.Data["json"] = &response
+	this.SetupResponseHeader()
+	this.ServeJson()
+}
+
+func (this *ResturantController) GetTransactionList() {
+	flg := true
+	var apiRequest m.BaseRequest
+	response := new(m.ResTransactionList)
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
+	if err != nil {
+		beego.Error(err.Error())
+		response.Header.StatusCode = lib.ERROR_JSON_UNMARSHAL_FAILED
+		flg = false
+	}
+
+	//input validation
+	var merchantId int
+	if flg {
+		merchantId = GetMerchantId(apiRequest.Token)
+		if merchantId == 0 {
+			response.Header.StatusCode = lib.ERROR_TOKEN_NOT_VERIFIED
+			flg = false
+		}
+	}
+	if flg {
+		rstList, err := m.GetTransactionList(merchantId)
+
+		if err != nil {
+			beego.Error(err.Error())
+			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
+		} else {
+			response.Header.StatusCode = lib.STATUS_SUCCESS
+			response.ResList = rstList
+
+		}
+
 	}
 
 	response.Header.ErrorMsg = GetErrorMsg(response.Header.StatusCode)

@@ -83,3 +83,24 @@ type RequestOrder struct {
 	NumberOfSuppliers         int
 	NumberOfResponseSuppliers int
 }
+
+type ResActivityList struct {
+	BaseResponse
+	ResList []*FeActivityMaster
+}
+
+type ResCategoryList struct {
+	BaseResponse
+	ResList []*CategoryNode
+}
+
+type CategoryNode struct {
+	Id              int
+	Name            string
+	SubCategoryList []*FeCategoryMaster
+}
+
+type ResTransactionList struct {
+	BaseResponse
+	ResList []*BeTransactionHeader
+}

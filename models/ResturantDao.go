@@ -58,7 +58,6 @@ func QueryPrice(merchantId int, queryRequest PriceQueryRequest) (rstError error)
 	o := orm.NewOrm()
 	rstError = o.Begin()
 
-	beego.Debug(queryRequest)
 	queryRequestHeader := BeMerchantQueryRequestHeader{MerchantId: merchantId}
 	//queryRequestHeader.MerchantId = merchantId
 	queryRequestHeader.RequestDate = time.Now().Format("2006-01-02")
@@ -178,7 +177,6 @@ func PlaceOrder(merchantId int, orderRequest PlaceOrderRequest) (rstError error)
 		transactionHeader.SupplierId = orderDetail.SupplierId
 		transactionHeader.ExpectedReceiveTime = orderDetail.ExpectedReceiveTime
 		transactionHeader.OrderTime = time.Now()
-		transactionHeader.CategoryKey = orderDetail.CategoryKey
 		transactionHeader.TrasactionStatus = lib.LOV_TRANSACTION_TYPE_SEND
 		transactionHeader.OrderNumber = lib.GenerateOrderNumber(lib.ORDER_TRANSACTION)
 		transactionHeaderId, rstError = o.Insert(&transactionHeader)
@@ -244,9 +242,66 @@ func UpdateOrder(orderNumber string, transactionStatus string) (rstError error) 
 	return rstError
 }
 
-func GetMaterialListByCategory(categoryCode string) (resList []*ResMaterial, resError error) {
+func GetMaterialListByCategory(categoryId int) (resList []*ResMaterial, resError error) {
 	o := orm.NewOrm()
-	_, resError = o.Raw("select m.name as name,m.standard_type as standard_type,lov.lov_value as standard_type_name,m.pic_url as pic_url from fe_material_master as m left join fe_lov as lov on m.standard_type=lov.lov_key and lov.lov_code='STANDARD_TYPE' WHERE category_key = ?", categoryCode).QueryRows(&resList)
+	_, resError = o.Raw("select m.name as name,m.standard_type as standard_type,lov.lov_value as standard_type_name,m.pic_url as pic_url from fe_material_master as m left join fe_lov as lov on m.standard_type=lov.lov_key and lov.lov_code='STANDARD_TYPE' WHERE category_id = ?", categoryId).QueryRows(&resList)
 
 	return resList, resError
+}
+
+func GetCategoryList(categoryType string) (categoryNodeList []*CategoryNode, err error) {
+
+	o := orm.NewOrm()
+	sql := "select id, name, image_url, level, parent_id from fe_category_master order by level, parent_id,priority desc "
+
+	var dataList []FeCategoryMaster
+	tmpMap := make(map[int]*CategoryNode)
+	_, err = o.Raw(sql).QueryRows(&dataList)
+
+	if err == nil {
+		for _, record := range dataList {
+
+			if record.Level == 1 {
+				tmpMap[record.Id] = buildCategoryNode(record)
+			} else {
+				tmpNode, ok := tmpMap[record.ParentId]
+				if ok {
+					tmpNode.SubCategoryList = append(tmpNode.SubCategoryList, &record)
+				} else {
+					tmpMap[record.Id] = buildCategoryNode(record)
+				}
+			}
+		}
+
+		for _, value := range tmpMap {
+			categoryNodeList = append(categoryNodeList, value)
+		}
+	}
+
+	return categoryNodeList, err
+}
+
+func buildCategoryNode(record FeCategoryMaster) (tmpNode *CategoryNode) {
+
+	tmpNode = new(CategoryNode)
+	tmpNode.Id = record.Id
+	tmpNode.Name = record.Name
+	return tmpNode
+
+}
+
+func GetTransactionList(merchantId int) (RstList []*BeTransactionHeader, err error) {
+	o := orm.NewOrm()
+
+	sql := "select * from be_transaction_header as header where 1=1 "
+	var paramList []interface{}
+	if merchantId != 0 {
+		sql += " and header.merchant_id=?"
+		paramList = append(paramList, merchantId)
+	}
+
+	sql += " order by order_time desc"
+	_, err = o.Raw(sql, paramList).QueryRows(&RstList)
+
+	return RstList, err
 }

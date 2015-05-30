@@ -83,8 +83,13 @@ func DeleteCacheData(key string) {
 	}
 }
 
-func GetErrorMsg(satusCode string) string {
-	return ""
+func GetErrorMsg(statusCode string) string {
+	if statusCode == "000000" {
+		return ""
+	} else {
+		return "出现错误"
+	}
+
 }
 
 func GetMerchantId(token string) int {

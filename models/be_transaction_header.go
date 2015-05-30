@@ -22,7 +22,6 @@ type BeTransactionHeader struct {
 	ActualReceiveTime   time.Time `orm:"column(actual_receive_time);type(datetime);null"`
 	ExpectedReceiveTime time.Time `orm:"column(expected_receive_time);type(datetime);null"`
 	AveragePrice        float32   `orm:"column(average_price);null"`
-	CategoryKey         string    `orm:"column(category_key);size(3);null"`
 	CreateUser          int       `orm:"column(create_user);null"`
 	UpdateUser          int       `orm:"column(update_user);null"`
 	CreateTime          time.Time `orm:"column(create_time);type(timestamp);null"`
