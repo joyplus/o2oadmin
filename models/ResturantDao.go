@@ -259,6 +259,7 @@ func GetCategoryList(categoryType string) (categoryNodeList []*CategoryNode, err
 	_, err = o.Raw(sql).QueryRows(&dataList)
 
 	if err == nil {
+
 		for _, record := range dataList {
 
 			if record.Level == 1 {

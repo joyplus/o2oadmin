@@ -36,13 +36,17 @@ func (this *ResturantController) GetMaterialListByCategory() {
 		}
 	}
 	if flg {
-		resList, err := m.GetMaterialListByCategory(apiRequest.CategoryId)
+		rstList, err := m.GetMaterialListByCategory(apiRequest.CategoryId)
 		if err != nil {
 			beego.Error(err.Error())
 			response.Header.StatusCode = lib.ERROR_MYSQL_QUERY_FAILED
 		} else {
-			response.Header.StatusCode = lib.STATUS_SUCCESS
-			response.ResList = resList
+			if len(rstList) > 0 {
+				response.Header.StatusCode = lib.STATUS_SUCCESS
+				response.ResList = rstList
+			} else {
+				response.Header.StatusCode = lib.BIZ_NO_RECORD
+			}
 		}
 
 	}
@@ -316,6 +320,7 @@ func (this *ResturantController) GetCategoryList() {
 	} else {
 		if len(rstList) > 0 {
 			response.Header.StatusCode = lib.STATUS_SUCCESS
+			response.ResList = rstList
 		} else {
 			response.Header.StatusCode = lib.BIZ_NO_RECORD
 		}
@@ -356,6 +361,7 @@ func (this *ResturantController) GetTransactionList() {
 		} else {
 			if len(rstList) > 0 {
 				response.Header.StatusCode = lib.STATUS_SUCCESS
+				response.ResList = rstList
 			} else {
 				response.Header.StatusCode = lib.BIZ_NO_RECORD
 			}
@@ -405,6 +411,7 @@ func (this *ResturantController) GetTransactionDetail() {
 		} else {
 			if len(rstList) > 0 {
 				response.Header.StatusCode = lib.STATUS_SUCCESS
+				response.ResList = rstList
 			} else {
 				response.Header.StatusCode = lib.BIZ_NO_RECORD
 			}
@@ -449,12 +456,10 @@ func (this *ResturantController) GetRegularMaterialList() {
 		} else {
 			if len(rstList) > 0 {
 				response.Header.StatusCode = lib.STATUS_SUCCESS
+				response.ResList = rstList
 			} else {
 				response.Header.StatusCode = lib.BIZ_NO_RECORD
 			}
-
-			response.ResList = rstList
-
 		}
 
 	}
