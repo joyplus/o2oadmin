@@ -9,45 +9,44 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type BeTransactionDetail struct {
-	Id            int     `orm:"column(id);auto"`
-	TransactionId int     `orm:"column(transaction_id)"`
-	MaterialId    int     `orm:"column(material_id)"`
-	OrderQuality  int     `orm:"column(order_quality);null"`
-	UnitPrice     float32 `orm:"column(unit_price);null"`
-	ActualQuality int     `orm:"column(actual_quality);null"`
-	SubTotal      float32 `orm:"column(sub_total);null"`
+type FeCategoryMaster struct {
+	Id       int    `orm:"column(id);auto"`
+	Name     string `orm:"column(name);size(50)"`
+	ImageUrl string `orm:"column(image_url);size(500);null"`
+	Priority int    `orm:"column(priority);null"`
+	ParentId int    `orm:"column(parent_id);null"`
+	Level    int    `orm:"column(level);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(BeTransactionDetail))
+	orm.RegisterModel(new(FeCategoryMaster))
 }
 
-// AddBeTransactionDetail insert a new BeTransactionDetail into database and returns
+// AddFeCategoryMaster insert a new FeCategoryMaster into database and returns
 // last inserted Id on success.
-func AddBeTransactionDetail(m *BeTransactionDetail) (id int64, err error) {
+func AddFeCategoryMaster(m *FeCategoryMaster) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetBeTransactionDetailById retrieves BeTransactionDetail by Id. Returns error if
+// GetFeCategoryMasterById retrieves FeCategoryMaster by Id. Returns error if
 // Id doesn't exist
-func GetBeTransactionDetailById(id int) (v *BeTransactionDetail, err error) {
+func GetFeCategoryMasterById(id int) (v *FeCategoryMaster, err error) {
 	o := orm.NewOrm()
-	v = &BeTransactionDetail{Id: id}
+	v = &FeCategoryMaster{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllBeTransactionDetail retrieves all BeTransactionDetail matches certain condition. Returns empty list if
+// GetAllFeCategoryMaster retrieves all FeCategoryMaster matches certain condition. Returns empty list if
 // no records exist
-func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFeCategoryMaster(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(BeTransactionDetail))
+	qs := o.QueryTable(new(FeCategoryMaster))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -93,7 +92,7 @@ func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby 
 		}
 	}
 
-	var l []BeTransactionDetail
+	var l []FeCategoryMaster
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -116,11 +115,11 @@ func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby 
 	return nil, err
 }
 
-// UpdateBeTransactionDetail updates BeTransactionDetail by Id and returns error if
+// UpdateFeCategoryMaster updates FeCategoryMaster by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateBeTransactionDetailById(m *BeTransactionDetail) (err error) {
+func UpdateFeCategoryMasterById(m *FeCategoryMaster) (err error) {
 	o := orm.NewOrm()
-	v := BeTransactionDetail{Id: m.Id}
+	v := FeCategoryMaster{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -131,15 +130,15 @@ func UpdateBeTransactionDetailById(m *BeTransactionDetail) (err error) {
 	return
 }
 
-// DeleteBeTransactionDetail deletes BeTransactionDetail by Id and returns error if
+// DeleteFeCategoryMaster deletes FeCategoryMaster by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteBeTransactionDetail(id int) (err error) {
+func DeleteFeCategoryMaster(id int) (err error) {
 	o := orm.NewOrm()
-	v := BeTransactionDetail{Id: id}
+	v := FeCategoryMaster{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&BeTransactionDetail{Id: id}); err == nil {
+		if num, err = o.Delete(&FeCategoryMaster{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

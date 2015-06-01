@@ -42,6 +42,7 @@ type ResMaterialList struct {
 
 type ResMaterial struct {
 	Name             string
+	Description      string
 	UnitPrice        float64
 	StandardType     string
 	StandardTypeName string
@@ -56,6 +57,8 @@ type ResMaterial struct {
 	LadderName       string
 	ShelfLife        int
 	PicUrl           string
+	OrderQuality     int
+	SubTotal         float32
 }
 
 type ResSupplierList struct {
@@ -82,4 +85,30 @@ type RequestOrder struct {
 	RequestDate               string
 	NumberOfSuppliers         int
 	NumberOfResponseSuppliers int
+}
+
+type ResActivityList struct {
+	BaseResponse
+	ResList []*FeActivityMaster
+}
+
+type ResCategoryList struct {
+	BaseResponse
+	ResList []*CategoryNode
+}
+
+type CategoryNode struct {
+	Id              int
+	Name            string
+	SubCategoryList []*FeCategoryMaster
+}
+
+type ResTransactionList struct {
+	BaseResponse
+	ResList []*BeTransactionHeader
+}
+
+type ResTransactionDetail struct {
+	BaseResponse
+	ResList []*ResMaterial
 }

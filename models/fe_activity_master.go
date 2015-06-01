@@ -5,49 +5,57 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type BeTransactionDetail struct {
-	Id            int     `orm:"column(id);auto"`
-	TransactionId int     `orm:"column(transaction_id)"`
-	MaterialId    int     `orm:"column(material_id)"`
-	OrderQuality  int     `orm:"column(order_quality);null"`
-	UnitPrice     float32 `orm:"column(unit_price);null"`
-	ActualQuality int     `orm:"column(actual_quality);null"`
-	SubTotal      float32 `orm:"column(sub_total);null"`
+type FeActivityMaster struct {
+	Id             int       `orm:"column(id);auto"`
+	Name           string    `orm:"column(name);size(50)"`
+	Delflg         int8      `orm:"column(delflg);null"`
+	DisplayText    string    `orm:"column(display_text);size(255);null"`
+	ImageUrl       string    `orm:"column(image_url);size(500);null"`
+	LandingUrl     string    `orm:"column(landing_url);size(500);null"`
+	CreateUser     int       `orm:"column(create_user);null"`
+	UpdateUser     int       `orm:"column(update_user);null"`
+	CreateTime     time.Time `orm:"column(create_time);type(timestamp);null"`
+	UpdateTime     time.Time `orm:"column(update_time);type(timestamp);auto_now"`
+	Priority       int       `orm:"column(priority);null"`
+	StartDate      string    `orm:"column(start_date);type(date);null"`
+	EndDate        string    `orm:"column(end_date);type(date);null"`
+	ActivityStatus string    `orm:"column(activity_status);size(3);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(BeTransactionDetail))
+	orm.RegisterModel(new(FeActivityMaster))
 }
 
-// AddBeTransactionDetail insert a new BeTransactionDetail into database and returns
+// AddFeActivityMaster insert a new FeActivityMaster into database and returns
 // last inserted Id on success.
-func AddBeTransactionDetail(m *BeTransactionDetail) (id int64, err error) {
+func AddFeActivityMaster(m *FeActivityMaster) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetBeTransactionDetailById retrieves BeTransactionDetail by Id. Returns error if
+// GetFeActivityMasterById retrieves FeActivityMaster by Id. Returns error if
 // Id doesn't exist
-func GetBeTransactionDetailById(id int) (v *BeTransactionDetail, err error) {
+func GetFeActivityMasterById(id int) (v *FeActivityMaster, err error) {
 	o := orm.NewOrm()
-	v = &BeTransactionDetail{Id: id}
+	v = &FeActivityMaster{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllBeTransactionDetail retrieves all BeTransactionDetail matches certain condition. Returns empty list if
+// GetAllFeActivityMaster retrieves all FeActivityMaster matches certain condition. Returns empty list if
 // no records exist
-func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFeActivityMaster(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(BeTransactionDetail))
+	qs := o.QueryTable(new(FeActivityMaster))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -93,7 +101,7 @@ func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby 
 		}
 	}
 
-	var l []BeTransactionDetail
+	var l []FeActivityMaster
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -116,11 +124,11 @@ func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby 
 	return nil, err
 }
 
-// UpdateBeTransactionDetail updates BeTransactionDetail by Id and returns error if
+// UpdateFeActivityMaster updates FeActivityMaster by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateBeTransactionDetailById(m *BeTransactionDetail) (err error) {
+func UpdateFeActivityMasterById(m *FeActivityMaster) (err error) {
 	o := orm.NewOrm()
-	v := BeTransactionDetail{Id: m.Id}
+	v := FeActivityMaster{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -131,15 +139,15 @@ func UpdateBeTransactionDetailById(m *BeTransactionDetail) (err error) {
 	return
 }
 
-// DeleteBeTransactionDetail deletes BeTransactionDetail by Id and returns error if
+// DeleteFeActivityMaster deletes FeActivityMaster by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteBeTransactionDetail(id int) (err error) {
+func DeleteFeActivityMaster(id int) (err error) {
 	o := orm.NewOrm()
-	v := BeTransactionDetail{Id: id}
+	v := FeActivityMaster{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&BeTransactionDetail{Id: id}); err == nil {
+		if num, err = o.Delete(&FeActivityMaster{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

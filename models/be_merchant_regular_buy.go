@@ -9,45 +9,42 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type BeTransactionDetail struct {
-	Id            int     `orm:"column(id);auto"`
-	TransactionId int     `orm:"column(transaction_id)"`
-	MaterialId    int     `orm:"column(material_id)"`
-	OrderQuality  int     `orm:"column(order_quality);null"`
-	UnitPrice     float32 `orm:"column(unit_price);null"`
-	ActualQuality int     `orm:"column(actual_quality);null"`
-	SubTotal      float32 `orm:"column(sub_total);null"`
+type BeMerchantRegularBuy struct {
+	Id         int `orm:"column(id);auto"`
+	MerchantId int `orm:"column(merchant_id);null"`
+	MaterialId int `orm:"column(material_id)"`
+	OrderCount int `orm:"column(order_count);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(BeTransactionDetail))
+	orm.RegisterModel(new(BeMerchantRegularBuy))
 }
 
-// AddBeTransactionDetail insert a new BeTransactionDetail into database and returns
+// AddBeMerchantRegularBuy insert a new BeMerchantRegularBuy into database and returns
 // last inserted Id on success.
-func AddBeTransactionDetail(m *BeTransactionDetail) (id int64, err error) {
+func AddBeMerchantRegularBuy(m *BeMerchantRegularBuy) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetBeTransactionDetailById retrieves BeTransactionDetail by Id. Returns error if
+// GetBeMerchantRegularBuyById retrieves BeMerchantRegularBuy by Id. Returns error if
 // Id doesn't exist
-func GetBeTransactionDetailById(id int) (v *BeTransactionDetail, err error) {
+func GetBeMerchantRegularBuyById(id int) (v *BeMerchantRegularBuy, err error) {
 	o := orm.NewOrm()
-	v = &BeTransactionDetail{Id: id}
+	v = &BeMerchantRegularBuy{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllBeTransactionDetail retrieves all BeTransactionDetail matches certain condition. Returns empty list if
+// GetAllBeMerchantRegularBuy retrieves all BeMerchantRegularBuy matches certain condition. Returns empty list if
 // no records exist
-func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllBeMerchantRegularBuy(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(BeTransactionDetail))
+	qs := o.QueryTable(new(BeMerchantRegularBuy))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -93,7 +90,7 @@ func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby 
 		}
 	}
 
-	var l []BeTransactionDetail
+	var l []BeMerchantRegularBuy
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -116,11 +113,11 @@ func GetAllBeTransactionDetail(query map[string]string, fields []string, sortby 
 	return nil, err
 }
 
-// UpdateBeTransactionDetail updates BeTransactionDetail by Id and returns error if
+// UpdateBeMerchantRegularBuy updates BeMerchantRegularBuy by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateBeTransactionDetailById(m *BeTransactionDetail) (err error) {
+func UpdateBeMerchantRegularBuyById(m *BeMerchantRegularBuy) (err error) {
 	o := orm.NewOrm()
-	v := BeTransactionDetail{Id: m.Id}
+	v := BeMerchantRegularBuy{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -131,15 +128,15 @@ func UpdateBeTransactionDetailById(m *BeTransactionDetail) (err error) {
 	return
 }
 
-// DeleteBeTransactionDetail deletes BeTransactionDetail by Id and returns error if
+// DeleteBeMerchantRegularBuy deletes BeMerchantRegularBuy by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteBeTransactionDetail(id int) (err error) {
+func DeleteBeMerchantRegularBuy(id int) (err error) {
 	o := orm.NewOrm()
-	v := BeTransactionDetail{Id: id}
+	v := BeMerchantRegularBuy{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&BeTransactionDetail{Id: id}); err == nil {
+		if num, err = o.Delete(&BeMerchantRegularBuy{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

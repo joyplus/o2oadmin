@@ -26,6 +26,12 @@ func init() {
 	beego.Router("/api/resturant/placeOrder", &controllers.ResturantController{}, "*:PlaceOrder")
 	beego.Router("/api/resturant/cancelOrder", &controllers.ResturantController{}, "*:CancelOrder")
 
+	beego.Router("/api/activity/getList", &controllers.ActivityController{}, "*:GetActiveActivityList")
+	beego.Router("/api/resturant/getCategoryList", &controllers.ResturantController{}, "*:GetCategoryList")
+	beego.Router("/api/resturant/getTransactionList", &controllers.ResturantController{}, "*:GetTransactionList")
+	beego.Router("/api/resturant/getTransactionDetail", &controllers.ResturantController{}, "*:GetTransactionDetail")
+	beego.Router("/api/resturant/getRegularMaterialList", &controllers.ResturantController{}, "*:GetRegularMaterialList")
+
 }
 
 //func router() {
