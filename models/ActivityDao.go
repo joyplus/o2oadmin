@@ -19,10 +19,10 @@ func GetActiveActivityList() (activityList []*FeActivityMaster, err error) {
 	sql += " and end_date >= ?"
 	paramList = append(paramList, currentDate)
 
-	sql += " and activity_status = '001'"
+	sql += " and activity_status = 'ACT'"
 
-	sql += " order by priority desc"
-	_, err = o.Raw(sql, paramList).QueryRows(activityList)
+	sql += " order by priority desc limit 3"
+	_, err = o.Raw(sql, paramList).QueryRows(&activityList)
 
 	return activityList, err
 }
