@@ -41,6 +41,7 @@ type ResMaterialList struct {
 }
 
 type ResMaterial struct {
+	Id               int
 	Name             string
 	Description      string
 	UnitPrice        float64
