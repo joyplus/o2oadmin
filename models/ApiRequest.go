@@ -51,6 +51,7 @@ type ResturantQueryRequest struct {
 	Distance         int
 	OnTimeRate       float64
 	SupplierPriority int
+	IsOrderFinished  bool
 }
 
 type OTPRequest struct {

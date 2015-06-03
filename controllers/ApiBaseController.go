@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"o2oadmin/lib"
 	m "o2oadmin/models"
@@ -86,8 +87,10 @@ func DeleteCacheData(key string) {
 func GetErrorMsg(statusCode string) string {
 	if statusCode == "000000" {
 		return ""
+	} else if strings.HasPrefix(statusCode, "2") {
+		return lib.Messages[statusCode]
 	} else {
-		return "出现错误"
+		return fmt.Sprintf("服务异常(%s)", statusCode)
 	}
 
 }

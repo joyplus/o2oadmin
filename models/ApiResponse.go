@@ -1,14 +1,8 @@
 package models
 
-//import (
-//	"errors"
-//	"fmt"
-//	"reflect"
-//	"strings"
-//	"time"
-
-//	"github.com/astaxie/beego/orm"
-//)
+import (
+	"time"
+)
 
 type ResponseHeader struct {
 	StatusCode string
@@ -41,6 +35,7 @@ type ResMaterialList struct {
 }
 
 type ResMaterial struct {
+	Id               int
 	Name             string
 	Description      string
 	UnitPrice        float64
@@ -105,7 +100,17 @@ type CategoryNode struct {
 
 type ResTransactionList struct {
 	BaseResponse
-	ResList []*BeTransactionHeader
+	ResList []*TransactionItem
+}
+
+type TransactionItem struct {
+	Id                   int
+	OrderNumber          string
+	OrderAmount          float32
+	OrderTime            time.Time
+	ActualReceiveTime    time.Time
+	TrasactionStatus     string
+	TrasactionStatusName string
 }
 
 type ResTransactionDetail struct {
