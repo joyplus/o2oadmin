@@ -14,7 +14,9 @@ func main() {
 	//initCache()
 	orm.Debug, _ = beego.AppConfig.Bool("orm_debug")
 	//logFile := beego.AppConfig.String("log_file")
-	beego.SetLogger("file", `{"filename":"o2oadmin.log","daily":true}`)
+	beego.SetLogger("file", `{"filename":"logs/o2oapi.log"}`)
+	beego.SetLogFuncCall(true)
+
 	beego.Run()
 
 }

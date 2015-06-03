@@ -334,7 +334,7 @@ func (this *ResturantController) GetCategoryList() {
 
 func (this *ResturantController) GetTransactionList() {
 	flg := true
-	var apiRequest m.BaseRequest
+	var apiRequest m.ResturantQueryRequest
 	response := new(m.ResTransactionList)
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &apiRequest)
 	if err != nil {
@@ -353,7 +353,7 @@ func (this *ResturantController) GetTransactionList() {
 		}
 	}
 	if flg {
-		rstList, err := m.GetTransactionList(merchantId)
+		rstList, err := m.GetTransactionList(merchantId, apiRequest.IsOrderFinished)
 
 		if err != nil {
 			beego.Error(err.Error())

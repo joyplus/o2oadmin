@@ -177,7 +177,7 @@ func PlaceOrder(merchantId int, orderRequest PlaceOrderRequest) (rstError error)
 		transactionHeader.SupplierId = orderDetail.SupplierId
 		transactionHeader.ExpectedReceiveTime = orderDetail.ExpectedReceiveTime
 		transactionHeader.OrderTime = time.Now()
-		transactionHeader.TrasactionStatus = lib.LOV_TRANSACTION_TYPE_SEND
+		transactionHeader.TrasactionStatus = lib.LOV_TRANSACTION_TYPE_START
 		transactionHeader.OrderNumber = lib.GenerateOrderNumber(lib.ORDER_TRANSACTION)
 		transactionHeaderId, rstError = o.Insert(&transactionHeader)
 
@@ -291,14 +291,27 @@ func buildCategoryNode(record FeCategoryMaster) (tmpNode *CategoryNode) {
 
 }
 
-func GetTransactionList(merchantId int) (RstList []*BeTransactionHeader, err error) {
+func GetTransactionList(merchantId int, isOrderFinished bool) (RstList []*TransactionItem, err error) {
 	o := orm.NewOrm()
 
-	sql := "select * from be_transaction_header as header where 1=1 "
+	//Id                   int
+	//OrderNumber          string
+	//OrderAmount          float32
+	//OrderTime            time.Time
+	//ActualReceiveTime    time.Time
+	//TrasactionStatus     string
+	//TrasactionStatusName string
+	sql := "select header.id as id, header.order_number as order_number,header.order_amount as order_amount,header.order_time as order_time,header.transaction_status as transaction_status, lov.lov_value as transaction_status_name from be_transaction_header as header left join fe_lov as lov on header.transaction_status=lov.lov_key and lov.lov_code='TRANSACTION_STATUS' where 1=1 "
 	var paramList []interface{}
 	if merchantId != 0 {
 		sql += " and header.merchant_id=?"
 		paramList = append(paramList, merchantId)
+	}
+
+	if isOrderFinished {
+		sql += " and header.transaction_status='006'"
+	} else {
+		sql += " and header.transaction_status<>'006'"
 	}
 
 	sql += " order by order_time desc"
