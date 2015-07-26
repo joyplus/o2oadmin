@@ -1,10 +1,16 @@
 package routers
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/beego/admin"
+	"o2oadmin/controllers"
 )
 
 func init() {
+	beego.Router("/pmp/adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList")
+//	beego.Router("/pmp/adspace/showDetail", &controllers.PmpDailyAllocationController{}, "*:ShowDetail")
+	beego.Router("/pmp/demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemands")
+	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
 	admin.Run()
 
 }
