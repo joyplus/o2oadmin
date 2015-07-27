@@ -32,7 +32,14 @@ func (c *PmpAdspaceController) URLMapping() {
 // @router / [post]
 func (c *PmpAdspaceController) Post() {
 	var v models.PmpAdspace
-	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+//	beego.Info("**** request body: " + string(c.Ctx.Input.RequestBody))
+//	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+	c.Ctx.Request.ParseForm()
+	mediaid,_ := strconv.Atoi(c.Ctx.Request.Form["MediaId"][0])
+//	beego.Info(mediaid)
+	v = models.PmpAdspace{Name:c.Ctx.Request.Form["Name"][0], MediaId:mediaid , Description:c.Ctx.Request.Form["Description"][0]}
+//	jsoncontent, _ := json.Marshal(v)
+//	beego.Info("**** pased Adspace: " + string(jsoncontent))
 	if id, err := models.AddPmpAdspace(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
