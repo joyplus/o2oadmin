@@ -8,7 +8,7 @@ import (
 
 func init() {
 	beego.Router("/pmp/adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList")
-//	beego.Router("/pmp/adspace/showDetail", &controllers.PmpDailyAllocationController{}, "*:ShowDetail")
+	beego.Router("/pmp/adspace/addadspace", &controllers.PmpAdspaceController{}, "*:Post")
 	beego.Router("/pmp/demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemands")
 	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
 	admin.Run()

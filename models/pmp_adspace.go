@@ -22,6 +22,7 @@ type PmpAdspace struct {
 	UpdateTime    time.Time `orm:"column(update_time);type(timestamp);null"`
 	PmpAdspaceKey string    `orm:"column(pmp_adspace_key);size(50);null"`
 	SecretKey     string    `orm:"column(secret_key);size(50);null"`
+	MediaId		  int        `orm:"column(media_id);null"`
 	EstDailyImp   int       `orm:"column(est_daily_imp);null"`
 	EstDailyClk   int       `orm:"column(est_daily_clk);null"`
 	EstDailyCtr   float32   `orm:"column(est_daily_ctr);null"`
