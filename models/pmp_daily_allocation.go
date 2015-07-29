@@ -139,6 +139,45 @@ func UpdatePmpDailyAllocationById(m *PmpDailyAllocation) (err error) {
 	return
 }
 
+type PmpDailyAllocationVo struct {
+	Name string
+	DemandAdspaceId int
+	AdDate time.Time
+	Imp int
+	Clk int
+	Ctr float32
+}
+
+// Query PmpDailyAllocation
+func GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceid int, addate time.Time)[]PmpDailyAllocationVo {
+	var querysql = "select demand.name, da.demand_adspace_id, da.ad_date, da.imp, da.clk, da.ctr from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id inner join pmp_daily_allocation as da on matrix.demand_adspace_id = da.demand_adspace_id where adspace.id=? and da.ad_date >= ? and da.ad_date <= ? order by demand.name, da.ad_date"
+	o := orm.NewOrm()
+	var dailyAllocationVos []PmpDailyAllocationVo
+	adenddate := addate.AddDate(0, 0, 6)
+	fmt.Println("adenddate: ", adenddate.Format("2006-1-2"))
+	count, err := o.Raw(querysql, adspaceid, addate, adenddate).QueryRows(&dailyAllocationVos)
+	if err != nil {
+		fmt.Println("SQL Syntax Error or Parameter Error")
+		return nil
+	} else {
+		fmt.Printf("%d rows returned for PmpDailyAllocation", count)
+	}
+	return dailyAllocationVos
+}
+
+// Update daily allocation 
+func UpdatePmpDailyAllocationByDemandAdpaceId(demandadspaceid int, addate string, imp int, clk int, ctr float32) {
+	var updatesql = "update pmp_daily_allocation set imp=?, clk=?, ctr=? where demand_adspace_id=? and ad_date=?";
+	o := orm.NewOrm()
+	res, err := o.Raw(updatesql, imp, clk, ctr, demandadspaceid, addate).Exec()
+	if err == nil {
+	    num, _ := res.RowsAffected()
+	    fmt.Println("mysql row affected nums: ", num)
+	} else {
+		fmt.Println("SQL Syntax Error")
+	}
+}
+
 // DeletePmpDailyAllocation deletes PmpDailyAllocation by Id and returns error if
 // the record to be deleted doesn't exist
 func DeletePmpDailyAllocation(id int) (err error) {
