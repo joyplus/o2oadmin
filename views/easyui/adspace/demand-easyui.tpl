@@ -82,20 +82,23 @@ $(function(){
 				formatter: function(value,row, index){
 					return '<div><a href="#" icon="icon-edit" plain="true" onclick="edittherow($(this), ' + index +')" class="easyui-linkbutton" >编辑</a></div>';
 				}
-			}
+			},
+			{field:'DemandAdspaceId', visible:false}
         ]],
         onAfterEdit:function(index, data, changes){
-            /*if(vac.isEmpty(changes)){
+            if(vac.isEmpty(changes)){
                 return;
             }
-            changes.Id = data.Id;
-            vac.ajax(URL+'/UpdateUser', changes, 'POST', function(r){
+            changes.DemandAdspaceId = data.DemandAdspaceId;
+			changes.Operation = startDate; //use field Operation to pass start date
+			//alert(JSON.stringify(changes))
+            vac.ajax(URL+'/updateDailyAllocation', changes, 'POST', function(r){
                 if(!r.status){
                     vac.alert(r.info);
                 }else{
                     $("#datagrid").datagrid("reload");
                 }
-            })*/
+            })
         }
     });	
 	initDate();
