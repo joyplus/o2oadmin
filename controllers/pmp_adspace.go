@@ -130,9 +130,17 @@ func (c *PmpAdspaceController) GetAll() {
 
 // get adspace list by page
 func (this *PmpAdspaceController) GetAdspaceList() {
-	params := "fields:" + this.GetString("fields") + " ****** limit:" + this.GetString("limit") + " ****** offset:" + this.GetString("offset") + " ****** sortby:" + this.GetString("sortby") +
-				" ****** query:" + this.GetString("query") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" + this.GetString("sort")  + " ****** order:" + this.GetString("order")
+	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" + 
+				this.GetString("sort")  + " ****** order:" + this.GetString("order") + " ****** mediaid: " + this.GetString("mediaid") +
+				 " ***** adspacename: " + this.GetString("adspacename")
 	beego.Info(params)
+	
+	mediaid, err := this.GetInt("mediaid")
+	adspacename := this.GetString("adspacename")
+	if err != nil {
+		mediaid = -1
+	}
+	
 	page, _ := this.GetInt64("page")
 	page_size, _ := this.GetInt64("rows")
 	sort := this.GetString("sort")
@@ -144,7 +152,8 @@ func (this *PmpAdspaceController) GetAdspaceList() {
 	} else {
 		sort = "Id"
 	}
-	adspaces, count := models.GetAdspaceList(page, page_size, sort)
+	
+	adspaces, count := models.GetAdspaceList(page, page_size, sort, mediaid, adspacename)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaces}
 		jsoncontent, _ := json.Marshal(this.Data["json"])

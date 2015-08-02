@@ -43,6 +43,12 @@
 				 		    
           				}
            			});
+					
+					$("#field1").keyup(function(event){
+					    if(event.keyCode == 13){
+					        filterData();
+					    }
+					});
         		});
 				
 				//新建广告位弹窗
@@ -66,6 +72,13 @@
 				function cancelNew() {
 					$("#dd").dialog("close");
 				}	
+				
+				function filterData() {
+					$('#dg').datagrid('loadData', {"total":0,"rows":[]});
+					var name = $("#field1").val();
+					var id = $('#mediacc').combobox('getValue');
+					$("#dg").datagrid('load', {mediaid:id,adspacename:name,page:'1',rows:'10'});
+				}
 						
 		    </script>
 		    <style type="text/css">
@@ -81,9 +94,9 @@
 		        
 		    <div> 
 				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建广告位</a></div> 
-				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="reloadrow()" class="easyui-linkbutton" >刷新</a></div>
+				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
-	              <input type="text" class="" id="field1" placeholder="请输入搜索内容">				  
+	              <input type="text" class="" id="field1" placeholder="请输入部分广告位名称">				  
 	          </div>
 			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'"></div>
 			</div>

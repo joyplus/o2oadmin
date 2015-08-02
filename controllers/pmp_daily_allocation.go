@@ -137,37 +137,6 @@ func (c *PmpDailyAllocationController) GetAll() {
 
 }
 
-// @Title Get All
-// @Description get PmpDailyAllocation
-// @Param	id	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.PmpDailyAllocation
-// @Failure 403
-// @router / [get]
-//func (c *PmpDailyAllocationController) ShowDetail() {
-//	id := c.GetString("id")
-//	divId := strings.Join([]string{"p", id}, "-")
-//    responseString := strings.Join([]string{ "<div class='panel' style='display: block; width: 700px;'>",
-//	    id,
-//		"<div class='panel-header' style='width: 688px;'><div class='panel-title'>Load Panel Content</div><div class='panel-tool'><a href='javascript:void(0)' class='icon-reload'></a></div></div><div id='",
-//		divId,
-//		"' class='easyui-panel panel-body' title='' style='padding: 10px; width: 678px; height: 151px;' data-options=\"tools:[{iconCls:'icon-reload',handler:function(){alert('refresh'); $('#",
-//		divId,
-//		"').panel('refresh', '/pmp/adspace/showDetail?id=",
-//		id,
-//		"'); alert('refresh1');}}]\"><p style='font-size:14px'>Here is the content loaded via AJAX.</p><ul>",
-//		"<li>easyui is a collection of user-interface plugin based on jQuery.</li>",
-//		"<li>easyui provides essential functionality for building modem, interactive, javascript applications.</li>",
-//		"<li>using easyui you don't need to write many javascript code, you usually defines user-interface by writing some HTML markup.</li>",
-//		"<li>complete framework for HTML5 web page.</li>",
-//		"<li>easyui save your time and scales while developing your products.</li>",
-//		"<li>easyui is very easy but powerful.</li>",
-//		"</ul>",
-//		"</div></div>"}, "")
-//	c.Ctx.WriteString(responseString)
-
-//}
-
-
 // @Title Update
 // @Description update the PmpDailyAllocation
 // @Param	id		path 	string	true		"The id you want to update"
