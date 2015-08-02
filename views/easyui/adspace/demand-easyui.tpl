@@ -3,10 +3,11 @@
 <script type="text/javascript">
 var URL="/pmp/demand";
 var maingridrowid = {{.maingridrowid}}
-var startDate = new Date();
-startDate.setDate(startDate.getDate() - 3);
+var initialDate = new Date();
+initialDate.setDate(initialDate.getDate() - 3);
+var startDate = initialDate.getFullYear() + "-" + (initialDate.getMonth() + 1) + "-" + initialDate.getDate()
 var title1, title2, title3, title4, title5, title6, title7;
-updateTitles(startDate);
+updateTitles(initialDate);
 $(function(){
 
     //广告主列表
@@ -134,7 +135,7 @@ function onSelectStartDate(date) {
 	newDate.setDate(newDate.getDate() + 6);
 	var d = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
 	endDateEl.datebox('setValue', d);
-	startDate = date;
+	startDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();;
 	changeColumns(date);
 	reloadrow();
 }
@@ -145,7 +146,7 @@ function onSelectEndDate(endDate) {
 	newDate.setDate(newDate.getDate() - 6);
 	var d = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
 	startDateEl.datebox('setValue', d);
-	startDate = startDateEl.datebox('getValue');
+	startDate = d;
 	changeColumns(startDate);
 	reloadrow();
 }

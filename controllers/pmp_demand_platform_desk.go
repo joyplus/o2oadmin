@@ -6,8 +6,9 @@ import (
 	"o2oadmin/models"
 	"strconv"
 	"strings"
-
+	"time"
 	"github.com/beego/admin/src/rbac"
+	"github.com/astaxie/beego"
 	
 )
 
@@ -24,46 +25,97 @@ func (c *PmpDemandPlatformDeskController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
+type DemandVo struct {
+	Name string
+	Proportion float32
+	Day1 int
+	Day2 int
+	Day3 int
+	Day4 int
+	Day5 int
+	Day6 int
+	Day7 int
+	Operation string
+}
+
 func (c *PmpDemandPlatformDeskController) GetDemands() {
 	adspaceId := c.GetString("adspaceid")
 	date := c.GetString("startdate")
 	usetpl, err := c.GetBool("usetpl")
+	beego.Info(" **** param adspaceid: " + adspaceId + " *** param startdate: " + date + " **** param usetpl: " + strconv.FormatBool(usetpl))
 	if (err !=  nil) {
 		usetpl = false;
 	}
-	
-	demandVos := []DemandVo{{Name: "name1", Proportion: 0.2, Day1: 1000000, Day2: 1200033, Day3:3100000, Day4: 3100000, Day5:5000000, Day6: 600000, Day7:999900000}, 
-					{Name: "name2", Proportion: 0.2, Day1: 1000000, Day2: 1200033, Day3:3100000, Day4: 3100000, Day5:5000000, Day6: 600000, Day7:888900000}}
-
 	c.Data["maingridrowid"] = adspaceId
 	c.Data["startdate"] = date
 	if (usetpl) {
 		tree := c.GetTree()
 		c.Data["tree"] = &tree
-		c.Data["json"] = &map[string]interface{}{"total": 2, "rows": &demandVos}
+		c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
 		c.TplNames = c.GetTemplatetype() + "/adspace/demand-easyui.tpl"
-	}  else {
-		c.Data["json"] = &map[string]interface{}{"total": 2, "rows": &demandVos}
-		c.ServeJson()
+		return
+	} 
+	const layout = "2006-1-2"
+	startdate, _ := time.Parse(layout, date)
+	startdate = startdate.Local()
+	beego.Info(" **** startdate:" + startdate.Format(layout))
+	var dailyAllocations []models.PmpDailyAllocationVo
+	adspaceIdInt, _ := strconv.Atoi(adspaceId)
+	dailyAllocations = models.GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceIdInt, startdate)
+	var demandVos []DemandVo
+	var days [7]string
+	var y, d int
+	var m time.Month
+	y,m,d = startdate.Date()
+	days[0] = strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
+	for i := 1; i < 7; i++ {
+		startdate = startdate.AddDate(0, 0, 1)
+		y,m,d = startdate.Date()
+		days[i] = strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
 	}
-}
+	var lastdemandname string = ""
+	for _, v := range dailyAllocations {	
+		if lastdemandname != v.Name {
+			demandVos = append(demandVos, DemandVo{Name: v.Name})
+			lastdemandname = v.Name
+		}
+		y,m,d  := v.AdDate.Date()
+		addate := strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
+		for index, val := range days {
+			var allocation int
+			currIndex := len(demandVos) - 1
+			
+			if val == addate {
+				allocation = v.Imp
+				switch index {
+					case 0:
+						demandVos[currIndex].Day1 = allocation
+					case 1:
+						demandVos[currIndex].Day2 = allocation
+					case 2:
+						demandVos[currIndex].Day3 = allocation
+					case 3:
+						demandVos[currIndex].Day4 = allocation
+					case 4:
+						demandVos[currIndex].Day5 = allocation
+					case 5:
+						demandVos[currIndex].Day6 = allocation
+					case 6:
+						demandVos[currIndex].Day7 = allocation
+				}
+			}
+			
+		}
+		
+	}
+	beego.Info("**** demandVos:", demandVos)
+	c.Data["json"] = &map[string]interface{}{"total": len(demandVos), "rows": &demandVos}
+	c.ServeJson()
 
-type DemandVo struct {
-	Name string
-	Proportion float32
-	Day1 int64
-	Day2 int64
-	Day3 int64
-	Day4 int64
-	Day5 int64
-	Day6 int64
-	Day7 int64
-	Operation string
 }
-
 
 // @Title Post
 // @Description create PmpDemandPlatformDesk
