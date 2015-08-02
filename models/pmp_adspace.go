@@ -63,8 +63,7 @@ type AdspaceVo struct {
 	EstDaily string
 }
 
-// Get adspace list by raw sql
-func GetAdspaceList (page int64, page_size int64, sort string) (adspaceVos []AdspaceVo, count int64) {
+func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
 	var offset int64
 	if page <= 1 {
 		offset = 0
@@ -73,8 +72,22 @@ func GetAdspaceList (page int64, page_size int64, sort string) (adspaceVos []Ads
 	}
 	var maps []orm.Params
 	o := orm.NewOrm()
-	query := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id ORDER BY a.id ASC limit ? offset ?"
-	num, err := o.Raw(query, page_size, offset).Values(&maps)
+	var r orm.RawSeter
+	var adspacenamecon string = "%" + adspacename + "%"
+    if mediaid == -1 && adspacename == "" {		
+		query1 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query1, page_size, offset)
+	} else if mediaid != -1 && adspacename != "" {
+		query2 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND m.id=? AND a.name like ? ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query2, mediaid, adspacenamecon, page_size, offset)
+	} else if mediaid != -1 {
+		query3 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND m.id=? ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query3, mediaid, page_size, offset)
+	} else {
+		query4 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.name like ? ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query4, adspacenamecon, page_size, offset)
+	}
+	num, err := r.Values(&maps)
 	if err == nil {
 	    fmt.Println("adspace nums: ", num)
 		

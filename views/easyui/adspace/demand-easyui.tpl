@@ -83,7 +83,7 @@ $(function(){
 					return '<div><a href="#" icon="icon-edit" plain="true" onclick="edittherow($(this), ' + index +')" class="easyui-linkbutton" >编辑</a></div>';
 				}
 			},
-			{field:'DemandAdspaceId', visible:false}
+			{field:'DemandAdspaceId', hidden:true}
         ]],
         onAfterEdit:function(index, data, changes){
             if(vac.isEmpty(changes)){

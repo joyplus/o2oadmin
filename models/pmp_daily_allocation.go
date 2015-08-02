@@ -150,13 +150,13 @@ type PmpDailyAllocationVo struct {
 
 // Query PmpDailyAllocation
 func GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceid int, startdate string, enddate string)[]PmpDailyAllocationVo {
-	var querysql = "select demand.name, da.demand_adspace_id, da.ad_date, da.imp, da.clk, da.ctr from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id inner join pmp_daily_allocation as da on matrix.demand_adspace_id = da.demand_adspace_id where adspace.id=? and da.ad_date >= STR_TO_DATE(?,'%Y-%m-%d') and da.ad_date <= STR_TO_DATE(?,'%Y-%m-%d') order by demand.name, da.ad_date"
+//	var querysql = "select demand.name, da.demand_adspace_id, da.ad_date, da.imp, da.clk, da.ctr from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id inner join pmp_daily_allocation as da on matrix.demand_adspace_id = da.demand_adspace_id where adspace.id=? and da.ad_date >= STR_TO_DATE(?,'%Y-%m-%d') and da.ad_date <= STR_TO_DATE(?,'%Y-%m-%d') order by demand.name, da.ad_date"
+	var querysql string = "select ad.name, ad.demand_adspace_id, da.imp, da.clk, da.ctr, da.ad_date from " +
+							"(select matrix.pmp_adspace_id, matrix.demand_id as demand_id, demand.name, matrix.demand_adspace_id from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id where adspace.id=?) as ad " +
+							"left join " + 
+							"(select * from pmp_daily_allocation where ad_date >= STR_TO_DATE(?,'%Y-%m-%d') and ad_date <= STR_TO_DATE(?,'%Y-%m-%d')) as da on ad.demand_adspace_id = da.demand_adspace_id"
 	o := orm.NewOrm()
 	var dailyAllocationVos []PmpDailyAllocationVo
-//	const layout = "2006-1-2"
-//	adenddate := addate.AddDate(0, 0, 6)
-		
-//	fmt.Println("adenddate: ", adenddate.Format("2006-1-2"))
 	fmt.Println("startdate: ", startdate, " enddate: ", enddate)
 	count, err := o.Raw(querysql, adspaceid, startdate, enddate).QueryRows(&dailyAllocationVos)
 	if err != nil {
