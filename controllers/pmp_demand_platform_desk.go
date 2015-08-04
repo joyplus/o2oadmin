@@ -28,7 +28,7 @@ func (c *PmpDemandPlatformDeskController) URLMapping() {
 type DemandVo struct {
 	Name string
 	DemandAdspaceId int
-	Proportion float32
+	Proportion int
 	Day1 int
 	Day2 int
 	Day3 int
@@ -37,6 +37,7 @@ type DemandVo struct {
 	Day6 int
 	Day7 int
 	Operation string
+	DemandAdspaceName string
 }
 
 func (c *PmpDemandPlatformDeskController) GetDemands() {
@@ -82,7 +83,7 @@ func (c *PmpDemandPlatformDeskController) GetDemands() {
 	var lastdemandname string = ""
 	for _, v := range dailyAllocations {	
 		if lastdemandname != v.Name {
-			demandVos = append(demandVos, DemandVo{Name: v.Name, DemandAdspaceId: v.DemandAdspaceId})
+			demandVos = append(demandVos, DemandVo{Name:v.Name, DemandAdspaceId:v.DemandAdspaceId, Proportion:v.Priority, DemandAdspaceName:v.DemandAdspaceName})
 			lastdemandname = v.Name
 		}
 		y,m,d  := v.AdDate.Date()
@@ -146,7 +147,7 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 		datestrs = append(datestrs, tempdate.Format(layout))
 	}
 	beego.Info(" **** datestrs:" , datestrs, " DemandAdspaceId: ", u.DemandAdspaceId, " imps: ", imps)
-	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId, datestrs, imps)
+	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId,u.Proportion, datestrs, imps)
 	if err == nil {
 		beego.Info(" **** Number of rows updated: ", num)
 		this.Rsp(true, "Success")

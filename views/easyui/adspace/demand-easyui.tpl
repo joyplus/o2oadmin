@@ -26,13 +26,9 @@ $(function(){
         idField:'Name',
         pagination:false,
         columns:[[
-            {field:'Name',title:'需求方平台名称',width:100,sortable:true},
-			
-			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text',
-                formatter:function(value,row,index){
-                    if(value) return (value * 100) + "%";
-                    return value;
-                }
+            {field:'Name',title:'需求方名称',width:100,sortable:true},		
+			{field:'DemandAdspaceName',title:'需求方平台广告位',width:120,sortable:true},
+			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text'
             },
 			
 			{field:'Day1',title:title1,width:100,align:'center',editor:'text',
@@ -187,13 +183,9 @@ function changeColumns(startDate) {
 
 	$("#datagrid").datagrid({
 		columns:[[
-            {field:'Name',title:'需求方平台名称',width:100,sortable:true},
-			
-			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text',
-                formatter:function(value,row,index){
-                    if(value) return (value * 100) + "%";
-                    return value;
-                }
+            {field:'Name',title:'需求方名称',width:100,sortable:true},		
+			{field:'DemandAdspaceName',title:'需求方平台广告位',width:120,sortable:true},
+			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text'
             },
 			
 			{field:'Day1',title:title1,width:100,align:'center',editor:'text',

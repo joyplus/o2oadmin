@@ -9,13 +9,13 @@
 							{field:'Id',title:'ID', width:50
 							},
 							{
-								field:"Name", title:"广告位名称", width:100
+								field:"Name", title:"PDB广告位名称", width:100
 							},
 							{
-								field:"MediaName", title:"所属媒体", width:100
+								field:"MediaName", title:"所属PDB媒体", width:100
 							},
 							{
-								field:"EstDaily", title:"广告位预估流量", width:50,
+								field:"EstDaily", title:"PDB广告位预估流量", width:100,
 									formatter: function(value,row,index){
 										if (value) {
 											vs = value.split(",");
@@ -93,7 +93,7 @@
 			
 		        
 		    <div> 
-				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建广告位</a></div> 
+				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建PDB广告位</a></div> 
 				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
 	              <input type="text" class="" id="field1" placeholder="请输入部分广告位名称">				  
@@ -108,9 +108,9 @@
 		        <thead>
 		            <tr>
 		                <th field="Id" width="50">ID</th>
-		                <th field="Name" width="100">广告位名称</th>
-		                <th field="MediaName" width="100">所属媒体</th>
-						 <th field="EstDaily" width="50">广告位预估流量</th>
+		                <th field="Name" width="100">PDB广告位名称</th>
+		                <th field="MediaName" width="100">所属PDB媒体</th>
+						 <th field="EstDaily" width="100">PDB广告位预估流量</th>
 		            </tr>
 		        </thead>
 		    </table>
