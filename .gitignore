@@ -25,3 +25,5 @@ _testmain.go
 *.log
 o2oadmin*
 *.tag.gz
+
+logs/
