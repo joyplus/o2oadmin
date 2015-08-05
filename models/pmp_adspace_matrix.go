@@ -44,6 +44,19 @@ func GetPmpAdspaceMatrixById(id int) (v *PmpAdspaceMatrix, err error) {
 	return nil, err
 }
 
+// Retrieves PmpAdspaceMatrix by PmpDemandSpaceId. Returns error if pmpDemandSpaceId doesn't exist
+func GetPmpAdspaceMatrixByDemandSpaceId(pmpDemandSpaceId int) (v *PmpAdspaceMatrix, err error) {
+	querysql := "SELECT * FROM pmp_adspace_matrix where demand_adspace_id=?"
+	o := orm.NewOrm()
+	v = &PmpAdspaceMatrix{}
+	err = o.Raw(querysql, pmpDemandSpaceId).QueryRow(v)
+	if err == nil {
+		return v, nil
+	}
+	fmt.Println(err)
+	return nil, err
+}
+
 // GetAllPmpAdspaceMatrix retrieves all PmpAdspaceMatrix matches certain condition. Returns empty list if
 // no records exist
 func GetAllPmpAdspaceMatrix(query map[string]string, fields []string, sortby []string, order []string,

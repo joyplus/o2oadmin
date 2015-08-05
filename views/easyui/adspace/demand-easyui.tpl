@@ -26,13 +26,9 @@ $(function(){
         idField:'Name',
         pagination:false,
         columns:[[
-            {field:'Name',title:'需求方平台名称',width:100,sortable:true},
-			
-			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text',
-                formatter:function(value,row,index){
-                    if(value) return (value * 100) + "%";
-                    return value;
-                }
+            {field:'Name',title:'需求方名称',width:100,sortable:true},		
+			{field:'DemandAdspaceName',title:'需求方平台广告位',width:120,sortable:true},
+			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text'
             },
 			
 			{field:'Day1',title:title1,width:100,align:'center',editor:'text',
@@ -82,20 +78,23 @@ $(function(){
 				formatter: function(value,row, index){
 					return '<div><a href="#" icon="icon-edit" plain="true" onclick="edittherow($(this), ' + index +')" class="easyui-linkbutton" >编辑</a></div>';
 				}
-			}
+			},
+			{field:'DemandAdspaceId', hidden:true}
         ]],
         onAfterEdit:function(index, data, changes){
-            /*if(vac.isEmpty(changes)){
+            if(vac.isEmpty(changes)){
                 return;
             }
-            changes.Id = data.Id;
-            vac.ajax(URL+'/UpdateUser', changes, 'POST', function(r){
+            changes.DemandAdspaceId = data.DemandAdspaceId;
+			changes.Operation = startDate; //use field Operation to pass start date
+			//alert(JSON.stringify(changes))
+            vac.ajax(URL+'/updateDailyAllocation', changes, 'POST', function(r){
                 if(!r.status){
                     vac.alert(r.info);
                 }else{
                     $("#datagrid").datagrid("reload");
                 }
-            })*/
+            })
         }
     });	
 	initDate();
@@ -184,13 +183,9 @@ function changeColumns(startDate) {
 
 	$("#datagrid").datagrid({
 		columns:[[
-            {field:'Name',title:'需求方平台名称',width:100,sortable:true},
-			
-			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text',
-                formatter:function(value,row,index){
-                    if(value) return (value * 100) + "%";
-                    return value;
-                }
+            {field:'Name',title:'需求方名称',width:100,sortable:true},		
+			{field:'DemandAdspaceName',title:'需求方平台广告位',width:120,sortable:true},
+			{field:'Proportion',title:'权重',width:50,align:'center',editor:'text'
             },
 			
 			{field:'Day1',title:title1,width:100,align:'center',editor:'text',

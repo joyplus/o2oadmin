@@ -27,7 +27,8 @@ func (c *PmpDemandPlatformDeskController) URLMapping() {
 
 type DemandVo struct {
 	Name string
-	Proportion float32
+	DemandAdspaceId int
+	Proportion int
 	Day1 int
 	Day2 int
 	Day3 int
@@ -36,6 +37,7 @@ type DemandVo struct {
 	Day6 int
 	Day7 int
 	Operation string
+	DemandAdspaceName string
 }
 
 func (c *PmpDemandPlatformDeskController) GetDemands() {
@@ -61,10 +63,12 @@ func (c *PmpDemandPlatformDeskController) GetDemands() {
 	const layout = "2006-1-2"
 	startdate, _ := time.Parse(layout, date)
 	startdate = startdate.Local()
-	beego.Info(" **** startdate:" + startdate.Format(layout))
+	enddate := startdate.AddDate(0, 0, 6)
+	dateend := enddate.Format(layout)
+	beego.Info(" **** startdate:" + startdate.Format(layout), " **** enddate:" , dateend)
 	var dailyAllocations []models.PmpDailyAllocationVo
 	adspaceIdInt, _ := strconv.Atoi(adspaceId)
-	dailyAllocations = models.GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceIdInt, startdate)
+	dailyAllocations = models.GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceIdInt, date, dateend)
 	var demandVos []DemandVo
 	var days [7]string
 	var y, d int
@@ -79,7 +83,7 @@ func (c *PmpDemandPlatformDeskController) GetDemands() {
 	var lastdemandname string = ""
 	for _, v := range dailyAllocations {	
 		if lastdemandname != v.Name {
-			demandVos = append(demandVos, DemandVo{Name: v.Name})
+			demandVos = append(demandVos, DemandVo{Name:v.Name, DemandAdspaceId:v.DemandAdspaceId, Proportion:v.Priority, DemandAdspaceName:v.DemandAdspaceName})
 			lastdemandname = v.Name
 		}
 		y,m,d  := v.AdDate.Date()
@@ -114,6 +118,44 @@ func (c *PmpDemandPlatformDeskController) GetDemands() {
 	beego.Info("**** demandVos:", demandVos)
 	c.Data["json"] = &map[string]interface{}{"total": len(demandVos), "rows": &demandVos}
 	c.ServeJson()
+
+}
+
+func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
+	u := DemandVo{Day1:-1, Day2:-1, Day3:-1, Day4:-1, Day5:-1, Day6:-1, Day7:-1}
+	if err := this.ParseForm(&u); err != nil {
+		//handle error
+		this.Rsp(false, err.Error())
+		return
+	}
+	const layout = "2006-1-2"
+	startdate, _ := time.Parse(layout, u.Operation)
+	startdate = startdate.Local()
+//	startdate = startdate.AddDate(0, 0, 3)
+//	beego.Info(" **** startdate:" , startdate.Format(layout), " DemandAdspaceId: ", u.DemandAdspaceId, " Day4: ", u.Day4)
+	var imps []int
+	imps = append(imps, u.Day1)
+	imps = append(imps, u.Day2)
+	imps = append(imps, u.Day3)
+	imps = append(imps, u.Day4)
+	imps = append(imps, u.Day5)
+	imps = append(imps, u.Day6)
+	imps = append(imps, u.Day7)
+	var datestrs []string
+	for i := 0 ; i < 7; i++ {
+		tempdate := startdate.AddDate(0, 0, i)
+		datestrs = append(datestrs, tempdate.Format(layout))
+	}
+	beego.Info(" **** datestrs:" , datestrs, " DemandAdspaceId: ", u.DemandAdspaceId, " imps: ", imps)
+	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId,u.Proportion, datestrs, imps)
+	if err == nil {
+		beego.Info(" **** Number of rows updated: ", num)
+		this.Rsp(true, "Success")
+		return
+	} else {
+		this.Rsp(false, err.Error())
+		return
+	}
 
 }
 
