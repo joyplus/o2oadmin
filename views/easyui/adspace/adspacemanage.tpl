@@ -100,7 +100,7 @@
 	          </div>
 			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'"></div>
 			</div>
-		    <table id="dg" title="广告位列表" style="width:1000px;height:650px"
+		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
 	            url="/pmp/adspace/index"
 		            pagination="true"
 		            fitColumns="true" singleSelect="true"

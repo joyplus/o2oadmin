@@ -25,6 +25,42 @@ func (c *PmpDemandPlatformDeskController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
+// Get the demand list 
+func (this *PmpDemandPlatformDeskController) GetDemandList(){
+	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" + 
+				this.GetString("sort")  + " ****** order:" + this.GetString("order") + " ****** name: " + this.GetString("name")
+	beego.Info(params)
+	name := this.GetString("name")
+	page, _ := this.GetInt64("page")
+	page_size, _ := this.GetInt64("rows")
+	sort := this.GetString("sort")
+	order := this.GetString("order")
+	if len(order) > 0 {
+		if order == "desc" {
+			sort = " " + sort
+		}
+	} else {
+		sort = "Id"
+	}
+	
+	demands, count := models.GetDemandList(page, page_size, sort, name)
+	if this.IsAjax() {
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &demands}
+		jsoncontent, _ := json.Marshal(this.Data["json"])
+		beego.Info("*********************" + string(jsoncontent) + "******************")
+		this.ServeJson()
+		return
+	} else {
+		tree := this.GetTree()
+		this.Data["tree"] = &tree
+		this.Data["json"] = &demands
+		if this.GetTemplatetype() != "easyui" {
+			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
+		}
+		this.TplNames = this.GetTemplatetype() + "/adspace/demandmanage.tpl"
+	}
+}
+
 type DemandVo struct {
 	Name string
 	DemandAdspaceId int
@@ -40,7 +76,8 @@ type DemandVo struct {
 	DemandAdspaceName string
 }
 
-func (c *PmpDemandPlatformDeskController) GetDemands() {
+// Get demands by adspace id
+func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 	adspaceId := c.GetString("adspaceid")
 	date := c.GetString("startdate")
 	usetpl, err := c.GetBool("usetpl")
@@ -131,8 +168,6 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 	const layout = "2006-1-2"
 	startdate, _ := time.Parse(layout, u.Operation)
 	startdate = startdate.Local()
-//	startdate = startdate.AddDate(0, 0, 3)
-//	beego.Info(" **** startdate:" , startdate.Format(layout), " DemandAdspaceId: ", u.DemandAdspaceId, " Day4: ", u.Day4)
 	var imps []int
 	imps = append(imps, u.Day1)
 	imps = append(imps, u.Day2)
@@ -167,7 +202,8 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 // @router / [post]
 func (c *PmpDemandPlatformDeskController) Post() {
 	var v models.PmpDemandPlatformDesk
-	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+//	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+	c.ParseForm(&v)
 	if id, err := models.AddPmpDemandPlatformDesk(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {

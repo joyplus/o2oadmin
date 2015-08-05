@@ -58,6 +58,11 @@ func (c *PmpMediaController) GetOne() {
 	c.ServeJson()
 }
 
+// Get the media list 
+func (this * PmpMediaController) GetMediaList() {
+	
+}
+
 type MediaVo struct {
 	Id int
 	Text string
