@@ -50,6 +50,41 @@ func GetPmpDemandPlatformDeskById(id int) (v *PmpDemandPlatformDesk, err error) 
 	return nil, err
 }
 
+// Get demand list
+func GetDemandList(page int64, page_size int64, sort string, name string)(demands []PmpDemandPlatformDesk, count int64){
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	o := orm.NewOrm()
+	var r orm.RawSeter
+	sql := "select d.id, d.name, d.request_url_template from pmp_demand_platform_desk d "
+	if name == "" && sort == "" {
+		sql += "limit ? offset ? "
+		r = o.Raw(sql, page_size, offset)	
+	} else if name != "" && sort != "" {
+		name = "%" + name + "%"
+		sql += "where d.name like ? order by " + sort + " " + "limit ? offset ?"
+		r = o.Raw(sql, name, page_size, offset)
+	} else if sort != "" {
+		sql += "order by " + sort + " " + "limit ? offset ?"
+		r = o.Raw(sql, page_size, offset)	
+	} else if name != "" {
+		name = "%" + name + "%"
+		sql += "where d.name like ? limit ? offset ?"
+		r = o.Raw(sql, name, page_size, offset)
+	}
+	num, err := r.QueryRows(&demands)
+	if err != nil  {
+		fmt.Println(err)
+		return nil, 0
+	}
+	fmt.Println("demands nums: ", num)
+	return demands, num
+}
+
 // GetAllPmpDemandPlatformDesk retrieves all PmpDemandPlatformDesk matches certain condition. Returns empty list if
 // no records exist
 func GetAllPmpDemandPlatformDesk(query map[string]string, fields []string, sortby []string, order []string,
