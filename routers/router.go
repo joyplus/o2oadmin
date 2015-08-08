@@ -14,7 +14,10 @@ func init() {
 	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
 	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")
 	beego.Router("/pmp/demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList")	
-	beego.Router("/pmp/demand/adddemand", &controllers.PmpDemandPlatformDeskController{}, "*:Post")		
+	beego.Router("/pmp/demand/adddemand", &controllers.PmpDemandPlatformDeskController{}, "*:Post")
+	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")	
+	beego.Router("/pmp/media/updatemedia", &controllers.PmpMediaController{}, "*:SaveOrUpdateMedia")		
+	beego.Router("/pmp/media/delmedia", &controllers.PmpMediaController{}, "*:Delete")	
 	
 	admin.Run()
 	beego.Info("o2oadmin start")
