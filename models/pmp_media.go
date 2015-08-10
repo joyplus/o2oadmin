@@ -29,6 +29,41 @@ func init() {
 	orm.RegisterModel(new(PmpMedia))
 }
 
+// Get media list
+func GetMediaList(page int64, page_size int64, sort string, name string)(medias []PmpMedia, count int64){
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	o := orm.NewOrm()
+	var r orm.RawSeter
+	sql := "select m.id, m.name, m.description from pmp_media m where (m.del_flg is null or m.del_flg != 1) "
+	if name == "" && sort == "" {
+		sql += "limit ? offset ? "
+		r = o.Raw(sql, page_size, offset)	
+	} else if name != "" && sort != "" {
+		name = "%" + name + "%"
+		sql += "and m.name like ? order by " + sort + " " + "limit ? offset ?"
+		r = o.Raw(sql, name, page_size, offset)
+	} else if sort != "" {
+		sql += "order by " + sort + " " + "limit ? offset ?"
+		r = o.Raw(sql, page_size, offset)	
+	} else if name != "" {
+		name = "%" + name + "%"
+		sql += "and d.name like ? limit ? offset ?"
+		r = o.Raw(sql, name, page_size, offset)
+	}
+	num, err := r.QueryRows(&medias)
+	if err != nil  {
+		fmt.Println(err)
+		return nil, 0
+	}
+	fmt.Println("medias nums: ", num)
+	return medias, num
+}
+
 // AddPmpMedia insert a new PmpMedia into database and returns
 // last inserted Id on success.
 func AddPmpMedia(m *PmpMedia) (id int64, err error) {

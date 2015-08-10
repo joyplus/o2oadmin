@@ -60,20 +60,20 @@ func GetDemandList(page int64, page_size int64, sort string, name string)(demand
 	}
 	o := orm.NewOrm()
 	var r orm.RawSeter
-	sql := "select d.id, d.name, d.request_url_template from pmp_demand_platform_desk d "
+	sql := "select d.id, d.name, d.request_url_template from pmp_demand_platform_desk d where (d.del_flg is null or d.del_flg != 1) "
 	if name == "" && sort == "" {
 		sql += "limit ? offset ? "
 		r = o.Raw(sql, page_size, offset)	
 	} else if name != "" && sort != "" {
 		name = "%" + name + "%"
-		sql += "where d.name like ? order by " + sort + " " + "limit ? offset ?"
+		sql += "and d.name like ? order by " + sort + " " + "limit ? offset ?"
 		r = o.Raw(sql, name, page_size, offset)
 	} else if sort != "" {
 		sql += "order by " + sort + " " + "limit ? offset ?"
 		r = o.Raw(sql, page_size, offset)	
 	} else if name != "" {
 		name = "%" + name + "%"
-		sql += "where d.name like ? limit ? offset ?"
+		sql += "and d.name like ? limit ? offset ?"
 		r = o.Raw(sql, name, page_size, offset)
 	}
 	num, err := r.QueryRows(&demands)

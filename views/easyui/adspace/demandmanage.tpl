@@ -4,10 +4,10 @@
 		        $(function(){
 		            $('#dg').datagrid({
 						columns:[[
-							{field:'Id',title:'ID', width:100
+							{field:'Id',title:'ID', width:100,  sortable:true
 							},
 							{
-								field:"Name", title:"需求方平台名称", width:150
+								field:"Name", title:"需求方平台名称", width:150, sortable:true
 							},
 							{
 								field:"RequestUrlTemplate", title:"需求方平台URL", width:300
@@ -79,7 +79,7 @@
 		            <tr>
 		                <th field="Id" width="100">ID</th>
 		                <th field="Name" width="150">需求方平台名称</th>
-		                <th field="MediaName" width="300">需求方平台URL</th>
+		                <th field="RequestUrlTemplate" width="300">需求方平台URL</th>
 		            </tr>
 		        </thead>
 		    </table>

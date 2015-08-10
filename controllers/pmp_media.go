@@ -8,11 +8,12 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego"
+	"github.com/beego/admin/src/rbac"
 )
 
 // oprations for PmpMedia
 type PmpMediaController struct {
-	beego.Controller
+	rbac.CommonController
 }
 
 func (c *PmpMediaController) URLMapping() {
@@ -23,6 +24,26 @@ func (c *PmpMediaController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
+func (c *PmpMediaController) SaveOrUpdateMedia() {
+	var v models.PmpMedia
+	c.ParseForm(&v)
+	beego.Info("*********** pased form values:", v)
+	if v.Id == 0 {
+		if id, err := models.AddPmpMedia(&v); err == nil {
+			c.Data["json"] = map[string]int64{"id": id}
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	} else {
+		if err := models.UpdatePmpMediaById(&v); err == nil {
+			c.Data["json"] = "OK"
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	}	
+	c.ServeJson()
+}
+
 // @Title Post
 // @Description create PmpMedia
 // @Param	body		body 	models.PmpMedia	true		"body for PmpMedia content"
@@ -31,7 +52,8 @@ func (c *PmpMediaController) URLMapping() {
 // @router / [post]
 func (c *PmpMediaController) Post() {
 	var v models.PmpMedia
-	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+//	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+	c.ParseForm(&v)
 	if id, err := models.AddPmpMedia(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
@@ -60,7 +82,38 @@ func (c *PmpMediaController) GetOne() {
 
 // Get the media list 
 func (this * PmpMediaController) GetMediaList() {
+	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" + 
+				this.GetString("sort")  + " ****** order:" + this.GetString("order") + " ****** name: " + this.GetString("name")
+	beego.Info(params)
+	name := this.GetString("name")
+	page, _ := this.GetInt64("page")
+	page_size, _ := this.GetInt64("rows")
+	sort := this.GetString("sort")
+	order := this.GetString("order")
+	if len(order) > 0 {
+		if order == "desc" {
+			sort = " " + sort
+		}
+	} else {
+		sort = "Id"
+	}
 	
+	medias, count := models.GetMediaList(page, page_size, sort, name)
+	if this.IsAjax() {
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &medias}
+		jsoncontent, _ := json.Marshal(this.Data["json"])
+		beego.Info("*********************" + string(jsoncontent) + "******************")
+		this.ServeJson()
+		return
+	} else {
+		tree := this.GetTree()
+		this.Data["tree"] = &tree
+		this.Data["json"] = &medias
+		if this.GetTemplatetype() != "easyui" {
+			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
+		}
+		this.TplNames = this.GetTemplatetype() + "/adspace/mediamanage.tpl"
+	}
 }
 
 type MediaVo struct {
@@ -166,8 +219,8 @@ func (c *PmpMediaController) Put() {
 // @Failure 403 id is empty
 // @router /:id [delete]
 func (c *PmpMediaController) Delete() {
-	idStr := c.Ctx.Input.Params[":id"]
-	id, _ := strconv.Atoi(idStr)
+	beego.Info("******* param:", c.GetString("Id"))
+	id, _ := c.GetInt("Id")
 	if err := models.DeletePmpMedia(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
