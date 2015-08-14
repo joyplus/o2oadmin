@@ -37,7 +37,7 @@ func (c *PmpAdspaceController) Post() {
 	c.Ctx.Request.ParseForm()
 	mediaid,_ := strconv.Atoi(c.Ctx.Request.Form["MediaId"][0])
 //	beego.Info(mediaid)
-	v = models.PmpAdspace{Name:c.Ctx.Request.Form["Name"][0], MediaId:mediaid , Description:c.Ctx.Request.Form["Description"][0]}
+	v = models.PmpAdspace{Name:c.Ctx.Request.Form["Name"][0], PmpMedia:&models.PmpMedia{Id:mediaid} , Description:c.Ctx.Request.Form["Description"][0]}
 //	jsoncontent, _ := json.Marshal(v)
 //	beego.Info("**** pased Adspace: " + string(jsoncontent))
 	if id, err := models.AddPmpAdspace(&v); err == nil {

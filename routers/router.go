@@ -15,7 +15,10 @@ func init() {
 	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")
 	beego.Router("/pmp/demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList")	
 	beego.Router("/pmp/demand/adddemand", &controllers.PmpDemandPlatformDeskController{}, "*:Post")		
-	
+	beego.Router("/pmp/report/GetPdbMediaReport", &controllers.ReportController{}, "*:GetPdbMediaReport")
+	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.ReportController{}, "*:GetPdbMediaReportData")
+//	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll")
+
 	admin.Run()
 	beego.Info("o2oadmin start")
 	beego.Router("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant")

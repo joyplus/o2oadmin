@@ -13,11 +13,17 @@ import (
 type PmpDailyRequestReport struct {
 	Id           int       `orm:"column(id);auto"`
 	AdDate       time.Time `orm:"column(ad_date);type(date);null"`
-	PmpAdspaceId int       `orm:"column(pmp_adspace_id);null"`
+//	PmpAdspaceId int       `orm:"column(pmp_adspace_id);null"`
 	ReqSuccess   int       `orm:"column(req_success);null"`
 	ReqNoad      int       `orm:"column(req_noad);null"`
 	ReqError     int       `orm:"column(req_error);null"`
 	FillRate     float32   `orm:"column(fill_rate);null"`
+
+	PmpAdspace	 *PmpAdspace	`orm:"rel(fk);column(pmp_adspace_id)"`
+
+	PdbMediaName string		`orm:"-"`
+	PdbAdspaceName string	`orm:"-"`
+	ReqAll		   int	`orm:"-"`
 }
 
 func (t *PmpDailyRequestReport) TableName() string {
@@ -100,7 +106,7 @@ func GetAllPmpDailyRequestReport(query map[string]string, fields []string, sortb
 
 	var l []PmpDailyRequestReport
 	qs = qs.OrderBy(sortFields...)
-	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
+	if _, err := qs.Limit(limit, offset).RelatedSel().All(&l, fields...); err == nil {
 		if len(fields) == 0 {
 			for _, v := range l {
 				ml = append(ml, v)

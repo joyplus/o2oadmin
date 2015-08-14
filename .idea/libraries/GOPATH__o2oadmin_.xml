@@ -1,0 +1,81 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;o2oadmin&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../.git" />
+      <root url="file://$PROJECT_DIR$/../hello" />
+      <root url="file://$PROJECT_DIR$/../test_cmd" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../code.google.com" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../.DS_Store" />
+      <root url="file://$PROJECT_DIR$/../adprocess" />
+      <root url="file://$PROJECT_DIR$/../adexchange" />
+      <root url="file://$PROJECT_DIR$/../monitor" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <excluded>
+      <root url="file://$PROJECT_DIR$/../adprocess/.idea" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/oauth2/google/testdata" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/net/html/testdata" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/text/encoding/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/smartystreets/assertions/.git" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/text/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/grpc/grpc-common/csharp/.nuget" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/grpc/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/grpc/grpc-common/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/franela/goreq/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/golang/protobuf/proto/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/bradfitz/http2/.git" />
+      <root url="file://$PROJECT_DIR$/../adprocess/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/bradfitz/http2/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/grpc/grpc-common/csharp/route_guide/.nuget" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/cloud/storage/testdata" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/net/html/charset/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/mattn/go-sqlite3/_example" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in/vmihailenco/msgpack.v2/.git" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/grpc/transport/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/admin/.idea" />
+      <root url="file://$PROJECT_DIR$/../github.com/lib/pq/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/golang/protobuf/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/garyburd/redigo/.git" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/net/.git" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/cloud/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/redigo/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/go-sql-driver/mysql/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/bee/.git" />
+      <root url="file://$PROJECT_DIR$/../code.google.com/p/go.text/.hg" />
+      <root url="file://$PROJECT_DIR$/../github.com/satori/go.uuid/.git" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/grpc/interop/server/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/astaxie/bee/testdata" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/grpc/interop/client/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/astaxie/bee/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/grpc/grpc-common/go/.idea" />
+      <root url="file://$PROJECT_DIR$/../adexchange/.idea" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/grpc/examples/route_guide/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/mattn/go-sqlite3/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/jtolds/gls/.git" />
+      <root url="file://$PROJECT_DIR$/../adexchange/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/howeyc/fsnotify/.git" />
+      <root url="file://$PROJECT_DIR$/../.git" />
+      <root url="file://$PROJECT_DIR$/../code.google.com/p/go.text/encoding/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/astaxie/beego/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/samples/todo/.idea" />
+      <root url="file://$PROJECT_DIR$/../golang.org/x/oauth2/.git" />
+      <root url="file://$PROJECT_DIR$/../monitor/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/astaxie/beego/utils/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/smartystreets/goconvey/.git" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/cloud/datastore/testdata" />
+      <root url="file://$PROJECT_DIR$/../google.golang.org/grpc/test/testdata" />
+      <root url="file://$PROJECT_DIR$/../monitor/.idea" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/admin/.git" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/bee/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/golang/protobuf/protoc-gen-go/testdata" />
+      <root url="file://$PROJECT_DIR$/../github.com/beego/samples/.git" />
+    </excluded>
+  </library>
+</component>
