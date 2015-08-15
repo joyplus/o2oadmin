@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e90697f5-23a9-4de5-9252-6560c3e83517" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/GOPATH__o2oadmin_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/ReportController.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/goLibraries.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/easyui/jquery-datagrid-clientpaging.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/pmp_report.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/app.conf" afterPath="$PROJECT_DIR$/conf/app.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/easyui/public/header.tpl" afterPath="$PROJECT_DIR$/views/easyui/public/header.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/pmp_adspace.go" afterPath="$PROJECT_DIR$/controllers/pmp_adspace.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_adspace.go" afterPath="$PROJECT_DIR$/models/pmp_adspace.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ReportController.go" afterPath="$PROJECT_DIR$/controllers/ReportController.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/pmp_daily_report.go" afterPath="$PROJECT_DIR$/controllers/pmp_daily_report.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_daily_report.go" afterPath="$PROJECT_DIR$/models/pmp_daily_report.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/pmp_daily_request_report.go" afterPath="$PROJECT_DIR$/controllers/pmp_daily_request_report.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_daily_request_report.go" afterPath="$PROJECT_DIR$/models/pmp_daily_request_report.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/redisx.go" afterPath="$PROJECT_DIR$/lib/redisx.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/router.go" afterPath="$PROJECT_DIR$/routers/router.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/update.sql" afterPath="$PROJECT_DIR$/db/update.sql" />
     </list>
     <ignored path="o2oadmin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,21 +40,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pmp_daily_request_report.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pmp_daily_request_report.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_request_report.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.125">
-              <caret line="67" column="18" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.37821484">
+              <caret line="119" column="17" selection-start-line="119" selection-start-column="17" selection-end-line="119" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pmp_media.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/pmp_media.go">
+      <file leaf-file-name="pmp_daily_report.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/pmp_daily_report.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.875">
+              <caret line="113" column="33" selection-start-line="113" selection-start-column="33" selection-end-line="113" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pmp_daily_report.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_report.go">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+              <caret line="113" column="39" selection-start-line="113" selection-start-column="39" selection-end-line="113" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -110,21 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pmp_report.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/pmp_report.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pmp_daily_request_report.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pmp_daily_request_report.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/pmp_daily_request_report.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7049924">
-              <caret line="151" column="21" selection-start-line="151" selection-start-column="21" selection-end-line="151" selection-end-column="21" />
+            <state vertical-scroll-proportion="-6.607143">
+              <caret line="79" column="35" selection-start-line="79" selection-start-column="35" selection-end-line="79" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -172,12 +162,15 @@
         <option value="$PROJECT_DIR$/db/update.sql" />
         <option value="$PROJECT_DIR$/models/pmp_demand_daily_report.go" />
         <option value="$PROJECT_DIR$/routers/router.go" />
-        <option value="$PROJECT_DIR$/models/pmp_daily_request_report.go" />
         <option value="$PROJECT_DIR$/models/pmp_report.go" />
         <option value="$PROJECT_DIR$/models/pmp_adspace.go" />
         <option value="$PROJECT_DIR$/controllers/pmp_adspace.go" />
         <option value="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" />
         <option value="$PROJECT_DIR$/controllers/ReportController.go" />
+        <option value="$PROJECT_DIR$/models/pmp_daily_report.go" />
+        <option value="$PROJECT_DIR$/models/pmp_daily_request_report.go" />
+        <option value="$PROJECT_DIR$/controllers/pmp_daily_report.go" />
+        <option value="$PROJECT_DIR$/controllers/pmp_daily_request_report.go" />
       </list>
     </option>
   </component>
@@ -885,12 +878,12 @@
       <workItem from="1438994311793" duration="122000" />
       <workItem from="1438994463259" duration="21000" />
       <workItem from="1438994600098" duration="871000" />
-      <workItem from="1438995522485" duration="26743000" />
+      <workItem from="1438995522485" duration="28521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31277000" />
+    <option name="totallyTimeSpent" value="33055000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2340" y="-135" width="998" height="837" extended-state="0" />
@@ -941,17 +934,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/fe_lov.go">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1103,14 +1085,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_report.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="41" selection-start-line="71" selection-start-column="35" selection-end-line="71" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -1371,14 +1345,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_request_report.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125">
-          <caret line="67" column="18" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/ReportController.go">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1391,8 +1357,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/pmp_daily_request_report.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7049924">
-          <caret line="151" column="21" selection-start-line="151" selection-start-column="21" selection-end-line="151" selection-end-column="21" />
+        <state vertical-scroll-proportion="-6.607143">
+          <caret line="79" column="35" selection-start-line="79" selection-start-column="35" selection-end-line="79" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_report.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="113" column="39" selection-start-line="113" selection-start-column="39" selection-end-line="113" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/pmp_daily_report.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.875">
+          <caret line="113" column="33" selection-start-line="113" selection-start-column="33" selection-end-line="113" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_request_report.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37821484">
+          <caret line="119" column="17" selection-start-line="119" selection-start-column="17" selection-end-line="119" selection-end-column="17" />
           <folding />
         </state>
       </provider>

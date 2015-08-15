@@ -46,7 +46,7 @@ func (this *ReportController) GetPdbMediaReportData() {
 	if request.Dimension != "" {
 		strings.Split(request.Dimension, ",")
 	}
-	report, err := models.GetAllPmpDailyRequestReport(map[string]string{}, []string{}, []string{}, []string{}, (request.Page-1)*request.Rows, request.Rows)
+	report, count, err := models.GetAllPmpDailyRequestReport(map[string]string{}, []string{}, []string{}, []string{}, (request.Page-1)*request.Rows, request.Rows)
 
 	if err != nil {
 		beego.Debug("failed to get pmp demand daily report")
@@ -69,7 +69,7 @@ func (this *ReportController) GetPdbMediaReportData() {
 			rows = append(rows, reportVo)
 		}
 
-		this.Data["json"] = &map[string]interface{}{"total": len(rows), "rows": &rows}
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &rows}
 	}
 	this.ServeJson()
 
