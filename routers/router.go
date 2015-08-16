@@ -18,6 +18,8 @@ func init() {
 	beego.Router("/pmp/report/GetPdbMediaReport", &controllers.ReportController{}, "*:GetPdbMediaReport")
 	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.ReportController{}, "*:GetPdbMediaReportData")
 //	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll")
+	beego.Router("/pmp/report/GetPdbDspReport", &controllers.ReportController{}, "*:GetPdbDspReport")
+	beego.Router("/pmp/report/GetPdbDspReportData", &controllers.ReportController{}, "*:GetPdbDspReportData")
 
 	admin.Run()
 	beego.Info("o2oadmin start")

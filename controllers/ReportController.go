@@ -31,11 +31,7 @@ type DspRequest struct {
 
 func (this *ReportController) GetPdbMediaReport() {
 
-
-	request := PdbMediaRequest{}
-	this.ParseForm(request)
 	this.TplNames = this.GetTemplatetype() + "/report/pmp_media_report.tpl"
-	beego.Debug(request)
 
 }
 
@@ -43,13 +39,6 @@ func (this *ReportController) GetPdbMediaReportData() {
 
 	request := PdbMediaRequest{}
 	this.ParseForm(&request)
-
-//	excludedFields := []string{}
-//	if request.Dimension != nil {
-//
-//	} else {
-//		excludedFields = []string{"0", "1"}
-//	}
 
 	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
 
@@ -69,5 +58,13 @@ func (this *ReportController) GetPdbMediaReportData() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
 	}
 	this.ServeJson()
+
+}
+
+func (this *ReportController) GetPdbDspReport() {
+	this.TplNames = this.GetTemplatetype() + "/report/pmp_dsp_report.tpl"
+}
+
+func (this *ReportController) GetPdbDspReportData() {
 
 }
