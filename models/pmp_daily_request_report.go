@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"strconv"
 )
 
 type PmpDailyRequestReport struct {
@@ -106,7 +107,7 @@ func GetAllPmpDailyRequestReport(query map[string]string, fields []string, sortb
 
 	var l []PmpDailyRequestReport
 	qs = qs.OrderBy(sortFields...)
-	count, err = qs.Count()
+	count, err = qs.RelatedSel().Count()
 	if _, err := qs.Limit(limit, offset).RelatedSel().All(&l, fields...); err == nil {
 		if len(fields) == 0 {
 			for _, v := range l {
@@ -126,6 +127,82 @@ func GetAllPmpDailyRequestReport(query map[string]string, fields []string, sortb
 		return ml, count, nil
 	}
 	return nil, 0, err
+}
+
+/**
+  groupFields might be:
+  1. nil,
+  2. ["0"]
+  3. ["1"]
+  4 ["0", "1"]
+
+  0 表示 PDB广告位
+  1 表示 日期
+ */
+func GetGroupedPmpDailyRequestReport(groupFields []string, medias []string, startDate time.Time, endDate time.Time, sortby string, order string,
+	offset int, limit int) (ml []PdbMediaReportVo, count int, err error) {
+	o := orm.NewOrm()
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	selectFields := []string{
+		"pmp_adspace.id as pmp_adspace_id",
+		"pmp_adspace.name as pmp_adspace_name",
+		"ad_date",
+		"pmp_media.id as pmp_media_id",
+		"pmp_media.name as pmp_media_name",
+		"sum(pmp_daily_request_report.req_success) as req_success",
+		"sum(pmp_daily_request_report.req_noad) as req_noad",
+		"sum(pmp_daily_request_report.req_error) as req_error"}
+
+	possibleGroupFields := map[string]string{"0":"pmp_adspace.id", "1":"pmp_daily_request_report.ad_date"}
+
+	groupby := "pmp_media.id"
+	if groupFields != nil && len(groupFields) > 0 {
+		for _, fldIdx := range groupFields {
+			groupby += "," + possibleGroupFields[fldIdx]
+		}
+	}
+	qb.Select(strings.Join(selectFields, ", ")).
+	From("pmp_daily_request_report").
+	InnerJoin("pmp_adspace").On("pmp_daily_request_report.pmp_adspace_id=pmp_adspace.id").
+	InnerJoin("pmp_media").On("pmp_adspace.media_id=pmp_media.id")
+
+	qb.Where("1=1")
+	if medias != nil {
+		qb.And("pmp_media.id in (" + strings.Join(medias, ",") + ")")
+	}
+
+	qb.And("pmp_daily_request_report.ad_date >= ?")
+	qb.And("pmp_daily_request_report.ad_date <= ?")
+
+	qb.GroupBy(groupby)
+
+
+	// order by:
+	if sortby != "" {
+		qb.OrderBy(sortby)
+		if order == "desc"{
+			qb.Desc()
+		} else {
+			qb.Asc()
+		}
+	}
+	// TODO default order by ???
+
+
+	qbCount, _ := orm.NewQueryBuilder("mysql")
+	qbCount.Select("count(*) as cnt").
+	From("(" + qb.String() + ") as sub")
+	var countResult []orm.Params
+	o.Raw(qbCount.String(), startDate, endDate).Values(&countResult)
+	count, _ = strconv.Atoi(countResult[0]["cnt"].(string))
+
+	qb.Limit(limit)
+	qb.Offset(offset)
+	report := []PdbMediaReportVo{}
+	o.Raw(qb.String(), startDate, endDate).QueryRows(&report)
+
+	return report, count, err
 }
 
 // UpdatePmpDailyRequestReport updates PmpDailyRequestReport by Id and returns error if

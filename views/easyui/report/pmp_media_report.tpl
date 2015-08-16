@@ -24,44 +24,42 @@
     <input class="easyui-combobox"
            name="media" id="media"
            data-options="
+                    url:'/pmp/adspace/medias',
                     method:'get',
-                    valueField:'id',
-                    textField:'text',
+                    valueField:'Id',
+                    textField:'Text',
                     multiple:true,
                     panelHeight:'auto'
             ">
     从：<input id="startDate" name="startDate" class="easyui-datebox"></input>
     到：<input id="endDate" name="endDate" class="easyui-datebox"></input>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-search" id="searchBtn">Search</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" id="searchBtn">查询</a>
 </div>
 
 <script type="text/javascript">
 
     $(function () {
 
-        /*
-         <thead>
-         <tr>
-         <th data-options="field:'PdbMedia',width:80">PDB媒体</th>
-         <th data-options="field:'PdbAdspace',width:100">PDB广告位</th>
-         <th data-options="field:'Date',width:80,align:'right'">日期</th>
-         <th data-options="field:'RequestCount',width:80,align:'right'">请求数</th>
-         <th data-options="field:'RequestCountValid',width:240">请求有效广告数</th>
-         <th data-options="field:'Rate',width:60,align:'center'">填充率（%）</th>
-         <th data-options="field:'RequestCountError',width:240">错误数</th>
-         </tr>
-         </thead>
+        function formatAdDate(value) {
+            var d = new Date(value);
+            return d.format('yyyy-MM-dd');
+        }
 
-         */
+        // 页面首次加载时选中两个选项
+        $('#dimension').combobox('setValues', ['0', '1']);
+
+        $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('yyyy-MM-dd'));
+        $('#endDate').datebox('setValue', new Date().format('yyyy-MM-dd'));
+
         $('#dg').datagrid({
             columns:[[
                 {field:'PdbMediaName',title:'PDB媒体',width:100},
                 {field:'PdbAdspaceName',title:'PDB广告位',width:100},
-                {field:'AdDate',title:'日期',width:100},
-                {field:'ReqAll',title:'请求数',width:80},
-                {field:'ReqSuccess',title:'请求有效广告数',width:80},
-                {field:'FillRate',title:'填充率（%）',width:80},
-                {field:'reqError',title:'错误数',width:80}
+                {field:'AdDate',title:'日期',width:80, formatter:formatAdDate},
+                {field:'ReqAll',title:'请求数',width:100},
+                {field:'ReqSuccess',title:'请求有效广告数',width:100},
+                {field:'FillRate',title:'填充率（%）',width:100},
+                {field:'reqError',title:'错误数',width:100}
             ]]
         });
         $('#searchBtn').bind('click', function () {
@@ -69,28 +67,9 @@
             var dg = $('#dg');
             dg.datagrid('loadData',[]);
 
-//            $.ajax({
-//                url: 'pmp/Report/GetPdbMediaReportData',
-//                type: 'POST',
-//                data: {
-//                    dimension: $('#dimension').combobox('getValue'),
-//                    media: $('#media').combobox('getValue'),
-//                    dt: $('#dt').combobox('getValue'),
-//                    offset: dg.datagrid('pageSize') * dg.datagrid('pageNumber'),
-//                    limit: dg.datagrid('pageSize')
-//                },
-//                success: function (data) {
-//                    if (data.rows) {
-//                        dg.datagrid('loadData', data);
-//                    } else {
-//                        dg.datagrid({data:{total: 0, rows: {}}});
-//                    }
-//                }
-//            });
-
             dg.datagrid('load', {
-                dimension: $('#dimension').combobox('getValue'),
-                mediaName: $('#media').combobox('getValue'),
+                dimension: $('#dimension').combobox('getValues'),
+                media: $('#media').combobox('getValues'),
                 startDate: $('#startDate').datebox("getValue"),
                 endDate: $('#endDate').datebox("getValue")
             });

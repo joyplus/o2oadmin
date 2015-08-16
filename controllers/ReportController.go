@@ -5,7 +5,6 @@ import (
 	"time"
 	"github.com/astaxie/beego"
 	"o2oadmin/models"
-	"strings"
 )
 
 type ReportController struct {
@@ -13,12 +12,14 @@ type ReportController struct {
 }
 
 type PdbMediaRequest struct {
-	Dimension 	string `form:"dimension"`
-	Media		string `form:"media"`
+	Dimension 	[]string `form:"dimension[]"`
+	Medias		[]string `form:"media[]"`
 	StartDate	time.Time `form:"startDate,2006-1-2"`
 	EndDate	time.Time `form:"endDate,2006-1-2"`
-	Page		int64 `form:"page"`
-	Rows		int64 `form:"rows"`
+	Page		int `form:"page"`
+	Rows		int `form:"rows"`
+	Sortby		string `form:"sortby"`
+	Order		string `form:"order"`
 }
 
 type DspRequest struct {
@@ -43,33 +44,29 @@ func (this *ReportController) GetPdbMediaReportData() {
 	request := PdbMediaRequest{}
 	this.ParseForm(&request)
 
-	if request.Dimension != "" {
-		strings.Split(request.Dimension, ",")
-	}
-	report, count, err := models.GetAllPmpDailyRequestReport(map[string]string{}, []string{}, []string{}, []string{}, (request.Page-1)*request.Rows, request.Rows)
+//	excludedFields := []string{}
+//	if request.Dimension != nil {
+//
+//	} else {
+//		excludedFields = []string{"0", "1"}
+//	}
+
+	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
 
 	if err != nil {
 		beego.Debug("failed to get pmp demand daily report")
 	} else {
 		// set PdbMediaName and PdbAdspaceName
-		rows := []models.PdbMediaReportVo{}
-		var reportItem models.PmpDailyRequestReport
-		for _, item := range report {
-			reportVo := models.PdbMediaReportVo{}
-			reportItem = item.(models.PmpDailyRequestReport)
+		for idx, reportItem := range report {
 
-			reportVo.PdbMediaName = reportItem.PmpAdspace.PmpMedia.Name
-			reportVo.PdbAdspaceName = reportItem.PmpAdspace.Name
-			reportVo.AdDate = reportItem.AdDate
-			reportVo.ReqAll = reportItem.ReqError + reportItem.ReqNoad + reportItem.ReqSuccess
-			reportVo.ReqSuccess = reportItem.ReqSuccess
-			reportVo.FillRate = reportItem.FillRate
-			reportVo.ReqError = reportItem.ReqError
-
-			rows = append(rows, reportVo)
+			// because range copy values from the slice, we need to use index to change the original item
+			report[idx].ReqAll = reportItem.ReqError + reportItem.ReqNoad + reportItem.ReqSuccess
+			if report[idx].ReqAll > 0 {
+				report[idx].FillRate = float32(reportItem.ReqSuccess) / float32(report[idx].ReqAll)
+			}
 		}
 
-		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &rows}
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
 	}
 	this.ServeJson()
 
