@@ -1,7 +1,6 @@
 {{template "../public/header.tpl"}}
 
-<table id="dg" class="easyui-datagrid" title="" style="width:700px;height:250px"
-       data-options="rownumbers:true,singleSelect:true,url:'GetPdbMediaReportData',method:'get',toolbar:'#tb',footer:'#ft', pagination:'true'">
+<table id="dg" class="easyui-datagrid" title="" style="width:700px;height:250px">
 </table>
 <div id="tb" style="padding:2px 5px;">
     <input class="easyui-combobox"
@@ -46,12 +45,28 @@
         }
 
         // 页面首次加载时选中两个选项
-        $('#dimension').combobox('setValues', ['0', '1']);
+        var dynaFields = ["PdbAdspaceName", "AdDate"];
+        $('#dimension').combobox({
+           onSelect: function (rec) {
+               $('#dg').datagrid('showColumn', dynaFields[rec.id]);
+           },
+            onUnselect: function (rec) {
+                $('#dg').datagrid('hideColumn', dynaFields[rec.id]);
+            }
+        }).combobox('setValues', ['0', '1']);
+
 
         $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('yyyy-MM-dd'));
         $('#endDate').datebox('setValue', new Date().format('yyyy-MM-dd'));
 
         $('#dg').datagrid({
+            url:'GetPdbMediaReportData',
+            rownumbers:true,
+            singleSelect:true,
+            method:'get',
+            pagination:'true',
+            toolbar:'#tb',
+            footer:'#ft',
             columns:[[
                 {field:'PdbMediaName',title:'PDB媒体',width:100},
                 {field:'PdbAdspaceName',title:'PDB广告位',width:100},

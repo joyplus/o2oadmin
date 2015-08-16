@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e90697f5-23a9-4de5-9252-6560c3e83517" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ReportController.go" afterPath="$PROJECT_DIR$/controllers/ReportController.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/goLibraries.xml" afterPath="$PROJECT_DIR$/.idea/goLibraries.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_daily_request_report.go" afterPath="$PROJECT_DIR$/models/pmp_daily_request_report.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" afterPath="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_report.go" afterPath="$PROJECT_DIR$/models/pmp_report.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="o2oadmin.iws" />
@@ -57,7 +53,7 @@
                 <entry file="file://$PROJECT_DIR$/logs/o2oapi.log">
                   <provider selected="true" editor-type-id="text-editor">
                     <state vertical-scroll-proportion="0.0">
-                      <caret line="1579" column="0" selection-start-line="1579" selection-start-column="0" selection-end-line="1579" selection-end-column="0" />
+                      <caret line="1613" column="0" selection-start-line="1613" selection-start-column="0" selection-end-line="1613" selection-end-column="0" />
                       <folding />
                     </state>
                   </provider>
@@ -96,8 +92,8 @@
               <file leaf-file-name="pmp_media_report.tpl" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.77348995">
-                      <caret line="64" column="51" selection-start-line="64" selection-start-column="51" selection-end-line="64" selection-end-column="51" />
+                    <state vertical-scroll-proportion="0.24496645">
+                      <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
                       <folding>
                         <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
                         <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -143,8 +139,8 @@
               <file leaf-file-name="pmp_daily_request_report.go" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/models/pmp_daily_request_report.go">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.47741935">
-                      <caret line="172" column="5" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+                    <state vertical-scroll-proportion="0.45967743">
+                      <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
                       <folding />
                     </state>
                   </provider>
@@ -893,12 +889,12 @@
       <workItem from="1439728067132" duration="121000" />
       <workItem from="1439728221972" duration="43000" />
       <workItem from="1439728279630" duration="477000" />
-      <workItem from="1439728850159" duration="6275000" />
+      <workItem from="1439728850159" duration="7987000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64080000" />
+    <option name="totallyTimeSpent" value="65792000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1214,7 +1210,7 @@
     <entry file="file://$PROJECT_DIR$/logs/o2oapi.log">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1579" column="0" selection-start-line="1579" selection-start-column="0" selection-end-line="1579" selection-end-column="0" />
+          <caret line="1613" column="0" selection-start-line="1613" selection-start-column="0" selection-end-line="1613" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1373,16 +1369,16 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47741935">
-          <caret line="172" column="5" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.45967743">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77348995">
-          <caret line="64" column="51" selection-start-line="64" selection-start-column="51" selection-end-line="64" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.24496645">
+          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
