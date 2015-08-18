@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"strconv"
 )
 
 type PmpDemandDailyReport struct {
@@ -139,6 +140,8 @@ offset int, limit int) (ml []PdbMediaReportVo, count int, err error) {
 
 	selectFields := []string{
 		"ddr.ad_date",
+		"pda.demand_id as demand_id",
+		"dpd.name as demand_name",
 		"pda.id as demand_adspace_id",
 		"pda.name as demand_adspace_name",
 		"pmp_media.id as pmp_media_id",
@@ -149,25 +152,30 @@ offset int, limit int) (ml []PdbMediaReportVo, count int, err error) {
 		"sum(ddr.req_noad) as req_noad",
 		"sum(ddr.req_timeout) as req_timeout",
 		"sum(ddr.req_error) as req_error",
-		"sum(pdr.impl) as impl",
-		"sum(ddr.clk) as clk",
+		"sum(pdr.imp) as imp",
+		"sum(pdr.clk) as clk",
 	}
 
-	possibleGroupFields := map[string]string{"0":"pmp_adspace.id", "1":"pmp_daily_request_report.ad_date"}
+	possibleGroupFields := map[string]string{
+		"0":"pda.demand_id",
+		"1":"pda.id",
+		"2":"pmp_media.id",
+		"3":"pmp_adspace.id",
+	}
 
-	groupby := "pmp_media.id"
+	groupby := "ddr.ad_date"
 	if groupFields != nil && len(groupFields) > 0 {
 		for _, fldIdx := range groupFields {
 			groupby += "," + possibleGroupFields[fldIdx]
 		}
 	}
 	qb.Select(strings.Join(selectFields, ", ")).
-	From("pmp_demand_daily_report as ddr").
-	InnerJoin("pmp_daily_report as pdr").
-	InnerJoin("pmp_adspace_matrix as pam").On("pam.pmp_adspace_id=ddr.pmp_adspace_id and pam.demand_adspace_id=pdr.demand_adspace_id and ddr.ad_date = pdr.ad_date").
-	InnerJoin("pmp_adspace").On("ddr.pmp_adspace_id=pmp_adspace.id").
+	From("pmp_demand_daily_report ddr").
+	InnerJoin("pmp_daily_report pdr").On("ddr.demand_adspace_id=pdr.demand_adspace_id").
+	InnerJoin("pmp_adspace").On("pdr.pmp_adspace_id=pmp_adspace.id").
 	InnerJoin("pmp_media").On("pmp_adspace.media_id=pmp_media.id").
-	InnerJoin("pmp_demand_adspace as pda").On("pda.id=ddr.demand_adspace_id")
+	InnerJoin("pmp_demand_adspace pda").On("pda.id=ddr.demand_adspace_id").
+	InnerJoin("pmp_demand_platform_desk dpd").On("pda.demand_id=dpd.id")
 
 	qb.Where("1=1")
 //	if medias != nil {

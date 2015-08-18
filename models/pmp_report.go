@@ -17,10 +17,10 @@ type PdbMediaReportVo struct {
 
 type DspReportVo struct {
 	AdDate 				time.Time	`orm:"column(ad_date);type(datetime);"`
-	DspId				string		`orm:"column(demand_adspace_id);"`
-	DspName				string		`orm:"column(demand_adspace_name);"`
-	DspAdSpaceId 		string		`orm:"column(demand_adspace_id);"`
-	DspAdSpaceName 		string		`orm:"column(demand_adspace_name);"`
+	DemandId			string		`orm:"column(demand_id);"`
+	DemandName			string		`orm:"column(demand_name);"`
+	DemandAdSpaceId 	string		`orm:"column(demand_adspace_id);"`
+	DemandAdSpaceName 	string		`orm:"column(demand_adspace_name);"`
 	PdbMediaId 			string		`orm:"column(pmp_media_id);"`
 	PdbMediaName 		string		`orm:"column(pmp_media_name);"`
 	PdbAdSpaceId 		string		`orm:"column(pmp_adspace_id);"`
@@ -29,7 +29,7 @@ type DspReportVo struct {
 	ReqError			int			`orm:"column(req_error);"`
 	ReqTimeout			int			`orm:"column(req_timeout);"`
 	ReqNoad				int			`orm:"column(req_noad);"`
-	Impl				int			`orm:"column(impl);"`
+	Imp					int			`orm:"column(imp);"`
 	Clk					int			`orm:"column(clk);"`
 
 	Ctr					float32		`orm:"-"`

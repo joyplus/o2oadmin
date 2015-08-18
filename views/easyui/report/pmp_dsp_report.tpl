@@ -1,6 +1,6 @@
 {{template "../public/header.tpl"}}
 
-<table id="dg" class="easyui-datagrid" title="" style="width:700px;height:250px">
+<table id="dg" class="easyui-datagrid" title="" style="width:1000px;height:250px">
 </table>
 <div id="tb" style="padding:2px 5px;">
     <input class="easyui-combobox"
@@ -40,7 +40,7 @@
         }
 
         // 页面首次加载时选中两个选项
-        var dynaFields = ["DspName", "DspAdspaceName", "PdbMediaName", "PdbAdspaceName"];
+        var dynaFields = ["DemandName", "DemandAdspaceName", "PdbMediaName", "PdbAdspaceName"];
         $('#dimension').combobox({
            onSelect: function (rec) {
                $('#dg').datagrid('showColumn', dynaFields[rec.id]);
@@ -64,8 +64,8 @@
             footer:'#ft',
             columns:[[
                 {field:'AdDate',title:'日期',width:80, formatter:formatAdDate},
-                {field:'DspName',title:'DSP',width:100},
-                {field:'DspAdspaceName',title:'DSP广告位',width:100},
+                {field:'DemandName',title:'DSP',width:100},
+                {field:'DemandAdspaceName',title:'DSP广告位',width:100},
                 {field:'PdbMediaName',title:'PDB媒体',width:100},
                 {field:'PdbAdspaceName',title:'PDB广告位',width:100},
                 {field:'ReqAll',title:'请求数',width:100},
