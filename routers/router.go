@@ -9,15 +9,24 @@ import (
 func init() {
 	beego.Router("/pmp/adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList")
 	beego.Router("/pmp/adspace/addadspace", &controllers.PmpAdspaceController{}, "*:Post")
+	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
+	beego.Router("/pmp/adspace/updateadspace", &controllers.PmpAdspaceController{}, "*:SaveOrUpdateAdspace")
+	
 	beego.Router("/pmp/demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandByAdspace")
 	beego.Router("/pmp/demand/updateDailyAllocation", &controllers.PmpDemandPlatformDeskController{}, "*:UpdateDailyAllocation")	
-	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
-	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")
+	
 	beego.Router("/pmp/demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList")	
-	beego.Router("/pmp/demand/adddemand", &controllers.PmpDemandPlatformDeskController{}, "*:Post")
+	beego.Router("/pmp/demand/updatedemand", &controllers.PmpDemandPlatformDeskController{}, "*:SaveOrUpdateDemand")
+	beego.Router("/pmp/demand/deldemand", &controllers.PmpDemandPlatformDeskController{}, "*:Delete")
+	beego.Router("/pmp/demand/getDemandsMappingInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandsMappingInfo")		
+	
+	beego.Router("/pmp/demand/getAdspaceByDemand", &controllers.PmpAdspaceController{}, "*:GetAdspaceListByDemand")		
+	
 	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")	
 	beego.Router("/pmp/media/updatemedia", &controllers.PmpMediaController{}, "*:SaveOrUpdateMedia")		
 	beego.Router("/pmp/media/delmedia", &controllers.PmpMediaController{}, "*:Delete")	
+	
+	beego.Router("/pmp/adspacematrix/deladspacematrix", &controllers.PmpAdspaceMatrixController{}, "*:DeleteByDemandIdAndAdspaceId")	
 	
 	admin.Run()
 	beego.Info("o2oadmin start")

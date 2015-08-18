@@ -53,6 +53,8 @@
 				
 				//新建广告位弹窗
 				function addrow(){
+					$('#dd').dialog({title: '新建PDB广告位'});
+					$("#form1").form('clear');
 				    $("#dd").dialog('open');
 				}	
 				

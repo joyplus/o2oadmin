@@ -33,6 +33,8 @@
 				
 				//新建需求方平台弹窗
 				function addrow(){
+					$('#dd').dialog({title: '新建PDB媒体'});
+					$("#form1").form('clear');
 				    $("#dd").dialog('open');
 				}	
 				
@@ -68,6 +70,7 @@
 				}
 				
 				function viewRow() {
+					$('#dd').dialog({title: '查看PDB媒体'});
 					$('#savebutton').hide();
 					$('#cancelbutton').show();
 					$("#dd").dialog('open');
@@ -77,6 +80,7 @@
 				}
 				
 				function editRow() {
+					$('#dd').dialog({title: '编辑PDB媒体'});
 					$('#savebutton').show();
 					$('#cancelbutton').show();
 					$("#dd").dialog('open');

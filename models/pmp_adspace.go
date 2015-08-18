@@ -26,6 +26,8 @@ type PmpAdspace struct {
 	EstDailyImp   int       `orm:"column(est_daily_imp);null"`
 	EstDailyClk   int       `orm:"column(est_daily_clk);null"`
 	EstDailyCtr   float32   `orm:"column(est_daily_ctr);null"`
+	Status        int       `orm:"default(1)" form:"Status" valid:"Range(1,2)"`
+	CreativeType int       `orm:"default(1)" form:"CreativeType" valid:"Range(1,2)"`
 }
 
 func (t *PmpAdspace) TableName() string {
@@ -42,6 +44,43 @@ func AddPmpAdspace(m *PmpAdspace) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
+}
+
+// add a new PmpAdspace and create the adsapce and demand mapping at the sametime
+func AddPmpAdspaceAndMapDemand(v *AdspaceVo) (id int64, err error) {
+    o := orm.NewOrm()
+    o.Begin()
+    adspaceV := PmpAdspace{Name:v.Name, Description:v.Description, PmpAdspaceKey:v.PmpAdspaceKey, SecretKey:v.SecretKey, MediaId:v.MediaId}
+    id, err = o.Insert(&adspaceV)
+    if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId}
+    id, err = o.Insert(&matrix)
+    if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+    o.Commit()
+    return id, nil
+}
+
+// update PmpAdspace
+func UpdatePmpAdspaceAndMatrix(v *AdspaceVo) (err error) {
+    o := orm.NewOrm()
+    tempv := PmpAdspace{Id: v.Id}
+    adspaceV := PmpAdspace{Id:v.Id, Name:v.Name, Description:v.Description, PmpAdspaceKey:v.PmpAdspaceKey, SecretKey:v.SecretKey, MediaId:v.MediaId}
+    // ascertain id exists in the database
+    if err = o.Read(&tempv); err == nil {
+        var num int64        
+        if num, err = o.Update(&adspaceV); err == nil {
+            fmt.Println("Number of records updated in database:", num)
+        } else {
+            return err    
+        }
+    }   
+    return
 }
 
 // GetPmpAdspaceById retrieves PmpAdspace by Id. Returns error if
@@ -61,8 +100,53 @@ type AdspaceVo struct {
 	Name string
 	MediaName string
 	EstDaily string
+	DemandName string
+	DemandId int
+	MediaId	int
+	SecretKey string
+	PmpAdspaceKey string
+	Description string
 }
 
+// get adspace list by demand id , may filtered by adspace name
+func GetAdspaceListByDemandId(page int64, page_size int64, sort string, demandid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
+	var sql = "select adspace.id, adspace.name, adspace.media_id, adspace.secret_key,adspace.pmp_adspace_key,adspace.description, demand.id as demand_id, demand.name as demand_name from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id where demand.id=? "
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	o := orm.NewOrm()
+	var r orm.RawSeter
+	if adspacename == "" {
+		if sort == "" {
+			sort = "ORDER BY adspace.id ASC limit ? offset ?"
+		} else {
+			sort = "ORDER BY " + sort + " " + "limit ? offset ?"
+		}
+		sql = sql + sort
+		r = o.Raw(sql, demandid, page_size, offset)
+	} else {
+		sql = sql + "and adspace.name like ? "
+		if sort == "" {
+			sort = "ORDER BY adspace.id ASC limit ? offset ?"
+		} else {
+			sort = "ORDER BY " + sort + " " + "limit ? offset ?"
+		}
+		sql = sql + sort
+		adspacename = "%" + adspacename + "%"
+		r = o.Raw(sql, demandid, adspacename, page_size, offset)
+	}
+	count, err := r.QueryRows(&adspaceVos)
+	if err == nil {
+		return adspaceVos, count
+	} else {
+		return nil, 0	
+	}
+}
+
+// get adspace list, may filtered by adspace name
 func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
 	var offset int64
 	if page <= 1 {
@@ -137,22 +221,6 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 	}
 
 	return adspaceVos, int64(len(adspaceVos))
-}
-
-//get adspace list
-func GetPmpAdspacelist(page int64, page_size int64, sort string) (adspaces []orm.Params, count int64) {
-	o := orm.NewOrm()
-	adspace := new(PmpAdspace)
-	qs := o.QueryTable(adspace)
-	var offset int64
-	if page <= 1 {
-		offset = 0
-	} else {
-		offset = (page - 1) * page_size
-	}
-	qs.Limit(page_size, offset).OrderBy(sort).Values(&adspaces)
-	count, _ = qs.Count()
-	return adspaces, count
 }
 
 // GetAllPmpAdspace retrieves all PmpAdspace matches certain condition. Returns empty list if

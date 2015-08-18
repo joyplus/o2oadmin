@@ -46,8 +46,6 @@ func (this *PmpDemandPlatformDeskController) GetDemandList(){
 	demands, count := models.GetDemandList(page, page_size, sort, name)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &demands}
-		jsoncontent, _ := json.Marshal(this.Data["json"])
-		beego.Info("*********************" + string(jsoncontent) + "******************")
 		this.ServeJson()
 		return
 	} else {
@@ -59,6 +57,29 @@ func (this *PmpDemandPlatformDeskController) GetDemandList(){
 		}
 		this.TplNames = this.GetTemplatetype() + "/adspace/demandmanage.tpl"
 	}
+}
+
+// get the all the demands information to map to a specified adspace
+func (c *PmpDemandPlatformDeskController) GetDemandsMappingInfo() {
+	adspaceId, _ := c.GetInt("adspaceid")
+	page, err := c.GetInt64("page")
+	name := c.GetString("name")
+	beego.Info(" **** param adspaceid:", adspaceId, " **** page:", c.GetString("page"), " **** demand name:", name)
+	var page_size int64 
+	if err != nil {
+		page = 0	
+	} else {
+		page_size, _ = c.GetInt64("rows")
+	}	
+	sort := "d.Id"
+	demandMappingVos, _ := models.GetDemandsMappingInfo(page, page_size, sort, name, adspaceId)	
+	if page > 0 {
+		c.Data["json"] = &map[string]interface{}{"total": len(demandMappingVos), "rows": &demandMappingVos}
+	} else {
+		c.Data["json"] = &demandMappingVos
+	}
+	beego.Info("********** demands mapping information:", demandMappingVos)
+	c.ServeJson()
 }
 
 type DemandVo struct {
@@ -212,6 +233,27 @@ func (c *PmpDemandPlatformDeskController) Post() {
 	c.ServeJson()
 }
 
+// save or upate demand 
+func (c *PmpDemandPlatformDeskController) SaveOrUpdateDemand() {
+	var v models.PmpDemandPlatformDesk
+	c.ParseForm(&v)
+	beego.Info("*********** pased form values:", v)
+	if v.Id == 0 {
+		if id, err := models.AddPmpDemandPlatformDesk(&v); err == nil {
+			c.Data["json"] = map[string]int64{"id": id}
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	} else {
+		if err := models.UpdatePmpDemandPlatformDeskById(&v); err == nil {
+			c.Data["json"] = "OK"
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	}	
+	c.ServeJson()
+}
+
 // @Title Get
 // @Description get PmpDemandPlatformDesk by id
 // @Param	id		path 	string	true		"The key for staticblock"
@@ -319,8 +361,8 @@ func (c *PmpDemandPlatformDeskController) Put() {
 // @Failure 403 id is empty
 // @router /:id [delete]
 func (c *PmpDemandPlatformDeskController) Delete() {
-	idStr := c.Ctx.Input.Params[":id"]
-	id, _ := strconv.Atoi(idStr)
+	beego.Info("******* param:", c.GetString("Id"))
+	id, _ := c.GetInt("Id")
 	if err := models.DeletePmpDemandPlatformDesk(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
