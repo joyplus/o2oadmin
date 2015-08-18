@@ -15,18 +15,27 @@ type PdbMediaReportVo struct {
 	FillRate			float32		`orm:"-"`
 }
 
-type DspReportItem struct {
-	Date 					time.Time
-	DspName					string
-	DspAdSpace 				string
-	PdbMedia 				string
-	PdbAdSpace 				string
-	RequestCount 			int
-	countRequestCountValid 	int
-	Rate					float32
-	ErrorCount				int
-	RequestCountTimeout		int
-	ImplCount				int
+type DspReportVo struct {
+	AdDate 				time.Time	`orm:"column(ad_date);type(datetime);"`
+	DspId				string		`orm:"column(demand_adspace_id);"`
+	DspName				string		`orm:"column(demand_adspace_name);"`
+	DspAdSpaceId 		string		`orm:"column(demand_adspace_id);"`
+	DspAdSpaceName 		string		`orm:"column(demand_adspace_name);"`
+	PdbMediaId 			string		`orm:"column(pmp_media_id);"`
+	PdbMediaName 		string		`orm:"column(pmp_media_name);"`
+	PdbAdSpaceId 		string		`orm:"column(pmp_adspace_id);"`
+	PdbAdSpaceName 		string		`orm:"column(pmp_adspace_id);"`
+	ReqSuccess	 		int			`orm:"column(req_success);"`
+	ReqError			int			`orm:"column(req_error);"`
+	ReqTimeout			int			`orm:"column(req_timeout);"`
+	ReqNoad				int			`orm:"column(req_noad);"`
+	Impl				int			`orm:"column(impl);"`
+	Clk					int			`orm:"column(clk);"`
+
+	Ctr					float32		`orm:"-"`
+
+	ReqAll 				int			`orm:"-"`
+	FillRate			float32		`orm:"-"`
 }
 
 

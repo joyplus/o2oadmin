@@ -66,5 +66,25 @@ func (this *ReportController) GetPdbDspReport() {
 }
 
 func (this *ReportController) GetPdbDspReportData() {
+	request := PdbMediaRequest{}
+	this.ParseForm(&request)
 
+	report, count, err := models.GetGroupedPmpDemandDailyReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
+
+	if err != nil {
+		beego.Debug("failed to get pmp demand daily report")
+	} else {
+		// set PdbMediaName and PdbAdspaceName
+		for idx, reportItem := range report {
+
+			// because range copy values from the slice, we need to use index to change the original item
+			report[idx].ReqAll = reportItem.ReqError + reportItem.ReqNoad + reportItem.ReqSuccess
+			if report[idx].ReqAll > 0 {
+				report[idx].FillRate = float32(reportItem.ReqSuccess) / float32(report[idx].ReqAll)
+			}
+		}
+
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
+	}
+	this.ServeJson()
 }

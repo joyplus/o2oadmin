@@ -72,7 +72,6 @@
                 {field:'ReqSuccess',title:'请求有效广告数',width:100},
                 {field:'FillRate',title:'填充率（%）',width:100},
                 {field:'ReqError',title:'错误数',width:100},
-
                 {field:'ReqTimeout',title:'请求超时数',width:100},
                 {field:'Imp',title:'曝光数',width:100},
                 {field:'Clk',title:'点击数',width:100},

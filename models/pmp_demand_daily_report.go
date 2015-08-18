@@ -121,6 +121,93 @@ func GetAllPmpDemandDailyReport(query map[string]string, fields []string, sortby
 	return nil, err
 }
 
+
+/**
+  groupFields might be:
+  1. nil,
+  2. ["0"]
+  3. ["1"]
+  4 ["0", "1"]
+
+  0 表示 PDB广告位
+  1 表示 日期
+ */
+func GetGroupedPmpDemandDailyReport(groupFields []string, medias []string, startDate time.Time, endDate time.Time, sortby string, order string,
+offset int, limit int) (ml []PdbMediaReportVo, count int, err error) {
+	o := orm.NewOrm()
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	selectFields := []string{
+		"ddr.ad_date",
+		"pda.id as demand_adspace_id",
+		"pda.name as demand_adspace_name",
+		"pmp_media.id as pmp_media_id",
+		"pmp_media.name as pmp_media_name",
+		"pmp_adspace.id as pmp_adspace_id",
+		"pmp_adspace.name as pmp_adspace_name",
+		"sum(ddr.req_success) as req_success",
+		"sum(ddr.req_noad) as req_noad",
+		"sum(ddr.req_timeout) as req_timeout",
+		"sum(ddr.req_error) as req_error",
+		"sum(pdr.impl) as impl",
+		"sum(ddr.clk) as clk",
+	}
+
+	possibleGroupFields := map[string]string{"0":"pmp_adspace.id", "1":"pmp_daily_request_report.ad_date"}
+
+	groupby := "pmp_media.id"
+	if groupFields != nil && len(groupFields) > 0 {
+		for _, fldIdx := range groupFields {
+			groupby += "," + possibleGroupFields[fldIdx]
+		}
+	}
+	qb.Select(strings.Join(selectFields, ", ")).
+	From("pmp_demand_daily_report as ddr").
+	InnerJoin("pmp_daily_report as pdr").
+	InnerJoin("pmp_adspace_matrix as pam").On("pam.pmp_adspace_id=ddr.pmp_adspace_id and pam.demand_adspace_id=pdr.demand_adspace_id and ddr.ad_date = pdr.ad_date").
+	InnerJoin("pmp_adspace").On("ddr.pmp_adspace_id=pmp_adspace.id").
+	InnerJoin("pmp_media").On("pmp_adspace.media_id=pmp_media.id").
+	InnerJoin("pmp_demand_adspace as pda").On("pda.id=ddr.demand_adspace_id")
+
+	qb.Where("1=1")
+//	if medias != nil {
+//		qb.And("pmp_media.id in (" + strings.Join(medias, ",") + ")")
+//	}
+
+	qb.And("ddr.ad_date >= ?")
+	qb.And("ddr.ad_date <= ?")
+
+	qb.GroupBy(groupby)
+
+
+	// order by:
+	if sortby != "" {
+		qb.OrderBy(sortby)
+		if order == "desc"{
+			qb.Desc()
+		} else {
+			qb.Asc()
+		}
+	}
+	// TODO default order by ???
+
+
+	qbCount, _ := orm.NewQueryBuilder("mysql")
+	qbCount.Select("count(*) as cnt").
+	From("(" + qb.String() + ") as sub")
+	var countResult []orm.Params
+	o.Raw(qbCount.String(), startDate, endDate).Values(&countResult)
+	count, _ = strconv.Atoi(countResult[0]["cnt"].(string))
+
+	qb.Limit(limit)
+	qb.Offset(offset)
+	report := []PdbMediaReportVo{}
+	o.Raw(qb.String(), startDate, endDate).QueryRows(&report)
+
+	return report, count, err
+}
+
+
 // UpdatePmpDemandDailyReport updates PmpDemandDailyReport by Id and returns error if
 // the record to be updated doesn't exist
 func UpdatePmpDemandDailyReportById(m *PmpDemandDailyReport) (err error) {
