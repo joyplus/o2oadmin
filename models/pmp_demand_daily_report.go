@@ -134,7 +134,7 @@ func GetAllPmpDemandDailyReport(query map[string]string, fields []string, sortby
   1 表示 日期
  */
 func GetGroupedPmpDemandDailyReport(groupFields []string, medias []string, startDate time.Time, endDate time.Time, sortby string, order string,
-offset int, limit int) (ml []PdbMediaReportVo, count int, err error) {
+offset int, limit int) (ml []PdbDemandReportVo, count int, err error) {
 	o := orm.NewOrm()
 	qb, _ := orm.NewQueryBuilder("mysql")
 
@@ -209,7 +209,7 @@ offset int, limit int) (ml []PdbMediaReportVo, count int, err error) {
 
 	qb.Limit(limit)
 	qb.Offset(offset)
-	report := []PdbMediaReportVo{}
+	report := []PdbDemandReportVo{}
 	o.Raw(qb.String(), startDate, endDate).QueryRows(&report)
 
 	return report, count, err

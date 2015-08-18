@@ -11,9 +11,10 @@ type ReportController struct {
 	rbac.CommonController
 }
 
-type PdbMediaRequest struct {
+type ReportQueryRequest struct {
 	Dimension 	[]string `form:"dimension[]"`
 	Medias		[]string `form:"media[]"`
+
 	StartDate	time.Time `form:"startDate,2006-1-2"`
 	EndDate	time.Time `form:"endDate,2006-1-2"`
 	Page		int `form:"page"`
@@ -37,7 +38,7 @@ func (this *ReportController) GetPdbMediaReport() {
 
 func (this *ReportController) GetPdbMediaReportData() {
 
-	request := PdbMediaRequest{}
+	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
 	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
@@ -66,7 +67,7 @@ func (this *ReportController) GetPdbDspReport() {
 }
 
 func (this *ReportController) GetPdbDspReportData() {
-	request := PdbMediaRequest{}
+	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
 	report, count, err := models.GetGroupedPmpDemandDailyReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)

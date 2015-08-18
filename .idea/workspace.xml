@@ -5,7 +5,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ReportController.go" afterPath="$PROJECT_DIR$/controllers/ReportController.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_demand_daily_report.go" afterPath="$PROJECT_DIR$/models/pmp_demand_daily_report.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/easyui/report/pmp_dsp_report.tpl" afterPath="$PROJECT_DIR$/views/easyui/report/pmp_dsp_report.tpl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" afterPath="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/pmp_report.go" afterPath="$PROJECT_DIR$/models/pmp_report.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/update.sql" afterPath="$PROJECT_DIR$/db/update.sql" />
     </list>
     <ignored path="o2oadmin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,34 +31,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.46603563">
       <split-first>
         <leaf>
-          <file leaf-file-name="pmp_report.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/pmp_report.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="update.sql" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/db/update.sql">
-              <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-                <state />
-              </provider>
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-1.2650602">
-                  <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/main.go">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
+                  <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -75,8 +54,8 @@
           <file leaf-file-name="pmp_media_report.tpl" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-5.4583335">
-                  <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
+                <state vertical-scroll-proportion="-12.5">
+                  <caret line="71" column="60" selection-start-line="71" selection-start-column="60" selection-end-line="71" selection-end-column="60" />
                   <folding>
                     <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -98,9 +77,12 @@
           <file leaf-file-name="pmp_dsp_report.tpl" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_dsp_report.tpl">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.043165468">
-                  <caret line="2" column="63" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
-                  <folding />
+                <state vertical-scroll-proportion="0.47482014">
+                  <caret line="64" column="25" selection-start-line="64" selection-start-column="25" selection-end-line="64" selection-end-column="25" />
+                  <folding>
+                    <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#input#0;n#div#0;n#!!top" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -119,81 +101,31 @@
       </split-first>
       <split-second>
         <leaf>
+          <file leaf-file-name="pmp_report.go" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/models/pmp_report.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.7927677">
+                  <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="ReportController.go" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/controllers/ReportController.go">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+                  <caret line="77" column="46" selection-start-line="77" selection-start-column="46" selection-end-line="77" selection-end-column="46" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="pmp_demand_daily_report.go" pinned="false" current-in-tab="true">
+          <file leaf-file-name="pmp_demand_daily_report.go" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/models/pmp_demand_daily_report.go">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.30180806">
-                  <caret line="154" column="30" selection-start-line="154" selection-start-column="30" selection-end-line="154" selection-end-column="30" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="pmp_daily_report.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/pmp_daily_report.go">
-              <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="137" column="36" selection-start-line="137" selection-start-column="36" selection-end-line="137" selection-end-column="36" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="qb.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/qb.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="32" column="27" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="qb_mysql.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/qb_mysql.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="types.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/types.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="103" column="4" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="4" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="orm_raw.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/orm_raw.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="models_utils.go" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/models_utils.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="189" column="5" selection-start-line="189" selection-start-column="5" selection-end-line="189" selection-end-column="5" />
+                  <caret line="136" column="46" selection-start-line="136" selection-start-column="46" selection-end-line="136" selection-end-column="46" />
                   <folding />
                 </state>
               </provider>
@@ -235,12 +167,12 @@
         <option value="$PROJECT_DIR$/logs/o2oapi.log" />
         <option value="$PROJECT_DIR$/../github.com/astaxie/beego/orm/orm_raw.go" />
         <option value="$PROJECT_DIR$/models/pmp_daily_request_report.go" />
-        <option value="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" />
-        <option value="$PROJECT_DIR$/db/update.sql" />
         <option value="$PROJECT_DIR$/routers/router.go" />
+        <option value="$PROJECT_DIR$/db/update.sql" />
+        <option value="$PROJECT_DIR$/models/pmp_demand_daily_report.go" />
         <option value="$PROJECT_DIR$/controllers/ReportController.go" />
         <option value="$PROJECT_DIR$/models/pmp_report.go" />
-        <option value="$PROJECT_DIR$/models/pmp_demand_daily_report.go" />
+        <option value="$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl" />
         <option value="$PROJECT_DIR$/views/easyui/report/pmp_dsp_report.tpl" />
       </list>
     </option>
@@ -264,8 +196,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1440" />
-    <option name="y" value="23" />
+    <option name="x" value="1473" />
+    <option name="y" value="-59" />
     <option name="width" value="1838" />
     <option name="height" value="839" />
   </component>
@@ -986,12 +918,12 @@
       <workItem from="1439728067132" duration="121000" />
       <workItem from="1439728221972" duration="43000" />
       <workItem from="1439728279630" duration="477000" />
-      <workItem from="1439728850159" duration="16046000" />
+      <workItem from="1439728850159" duration="17404000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73851000" />
+    <option name="totallyTimeSpent" value="75209000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1003,7 +935,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="23" width="1838" height="839" extended-state="6" />
+    <frame x="1473" y="-59" width="1838" height="839" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1339,14 +1271,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/qb.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="27" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/qb_mysql.go">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1371,17 +1295,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/update.sql">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2650602">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/go/src/strconv/atoi.go">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7913769">
@@ -1401,61 +1314,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/pmp_daily_report.go">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="137" column="36" selection-start-line="137" selection-start-column="36" selection-end-line="137" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.4583335">
-          <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ReportController.go">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/pmp_report.go">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/pmp_daily_report.go">
       <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
         <state />
@@ -1467,19 +1325,96 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/models/pmp_daily_report.go">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2906815">
+          <caret line="129" column="41" selection-start-line="129" selection-start-column="41" selection-end-line="129" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../github.com/astaxie/beego/orm/qb.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3532684">
+          <caret line="32" column="27" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/update.sql">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16509435">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ReportController.go">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="77" column="46" selection-start-line="77" selection-start-column="46" selection-end-line="77" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/pmp_demand_daily_report.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30180806">
-          <caret line="154" column="30" selection-start-line="154" selection-start-column="30" selection-end-line="154" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="136" column="46" selection-start-line="136" selection-start-column="46" selection-end-line="136" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/pmp_report.go">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7927677">
+          <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_media_report.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.5">
+          <caret line="71" column="60" selection-start-line="71" selection-start-column="60" selection-end-line="71" selection-end-column="60" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/easyui/report/pmp_dsp_report.tpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.043165468">
-          <caret line="2" column="63" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
-          <folding />
+        <state vertical-scroll-proportion="0.47482014">
+          <caret line="64" column="25" selection-start-line="64" selection-start-column="25" selection-end-line="64" selection-end-column="25" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -2,8 +2,8 @@ package models
 import "time"
 
 type PdbMediaReportVo struct {
-	PmpAdspaceId		string		`orm:"column(pmp_adspace_id);"`
-	PdbAdspaceName 		string		`orm:"column(pmp_adspace_name);"`
+	PmpAdSpaceId		string		`orm:"column(pmp_adspace_id);"`
+	PdbAdSpaceName 		string		`orm:"column(pmp_adspace_name);"`
 	AdDate 				time.Time	`orm:"column(ad_date);type(datetime);"`
 	PmpMediaId			string		`orm:"column(pmp_media_id);"`
 	PdbMediaName		string		`orm:"column(pmp_media_name);"`
@@ -15,7 +15,7 @@ type PdbMediaReportVo struct {
 	FillRate			float32		`orm:"-"`
 }
 
-type DspReportVo struct {
+type PdbDemandReportVo struct {
 	AdDate 				time.Time	`orm:"column(ad_date);type(datetime);"`
 	DemandId			string		`orm:"column(demand_id);"`
 	DemandName			string		`orm:"column(demand_name);"`
