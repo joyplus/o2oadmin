@@ -32,20 +32,74 @@ func (c *PmpAdspaceController) URLMapping() {
 // @router / [post]
 func (c *PmpAdspaceController) Post() {
 	var v models.PmpAdspace
-//	beego.Info("**** request body: " + string(c.Ctx.Input.RequestBody))
-//	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
 	c.Ctx.Request.ParseForm()
 	mediaid,_ := strconv.Atoi(c.Ctx.Request.Form["MediaId"][0])
-//	beego.Info(mediaid)
-	v = models.PmpAdspace{Name:c.Ctx.Request.Form["Name"][0], PmpMedia:&models.PmpMedia{Id:mediaid} , Description:c.Ctx.Request.Form["Description"][0]}
-//	jsoncontent, _ := json.Marshal(v)
-//	beego.Info("**** pased Adspace: " + string(jsoncontent))
+	v = models.PmpAdspace{Name:c.Ctx.Request.Form["Name"][0], MediaId:mediaid , Description:c.Ctx.Request.Form["Description"][0]}
 	if id, err := models.AddPmpAdspace(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
 		c.Data["json"] = err.Error()
 	}
 	c.ServeJson()
+}
+
+// save or update adspace with param models.AdspaceVo
+func (c *PmpAdspaceController) SaveOrUpdateAdspace() {
+	var v models.AdspaceVo
+	c.ParseForm(&v)
+	beego.Info("*********** pased form values:", v)
+	if v.Id == 0 {
+		if id, err := models.AddPmpAdspaceAndMapDemand(&v); err == nil {
+			c.Data["json"] = map[string]int64{"id": id}
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	} else {
+		if err := models.UpdatePmpAdspaceAndMatrix(&v); err == nil {
+			c.Data["json"] = "OK"
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	}	
+	c.ServeJson()
+}
+
+// get adspace list by demand id
+func (c *PmpAdspaceController) GetAdspaceListByDemand() {
+	beego.Info("********* demandid:", c.GetString("demandid"), "********** adspacename:", c.GetString("adspacename"))
+	id,err := c.GetInt("demandid")
+	adspacename := c.GetString("adspacename")
+	page, _ := c.GetInt64("page")
+	page_size, _ := c.GetInt64("rows")
+	sort := c.GetString("sort")
+	order := c.GetString("order")
+	usetpl,_ := c.GetBool("usetpl")
+	if len(order) > 0 {
+		if order == "desc" {
+			sort = " " + sort + " DESC"
+		}
+	} else {
+		sort = "Id"
+	}
+	var adspaceVos []models.AdspaceVo
+	var count int64
+	if err == nil {
+		adspaceVos, count = models.GetAdspaceListByDemandId(page, page_size, sort, id, adspacename)
+	}
+	if usetpl {
+		tree := c.GetTree()
+		c.Data["tree"] = &tree
+		c.Data["json"] = &adspaceVos
+		c.Data["demandid"] = id
+		if c.GetTemplatetype() != "easyui" {
+			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
+		}
+		c.TplNames = c.GetTemplatetype() + "/adspace/adspacelist.tpl"			
+		return
+	} else {
+		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaceVos}		
+		c.ServeJson()
+	}
 }
 
 // @Title Get

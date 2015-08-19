@@ -7,7 +7,7 @@
 							{field:'Id',title:'ID', width:100,  sortable:true
 							},
 							{
-								field:"Name", title:"需求方平台名称", width:150, sortable:true,
+								field:"Name", title:"PDB媒体名称", width:150, sortable:true,
 								formatter: function(value,row,index){
 									if (value) {
 										var html = '<div style="display:inline; padding-right:20px;">' + value +'</div>' + '<div style="float:right;" onclick="showOperation($(this), ' + index +')"><img src="/static/easyui/jquery-easyui/themes/icons/orp.png"/></div>'
@@ -18,7 +18,7 @@
 								}
 							},
 							{
-								field:"RequestUrlTemplate", title:"需求方平台URL", width:300
+								field:"Description", title:"备注", width:300
 							}							
 						]]
 		                
@@ -33,14 +33,14 @@
 				
 				//新建需求方平台弹窗
 				function addrow(){
-					$('#dd').dialog({title: '新建需求方平台'});
+					$('#dd').dialog({title: '新建PDB媒体'});
 					$("#form1").form('clear');
 				    $("#dd").dialog('open');
 				}	
 				
 				function saveNew() {
 					$("#form1").form('submit',{
-                    url:'/pmp/demand/updatedemand',
+                    url:'/pmp/media/updatemedia',
                     onSubmit:function(){
                         return $("#form1").form('validate');
                     },
@@ -68,69 +68,9 @@
 						top: pos.top + 80
 					});
 				}
-		
-				function onViewAdspace() {
-					var row = $('#dg').datagrid('getSelected');		
-					var href = "/pmp/demand/getAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";		              
-					var newtabTitle = "View DSP";
-					openNewTab(href, newtabTitle);
-				}
-				
-				//var tabs = window.parent.parent.document.getElementById("#tabs");
-				function openNewTab(href, newtabTitle) {
-					/*alert(tabs);
-			        if(href){
-			            var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
-			        }else{
-			            var content = '未实现';
-			        }
-					alert("start tab");	   
-					//已经存在tabs则选中它
-			        if(tabs.tabs('exists',newtabTitle)){
-			            //选中
-			            tabs.tabs('select',newtabTitle);
-			            //refreshTab(newtabTitle);
-			        }else{
-			            //添加
-			            tabs.tabs('add',{
-			                title:newtabTitle,
-			                content:content,
-			                closable:true,
-			                cache:false,
-			                fit:'true'
-			            });
-			        }             						
-					alert("view adspace");*/
-					window.location = href;
-				}
-	
-				function viewAdspace() {
-					var row = $('#dg').datagrid('getSelected');
-					var demandname = row.Name;
-					var href = "/pmp/demand/getAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";
-					var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
-					alert(demandname);
-					alert($('#tabs'));
-					$('#tabs').tabs('add',{
-						title: 'new tab',
-						selected: false
-					});
-					alert("1");
-					alert($('#tabs').tabs('getTab', 'User'));
-					var title = $('#tabs').tabs('getTab', 'User').panel('options').title;
-					alert(title);
-					$("#tabs").tabs('add',{
-                        title: demandname,
-                        content:content,
-                        closable:true,
-                        cache:false,
-                        fit:'true'
-                    });
-					alert("2");
-				}
 				
 				function viewRow() {
-					$('#dd').dialog({title: '查看需求方平台'});
+					$('#dd').dialog({title: '查看PDB媒体'});
 					$('#savebutton').hide();
 					$('#cancelbutton').show();
 					$("#dd").dialog('open');
@@ -140,7 +80,7 @@
 				}
 				
 				function editRow() {
-					$('#dd').dialog({title: '编辑需求方平台'});
+					$('#dd').dialog({title: '编辑PDB媒体'});
 					$('#savebutton').show();
 					$('#cancelbutton').show();
 					$("#dd").dialog('open');
@@ -156,7 +96,7 @@
 				                vac.alert("请选择要删除的行");
 				                return;
 				            }
-				            vac.ajax('/pmp/demand/deldemand', {Id:row.Id}, 'POST', function(data){
+				            vac.ajax('/pmp/media/delmedia', {Id:row.Id}, 'POST', function(data){
 				                if(data == "OK"){
 				                    $("#dg").datagrid('reload');
 				                }else{
@@ -166,7 +106,7 @@
 				        }
 				    });
 				}
-						
+				
 		    </script>
 		    <style type="text/css">
 		        .dv-table td{
@@ -180,43 +120,39 @@
 			
 		        
 		    <div> 
-				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建需求方平台</a></div> 
+				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建PDB媒体</a></div> 
 				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
 	              <input type="text" class="" id="field1" placeholder="请输入部分名称">				  
 	          </div>
 			</div>
-		    <table id="dg" title="需求方平台列表" style="width:1000px;height:550px"
-	            url="/pmp/demand/index"
+		    <table id="dg" title="PDB媒体列表" style="width:1000px;height:550px"
+	            url="/pmp/media/index"
 		            pagination="true"
 		            fitColumns="true" singleSelect="true"
 					resizable="true" idField="Id" >
 		        <thead>
 		            <tr>
 		                <th field="Id" width="100">ID</th>
-		                <th field="Name" width="150">需求方平台名称</th>
-		                <th field="RequestUrlTemplate" width="300">需求方平台URL</th>
+		                <th field="Name" width="150">PDB媒体名称</th>
+		                <th field="Description" width="300">备注</th>
 		            </tr>
 		        </thead>
 		    </table>
 			
-			<div id="dd" class="easyui-dialog" title="新建需求方平台" style="width:400px;height:400px;padding-top:10px;"
+			<div id="dd" class="easyui-dialog" title="新建PDB媒体" style="width:400px;height:400px;padding-top:10px;"
 			        data-options="resizable:true,modal:true,closed:true,buttons:'#bb'">
 				<div style="padding:20px 20px 40px 80px;" >
 			    <form id="form1" method="post">
 		            <table>
-						<tr><input name="Id" hidden="true"/> </tr>
+					    <tr><input name="Id" hidden="true"/> </tr>
 		                <tr>
-		                    <td>需求方平台名称：</td>
-		                    <td><input name="Name" class="easyui-validatebox" required="true"/></td>
+		                    <td>PDB媒体名称：</td>
+		                    <td><input name="Name" class="easyui-validatebox" required="true" width="300px"/></td>
 		                </tr>
 		                <tr>
-		                    <td>需求方平台URL：</td>	
-		                    <td><input name="RequestUrlTemplate" class="easyui-validatebox" required="true"/></td>
-		                </tr>
-		                <tr>
-		                    <td>允许超时时间：</td>
-		                    <td><input name="Timeout" class="easyui-validatebox" required="true"/>ms</td>
+		                    <td>备注：</td>	
+		                    <td><textarea name="Description" class="easyui-validatebox" width="300px" height="400px"></textarea></td>
 		                </tr>
 		            </table>
 		        </form>
@@ -224,13 +160,11 @@
 			</div>	    
 		    
 			<div id="bb">
-				<a href="#" class="easyui-linkbutton" id='savebutton' onclick="saveNew()">Save</a>
-				<a href="#" class="easyui-linkbutton" id='cancelbutton' onclick="cancelNew()">Close</a>
+				<a href="#" id="savebutton" class="easyui-linkbutton" onclick="saveNew()">Save</a>
+				<a href="#" id="cancelbutton" class="easyui-linkbutton" onclick="cancelNew()">Close</a>
 			</div>
 			
 			<div id="mm" class="easyui-menu" style="width:120px;">
-				<div onclick="javascript:onViewAdspace()">查看广告位</div>
-				<div>--------------</div>
 				<div onclick="javascript:viewRow()">查看</div>
 				<div onclick="javascript:editRow()">编辑</div>
 				<div onclick="javascript:deleteRow()">删除</div>

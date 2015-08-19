@@ -153,8 +153,8 @@ function onSelectEndDate(endDate) {
 function initDate() {
 	var startDateEl = $("body").find(".start");
 	var endDateEl = $("body").find(".end");
-	var d = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
-	startDateEl.datebox("setValue", d);
+	var d = startDate;
+	startDateEl.datebox("setValue", startDate);
 	var newDate = new Date(startDate);
 	newDate.setDate(newDate.getDate() + 6);
 	d = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();

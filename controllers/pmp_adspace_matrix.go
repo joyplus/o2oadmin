@@ -156,3 +156,15 @@ func (c *PmpAdspaceMatrixController) Delete() {
 	}
 	c.ServeJson()
 }
+
+// delete mapping relation by demand id and adspace id
+func (c *PmpAdspaceMatrixController) DeleteByDemandIdAndAdspaceId() {
+	demandid,_ := c.GetInt("demandid")
+	adspaceid,_ := c.GetInt("adspaceid")
+	if err := models.DeletePmpAdspaceMatrixByAdspaceIdAndDemandId(demandid, adspaceid); err == nil {
+		c.Data["json"] = "OK"
+	} else {
+		c.Data["json"] = err.Error()
+	}
+	c.ServeJson()
+}
