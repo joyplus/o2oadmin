@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"strconv"
 )
 
 type PmpDemandDailyReport struct {
@@ -120,6 +121,100 @@ func GetAllPmpDemandDailyReport(query map[string]string, fields []string, sortby
 	}
 	return nil, err
 }
+
+
+/**
+  groupFields might be:
+  1. nil,
+  2. ["0"]
+  3. ["1"]
+  4 ["0", "1"]
+
+  0 表示 PDB广告位
+  1 表示 日期
+ */
+func GetGroupedPmpDemandDailyReport(groupFields []string, medias []string, startDate time.Time, endDate time.Time, sortby string, order string,
+offset int, limit int) (ml []PdbDemandReportVo, count int, err error) {
+	o := orm.NewOrm()
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	selectFields := []string{
+		"ddr.ad_date",
+		"pda.demand_id as demand_id",
+		"dpd.name as demand_name",
+		"pda.id as demand_adspace_id",
+		"pda.name as demand_adspace_name",
+		"pmp_media.id as pmp_media_id",
+		"pmp_media.name as pmp_media_name",
+		"pmp_adspace.id as pmp_adspace_id",
+		"pmp_adspace.name as pmp_adspace_name",
+		"sum(ddr.req_success) as req_success",
+		"sum(ddr.req_noad) as req_noad",
+		"sum(ddr.req_timeout) as req_timeout",
+		"sum(ddr.req_error) as req_error",
+		"sum(pdr.imp) as imp",
+		"sum(pdr.clk) as clk",
+	}
+
+	possibleGroupFields := map[string]string{
+		"0":"pda.demand_id",
+		"1":"pda.id",
+		"2":"pmp_media.id",
+		"3":"pmp_adspace.id",
+	}
+
+	groupby := "ddr.ad_date"
+	if groupFields != nil && len(groupFields) > 0 {
+		for _, fldIdx := range groupFields {
+			groupby += "," + possibleGroupFields[fldIdx]
+		}
+	}
+	qb.Select(strings.Join(selectFields, ", ")).
+	From("pmp_demand_daily_report ddr").
+	InnerJoin("pmp_daily_report pdr").On("ddr.demand_adspace_id=pdr.demand_adspace_id").
+	InnerJoin("pmp_adspace").On("pdr.pmp_adspace_id=pmp_adspace.id").
+	InnerJoin("pmp_media").On("pmp_adspace.media_id=pmp_media.id").
+	InnerJoin("pmp_demand_adspace pda").On("pda.id=ddr.demand_adspace_id").
+	InnerJoin("pmp_demand_platform_desk dpd").On("pda.demand_id=dpd.id")
+
+	qb.Where("1=1")
+//	if medias != nil {
+//		qb.And("pmp_media.id in (" + strings.Join(medias, ",") + ")")
+//	}
+
+	qb.And("ddr.ad_date >= ?")
+	qb.And("ddr.ad_date <= ?")
+
+	qb.GroupBy(groupby)
+
+
+	// order by:
+	if sortby != "" {
+		qb.OrderBy(sortby)
+		if order == "desc"{
+			qb.Desc()
+		} else {
+			qb.Asc()
+		}
+	}
+	// TODO default order by ???
+
+
+	qbCount, _ := orm.NewQueryBuilder("mysql")
+	qbCount.Select("count(*) as cnt").
+	From("(" + qb.String() + ") as sub")
+	var countResult []orm.Params
+	o.Raw(qbCount.String(), startDate, endDate).Values(&countResult)
+	count, _ = strconv.Atoi(countResult[0]["cnt"].(string))
+
+	qb.Limit(limit)
+	qb.Offset(offset)
+	report := []PdbDemandReportVo{}
+	o.Raw(qb.String(), startDate, endDate).QueryRows(&report)
+
+	return report, count, err
+}
+
 
 // UpdatePmpDemandDailyReport updates PmpDemandDailyReport by Id and returns error if
 // the record to be updated doesn't exist

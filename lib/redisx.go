@@ -3,7 +3,6 @@ package lib
 import (
 	"encoding/json"
 	"errors"
-	"github.com/astaxie/beego/cache"
 	"github.com/beego/redigo/redis"
 )
 
@@ -159,5 +158,5 @@ func (rc *RedisxCache) connectInit() (redis.Conn, error) {
 }
 
 func init() {
-	cache.Register("redisx", NewRedisxCache())
+//	cache.Register("redisx", NewRedisxCache())
 }

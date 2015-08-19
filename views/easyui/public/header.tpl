@@ -10,4 +10,5 @@
     <script type="text/javascript" src="/static/easyui/jquery-easyui/common.js"></script>
     <script type="text/javascript" src="/static/easyui/jquery-easyui/easyui_expand.js"></script>
     <script type="text/javascript" src="/static/easyui/jquery-easyui/phpjs-min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery-datagrid-clientpaging.js"></script>
 </head>

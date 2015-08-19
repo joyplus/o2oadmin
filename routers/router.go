@@ -16,6 +16,12 @@ func init() {
 	beego.Router("/pmp/demand/updateDailyAllocation", &controllers.PmpDemandPlatformDeskController{}, "*:UpdateDailyAllocation")	
 	
 	beego.Router("/pmp/demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList")	
+	beego.Router("/pmp/report/GetPdbMediaReport", &controllers.ReportController{}, "*:GetPdbMediaReport")
+	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.ReportController{}, "*:GetPdbMediaReportData")
+//	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll")
+	beego.Router("/pmp/report/GetPdbDspReport", &controllers.ReportController{}, "*:GetPdbDspReport")
+	beego.Router("/pmp/report/GetPdbDspReportData", &controllers.ReportController{}, "*:GetPdbDspReportData")
+
 	beego.Router("/pmp/demand/updatedemand", &controllers.PmpDemandPlatformDeskController{}, "*:SaveOrUpdateDemand")
 	beego.Router("/pmp/demand/deldemand", &controllers.PmpDemandPlatformDeskController{}, "*:Delete")
 	beego.Router("/pmp/demand/getDemandsMappingInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandsMappingInfo")		

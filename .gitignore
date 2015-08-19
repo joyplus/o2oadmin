@@ -29,3 +29,5 @@ o2oadmin*
 logs/
 
 *.rdb
+
+.idea/
