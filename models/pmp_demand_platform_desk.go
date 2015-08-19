@@ -60,7 +60,7 @@ func GetDemandList(page int64, page_size int64, sort string, name string)(demand
 	}
 	o := orm.NewOrm()
 	var r orm.RawSeter
-	sql := "select d.id, d.name, d.request_url_template from pmp_demand_platform_desk d where (d.del_flg is null or d.del_flg != 1) "
+	sql := "select d.id, d.name, d.request_url_template, d.timeout from pmp_demand_platform_desk d where (d.del_flg is null or d.del_flg != 1) "
 	if name == "" && sort == "" {
 		sql += "limit ? offset ? "
 		r = o.Raw(sql, page_size, offset)	
@@ -187,4 +187,68 @@ func DeletePmpDemandPlatformDesk(id int) (err error) {
 		}
 	}
 	return
+}
+
+type DemandMappingVo struct {
+	Id int
+	Name string
+	MappedAdspaceId int
+	MappedAdspaceName string
+}
+
+// get the all the demands information to map to a specified adspace
+func GetDemandsMappingInfo(page int64, page_size int64, sort string, name string, adspaceid int)(v []DemandMappingVo, err error) {
+	o := orm.NewOrm()
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	var r orm.RawSeter
+	sql := "SELECT d.id, d.name, matrix.* FROM pmp_demand_platform_desk d left join (SELECT m.pmp_adspace_id as mapped_adspace_id, a.name as mapped_adspace_name, m.demand_id FROM pmp_adspace_matrix m INNER JOIN pmp_adspace a on m.pmp_adspace_id = a.id  WHERE m.pmp_adspace_id=?) as matrix on d.id = matrix.demand_id WHERE (d.del_flg is null OR d.del_flg != 1) "
+	if name == "" && sort == "" {
+		if page > 0 {
+			sql += "limit ? offset ? "
+			r = o.Raw(sql, adspaceid, page_size, offset)
+		} else {
+			r = o.Raw(sql, adspaceid)
+		}
+		
+	} else if name != "" && sort != "" {
+		name = "%" + name + "%"
+		if page > 0 {
+			sql += "and d.name like ? order by " + sort + " " + "limit ? offset ?"
+			r = o.Raw(sql, adspaceid, name, page_size, offset)
+		} else {
+			sql += "and d.name like ? order by " + sort 
+			r = o.Raw(sql, adspaceid, name)
+		}
+		
+	} else if sort != "" {
+		if page > 0 {
+			sql += "order by " + sort + " " + "limit ? offset ?"
+			r = o.Raw(sql, adspaceid, page_size, offset)	
+		} else {
+			sql += "order by " + sort 
+			r = o.Raw(sql, adspaceid)	
+		}
+		
+	} else if name != "" {
+		if page > 0 {
+			name = "%" + name + "%"
+			sql += "and d.name like ? limit ? offset ?"
+			r = o.Raw(sql, adspaceid, name, page_size, offset)
+		} else {
+			name = "%" + name + "%"
+			sql += "and d.name like ? "
+			r = o.Raw(sql, adspaceid, name)
+		}		
+	}
+	_, err = r.QueryRows(&v)
+	if err == nil {
+		return v, nil
+	} else {
+		return nil, err
+	}
 }

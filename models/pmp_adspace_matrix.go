@@ -44,6 +44,18 @@ func GetPmpAdspaceMatrixById(id int) (v *PmpAdspaceMatrix, err error) {
 	return nil, err
 }
 
+// Get PmpAdspaceMatrix by demand id and adspace id
+func GetPmpAdspaceMatrixByDemandIdAndAdspaceId(demandid int, adspaceid int) (v *PmpAdspaceMatrix, err error) {
+	sql := "SELECT * FROM pmp_adspace_matrix m WHERE m.demand_id = ? and m.pmp_adspace_id = ?"
+	o := orm.NewOrm()
+	err = o.Raw(sql, demandid, adspaceid).QueryRow(v)
+	if err == nil {
+		return v, nil
+	}
+	fmt.Println(err)
+	return nil, err
+}
+
 // Retrieves PmpAdspaceMatrix by PmpDemandSpaceId. Returns error if pmpDemandSpaceId doesn't exist
 func GetPmpAdspaceMatrixByDemandSpaceId(pmpDemandSpaceId int) (v *PmpAdspaceMatrix, err error) {
 	querysql := "SELECT * FROM pmp_adspace_matrix where demand_adspace_id=?"
@@ -159,4 +171,12 @@ func DeletePmpAdspaceMatrix(id int) (err error) {
 		}
 	}
 	return
+}
+
+// delete demand adspace mapping information by adspace id and demand id
+func DeletePmpAdspaceMatrixByAdspaceIdAndDemandId(demandid int, adspaceid int) (err error) {
+	o := orm.NewOrm()
+	sql := "DELETE FROM pmp_adspace_matrix WHERE demand_id = ? and pmp_adspace_id = ?"
+	_, err = o.Raw(sql, demandid, adspaceid).Exec()
+	return err
 }

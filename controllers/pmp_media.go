@@ -24,6 +24,7 @@ func (c *PmpMediaController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
+// save or update media
 func (c *PmpMediaController) SaveOrUpdateMedia() {
 	var v models.PmpMedia
 	c.ParseForm(&v)
