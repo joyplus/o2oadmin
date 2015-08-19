@@ -111,7 +111,7 @@ func (c *PmpDailyReportController) GetAll() {
 		}
 	}
 
-	l, _, err := models.GetAllPmpDailyReport(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllPmpDailyReport(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {

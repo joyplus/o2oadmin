@@ -54,7 +54,7 @@ func GetPmpDailyReportById(id int) (v *PmpDailyReport, err error) {
 // GetAllPmpDailyReport retrieves all PmpDailyReport matches certain condition. Returns empty list if
 // no records exist
 func GetAllPmpDailyReport(query map[string]string, fields []string, sortby []string, order []string,
-	offset int64, limit int64) (ml []interface{}, count int64, err error) {
+	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable(new(PmpDailyReport))
 	// query k=v
@@ -75,7 +75,7 @@ func GetAllPmpDailyReport(query map[string]string, fields []string, sortby []str
 				} else if order[i] == "asc" {
 					orderby = v
 				} else {
-					return nil, 0, errors.New("Error: Invalid order. Must be either [asc|desc]")
+					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
 				}
 				sortFields = append(sortFields, orderby)
 			}
@@ -89,22 +89,21 @@ func GetAllPmpDailyReport(query map[string]string, fields []string, sortby []str
 				} else if order[0] == "asc" {
 					orderby = v
 				} else {
-					return nil, 0, errors.New("Error: Invalid order. Must be either [asc|desc]")
+					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
 				}
 				sortFields = append(sortFields, orderby)
 			}
 		} else if len(sortby) != len(order) && len(order) != 1 {
-			return nil, 0, errors.New("Error: 'sortby', 'order' sizes mismatch or 'order' size is not 1")
+			return nil, errors.New("Error: 'sortby', 'order' sizes mismatch or 'order' size is not 1")
 		}
 	} else {
 		if len(order) != 0 {
-			return nil, 0, errors.New("Error: unused 'order' fields")
+			return nil, errors.New("Error: unused 'order' fields")
 		}
 	}
 
 	var l []PmpDailyReport
 	qs = qs.OrderBy(sortFields...)
-	count, err = qs.Count()
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
 			for _, v := range l {
@@ -121,9 +120,9 @@ func GetAllPmpDailyReport(query map[string]string, fields []string, sortby []str
 				ml = append(ml, m)
 			}
 		}
-		return ml, count, nil
+		return ml, nil
 	}
-	return nil, 0, err
+	return nil, err
 }
 
 // UpdatePmpDailyReport updates PmpDailyReport by Id and returns error if
