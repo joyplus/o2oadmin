@@ -75,7 +75,7 @@
                 {field:'ReqAll',title:'请求数',width:100},
                 {field:'ReqSuccess',title:'请求有效广告数',width:100},
                 {field:'FillRate',title:'填充率（%）',width:100},
-                {field:'reqError',title:'错误数',width:100}
+                {field:'ReqError',title:'错误数',width:100}
             ]]
         });
         $('#searchBtn').bind('click', function () {
