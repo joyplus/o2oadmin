@@ -34,11 +34,6 @@
 
     $(function () {
 
-        function formatAdDate(value) {
-            var d = new Date(value);
-            return d.format('yyyy-MM-dd');
-        }
-
         // 页面首次加载时选中两个选项
         var dynaFields = ["DemandName", "DemandAdSpaceName", "PdbMediaName", "PdbAdSpaceName"];
         $('#dimension').combobox({
@@ -64,14 +59,14 @@
             toolbar:'#tb',
             footer:'#ft',
             columns:[[
-                {field:'AdDate',title:'日期',width:80, formatter:formatAdDate},
+                {field:'AdDate',title:'日期',width:80, formatter:adDateFormatter},
                 {field:'DemandName',title:'DSP',width:100},
                 {field:'DemandAdSpaceName',title:'DSP广告位',width:200},
                 {field:'PdbMediaName',title:'PDB媒体',width:150},
                 {field:'PdbAdSpaceName',title:'PDB广告位',width:100},
                 {field:'ReqAll',title:'请求数',width:100},
                 {field:'ReqSuccess',title:'请求有效广告数',width:100},
-                {field:'FillRate',title:'填充率（%）',width:100},
+                {field:'FillRate',title:'填充率（%）',width:100, formatter: numberFormater},
                 {field:'ReqError',title:'错误数',width:100},
                 {field:'ReqTimeout',title:'请求超时数',width:100},
                 {field:'Imp',title:'曝光数',width:100},
