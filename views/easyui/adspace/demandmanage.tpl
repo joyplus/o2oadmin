@@ -35,6 +35,8 @@
 				function addrow(){
 					$('#dd').dialog({title: '新建需求方平台'});
 					$("#form1").form('clear');
+					$('#savebutton').show();
+					$('#cancelbutton').show();
 				    $("#dd").dialog('open');
 				}	
 				
@@ -76,57 +78,8 @@
 					openNewTab(href, newtabTitle);
 				}
 				
-				//var tabs = window.parent.parent.document.getElementById("#tabs");
 				function openNewTab(href, newtabTitle) {
-					/*alert(tabs);
-			        if(href){
-			            var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
-			        }else{
-			            var content = '未实现';
-			        }
-					alert("start tab");	   
-					//已经存在tabs则选中它
-			        if(tabs.tabs('exists',newtabTitle)){
-			            //选中
-			            tabs.tabs('select',newtabTitle);
-			            //refreshTab(newtabTitle);
-			        }else{
-			            //添加
-			            tabs.tabs('add',{
-			                title:newtabTitle,
-			                content:content,
-			                closable:true,
-			                cache:false,
-			                fit:'true'
-			            });
-			        }             						
-					alert("view adspace");*/
 					window.location = href;
-				}
-	
-				function viewAdspace() {
-					var row = $('#dg').datagrid('getSelected');
-					var demandname = row.Name;
-					var href = "/pmp/demand/getAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";
-					var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
-					alert(demandname);
-					alert($('#tabs'));
-					$('#tabs').tabs('add',{
-						title: 'new tab',
-						selected: false
-					});
-					alert("1");
-					alert($('#tabs').tabs('getTab', 'User'));
-					var title = $('#tabs').tabs('getTab', 'User').panel('options').title;
-					alert(title);
-					$("#tabs").tabs('add',{
-                        title: demandname,
-                        content:content,
-                        closable:true,
-                        cache:false,
-                        fit:'true'
-                    });
-					alert("2");
 				}
 				
 				function viewRow() {

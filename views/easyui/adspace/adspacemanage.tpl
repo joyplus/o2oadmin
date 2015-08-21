@@ -9,7 +9,15 @@
 							{field:'Id',title:'ID', width:50
 							},
 							{
-								field:"Name", title:"PDB广告位名称", width:100
+								field:"Name", title:"PDB广告位名称", width:100,
+								formatter: function(value,row,index){
+									if (value) {
+										var html = '<div style="display:inline; padding-right:20px;">' + value +'</div>' + '<div style="float:right;" onclick="showOperation($(this))"><img src="/static/easyui/jquery-easyui/themes/icons/orp.png"/></div>'
+										return html;
+									} else {
+										return value;
+									}
+								}
 							},
 							{
 								field:"MediaName", title:"所属PDB媒体", width:100
@@ -28,8 +36,10 @@
 											return value;
 										}
 									}
-							}
-							
+							},
+							{field:'MediaId', hidden:true},
+							{field:'Description', hidden:true}
+														
 						]],
 		                view: detailview,
 		                detailFormatter:function(index,row){
@@ -49,12 +59,19 @@
 					        filterData();
 					    }
 					});
+					$("#field2").keyup(function(event){
+					    if(event.keyCode == 13){
+					        filterData2();
+					    }
+					});
         		});
 				
 				//新建广告位弹窗
 				function addrow(){
 					$('#dd').dialog({title: '新建PDB广告位'});
 					$("#form1").form('clear');
+					$('#savebutton').show();
+					$('#cancelbutton').show();
 				    $("#dd").dialog('open');
 				}	
 				
@@ -81,7 +98,167 @@
 					var id = $('#mediacc').combobox('getValue');
 					$("#dg").datagrid('load', {mediaid:id,adspacename:name,page:'1',rows:'10'});
 				}
-						
+				
+				function showOperation(obj) {
+					var pos = obj.position();
+					$('#mm').menu('show', {
+						left:pos.left + 20,
+						top: pos.top + 80
+					});
+				}
+				
+				function viewRow() {
+					$('#dd').dialog({title: '查看广告位'});
+					$('#savebutton').hide();
+					$('#cancelbutton').show();
+					$("#dd").dialog('open');
+					var row = $('#dg').datagrid('getSelected');
+					$("#form1").form('load', row);
+					
+				}
+				
+				function editRow() {
+					$('#dd').dialog({title: '编辑广告位'});
+					$('#demandcc').combobox({					    					   
+						readonly:true					
+					});
+					$('#savebutton').show();
+					$('#cancelbutton').show();
+					$("#dd").dialog('open');
+					var row = $('#dg').datagrid('getSelected');
+					$("#form1").form('load', row);
+
+				}
+				
+				function deleteRow() {
+					$.messager.confirm('Confirm','你确定要删除?',function(r){
+				        if (r){
+				            var row = $("#dg").datagrid("getSelected");
+				            if(!row){
+				                vac.alert("请选择要删除的行");
+				                return;
+				            }
+				            vac.ajax('/pmp/adspace/deladspace', {id:row.Id}, 'POST', function(data){
+				                if(data == "OK"){
+				                    $("#dg").datagrid('reload');
+				                }else{
+				                    vac.alert(data);
+				                }
+				            })
+				        }
+				    });
+				}
+				
+				var allChanges = [];	
+				var adspaceid;			
+				function allocateToDemands() {
+					var row = $('#dg').datagrid('getSelected');
+					aid = row.Id;
+					adspaceid = aid;
+					allChanges.length = 0;
+					$("#mapDemandDialog").dialog('open');
+					$("#demandDataGrid").datagrid({
+				        title:'',
+				        url:'/pmp/demand/getDemandsMappingInfo',
+				        method:'POST',
+						queryParams: {
+							adspaceid:aid,						
+						},
+				        fitColumns:true,
+				        striped:true,
+				        rownumbers:false,
+				        singleSelect:true,
+				        idField:'Name',
+				        pagination:true,
+				        columns:[[
+							{field:'Ck',title:'口',width:50,
+								formatter: function(value,row,index){
+									var c;
+									if (value == 0) {
+										c = '';
+									} else {
+										c = 'checked="checked"';
+									}
+									var html = '<input type="checkbox" onchange="onCheck($(this), ' + index + ')" ' + c + ' /> '
+									return html;						
+								}
+							},
+				            {field:'MappedAdspaceName',title:'广告位名称',width:350},		
+							{field:'Name',title:'所属需求方平台',width:350},											
+							{field:'Id', hidden:true},
+							{field:'MappedAdspaceId', hidden:true}
+				        ]],
+						onLoadSuccess: function(data){
+								filterByDemandId();
+						}
+				    });	
+					
+				}	
+				
+				function onCheck(ckbox, index) {
+					var row = $('#demandDataGrid').datagrid('getRows')[index];
+					if (ckbox.is(':checked')) {
+						row.Ck = 1;
+					} else {
+						row.Ck = 0;
+					}
+					if (allChanges.length > 0) {
+						if (allChanges[allChanges.length - 1].Id == row.Id) {
+							allChanges.pop();
+						}
+					}
+					allChanges.push(row);
+				}
+				
+				function cancelMapChanges() {
+					$("#mapDemandDialog").dialog('close');
+				}
+				
+				function saveMapChanges() {
+					var jsonstr = JSON.stringify(allChanges);
+					$.ajax({url:'/pmp/adspacematrix/updateAdspaceMatrix', data:jsonstr,contentType:'application/json',dataType:'json', type:'POST', success:function(r){
+				                if(r != "OK"){
+				                    alert(r);
+				                }else{
+				                    $("#demandDataGrid").datagrid("reload");
+									$("#mapDemandDialog").dialog("close");
+				                }
+				            }});
+				}
+				
+				function filterData2() {
+					$('#demandDataGrid').datagrid('loadData', {"total":0,"rows":[]});
+					var nameval = $("#field2").val();
+					
+					$("#demandDataGrid").datagrid('reload', {adspaceid:adspaceid,name:nameval,page:'1',rows:'10'});
+				}
+				
+				function filterByDemandId() {
+					return;
+					var demandid = $('#demandcc').combobox("getValue");
+					if (demandid && demandid > 0) {
+						alert("filter");
+						$('#demandDataGrid').datagrid('addFilterRule', {
+								field: 'Id',
+								op: 'equal',
+								value: demandid
+							});
+						$('#demandDataGrid').datagrid('doFilter');
+					} else {
+						alert("nofilter");
+						$('#demandDataGrid').datagrid('enableFilter');
+						alert("1");
+						$('#demandDataGrid').datagrid('removeFilterRule');
+						alert("uu");
+					}
+					
+				}
+				
+				function resetFilter2() {
+					$("#field2").val("");
+					$('#demandcc').combobox("setValue", "需求方平台");
+					$("#demandDataGrid").datagrid('reload', {adspaceid:adspaceid,page:'1',rows:'10'});
+				}
 		    </script>
 		    <style type="text/css">
 		        .dv-table td{
@@ -122,13 +299,14 @@
 				<div style="padding:20px 20px 40px 80px;" >
 			    <form id="form1" method="post">
 		            <table>
+						<tr><input name="Id" hidden="true"/> </tr>
 		                <tr>
 		                    <td>广告位名称：</td>
 		                    <td><input name="Name" class="easyui-validatebox" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'" required="true"/></td>
+		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias',editable:false,panelHeight:'100'" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>
@@ -140,8 +318,42 @@
 			</div>	    
 		    
 			<div id="bb">
-				<a href="#" class="easyui-linkbutton" onclick="saveNew()">Save</a>
-				<a href="#" class="easyui-linkbutton" onclick="cancelNew()">Close</a>
+				<a href="#" id="savebutton" class="easyui-linkbutton" onclick="saveNew()">Save</a>
+				<a href="#" id="cancelbutton" class="easyui-linkbutton" onclick="cancelNew()">Close</a>
+			</div>
+			
+			<div id="mm" class="easyui-menu" style="width:120px;">
+				<div onclick="javascript:allocateToDemands()">关联需求方平台</div>
+				<div >－－－－－－</div>
+				<div onclick="javascript:viewRow()">查看</div>
+				<div onclick="javascript:editRow()">编辑</div>
+				<div onclick="javascript:deleteRow()">删除</div>
+			</div>
+			
+			<div id="mapDemandDialog" class="easyui-dialog" title="关联需求方平台" style="width:800px;height:400px;padding-top:10px;"
+			        data-options="resizable:true,modal:true,closed:true,buttons:'#mb'">
+					<div style="margin:10px 0;"></div>
+				    <table>
+				        <tr>
+							<td width="300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/getDemandsMappingInfo',editable:false,panelHeight:'100'" /></td>
+				            <td>
+				                <input type="text" class="" id="field2" placeholder="请输入部分需求方平台名称"/>	
+				            </td>
+				            <td><a href="#" icon='icon-reload' plain="true" onclick="filterData2()" class="easyui-linkbutton">搜索</a></td>
+				            <td>
+				                <a href="#"  class="easyui-linkbutton" onclick="resetFilter2()">重置筛选</a>
+				            </td>
+				        </tr>
+				    </table>
+				
+					<div style="margin:10px 0;"></div>
+					<table id="demandDataGrid"></table>
+			</div>
+			
+			<div id="mb">
+				<a href="#"  class="easyui-linkbutton" onclick="saveMapChanges()">保存</a>
+				<a href="#"  class="easyui-linkbutton" onclick="cancelMapChanges()">取消</a>
 			</div>
 		</body>
 	</html>

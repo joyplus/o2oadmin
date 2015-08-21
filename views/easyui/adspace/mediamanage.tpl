@@ -35,6 +35,8 @@
 				function addrow(){
 					$('#dd').dialog({title: '新建PDB媒体'});
 					$("#form1").form('clear');
+					$('#savebutton').show();
+					$('#cancelbutton').show();
 				    $("#dd").dialog('open');
 				}	
 				

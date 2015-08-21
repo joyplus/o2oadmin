@@ -32,14 +32,21 @@ func (c *PmpAdspaceController) URLMapping() {
 // @router / [post]
 func (c *PmpAdspaceController) Post() {
 	var v models.PmpAdspace
-	c.Ctx.Request.ParseForm()
-	mediaid,_ := strconv.Atoi(c.Ctx.Request.Form["MediaId"][0])
-	v = models.PmpAdspace{Name:c.Ctx.Request.Form["Name"][0], MediaId:mediaid , Description:c.Ctx.Request.Form["Description"][0]}
-	if id, err := models.AddPmpAdspace(&v); err == nil {
-		c.Data["json"] = map[string]int64{"id": id}
+	c.ParseForm(&v)
+	beego.Info("**** pased form:" , v)
+	if (v.Id == 0) {
+		if id, err := models.AddPmpAdspace(&v); err == nil {
+			c.Data["json"] = map[string]int64{"id": id}
+		} else {
+			c.Data["json"] = err.Error()
+		}
 	} else {
-		c.Data["json"] = err.Error()
-	}
+		if err := models.UpdatePmpAdspace(&v); err == nil {
+			c.Data["json"] = "OK"
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	}	
 	c.ServeJson()
 }
 
@@ -252,8 +259,7 @@ func (c *PmpAdspaceController) Put() {
 // @Failure 403 id is empty
 // @router /:id [delete]
 func (c *PmpAdspaceController) Delete() {
-	idStr := c.Ctx.Input.Params[":id"]
-	id, _ := strconv.Atoi(idStr)
+	id,_ := c.GetInt("id")
 	if err := models.DeletePmpAdspace(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
