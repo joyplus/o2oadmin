@@ -74,7 +74,7 @@
                 {field:'AdDate',title:'日期',width:80, formatter:formatAdDate},
                 {field:'ReqAll',title:'请求数',width:100},
                 {field:'ReqSuccess',title:'请求有效广告数',width:100},
-                {field:'FillRate',title:'填充率（%）',width:100},
+                {field:'FillRate',title:'填充率（%）',width:100, formatter: numberFormater},
                 {field:'ReqError',title:'错误数',width:100}
             ]]
         });

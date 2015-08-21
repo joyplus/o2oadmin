@@ -83,6 +83,9 @@ func (this *ReportController) GetPdbDspReportData() {
 			if report[idx].ReqAll > 0 {
 				report[idx].FillRate = float32(reportItem.ReqSuccess) / float32(report[idx].ReqAll)
 			}
+			if report[idx].Imp > 0 {
+                report[idx].Ctr = float32(reportItem.Clk) / float32(reportItem.Imp)
+            }
 		}
 
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}

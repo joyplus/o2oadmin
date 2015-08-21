@@ -76,7 +76,7 @@
                 {field:'ReqTimeout',title:'请求超时数',width:100},
                 {field:'Imp',title:'曝光数',width:100},
                 {field:'Clk',title:'点击数',width:100},
-                {field:'ClkRate',title:'点击率（%）',width:100}
+                {field:'Ctr',title:'点击率（%）',width:100, formatter: numberFormater}
             ]]
         });
         $('#searchBtn').bind('click', function () {
