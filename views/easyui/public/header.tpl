@@ -11,4 +11,5 @@
     <script type="text/javascript" src="/static/easyui/jquery-easyui/easyui_expand.js"></script>
     <script type="text/javascript" src="/static/easyui/jquery-easyui/phpjs-min.js"></script>
     <script type="text/javascript" src="/static/easyui/jquery-datagrid-clientpaging.js"></script>
+    <script type="text/javascript" src="/static/o2oadmin/utils.js"></script>
 </head>
