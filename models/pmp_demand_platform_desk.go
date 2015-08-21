@@ -194,6 +194,7 @@ type DemandMappingVo struct {
 	Name string
 	MappedAdspaceId int
 	MappedAdspaceName string
+	Ck int
 }
 
 // get the all the demands information to map to a specified adspace
@@ -206,7 +207,7 @@ func GetDemandsMappingInfo(page int64, page_size int64, sort string, name string
 		offset = (page - 1) * page_size
 	}
 	var r orm.RawSeter
-	sql := "SELECT d.id, d.name, matrix.* FROM pmp_demand_platform_desk d left join (SELECT m.pmp_adspace_id as mapped_adspace_id, a.name as mapped_adspace_name, m.demand_id FROM pmp_adspace_matrix m INNER JOIN pmp_adspace a on m.pmp_adspace_id = a.id  WHERE m.pmp_adspace_id=?) as matrix on d.id = matrix.demand_id WHERE (d.del_flg is null OR d.del_flg != 1) "
+	sql := "SELECT d.id, d.name, CASE WHEN matrix.mapped_adspace_id IS NOT NULL THEN 1 ELSE 0 END AS ck, matrix.mapped_adspace_id, matrix.mapped_adspace_name FROM pmp_demand_platform_desk d left join (SELECT m.pmp_adspace_id as mapped_adspace_id, a.name as mapped_adspace_name, m.demand_id FROM pmp_adspace_matrix m INNER JOIN pmp_adspace a on m.pmp_adspace_id = a.id  WHERE m.pmp_adspace_id=?) as matrix on d.id = matrix.demand_id WHERE (d.del_flg is null OR d.del_flg != 1) "
 	if name == "" && sort == "" {
 		if page > 0 {
 			sql += "limit ? offset ? "
@@ -246,9 +247,14 @@ func GetDemandsMappingInfo(page int64, page_size int64, sort string, name string
 		}		
 	}
 	_, err = r.QueryRows(&v)
-	if err == nil {
-		return v, nil
-	} else {
+	if err != nil {
 		return nil, err
+	}	
+	p := PmpAdspace{Id:adspaceid}
+	o.Read(&p)
+	for index,_ := range v {
+		v[index].MappedAdspaceId = p.Id
+		v[index].MappedAdspaceName = p.Name
 	}
+	return v, nil
 }

@@ -180,3 +180,34 @@ func DeletePmpAdspaceMatrixByAdspaceIdAndDemandId(demandid int, adspaceid int) (
 	_, err = o.Raw(sql, demandid, adspaceid).Exec()
 	return err
 }
+
+// update demand & adspace maps
+func UpdateAdspaceMatrix(v []DemandMappingVo) (err error) {
+	o := orm.NewOrm()
+	o.Begin()
+	for _, vo := range v {
+		if vo.Ck == 0 {
+			sql := "DELETE FROM pmp_adspace_matrix WHERE demand_id = ? and pmp_adspace_id = ?"
+			_, err = o.Raw(sql, vo.Id, vo.MappedAdspaceId).Exec()
+			if err != nil {
+				o.Rollback()
+				return err
+			}
+		} else {
+			sql := "SELECT * FROM pmp_adspace_matrix WHERE demand_id = ? and pmp_adspace_id = ?"
+			var matrix orm.Params
+			o.Raw(sql, vo.Id, vo.MappedAdspaceId).QueryRow(&matrix)
+			if matrix == nil {
+				m := PmpAdspaceMatrix{PmpAdspaceId:vo.MappedAdspaceId, DemandId: vo.Id}
+				fmt.Println("-------", m)
+				_, err = o.Insert(&m)
+				if err != nil {
+					o.Rollback()
+					return err
+				}
+			}
+		}
+	}
+	o.Commit()
+	return nil
+}

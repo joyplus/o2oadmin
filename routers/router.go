@@ -10,7 +10,8 @@ func init() {
 	beego.Router("/pmp/adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList")
 	beego.Router("/pmp/adspace/addadspace", &controllers.PmpAdspaceController{}, "*:Post")
 	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
-	beego.Router("/pmp/adspace/updateadspace", &controllers.PmpAdspaceController{}, "*:SaveOrUpdateAdspace")
+	beego.Router("/pmp/adspace/updateadspace", &controllers.PmpAdspaceController{}, "*:SaveOrUpdateAdspace")	
+	beego.Router("/pmp/adspace/deladspace", &controllers.PmpAdspaceController{}, "*:Delete")
 	
 	beego.Router("/pmp/demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandByAdspace")
 	beego.Router("/pmp/demand/updateDailyAllocation", &controllers.PmpDemandPlatformDeskController{}, "*:UpdateDailyAllocation")	
@@ -27,6 +28,7 @@ func init() {
 	beego.Router("/pmp/media/delmedia", &controllers.PmpMediaController{}, "*:Delete")	
 	
 	beego.Router("/pmp/adspacematrix/deladspacematrix", &controllers.PmpAdspaceMatrixController{}, "*:DeleteByDemandIdAndAdspaceId")	
+	beego.Router("/pmp/adspacematrix/updateAdspaceMatrix", &controllers.PmpAdspaceMatrixController{}, "*:UpdateAdspaceMatrix")	
 	
 	admin.Run()
 	beego.Info("o2oadmin start")

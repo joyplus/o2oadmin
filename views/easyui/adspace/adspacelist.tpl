@@ -59,6 +59,8 @@
 				function addrow(){
 					$('#dd').dialog({title: '新建广告位'});
 					$("#form1").form('clear');
+					$('#savebutton').show();
+					$('#cancelbutton').show();
 					$('#demandcc').combobox({					    					   
 						readonly:true					
 					});
@@ -159,7 +161,7 @@
 				<div style="display:inline"> <a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a></div> 
 				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
-	              <input type="text" class="" id="field1" placeholder="请输入部分名称">				  
+	              <input type="text" class="" id="field1" placeholder="请输入部分名称"/>				  
 	          </div>
 			</div>
 		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
