@@ -63,7 +63,8 @@
 					    if(event.keyCode == 13){
 					        filterData2();
 					    }
-					});
+					});					
+					
         		});
 				
 				//新建广告位弹窗
@@ -187,10 +188,7 @@
 							{field:'Name',title:'所属需求方平台',width:350},											
 							{field:'Id', hidden:true},
 							{field:'MappedAdspaceId', hidden:true}
-				        ]],
-						onLoadSuccess: function(data){
-								filterByDemandId();
-						}
+				        ]]
 				    });	
 					
 				}	
@@ -229,30 +227,10 @@
 				function filterData2() {
 					$('#demandDataGrid').datagrid('loadData', {"total":0,"rows":[]});
 					var nameval = $("#field2").val();
-					
-					$("#demandDataGrid").datagrid('reload', {adspaceid:adspaceid,name:nameval,page:'1',rows:'10'});
+					var demandid = $('#demandcc').combobox('getValue');
+					$("#demandDataGrid").datagrid('reload', {demandid:demandid,adspaceid:adspaceid,name:nameval,page:'1',rows:'10'});
 				}
 				
-				function filterByDemandId() {
-					return;
-					var demandid = $('#demandcc').combobox("getValue");
-					if (demandid && demandid > 0) {
-						alert("filter");
-						$('#demandDataGrid').datagrid('addFilterRule', {
-								field: 'Id',
-								op: 'equal',
-								value: demandid
-							});
-						$('#demandDataGrid').datagrid('doFilter');
-					} else {
-						alert("nofilter");
-						$('#demandDataGrid').datagrid('enableFilter');
-						alert("1");
-						$('#demandDataGrid').datagrid('removeFilterRule');
-						alert("uu");
-					}
-					
-				}
 				
 				function resetFilter2() {
 					$("#field2").val("");
@@ -273,7 +251,7 @@
 		        
 		    <div> 
 				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建PDB广告位</a></div> 
-				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
+				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >搜索</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
 	              <input type="text" class="" id="field1" placeholder="请输入部分广告位名称">				  
 	          </div>
