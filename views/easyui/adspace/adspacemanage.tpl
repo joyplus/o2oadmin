@@ -172,7 +172,7 @@
 				        idField:'Name',
 				        pagination:true,
 				        columns:[[
-							{field:'Ck',title:'口',width:50,
+							{field:'Ck',title:'',width:50,
 								formatter: function(value,row,index){
 									var c;
 									if (value == 0) {

@@ -60,10 +60,15 @@ $(function(){
             $.messager.alert('提示',r.info,'info');
         })
     }
+	
+	function back() {
+		window.location = "/rbac/role/index";
+	}
 </script>
 <body>
 <table id="datagrid2" toolbar="#tb2"></table>
 <div id="tb2" style="padding:5px;height:auto">
+	<div style="display:inline"> <a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a></div> 
     <div style="margin-bottom:5px">
         当前组：<input id="combobox" name="name" >
         <a href="#"  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="saveselect()">保存</a>
