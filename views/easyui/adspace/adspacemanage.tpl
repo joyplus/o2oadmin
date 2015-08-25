@@ -64,8 +64,18 @@
 					        filterData2();
 					    }
 					});					
-					
+					adjustHeight("#mediacc");
+					adjustHeight("#mediacc2");
+					adjustHeight("#demandcc");
         		});
+				
+				function adjustHeight(id) {
+					$(id).combobox({onShowPanel: function(){
+							var len = $(id).combobox('getData').length;
+							$(id).combobox({panelMaxHeight:100, panelHeight:len * 20, editable:false});							
+						} 
+					});
+				}
 				
 				//新建广告位弹窗
 				function addrow(){
@@ -209,6 +219,7 @@
 				}
 				
 				function cancelMapChanges() {
+					allChanges = [];
 					$("#mapDemandDialog").dialog('close');
 				}
 				
@@ -284,7 +295,7 @@
 		                </tr>
 		                <tr>
 		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias',editable:false,panelHeight:'100'" required="true"/></td>
+		                    <td><input class="easyui-combobox" id="mediacc2" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>
@@ -314,7 +325,7 @@
 				    <table>
 				        <tr>
 							<td width="300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/getDemandsMappingInfo',editable:false,panelHeight:'100'" /></td>
+				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/getDemandsMappingInfo'" /></td>
 				            <td>
 				                <input type="text" class="" id="field2" placeholder="请输入部分需求方平台名称"/>	
 				            </td>
@@ -326,7 +337,7 @@
 				    </table>
 				
 					<div style="margin:10px 0;"></div>
-					<table id="demandDataGrid"></table>
+					<table id="demandDataGrid" style="height:270px"></table>
 			</div>
 			
 			<div id="mb">
