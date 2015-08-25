@@ -98,8 +98,8 @@ $(function(){
         }
     });	
 	initDate();
-})
-
+});			
+				
 function editrow(){
     if(!$("#datagrid").datagrid("getSelected")){
         vac.alert("请选择要编辑的行");

@@ -52,8 +52,17 @@
 						panelHeight:'100',
 						readonly:true					
 					});
-
-        			});
+					
+					adjustHeight('#mediacc');
+        		});
+				
+				function adjustHeight(id) {
+					$(id).combobox({onShowPanel: function(){
+							var len = $(id).combobox('getData').length;
+							$(id).combobox({panelMaxHeight:100, panelHeight:len * 20, editable:false});							
+						} 
+					});
+				}
 				
 				//新建广告位
 				function addrow(){
@@ -194,7 +203,7 @@
 		                </tr>
 						<tr>
 		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias',editable:false,panelHeight:'100'" required="true"/></td>
+		                    <td><input id="mediacc" class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>所属需求方平台：</td>
