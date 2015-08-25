@@ -48,8 +48,6 @@
 					    valueField:'Id',
 					    textField:'Name',
 						url:'/pmp/demand/getDemandsMappingInfo',
-						editable:false,
-						panelHeight:'100',
 						readonly:true					
 					});
 					
