@@ -29,11 +29,11 @@
 					        filterData();
 					    }
 					});
-					initCombobox();
+					initContextMenu();
 					
         		});
 				
-				function initCombobox() {
+				function initContextMenu() {
 					// append a top menu item
 					$('#mm').menu('appendItem', {
 						text: '查看广告位',
@@ -41,7 +41,6 @@
 					});
 					// append a menu separator
 					$('#mm').menu('appendItem', {
-						text:"-",
 						separator: true
 					});
 					$('#mm').menu('appendItem', {
