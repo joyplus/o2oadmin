@@ -67,6 +67,7 @@
 					adjustHeight("#mediacc");
 					adjustHeight("#mediacc2");
 					adjustHeight("#demandcc");
+					initContextMenu();
         		});
 				
 				function adjustHeight(id) {
@@ -248,6 +249,30 @@
 					$('#demandcc').combobox("setValue", "需求方平台");
 					$("#demandDataGrid").datagrid('reload', {adspaceid:adspaceid,page:'1',rows:'10'});
 				}
+				
+				function initContextMenu() {
+					// append a top menu item
+					$('#mm').menu('appendItem', {
+						text: '关联需求方平台',
+						onclick: allocateToDemands
+					});
+					// append a menu separator
+					$('#mm').menu('appendItem', {
+						separator: true
+					});
+					$('#mm').menu('appendItem', {
+						text: '查看',
+						onclick: viewRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '编辑',
+						onclick: editRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '删除',
+						onclick: deleteRow
+					});
+				}
 		    </script>
 		    <style type="text/css">
 		        .dv-table td{
@@ -310,14 +335,8 @@
 				<a href="#" id="savebutton" class="easyui-linkbutton" onclick="saveNew()">Save</a>
 				<a href="#" id="cancelbutton" class="easyui-linkbutton" onclick="cancelNew()">Close</a>
 			</div>
-			
-			<div id="mm" class="easyui-menu" style="width:120px;">
-				<div onclick="javascript:allocateToDemands()">关联需求方平台</div>
-				<div >－－－－－－</div>
-				<div onclick="javascript:viewRow()">查看</div>
-				<div onclick="javascript:editRow()">编辑</div>
-				<div onclick="javascript:deleteRow()">删除</div>
-			</div>
+				
+			<div id="mm" class="easyui-menu" style="width:120px;"></div>
 			
 			<div id="mapDemandDialog" class="easyui-dialog" title="关联需求方平台" style="width:800px;height:400px;padding-top:10px;"
 			        data-options="resizable:true,modal:true,closed:true,buttons:'#mb'">
