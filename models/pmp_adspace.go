@@ -165,7 +165,7 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 	var maps []orm.Params
 	o := orm.NewOrm()
 	var r orm.RawSeter
-	var query string = "SELECT a.id, a.name, a.media_id, a.description, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.del_flg != 1 "
+	var query string = "SELECT a.id, a.name, a.media_id, a.description, a.pmp_adspace_key, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.del_flg != 1 "
 	var adspacenamecon string = "%" + adspacename + "%"
     if mediaid == -1 && adspacename == "" {		
 		query = query + "ORDER BY a.id ASC limit ? offset ?"
@@ -194,14 +194,13 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 		return nil, 0
 	}
 	fmt.Println(maps)
+	var impstr,clkstr,ctrstr,descstr string
+	var idint,mediaidint int	
+	var namestr, mediastr,pmpAdspaceKeystr string
 	for index := 0; index < len(maps); index++ {
 		imp := maps[index]["est_daily_imp"]
 		clk := maps[index]["est_daily_clk"]
 		ctr := maps[index]["est_daily_ctr"]
-	
-		var impstr,clkstr,ctrstr,descstr string
-		var idint,mediaidint int	
-		var namestr, mediastr string
 		
 		if impv, ok := imp.(string); ok {
 			impstr = impv
@@ -233,7 +232,11 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 		if descv, ok := maps[index]["description"].(string); ok {
 			descstr = descv
 		}
-		adspaceVos = append(adspaceVos, AdspaceVo{Id:idint, Name:namestr, MediaName:mediastr, EstDaily:est, MediaId:mediaidint, Description:descstr})
+		if v, ok := maps[index]["pmp_adspace_key"].(string); ok {
+			pmpAdspaceKeystr = v
+		}
+		
+		adspaceVos = append(adspaceVos, AdspaceVo{Id:idint, Name:namestr, MediaName:mediastr, EstDaily:est, MediaId:mediaidint, Description:descstr, PmpAdspaceKey:pmpAdspaceKeystr})
 	}
 
 	return adspaceVos, int64(len(adspaceVos))
