@@ -195,6 +195,8 @@ type DemandMappingVo struct {
 	MappedAdspaceId int
 	MappedAdspaceName string
 	Ck int
+	DemandName string
+	DemandId int
 }
 
 // get the all the demands information to map to a specified adspace
@@ -207,7 +209,7 @@ func GetDemandsMappingInfo(page int64, page_size int64, sort string, name string
 		offset = (page - 1) * page_size
 	}
 	var r orm.RawSeter
-	sql := "SELECT d.id, d.name, CASE WHEN matrix.mapped_adspace_id IS NOT NULL THEN 1 ELSE 0 END AS ck, matrix.mapped_adspace_id, matrix.mapped_adspace_name FROM pmp_demand_platform_desk d left join (SELECT m.pmp_adspace_id as mapped_adspace_id, a.name as mapped_adspace_name, m.demand_id FROM pmp_adspace_matrix m INNER JOIN pmp_adspace a on m.pmp_adspace_id = a.id  WHERE m.pmp_adspace_id=?) as matrix on d.id = matrix.demand_id WHERE (d.del_flg is null OR d.del_flg != 1) "
+	sql := "SELECT demandadspace.id, demandadspace.name, d.name as demand_name, d.id as demand_id, CASE WHEN matrix.mapped_adspace_id IS NOT NULL THEN 1 ELSE 0 END AS ck, matrix.mapped_adspace_id, matrix.mapped_adspace_name FROM pmp_demand_platform_desk d inner join pmp_demand_adspace demandadspace on d.id=demandadspace.demand_id left join (SELECT m.demand_adspace_id, m.pmp_adspace_id as mapped_adspace_id, a.name as mapped_adspace_name, m.demand_id FROM pmp_adspace_matrix m INNER JOIN pmp_adspace a on m.pmp_adspace_id = a.id  WHERE m.pmp_adspace_id=?) as matrix on demandadspace.id = matrix.demand_adspace_id WHERE (d.del_flg is null OR d.del_flg != 1) AND (demandadspace.del_flg is null OR demandadspace.del_flg != 1) "
 	if demandid > 0 {
 		name = "%" + name + "%"
 		sql = sql + "AND d.id=? AND d.name LIKE ?"

@@ -47,20 +47,11 @@
 					$('#demandcc').combobox({					    
 					    valueField:'Id',
 					    textField:'Name',
-						url:'/pmp/demand/getDemandsMappingInfo',
+						url:'/pmp/demand/demands',
 						readonly:true					
 					});
 					
-					adjustHeight('#mediacc');
         		});
-				
-				function adjustHeight(id) {
-					$(id).combobox({onShowPanel: function(){
-							var len = $(id).combobox('getData').length;
-							$(id).combobox({panelMaxHeight:100, panelHeight:len * 20, editable:false});							
-						} 
-					});
-				}
 				
 				//新建广告位
 				function addrow(){
@@ -68,9 +59,6 @@
 					$("#form1").form('clear');
 					$('#savebutton').show();
 					$('#cancelbutton').show();
-					$('#demandcc').combobox({					    					   
-						readonly:true					
-					});
 					$('#demandcc').combobox("setValue", demandid);
 				    $("#dd").dialog('open');
 				}	
@@ -118,15 +106,11 @@
 				
 				function editRow() {
 					$('#dd').dialog({title: '编辑广告位'});
-					$('#demandcc').combobox({					    					   
-						readonly:true					
-					});
 					$('#savebutton').show();
 					$('#cancelbutton').show();
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
 					$("#form1").form('load', row);
-
 				}
 				
 				function deleteRow() {
@@ -201,7 +185,7 @@
 		                </tr>
 						<tr>
 		                    <td>所属媒体：</td>
-		                    <td><input id="mediacc" class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'" required="true"/></td>
+		                    <td><input id="mediacc" class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>所属需求方平台：</td>

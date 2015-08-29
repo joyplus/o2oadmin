@@ -14,6 +14,7 @@ func init() {
 	beego.Router("/pmp/adspace/deladspace", &controllers.PmpAdspaceController{}, "*:Delete")
 
 	beego.Router("/pmp/demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandByAdspace")
+	beego.Router("/pmp/demand/demands", &controllers.PmpDemandPlatformDeskController{}, "*:GetAll")
 	beego.Router("/pmp/demand/updateDailyAllocation", &controllers.PmpDemandPlatformDeskController{}, "*:UpdateDailyAllocation")
 
 	beego.Router("/pmp/demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList")
