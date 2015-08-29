@@ -90,6 +90,30 @@ Date.prototype.format = function(format){
     }
     return format;
 };
+Date.prototype.formatWithoutTime = function(format){
+    /*
+     * eg:format="yyyy-MM-dd";
+     */
+    if(!format){
+        format = "yyyy-MM-dd";
+    }
+
+    var o = {
+        "M+": this.getMonth() + 1, // month
+        "d+": this.getDate() // day
+    };
+
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" +o[k]).length));
+        }
+    }
+    return format;
+};
 //扩展datagrid的日期编辑框
 $.extend($.fn.datagrid.defaults.editors, {
     datetimebox: {//datetimebox就是你要自定义editor的名称
@@ -143,7 +167,7 @@ $.extend($.fn.datagrid.methods, {
     }
 });
 //这是自己添加的代码，为了释放tabs中引入iframe内存未释放的问题。
-$.fn.panel.defaults = $.extend({},$.fn.panel.defaults,{onBeforeDestroy:function(){
+/*$.fn.panel.defaults = $.extend({},$.fn.panel.defaults,{onBeforeDestroy:function(){
 	var frame=$('iframe', this);
 	if(frame.length>0){
 		frame[0].contentWindow.document.write('');
@@ -154,12 +178,12 @@ $.fn.panel.defaults = $.extend({},$.fn.panel.defaults,{onBeforeDestroy:function(
 		}
 	}
 	}
-});
+});*/
 //扩展日历选中时间的格式化
-$.fn.datebox.defaults.formatter = function(date){
+/*$.fn.datebox.defaults.formatter = function(date){
     var y = date.getFullYear();
     var m = date.getMonth()+1;
     var d = date.getDate();
     return y+'-'+m+'-'+d;
-}
+}*/
 

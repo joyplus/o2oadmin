@@ -183,8 +183,8 @@ func UpdateImpByDemandAdpaceIdAndAdDate(demandadspaceid int, proportion int, dat
 	}
 	var num int64 = 0
 	o.Begin()
-	res, err := o.Raw(proportionSql, proportion, demandadspaceid).Exec()
-	if m,_ := res.RowsAffected(); m !=1 || err != nil {
+	_, err := o.Raw(proportionSql, proportion, demandadspaceid).Exec()
+	if err != nil {
 		o.Rollback()
 		fmt.Println("Update Priority SQL Syntax Error")
 		return 0, err 
