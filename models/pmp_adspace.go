@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"o2oadmin/lib"
 )
 
 type PmpAdspace struct {
@@ -43,6 +44,13 @@ func init() {
 func AddPmpAdspace(m *PmpAdspace) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
+	if err == nil {
+		// generate PmpAdspaceKey automatically
+		pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + m.Name);
+		o.Read(m);
+		m.PmpAdspaceKey = pmpAdspaceKey;
+		_, err = o.Update(m);
+	}
 	return
 }
 
