@@ -55,7 +55,7 @@
         $('#endDate').datebox('setValue', new Date().format('MM/dd/yyyy'));
 
         $('#dg').datagrid({
-            url:'GetPdbMediaReportData',
+            url:'getPdbMediaReportData',
             rownumbers:true,
             singleSelect:true,
             method:'get',

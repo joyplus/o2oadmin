@@ -64,19 +64,9 @@
 					        filterData2();
 					    }
 					});					
-					adjustHeight("#mediacc");
-					adjustHeight("#mediacc2");
-					adjustHeight("#demandcc");
 					initContextMenu();
-        		});
-				
-				function adjustHeight(id) {
-					$(id).combobox({onShowPanel: function(){
-							var len = $(id).combobox('getData').length;
-							$(id).combobox({panelMaxHeight:100, panelHeight:len * 20, editable:false});							
-						} 
-					});
-				}
+					
+        		});				
 				
 				//新建广告位弹窗
 				function addrow(){
@@ -139,7 +129,6 @@
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
 					$("#form1").form('load', row);
-
 				}
 				
 				function deleteRow() {
@@ -195,10 +184,12 @@
 									return html;						
 								}
 							},
-				            {field:'MappedAdspaceName',title:'广告位名称',width:350},		
-							{field:'Name',title:'所属需求方平台',width:350},											
+				            {field:'Name',title:'需求方平台广告位',width:350},		
+							{field:'DemandName',title:'所属需求方平台',width:350},											
 							{field:'Id', hidden:true},
-							{field:'MappedAdspaceId', hidden:true}
+							{field:'MappedAdspaceId', hidden:true},
+							{field:'DemandId', hidden:true}
+							
 				        ]]
 				    });	
 					
@@ -230,7 +221,7 @@
 				                if(r != "OK"){
 				                    alert(r);
 				                }else{
-				                    $("#demandDataGrid").datagrid("reload");
+				                    $("#dg").datagrid("reload");
 									$("#mapDemandDialog").dialog("close");
 				                }
 				            }});
@@ -291,7 +282,7 @@
 				<div class="search" style="float:right; padding-left:5px;">	              	              
 	              <input type="text" class="" id="field1" placeholder="请输入部分广告位名称">				  
 	          </div>
-			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'"></div>
+			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'"></div>
 			</div>
 		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
 	            url="/pmp/adspace/index"
@@ -320,7 +311,7 @@
 		                </tr>
 		                <tr>
 		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" id="mediacc2" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'" required="true"/></td>
+		                    <td><input class="easyui-combobox" id="mediacc2" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>
@@ -344,7 +335,7 @@
 				    <table>
 				        <tr>
 							<td width="300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/getDemandsMappingInfo'" /></td>
+				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/demands', panelHeight:'auto'" /></td>
 				            <td>
 				                <input type="text" class="" id="field2" placeholder="请输入部分需求方平台名称"/>	
 				            </td>

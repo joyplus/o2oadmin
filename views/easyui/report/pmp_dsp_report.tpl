@@ -50,7 +50,7 @@
         $('#endDate').datebox('setValue', new Date().format('MM/dd/yyyy'));
 
         $('#dg').datagrid({
-            url:'GetPdbDspReportData',
+            url:'getPdbDspReportData',
             rownumbers:true,
             singleSelect:true,
             method:'get',
