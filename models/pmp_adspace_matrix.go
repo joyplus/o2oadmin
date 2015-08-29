@@ -187,18 +187,18 @@ func UpdateAdspaceMatrix(v []DemandMappingVo) (err error) {
 	o.Begin()
 	for _, vo := range v {
 		if vo.Ck == 0 {
-			sql := "DELETE FROM pmp_adspace_matrix WHERE demand_id = ? and pmp_adspace_id = ?"
+			sql := "DELETE FROM pmp_adspace_matrix WHERE demand_adspace_id=? AND pmp_adspace_id = ? "
 			_, err = o.Raw(sql, vo.Id, vo.MappedAdspaceId).Exec()
 			if err != nil {
 				o.Rollback()
 				return err
 			}
 		} else {
-			sql := "SELECT * FROM pmp_adspace_matrix WHERE demand_id = ? and pmp_adspace_id = ?"
+			sql := "SELECT * FROM pmp_adspace_matrix WHERE demand_adspace_id = ? and pmp_adspace_id = ?"
 			var matrix orm.Params
 			o.Raw(sql, vo.Id, vo.MappedAdspaceId).QueryRow(&matrix)
 			if matrix == nil {
-				m := PmpAdspaceMatrix{PmpAdspaceId:vo.MappedAdspaceId, DemandId: vo.Id}
+				m := PmpAdspaceMatrix{PmpAdspaceId:vo.MappedAdspaceId, DemandId: vo.DemandId, DemandAdspaceId:vo.Id}
 				fmt.Println("-------", m)
 				_, err = o.Insert(&m)
 				if err != nil {
