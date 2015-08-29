@@ -38,7 +38,8 @@
 									}
 							},
 							{field:'MediaId', hidden:true},
-							{field:'Description', hidden:true}
+							{field:'Description', hidden:true},
+							{field:'PmpAdspaceKey', hidden:true}
 														
 						]],
 		                view: detailview,
@@ -304,7 +305,7 @@
 				<div style="padding:20px 20px 40px 80px;" >
 			    <form id="form1" method="post">
 		            <table>
-						<tr><input name="Id" hidden="true"/> </tr>
+						<tr><td><input name="Id" hidden="true"/></td><td></td> </tr>
 		                <tr>
 		                    <td>广告位名称：</td>
 		                    <td><input name="Name" class="easyui-validatebox" required="true"/></td>
@@ -313,10 +314,14 @@
 		                    <td>所属媒体：</td>
 		                    <td><input class="easyui-combobox" id="mediacc2" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'" required="true"/></td>
 		                </tr>
+						<tr>
+		                    <td>PmpAdspaceKey：</td>
+		                    <td><input name="PmpAdspaceKey" readonly/></td>
+		                </tr>
 		                <tr>
 		                    <td>备注：</td>
 		                    <td><textarea style="height:150px;" name="Description" class="easyui-validatebox" validType="length[0,1000]"></textarea></td>
-		                </tr>
+		                </tr>											
 		            </table>
 		        </form>
 				</div>
