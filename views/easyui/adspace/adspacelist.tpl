@@ -197,7 +197,7 @@
 		                </tr>
 						<tr>
 		                    <td>Ad space Key</td>
-		                    <td><input name="PmpAdspaceKey" class="easyui-validatebox" required="true"/></td>
+		                    <td><input name="PmpAdspaceKey" readonly/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>
