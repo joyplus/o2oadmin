@@ -46,10 +46,10 @@ func AddPmpAdspace(m *PmpAdspace) (id int64, err error) {
 	id, err = o.Insert(m)
 	if err == nil {
 		// generate PmpAdspaceKey automatically
-		pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + m.Name);
-		o.Read(m);
-		m.PmpAdspaceKey = pmpAdspaceKey;
-		_, err = o.Update(m);
+		pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + m.Name)
+		o.Read(m)
+		m.PmpAdspaceKey = pmpAdspaceKey
+		_, err = o.Update(m)
 	}
 	return
 }
@@ -64,7 +64,29 @@ func AddPmpAdspaceAndMapDemand(v *AdspaceVo) (id int64, err error) {
         o.Rollback()
         return -1, err
     }
-    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId}
+	// generate PmpAdspaceKey automatically
+	pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + v.Name);
+	var m *PmpAdspace = &PmpAdspace{}
+	m.Id = int(id)
+	o.Read(m)
+	m.PmpAdspaceKey = pmpAdspaceKey
+	_, err = o.Update(m)
+	if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+	sql := "SELECT id FROM pmp_demand_adspace WHERE demand_id = ? order by id desc limit 1"
+	var maps []orm.Params
+	_, err = o.Raw(sql, v.DemandId).Values(&maps)
+	if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+	var daid int
+	if idv, ok := maps[0]["id"].(string); ok {	
+		daid,_ = strconv.Atoi(idv)		
+	}
+    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId, DemandAdspaceId:daid}
     id, err = o.Insert(&matrix)
     if err != nil {
         o.Rollback()
