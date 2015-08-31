@@ -155,7 +155,7 @@ func GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceid int, startdate string, 
 	var querysql string = "select ad.name, ad.demand_adspace_name, ad.demand_adspace_id, ad.priority, da.imp, da.clk, da.ctr, da.ad_date from " +
 							"(select matrix.pmp_adspace_id, matrix.demand_id as demand_id, demand.name, demandspace.name as demand_adspace_name, matrix.demand_adspace_id, matrix.priority from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_adspace demandspace on matrix.demand_adspace_id=demandspace.id inner join pmp_demand_platform_desk as demand on demandspace.demand_id=demand.id where adspace.id=?) as ad " +
 							"left join " + 
-							"(select * from pmp_daily_allocation where ad_date >= STR_TO_DATE(?,'%Y-%m-%d') and ad_date <= STR_TO_DATE(?,'%Y-%m-%d')) as da on ad.demand_adspace_id = da.demand_adspace_id"
+							"(select * from pmp_daily_allocation where ad_date >= STR_TO_DATE(?,'%Y-%m-%d') and ad_date <= STR_TO_DATE(?,'%Y-%m-%d')) as da on ad.demand_adspace_id = da.demand_adspace_id order by ad.demand_adspace_id"
 	o := orm.NewOrm()
 	var dailyAllocationVos []PmpDailyAllocationVo
 	fmt.Println("startdate: ", startdate, " enddate: ", enddate)
