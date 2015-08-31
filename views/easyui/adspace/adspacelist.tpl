@@ -47,21 +47,18 @@
 					$('#demandcc').combobox({					    
 					    valueField:'Id',
 					    textField:'Name',
-						url:'/pmp/demand/getDemandsMappingInfo',
-						editable:false,
-						panelHeight:'100',
+						url:'/pmp/demand/demands',
 						readonly:true					
 					});
-
-        			});
+					
+        		});
 				
 				//新建广告位
 				function addrow(){
 					$('#dd').dialog({title: '新建广告位'});
 					$("#form1").form('clear');
-					$('#demandcc').combobox({					    					   
-						readonly:true					
-					});
+					$('#savebutton').show();
+					$('#cancelbutton').show();
 					$('#demandcc').combobox("setValue", demandid);
 				    $("#dd").dialog('open');
 				}	
@@ -109,15 +106,11 @@
 				
 				function editRow() {
 					$('#dd').dialog({title: '编辑广告位'});
-					$('#demandcc').combobox({					    					   
-						readonly:true					
-					});
 					$('#savebutton').show();
 					$('#cancelbutton').show();
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
 					$("#form1").form('load', row);
-
 				}
 				
 				function deleteRow() {
@@ -132,7 +125,7 @@
 				                if(data == "OK"){
 				                    $("#dg").datagrid('reload');
 				                }else{
-				                    vac.alert(r.info);
+				                    vac.alert(data);
 				                }
 				            })
 				        }
@@ -157,9 +150,9 @@
 		    <div> 
 				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建广告位</a></div> 
 				<div style="display:inline"> <a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a></div> 
-				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
+				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >搜索</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
-	              <input type="text" class="" id="field1" placeholder="请输入部分名称">				  
+	              <input type="text" class="" id="field1" placeholder="请输入部分名称"/>				  
 	          </div>
 			</div>
 		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
@@ -192,7 +185,7 @@
 		                </tr>
 						<tr>
 		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias',editable:false,panelHeight:'100'" required="true"/></td>
+		                    <td><input id="mediacc" class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>所属需求方平台：</td>
@@ -204,7 +197,7 @@
 		                </tr>
 						<tr>
 		                    <td>Ad space Key</td>
-		                    <td><input name="PmpAdspaceKey" class="easyui-validatebox" required="true"/></td>
+		                    <td><input name="PmpAdspaceKey" readonly/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>

@@ -29,12 +29,40 @@
 					        filterData();
 					    }
 					});
+					initContextMenu();
+					
         		});
+				
+				function initContextMenu() {
+					// append a top menu item
+					$('#mm').menu('appendItem', {
+						text: '查看广告位',
+						onclick: onViewAdspace
+					});
+					// append a menu separator
+					$('#mm').menu('appendItem', {
+						separator: true
+					});
+					$('#mm').menu('appendItem', {
+						text: '查看',
+						onclick: viewRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '编辑',
+						onclick: editRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '删除',
+						onclick: deleteRow
+					});
+				}
 				
 				//新建需求方平台弹窗
 				function addrow(){
 					$('#dd').dialog({title: '新建需求方平台'});
 					$("#form1").form('clear');
+					$('#savebutton').show();
+					$('#cancelbutton').show();
 				    $("#dd").dialog('open');
 				}	
 				
@@ -76,57 +104,8 @@
 					openNewTab(href, newtabTitle);
 				}
 				
-				//var tabs = window.parent.parent.document.getElementById("#tabs");
 				function openNewTab(href, newtabTitle) {
-					/*alert(tabs);
-			        if(href){
-			            var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
-			        }else{
-			            var content = '未实现';
-			        }
-					alert("start tab");	   
-					//已经存在tabs则选中它
-			        if(tabs.tabs('exists',newtabTitle)){
-			            //选中
-			            tabs.tabs('select',newtabTitle);
-			            //refreshTab(newtabTitle);
-			        }else{
-			            //添加
-			            tabs.tabs('add',{
-			                title:newtabTitle,
-			                content:content,
-			                closable:true,
-			                cache:false,
-			                fit:'true'
-			            });
-			        }             						
-					alert("view adspace");*/
 					window.location = href;
-				}
-	
-				function viewAdspace() {
-					var row = $('#dg').datagrid('getSelected');
-					var demandname = row.Name;
-					var href = "/pmp/demand/getAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";
-					var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
-					alert(demandname);
-					alert($('#tabs'));
-					$('#tabs').tabs('add',{
-						title: 'new tab',
-						selected: false
-					});
-					alert("1");
-					alert($('#tabs').tabs('getTab', 'User'));
-					var title = $('#tabs').tabs('getTab', 'User').panel('options').title;
-					alert(title);
-					$("#tabs").tabs('add',{
-                        title: demandname,
-                        content:content,
-                        closable:true,
-                        cache:false,
-                        fit:'true'
-                    });
-					alert("2");
 				}
 				
 				function viewRow() {
@@ -160,7 +139,7 @@
 				                if(data == "OK"){
 				                    $("#dg").datagrid('reload');
 				                }else{
-				                    vac.alert(r.info);
+				                    vac.alert(data);
 				                }
 				            })
 				        }
@@ -181,7 +160,7 @@
 		        
 		    <div> 
 				<div style="display:inline"> <a href="#" icon='icon-add' plain="true" onclick="addrow()" class="easyui-linkbutton" >新建需求方平台</a></div> 
-				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >刷新</a></div>
+				<div style="float:right; padding-right:30px"> <a href="#" icon='icon-reload' plain="true" onclick="filterData()" class="easyui-linkbutton" >搜索</a></div>
 				<div class="search" style="float:right; padding-left:5px;">	              	              
 	              <input type="text" class="" id="field1" placeholder="请输入部分名称">				  
 	          </div>
@@ -228,13 +207,7 @@
 				<a href="#" class="easyui-linkbutton" id='cancelbutton' onclick="cancelNew()">Close</a>
 			</div>
 			
-			<div id="mm" class="easyui-menu" style="width:120px;">
-				<div onclick="javascript:onViewAdspace()">查看广告位</div>
-				<div>--------------</div>
-				<div onclick="javascript:viewRow()">查看</div>
-				<div onclick="javascript:editRow()">编辑</div>
-				<div onclick="javascript:deleteRow()">删除</div>
-			</div>
+			<div id="mm" class="easyui-menu" style="width:120px;"></div>
 			
 		</body>
 	</html>

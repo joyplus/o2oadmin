@@ -51,11 +51,11 @@
         }).combobox('setValues', ['0', '1']);
 
 
-        $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('yyyy-MM-dd'));
-        $('#endDate').datebox('setValue', new Date().format('yyyy-MM-dd'));
+        $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('MM/dd/yyyy'));
+        $('#endDate').datebox('setValue', new Date().format('MM/dd/yyyy'));
 
         $('#dg').datagrid({
-            url:'GetPdbMediaReportData',
+            url:'getPdbMediaReportData',
             rownumbers:true,
             singleSelect:true,
             method:'get',

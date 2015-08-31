@@ -9,13 +9,14 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"o2oadmin/lib"
 )
 
 type PmpAdspace struct {
 	Id            int       `orm:"column(id);auto"`
 	Name          string    `orm:"column(name);size(255)"`
 	Description   string    `orm:"column(description);size(500);null"`
-	DelFlg        int8      `orm:"column(del_flg);null"`
+	DelFlg        int8      `orm:"column(del_flg);default(0)"`
 	CreateUser    int       `orm:"column(create_user);null"`
 	CreateTime    time.Time `orm:"column(create_time);type(timestamp);null"`
 	UpdateUser    int       `orm:"column(update_user);null"`
@@ -27,7 +28,7 @@ type PmpAdspace struct {
 	EstDailyClk   int       `orm:"column(est_daily_clk);null"`
 	EstDailyCtr   float32   `orm:"column(est_daily_ctr);null"`
 	Status        int       `orm:"default(1)" form:"Status" valid:"Range(1,2)"`
-	CreativeType int       `orm:"default(1)" form:"CreativeType" valid:"Range(1,2)"`
+	CreativeType  int       `orm:"default(1)" form:"CreativeType" valid:"Range(1,2)"`
 }
 
 func (t *PmpAdspace) TableName() string {
@@ -43,6 +44,13 @@ func init() {
 func AddPmpAdspace(m *PmpAdspace) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
+	if err == nil {
+		// generate PmpAdspaceKey automatically
+		pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + m.Name)
+		o.Read(m)
+		m.PmpAdspaceKey = pmpAdspaceKey
+		_, err = o.Update(m)
+	}
 	return
 }
 
@@ -56,7 +64,29 @@ func AddPmpAdspaceAndMapDemand(v *AdspaceVo) (id int64, err error) {
         o.Rollback()
         return -1, err
     }
-    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId}
+	// generate PmpAdspaceKey automatically
+	pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + v.Name);
+	var m *PmpAdspace = &PmpAdspace{}
+	m.Id = int(id)
+	o.Read(m)
+	m.PmpAdspaceKey = pmpAdspaceKey
+	_, err = o.Update(m)
+	if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+	sql := "SELECT id FROM pmp_demand_adspace WHERE demand_id = ? order by id desc limit 1"
+	var maps []orm.Params
+	_, err = o.Raw(sql, v.DemandId).Values(&maps)
+	if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+	var daid int
+	if idv, ok := maps[0]["id"].(string); ok {	
+		daid,_ = strconv.Atoi(idv)		
+	}
+    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId, DemandAdspaceId:daid}
     id, err = o.Insert(&matrix)
     if err != nil {
         o.Rollback()
@@ -110,7 +140,7 @@ type AdspaceVo struct {
 
 // get adspace list by demand id , may filtered by adspace name
 func GetAdspaceListByDemandId(page int64, page_size int64, sort string, demandid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
-	var sql = "select adspace.id, adspace.name, adspace.media_id, adspace.secret_key,adspace.pmp_adspace_key,adspace.description, demand.id as demand_id, demand.name as demand_name from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id where demand.id=? "
+	var sql = "select distinct adspace.id, adspace.name, adspace.media_id, adspace.secret_key,adspace.pmp_adspace_key,adspace.description, demand.id as demand_id, demand.name as demand_name from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id where demand.id=? "
 	var offset int64
 	if page <= 1 {
 		offset = 0
@@ -157,19 +187,20 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 	var maps []orm.Params
 	o := orm.NewOrm()
 	var r orm.RawSeter
+	var query string = "SELECT a.id, a.name, a.media_id, a.description, a.pmp_adspace_key, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.del_flg != 1 "
 	var adspacenamecon string = "%" + adspacename + "%"
     if mediaid == -1 && adspacename == "" {		
-		query1 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id ORDER BY a.id ASC limit ? offset ?"
-		r = o.Raw(query1, page_size, offset)
+		query = query + "ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query, page_size, offset)
 	} else if mediaid != -1 && adspacename != "" {
-		query2 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND m.id=? AND a.name like ? ORDER BY a.id ASC limit ? offset ?"
-		r = o.Raw(query2, mediaid, adspacenamecon, page_size, offset)
+		query = query + "AND m.id=? AND a.name like ? ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query, mediaid, adspacenamecon, page_size, offset)
 	} else if mediaid != -1 {
-		query3 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND m.id=? ORDER BY a.id ASC limit ? offset ?"
-		r = o.Raw(query3, mediaid, page_size, offset)
+		query = query + "AND m.id=? ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query, mediaid, page_size, offset)
 	} else {
-		query4 := "SELECT a.id, a.name, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.name like ? ORDER BY a.id ASC limit ? offset ?"
-		r = o.Raw(query4, adspacenamecon, page_size, offset)
+		query = query + "AND a.name like ? ORDER BY a.id ASC limit ? offset ?"
+		r = o.Raw(query, adspacenamecon, page_size, offset)
 	}
 	num, err := r.Values(&maps)
 	if err == nil {
@@ -185,14 +216,13 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 		return nil, 0
 	}
 	fmt.Println(maps)
+	var impstr,clkstr,ctrstr,descstr string
+	var idint,mediaidint int	
+	var namestr, mediastr,pmpAdspaceKeystr string
 	for index := 0; index < len(maps); index++ {
 		imp := maps[index]["est_daily_imp"]
 		clk := maps[index]["est_daily_clk"]
 		ctr := maps[index]["est_daily_ctr"]
-	
-		var impstr,clkstr,ctrstr string
-		var idint int	
-		var namestr, mediastr string
 		
 		if impv, ok := imp.(string); ok {
 			impstr = impv
@@ -203,21 +233,32 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 		if ctrv, ok := ctr.(string); ok {
 			ctrstr = ctrv
 		}
-		//strconv.FormatFloat(float64(ctrfloat32), 'f', 2, 32) 
 		
 		est := impstr + "," + clkstr + "," + ctrstr
-		fmt.Println("**********" + est + "**********")
+//		fmt.Println("**********" + est + "**********")
 	
 		if idv, ok := maps[index]["id"].(string); ok {
 			idint,_ = strconv.Atoi(idv)
 		} 
+		
+		if idv, ok := maps[index]["media_id"].(string); ok {
+			mediaidint,_ = strconv.Atoi(idv)
+		} 	
+			
 		if namev, ok := maps[index]["name"].(string); ok {
 			namestr = namev
 		}
 		if mediav, ok := maps[index]["media"].(string); ok {
 			mediastr = mediav
 		}
-		adspaceVos = append(adspaceVos, AdspaceVo{Id:idint, Name:namestr, MediaName:mediastr, EstDaily:est})
+		if descv, ok := maps[index]["description"].(string); ok {
+			descstr = descv
+		}
+		if v, ok := maps[index]["pmp_adspace_key"].(string); ok {
+			pmpAdspaceKeystr = v
+		}
+		
+		adspaceVos = append(adspaceVos, AdspaceVo{Id:idint, Name:namestr, MediaName:mediastr, EstDaily:est, MediaId:mediaidint, Description:descstr, PmpAdspaceKey:pmpAdspaceKeystr})
 	}
 
 	return adspaceVos, int64(len(adspaceVos))
@@ -312,17 +353,40 @@ func UpdatePmpAdspaceById(m *PmpAdspace) (err error) {
 	return
 }
 
+// only update mediaid, name and description
+func UpdatePmpAdspace(m *PmpAdspace) (err error) {
+	o := orm.NewOrm()
+	v := PmpAdspace{Id: m.Id}
+	// ascertain id exists in the database
+	if err = o.Read(&v); err == nil {
+		var num int64
+		v.MediaId = m.MediaId
+		v.Name = m.Name
+		v.Description = m.Description
+		if num, err = o.Update(&v); err == nil {
+			fmt.Println("Number of records updated in database:", num)
+		}
+	}
+	return
+}
+
 // DeletePmpAdspace deletes PmpAdspace by Id and returns error if
 // the record to be deleted doesn't exist
 func DeletePmpAdspace(id int) (err error) {
 	o := orm.NewOrm()
-	v := PmpAdspace{Id: id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Delete(&PmpAdspace{Id: id}); err == nil {
-			fmt.Println("Number of records deleted in database:", num)
-		}
+	o.Begin()
+	sql := "DELETE FROM pmp_adspace_matrix WHERE pmp_adspace_id=? "
+	_, err = o.Raw(sql, id).Exec()
+	if err != nil {
+		o.Rollback()
+		return err	
 	}
-	return
+	sql = "UPDATE pmp_adspace SET del_flg=1 WHERE id = ? "
+	_, err = o.Raw(sql, id).Exec()
+	if err != nil {
+		o.Rollback()
+		return err	
+	}
+	o.Commit()
+	return nil
 }

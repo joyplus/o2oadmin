@@ -62,9 +62,10 @@ func (this *PmpDemandPlatformDeskController) GetDemandList(){
 // get the all the demands information to map to a specified adspace
 func (c *PmpDemandPlatformDeskController) GetDemandsMappingInfo() {
 	adspaceId, _ := c.GetInt("adspaceid")
+	demandid, _ := c.GetInt("demandid")
 	page, err := c.GetInt64("page")
 	name := c.GetString("name")
-	beego.Info(" **** param adspaceid:", adspaceId, " **** page:", c.GetString("page"), " **** demand name:", name)
+	beego.Info(" **** param adspaceid:", adspaceId, " **** page:", c.GetString("page"), " **** demand name:", name, "*** demandid:", demandid)
 	var page_size int64 
 	if err != nil {
 		page = 0	
@@ -72,7 +73,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandsMappingInfo() {
 		page_size, _ = c.GetInt64("rows")
 	}	
 	sort := "d.Id"
-	demandMappingVos, _ := models.GetDemandsMappingInfo(page, page_size, sort, name, adspaceId)	
+	demandMappingVos, _ := models.GetDemandsMappingInfo(page, page_size, sort, name, adspaceId, demandid)	
 	if page > 0 {
 		c.Data["json"] = &map[string]interface{}{"total": len(demandMappingVos), "rows": &demandMappingVos}
 	} else {
@@ -138,11 +139,11 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 		y,m,d = startdate.Date()
 		days[i] = strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
 	}
-	var lastdemandname string = ""
+	var lastdemandadspaceid int = -1
 	for _, v := range dailyAllocations {	
-		if lastdemandname != v.Name {
+		if lastdemandadspaceid != v.DemandAdspaceId {
 			demandVos = append(demandVos, DemandVo{Name:v.Name, DemandAdspaceId:v.DemandAdspaceId, Proportion:v.Priority, DemandAdspaceName:v.DemandAdspaceName})
-			lastdemandname = v.Name
+			lastdemandadspaceid = v.DemandAdspaceId
 		}
 		y,m,d  := v.AdDate.Date()
 		addate := strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
@@ -288,7 +289,7 @@ func (c *PmpDemandPlatformDeskController) GetAll() {
 	var sortby []string
 	var order []string
 	var query map[string]string = make(map[string]string)
-	var limit int64 = 10
+	var limit int64 = 1000
 	var offset int64 = 0
 
 	// fields: col1,col2,entity.col3

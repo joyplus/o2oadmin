@@ -1,4 +1,5 @@
 {{template "../public/header.tpl"}}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script type="text/javascript">
 var URL="/public"
     $( function() {
@@ -103,6 +104,14 @@ var URL="/public"
     function redo(){
         $('#tree').tree('collapseAll');
     }
+    function dropdown_personalmenu(){
+        if($('#dropdown-menu').hasClass('close')){
+            $('#dropdown-menu').removeClass('close');
+        }
+        else{
+            $('#dropdown-menu').addClass('close');
+        }
+    }
     function modifypassword(){
         $("#dialog").dialog({
             modal:true,
@@ -150,6 +159,10 @@ var URL="/public"
 </script>
 
 <style>
+
+ul li{
+    list-style: none;
+}
 .ht_nav {
     float: left;
     overflow: hidden;
@@ -171,23 +184,215 @@ var URL="/public"
     color:#F20;
 
 }
+
+.header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1002;
+}
+.white-bg {
+    background: #fff;
+    border-bottom: 1px solid #f1f2f7;
+}
+.sidebar-toggle-box {
+    float: left;
+    padding-right: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.sidebar-toggle-box .fa-bars {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+}
+.fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+::selection {
+    background: #FF6C60;
+    color: #fff;
+}
+.fa-bars:before {
+    content: "\f0c9";
+}
+a.logo {
+    font-size: 21px;
+    color: #2e2e2e;
+    float: left;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+a, a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+}
+a.logo span {
+    color: #FF6C60;
+}
+.top-nav {
+    margin-top: 7px;
+}
+.pull-right {
+    float: right!important;
+}
+.top-nav ul.top-menu > li {
+    margin-left: 10px;
+}
+.top-nav ul.top-menu > li > a {
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 6px;
+    background: none;
+    margin-right: 15px;
+}
+ul.top-menu > li > a {
+    color: #666666;
+    font-size: 16px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #f0f0f8 !important;
+    padding: 2px 6px;
+    margin-right: 15px;
+}
+.top-nav .username {
+    font-size: 13px;
+    color: #555555;
+}
+.top-nav .nav .caret {
+    border-bottom-color: #A4AABA;
+    border-top-color: #A4AABA;
+}
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px solid;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+ul.top-menu{
+    margin-top: 5px;
+}
+.top-nav ul.top-menu > li .dropdown-menu.logout {
+    width: 268px !important;
+    position:absolute;
+    top:50px;
+}
+.top-nav .dropdown-menu.extended.logout {
+    top: 50px;
+}
+.top-nav li.dropdown .dropdown-menu {
+    float: right;
+    right: 0;
+    left: auto;
+}
+.log-arrow-up {
+    background: url("../img/arrow-up.png") no-repeat;
+    width: 20px;
+    height: 11px;
+    position: absolute;
+    right: 20px;
+    top: -10px;
+}
+.dropdown-menu.extended.logout > li {
+    float: left;
+    text-align: center;
+    width: 33.3%;
+}
+.dropdown-menu.extended.logout > li > a {
+    color: #a4abbb;
+    border-bottom: none !important;
+}
+.dropdown-menu.extended li a {
+    padding: 15px 10px !important;
+    display: inline-block;
+}
+.dropdown-menu.extended li a {
+    border-bottom: 1px solid #EBEBEB !important;
+    font-size: 12px;
+    list-style: none;
+}
+.dropdown-menu>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+.dropdown-menu.extended.logout > li:last-child {
+    float: left;
+    text-align: center;
+    width: 100%;
+    background: #a9d96c;
+    border-radius: 0 0 3px 3px;
+}
+.dropdown-menu.extended.logout > li:last-child > a, .dropdown-menu.extended.logout > li:last-child > a:hover {
+    color: #fff;
+    border-bottom: none !important;
+    text-transform: uppercase;
+}
+.dropdown-menu.extended.logout > li > a i {
+    font-size: 17px;
+}
+.close{
+    display:none;
+}
+.dropdown-menu.extended.logout > li > a > i {
+    display: block;
+}
+.dropdown-menu.extended {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
+}
+.layout-panel-west{
+    top:45px;
+}
+.layout-panel-center{
+    top:125px;
+}
 </style>
 <body class="easyui-layout" style="text-align:left">
-<div region="north" border="false" style="overflow: hidden; width: 100%; height:82px; background:#D9E5FD;">
-    <div style="overflow: hidden; width:200px; padding:2px 0 0 5px;">
-        <h2>O2O Admin</h2>
-    </div>
-    <ul class="ht_nav">
-        {{range .groups}}
-            <li><span><a class="current"  href="#" onClick="selectgroup({{.Id}});$('.ht_nav li a').removeClass('current');$(this).addClass('current')">{{.Title}}</a></span></li>
-        {{end}}
-    </ul>
-    <div id="header-inner" style="float:right; overflow:hidden; height:80px; width:300px; line-height:25px; text-align:right; padding-right:20px;margin-top:-50px; ">
-        欢迎你！ {{.userinfo.Nickname}} <a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
-        <a href="/public/logout" target="_parent"> 退 出</a>
-    </div>
+<header class="header white-bg">
+          <div class="sidebar-toggle-box">
+              <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
+          </div>
+          <!--logo start-->
+          <a href="index.html" class="logo">PMP<span>管理平台</span></a>
+          <!--logo end-->
+
+          <div class="top-nav ">
+              <ul class="nav pull-right top-menu">
+                  <!-- user login dropdown start-->
+                  <li class="dropdown">
+                      <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false" onclick="dropdown_personalmenu()">
+                          <span class="username">{{.userinfo.Nickname}}</span>
+                          <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu extended logout close" id="dropdown-menu" style="padding-left:0px;right:15px;background-color: white;">
+                          <div class="log-arrow-up"></div>
+                          <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                          <li><a href="javascript:void(0);" onclick="modifypassword()"><i class="fa fa-cog"></i> 修改密码</a></li>
+                          <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                          <li><a href="/public/logout" target="_parent"><i class="fa fa-key"></i> 退出登录</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+</header>
+<div region="north" border="false" style="overflow: hidden; width: 100%; height:45px;">
 </div>
-<div id="dialog" >
+<div id="dialog">
     <div style="padding:20px 20px 40px 80px;" >
         <form id="form1" method="post">
             <table>
@@ -208,7 +413,7 @@ var URL="/public"
     </div>
 </div>
 </div>
-<div region="west" border="false" split="true" title="菜单"  tools="#toolbar" style="width:200px;padding:5px;">
+<div region="west" border="false" split="true" title="菜单"  tools="#toolbar" style="width:200px;padding:5px;" class="index_toolbar_fix">
     <ul id="tree"></ul>
 </div>
 <div region="center" border="false" >
