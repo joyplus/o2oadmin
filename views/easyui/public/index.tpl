@@ -368,7 +368,7 @@ ul.top-menu{
               <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
           </div>
           <!--logo start-->
-          <a href="index.html" class="logo">O2O<span>admin</span></a>
+          <a href="index.html" class="logo">PMP<span>管理平台</span></a>
           <!--logo end-->
 
           <div class="top-nav ">
