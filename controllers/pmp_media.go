@@ -107,9 +107,7 @@ func (this * PmpMediaController) GetMediaList() {
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &medias
+		//this.Data["json"] = &medias
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}

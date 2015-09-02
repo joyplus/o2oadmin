@@ -154,6 +154,8 @@
 				var allChanges = [];	
 				var adspaceid;			
 				function allocateToDemands() {
+					$("#field2").val("");
+					$('#demandcc').combobox("setValue", "需求方平台");
 					var row = $('#dg').datagrid('getSelected');
 					aid = row.Id;
 					adspaceid = aid;
@@ -342,7 +344,7 @@
 							<td width="300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/demands', panelHeight:'auto'" /></td>
 				            <td>
-				                <input type="text" class="" id="field2" placeholder="请输入部分需求方平台名称"/>	
+				                <input id="field2" type="text" placeholder="请输入部分需求方平台名称"/>	
 				            </td>
 				            <td><a href="#" icon='icon-reload' plain="true" onclick="filterData2()" class="easyui-linkbutton">搜索</a></td>
 				            <td>

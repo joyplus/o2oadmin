@@ -168,9 +168,7 @@ func (c *PmpDemandAdspaceController) GetDemandAdspaceListByDemand() {
 		adspaceVos, count = models.GetDemandAdspaceListByDemandId(page, page_size, sort, id, adspacename)
 	}
 	if usetpl {
-		tree := c.GetTree()
-		c.Data["tree"] = &tree
-		c.Data["json"] = &adspaceVos
+//		c.Data["json"] = &adspaceVos
 		c.Data["demandid"] = id
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"

@@ -49,9 +49,7 @@ func (this *PmpDemandPlatformDeskController) GetDemandList(){
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &demands
+//		this.Data["json"] = &demands
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
@@ -110,9 +108,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 	c.Data["maingridrowid"] = adspaceId
 	c.Data["startdate"] = date
 	if (usetpl) {
-		tree := c.GetTree()
-		c.Data["tree"] = &tree
-		c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
+		//c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
