@@ -28,7 +28,9 @@ func init() {
 	beego.Router("/pmp/demand/deldemand", &controllers.PmpDemandPlatformDeskController{}, "*:Delete")
 	beego.Router("/pmp/demand/getDemandsMappingInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandsMappingInfo")
 
-	beego.Router("/pmp/demand/getAdspaceByDemand", &controllers.PmpAdspaceController{}, "*:GetAdspaceListByDemand")
+	beego.Router("/pmp/demand/getDemandAdspaceByDemand", &controllers.PmpDemandAdspaceController{}, "*:GetDemandAdspaceListByDemand")
+	beego.Router("/pmp/adspace/updatedemandadspace", &controllers.PmpDemandAdspaceController{}, "*:SaveOrUpdateDemandAdspace")
+	beego.Router("/pmp/adspace/deldemandadspace", &controllers.PmpDemandAdspaceController{}, "*:Delete")
 
 	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")
 	beego.Router("/pmp/media/updatemedia", &controllers.PmpMediaController{}, "*:SaveOrUpdateMedia")
