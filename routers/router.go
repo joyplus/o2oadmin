@@ -64,6 +64,9 @@ func init() {
 	beego.Router("/api/resturant/getTransactionDetail", &controllers.ResturantController{}, "*:GetTransactionDetail")
 	beego.Router("/api/resturant/getRegularMaterialList", &controllers.ResturantController{}, "*:GetRegularMaterialList")
 
+	//Campaign
+	beego.Router("/pmp/campaign/add", &controllers.CampaignController{}, "*:Add")
+
 }
 
 //func router() {

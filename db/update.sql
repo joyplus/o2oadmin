@@ -8,3 +8,5 @@ INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_i
 
 UPDATE node SET name='report/getPdbMediaReport' WHERE id=35;
 UPDATE node SET name='report/getPdbDspReport' WHERE id=36;
+
+INSERT INTO `pmp`.`node` (`id`, `title`, `name`, `level`, `pid`, `remark`, `status`, `group_id`) VALUES (NULL, '创建活动', 'campaign/add', '2', '31', NULL, '2', '2');
