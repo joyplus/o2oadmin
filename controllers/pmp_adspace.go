@@ -184,9 +184,7 @@ func (this *PmpAdspaceController) GetAdspaceList() {
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &adspaces
+		//this.Data["json"] = &adspaces
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
