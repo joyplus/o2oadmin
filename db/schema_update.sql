@@ -157,3 +157,9 @@ CREATE TABLE IF NOT EXISTS `pmp`.`pmp_campaign_targeting` (
   `targeting_id` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+
+ALTER TABLE `pmp_adspace` ADD `cpm` FLOAT NOT NULL AFTER `forever_flg`, ADD `cpc` FLOAT NOT NULL AFTER `cpm`, ADD `pricing_type` INT NOT NULL AFTER `cpc`;
+ALTER TABLE `pmp_demand_adspace` ADD `cpm` FLOAT NOT NULL AFTER `adspace_type`, ADD `cpc` FLOAT NOT NULL AFTER `cpm`, ADD `pricing_type` INT NOT NULL AFTER `cpc`;
+ALTER TABLE `pmp_daily_report` ADD `cost` FLOAT NOT NULL AFTER `updateTime`, ADD `spending` FLOAT NOT NULL AFTER `cost`;
+ALTER TABLE `pmp_campaign_daily_report` ADD `cost` FLOAT NOT NULL AFTER `spending`;
