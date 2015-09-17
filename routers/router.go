@@ -66,6 +66,7 @@ func init() {
 
 	//Campaign
 	beego.Router("/pmp/campaign/add", &controllers.CampaignController{}, "*:Add")
+	beego.Router("/api/addcampaign", &controllers.CampaignController{}, "*:Add")
 
 }
 
