@@ -38,7 +38,8 @@
 									}
 							},
 							{field:'MediaId', hidden:true},
-							{field:'Description', hidden:true}
+							{field:'Description', hidden:true},
+							{field:'PmpAdspaceKey', hidden:true}
 														
 						]],
 		                view: detailview,
@@ -64,8 +65,9 @@
 					        filterData2();
 					    }
 					});					
+					initContextMenu();
 					
-        		});
+        		});				
 				
 				//新建广告位弹窗
 				function addrow(){
@@ -128,7 +130,6 @@
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
 					$("#form1").form('load', row);
-
 				}
 				
 				function deleteRow() {
@@ -153,6 +154,8 @@
 				var allChanges = [];	
 				var adspaceid;			
 				function allocateToDemands() {
+					$("#field2").val("");
+					$('#demandcc').combobox("setValue", "需求方平台");
 					var row = $('#dg').datagrid('getSelected');
 					aid = row.Id;
 					adspaceid = aid;
@@ -184,10 +187,12 @@
 									return html;						
 								}
 							},
-				            {field:'MappedAdspaceName',title:'广告位名称',width:350},		
-							{field:'Name',title:'所属需求方平台',width:350},											
+				            {field:'Name',title:'需求方平台广告位',width:350},		
+							{field:'DemandName',title:'所属需求方平台',width:350},											
 							{field:'Id', hidden:true},
-							{field:'MappedAdspaceId', hidden:true}
+							{field:'MappedAdspaceId', hidden:true},
+							{field:'DemandId', hidden:true}
+							
 				        ]]
 				    });	
 					
@@ -209,6 +214,7 @@
 				}
 				
 				function cancelMapChanges() {
+					allChanges = [];
 					$("#mapDemandDialog").dialog('close');
 				}
 				
@@ -218,7 +224,7 @@
 				                if(r != "OK"){
 				                    alert(r);
 				                }else{
-				                    $("#demandDataGrid").datagrid("reload");
+				                    $("#dg").datagrid("reload");
 									$("#mapDemandDialog").dialog("close");
 				                }
 				            }});
@@ -236,6 +242,30 @@
 					$("#field2").val("");
 					$('#demandcc').combobox("setValue", "需求方平台");
 					$("#demandDataGrid").datagrid('reload', {adspaceid:adspaceid,page:'1',rows:'10'});
+				}
+				
+				function initContextMenu() {
+					// append a top menu item
+					$('#mm').menu('appendItem', {
+						text: '关联需求方平台',
+						onclick: allocateToDemands
+					});
+					// append a menu separator
+					$('#mm').menu('appendItem', {
+						separator: true
+					});
+					$('#mm').menu('appendItem', {
+						text: '查看',
+						onclick: viewRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '编辑',
+						onclick: editRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '删除',
+						onclick: deleteRow
+					});
 				}
 		    </script>
 		    <style type="text/css">
@@ -255,7 +285,7 @@
 				<div class="search" style="float:right; padding-left:5px;">	              	              
 	              <input type="text" class="" id="field1" placeholder="请输入部分广告位名称">				  
 	          </div>
-			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias'"></div>
+			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'"></div>
 			</div>
 		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
 	            url="/pmp/adspace/index"
@@ -277,19 +307,23 @@
 				<div style="padding:20px 20px 40px 80px;" >
 			    <form id="form1" method="post">
 		            <table>
-						<tr><input name="Id" hidden="true"/> </tr>
+						<tr><td><input name="Id" hidden="true"/></td><td></td> </tr>
 		                <tr>
 		                    <td>广告位名称：</td>
 		                    <td><input name="Name" class="easyui-validatebox" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias',editable:false,panelHeight:'100'" required="true"/></td>
+		                    <td><input class="easyui-combobox" id="mediacc2" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'" required="true"/></td>
+		                </tr>
+						<tr>
+		                    <td>PmpAdspaceKey：</td>
+		                    <td><input name="PmpAdspaceKey" readonly/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>
 		                    <td><textarea style="height:150px;" name="Description" class="easyui-validatebox" validType="length[0,1000]"></textarea></td>
-		                </tr>
+		                </tr>											
 		            </table>
 		        </form>
 				</div>
@@ -299,14 +333,8 @@
 				<a href="#" id="savebutton" class="easyui-linkbutton" onclick="saveNew()">Save</a>
 				<a href="#" id="cancelbutton" class="easyui-linkbutton" onclick="cancelNew()">Close</a>
 			</div>
-			
-			<div id="mm" class="easyui-menu" style="width:120px;">
-				<div onclick="javascript:allocateToDemands()">关联需求方平台</div>
-				<div >－－－－－－</div>
-				<div onclick="javascript:viewRow()">查看</div>
-				<div onclick="javascript:editRow()">编辑</div>
-				<div onclick="javascript:deleteRow()">删除</div>
-			</div>
+				
+			<div id="mm" class="easyui-menu" style="width:120px;"></div>
 			
 			<div id="mapDemandDialog" class="easyui-dialog" title="关联需求方平台" style="width:800px;height:400px;padding-top:10px;"
 			        data-options="resizable:true,modal:true,closed:true,buttons:'#mb'">
@@ -314,9 +342,9 @@
 				    <table>
 				        <tr>
 							<td width="300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/getDemandsMappingInfo',editable:false,panelHeight:'100'" /></td>
+				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/demands', panelHeight:'auto'" /></td>
 				            <td>
-				                <input type="text" class="" id="field2" placeholder="请输入部分需求方平台名称"/>	
+				                <input id="field2" type="text" placeholder="请输入部分需求方平台名称"/>	
 				            </td>
 				            <td><a href="#" icon='icon-reload' plain="true" onclick="filterData2()" class="easyui-linkbutton">搜索</a></td>
 				            <td>
@@ -326,7 +354,7 @@
 				    </table>
 				
 					<div style="margin:10px 0;"></div>
-					<table id="demandDataGrid"></table>
+					<table id="demandDataGrid" style="height:270px"></table>
 			</div>
 			
 			<div id="mb">

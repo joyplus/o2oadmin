@@ -27,9 +27,7 @@ func (this *MerchantController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["merchants"] = &merchants
+		//this.Data["merchants"] = &merchants
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}

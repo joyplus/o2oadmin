@@ -96,9 +96,9 @@ $(function(){
 </script>
 <body>
 <table id="treegrid" toolbar="#tbr"></table>
-<div id="tbr" style="padding:5px;height:auto">
-	<div style="display:inline"> <a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a></div> 
+<div id="tbr" style="padding:5px;height:auto"> 
     <div style="margin-bottom:5px">
+		<a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a>
         分组：<input id="group" name="name" >
         当前组：<input id="combobox1" name="name" >
         <a href="#"  class="easyui-linkbutton" iconCls="icon-save" title="保存" plain="true" onclick="saveaccess()">保存</a>

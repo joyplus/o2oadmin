@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>O2O admin</title>
+	<title>PMP管理平台</title>
     <link rel="stylesheet" type="text/css" href="/static/easyui/jquery-easyui/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="/static/easyui/jquery-easyui/themes/icon.css" />
     <script type="text/javascript" src="/static/easyui/jquery-easyui/jquery.min.js"></script>

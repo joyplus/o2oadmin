@@ -1,11 +1,13 @@
 {{template "../public/header.tpl"}}
 <script type="text/javascript" src="/static/easyui/jquery-easyui/accounting.min.js"></script>
 <script type="text/javascript">
+var date_format = 'yyyy-MM-dd';
+var date_format_to_server = "yyyy-MM-dd";
 var URL="/pmp/demand";
 var maingridrowid = {{.maingridrowid}}
 var initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 3);
-var startDate = initialDate.getFullYear() + "-" + (initialDate.getMonth() + 1) + "-" + initialDate.getDate()
+var startDate = initialDate.formatWithoutTime(date_format_to_server);
 var title1, title2, title3, title4, title5, title6, title7;
 updateTitles(initialDate);
 $(function(){
@@ -98,8 +100,8 @@ $(function(){
         }
     });	
 	initDate();
-})
-
+});			
+				
 function editrow(){
     if(!$("#datagrid").datagrid("getSelected")){
         vac.alert("请选择要编辑的行");
@@ -132,9 +134,8 @@ function onSelectStartDate(date) {
 	var newDate = new Date(date);
 	var endDateEl = $(this).parent().parent().find(".end");
 	newDate.setDate(newDate.getDate() + 6);
-	var d = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
-	endDateEl.datebox('setValue', d);
-	startDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();;
+	endDateEl.datebox('setValue', newDate.format(date_format));
+	startDate = date.formatWithoutTime(date_format_to_server);
 	changeColumns(date);
 	reloadrow();
 }
@@ -143,9 +144,8 @@ function onSelectEndDate(endDate) {
 	var newDate = new Date(endDate);
 	var startDateEl = $(this).parent().parent().find(".start");
 	newDate.setDate(newDate.getDate() - 6);
-	var d = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
-	startDateEl.datebox('setValue', d);
-	startDate = d;
+	startDateEl.datebox('setValue', newDate.format(date_format));
+	startDate = newDate.formatWithoutTime(date_format_to_server);
 	changeColumns(startDate);
 	reloadrow();
 }
@@ -153,29 +153,27 @@ function onSelectEndDate(endDate) {
 function initDate() {
 	var startDateEl = $("body").find(".start");
 	var endDateEl = $("body").find(".end");
-	var d = startDate;
-	startDateEl.datebox("setValue", startDate);
 	var newDate = new Date(startDate);
+	startDateEl.datebox("setValue", newDate.format(date_format));
 	newDate.setDate(newDate.getDate() + 6);
-	d = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
-	endDateEl.datebox("setValue", d);
+	endDateEl.datebox("setValue", newDate.format(date_format));
 }
 
 function updateTitles(d) {
 	var newDate = new Date(d);
-	title1 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title1 = newDate.formatWithoutTime(date_format_to_server);
 	newDate.setDate(newDate.getDate() + 1);
-	title2 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title2 = newDate.formatWithoutTime(date_format_to_server);
 	newDate.setDate(newDate.getDate() + 1);
-	title3 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title3 = newDate.formatWithoutTime(date_format_to_server);
 	newDate.setDate(newDate.getDate() + 1);
-	title4 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title4 = newDate.formatWithoutTime(date_format_to_server);
 	newDate.setDate(newDate.getDate() + 1);
-	title5 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title5 = newDate.formatWithoutTime(date_format_to_server);
 	newDate.setDate(newDate.getDate() + 1);
-	title6 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title6 = newDate.formatWithoutTime(date_format_to_server);
 	newDate.setDate(newDate.getDate() + 1);
-	title7 = newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+	title7 = newDate.formatWithoutTime(date_format_to_server);
 }
 
 function changeColumns(startDate) {

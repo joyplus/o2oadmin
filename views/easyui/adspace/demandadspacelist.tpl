@@ -2,7 +2,7 @@
 	<body>
 			<script type="text/javascript">
 				var demandid = {{.demandid}};
-				var gridurl = "/pmp/demand/getAdspaceByDemand?demandid=" + demandid;
+				var gridurl = "/pmp/demand/getDemandAdspaceByDemand?demandid=" + demandid;
 		        $(function(){
 		            $('#dg').datagrid({
 						url:gridurl,
@@ -10,7 +10,7 @@
 							{field:'Id',title:'ID', width:100,  sortable:true
 							},
 							{
-								field:"Name", title:"广告位名称", width:250, sortable:true,
+								field:"Name", title:"广告位名称", width:350, sortable:true,
 								formatter: function(value,row,index){
 									if (value) {
 										var html = '<div style="display:inline; padding-right:20px;">' + value +'</div>' + '<div style="float:right;" onclick="showOperation($(this), ' + index +')"><img src="/static/easyui/jquery-easyui/themes/icons/orp.png"/></div>'
@@ -27,13 +27,14 @@
 								field:"SecretKey", title:"Secret Key", width:150
 							},
 							{
-								field:"PmpAdspaceKey", title:"Ad space key", width:150
+								field:"RealAdspaceKey", title:"Ad space key", width:150
 							},
 							{
 								field:"Description", title:"备注", width:300
 							},
-							{field:'MediaId', hidden:true},
-							{field:'DemandId', hidden:true}														
+							{
+								field:"DemandId", hidden:true
+							}														
 						]]
 		                
            			});
@@ -47,13 +48,11 @@
 					$('#demandcc').combobox({					    
 					    valueField:'Id',
 					    textField:'Name',
-						url:'/pmp/demand/getDemandsMappingInfo',
-						editable:false,
-						panelHeight:'100',
+						url:'/pmp/demand/demands',
 						readonly:true					
 					});
-
-        			});
+					
+        		});
 				
 				//新建广告位
 				function addrow(){
@@ -61,16 +60,17 @@
 					$("#form1").form('clear');
 					$('#savebutton').show();
 					$('#cancelbutton').show();
-					$('#demandcc').combobox({					    					   
-						readonly:true					
-					});
 					$('#demandcc').combobox("setValue", demandid);
+					// set set input editable
+					$('#realadspacekeyid').prop('readonly', '');
+					//$('#realadspacekeyid').addClass('easyui-validatebox');
 				    $("#dd").dialog('open');
+					
 				}	
 				
 				function saveNew() {
 					$("#form1").form('submit',{
-                    url:'/pmp/adspace/updateadspace',
+                    url:'/pmp/adspace/updatedemandadspace',
                     onSubmit:function(){
                         return $("#form1").form('validate');
                     },
@@ -103,6 +103,9 @@
 					$('#dd').dialog({title: '查看广告位'});
 					$('#savebutton').hide();
 					$('#cancelbutton').show();
+					// set set input non editable
+					$('#realadspacekeyid').prop('readonly', 'readonly');
+					//$('#realadspacekeyid').removeClass('easyui-validatebox');
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
 					$("#form1").form('load', row);
@@ -111,15 +114,14 @@
 				
 				function editRow() {
 					$('#dd').dialog({title: '编辑广告位'});
-					$('#demandcc').combobox({					    					   
-						readonly:true					
-					});
 					$('#savebutton').show();
 					$('#cancelbutton').show();
+					// set set input non editable
+					$('#realadspacekeyid').prop('readonly', 'readonly');
+					//$('#realadspacekeyid').removeClass('easyui-validatebox');
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
 					$("#form1").form('load', row);
-
 				}
 				
 				function deleteRow() {
@@ -130,7 +132,7 @@
 				                vac.alert("请选择要删除的行");
 				                return;
 				            }
-				            vac.ajax('/pmp/adspacematrix/deladspacematrix', {adspaceid:row.Id, demandid:demandid}, 'POST', function(data){
+				            vac.ajax('/pmp/adspace/deldemandadspace', {adspaceid:row.Id}, 'POST', function(data){
 				                if(data == "OK"){
 				                    $("#dg").datagrid('reload');
 				                }else{
@@ -175,7 +177,7 @@
 		                <th field="Name" width="250">广告位名称</th>
 						<th field="DemandName" width="150">所属需求方平台</th>
 						<th field="SecretKey" width="150">Secret Key</th>
-						<th field="PmpAdspaceKey" width="150">Ad space key</th>
+						<th field="RealAdspaceKey" width="150">Ad space key</th>
 		                <th field="Description" width="300">备注</th>
 		            </tr>
 		        </thead>
@@ -192,10 +194,6 @@
 		                    <td>广告位名称：</td>
 		                    <td><input name="Name" class="easyui-validatebox" required="true"/></td>
 		                </tr>
-						<tr>
-		                    <td>所属媒体：</td>
-		                    <td><input class="easyui-combobox" name="MediaId" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias',editable:false,panelHeight:'100'" required="true"/></td>
-		                </tr>
 		                <tr>
 		                    <td>所属需求方平台：</td>
 		                    <td><input id="demandcc" name="DemandId" class="easyui-combobox" required="true" /></td>
@@ -205,8 +203,8 @@
 		                    <td><input name="SecretKey" class="easyui-validatebox" required="true"/></td>
 		                </tr>
 						<tr>
-		                    <td>Ad space Key</td>
-		                    <td><input name="PmpAdspaceKey" class="easyui-validatebox" required="true"/></td>
+		                    <td>Ad space Key:</td>
+		                    <td><input id="realadspacekeyid" class="easyui-validatebox" name="RealAdspaceKey" required="true"/></td>
 		                </tr>
 		                <tr>
 		                    <td>备注：</td>

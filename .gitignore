@@ -31,3 +31,4 @@ logs/
 *.rdb
 
 .idea/
+.DS_Store

@@ -1,5 +1,5 @@
 {{template "../public/header.tpl"}}
-
+<script type="text/javascript" src="/static/easyui/jquery-easyui/easyui_expand.js"></script>
 <table id="dg" class="easyui-datagrid" title="" style="width:1000px;height:480px">
 </table>
 <div id="tb" style="padding:2px 5px;">
@@ -46,11 +46,11 @@
         }).combobox('setValues', [0, 1, 2, 3]);
 
 
-        $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('yyyy-MM-dd'));
-        $('#endDate').datebox('setValue', new Date().format('yyyy-MM-dd'));
+        $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('MM/dd/yyyy'));
+        $('#endDate').datebox('setValue', new Date().format('MM/dd/yyyy'));
 
         $('#dg').datagrid({
-            url:'GetPdbDspReportData',
+            url:'getPdbDspReportData',
             rownumbers:true,
             singleSelect:true,
             method:'get',

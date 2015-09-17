@@ -29,7 +29,33 @@
 					        filterData();
 					    }
 					});
+					initContextMenu();
+					
         		});
+				
+				function initContextMenu() {
+					// append a top menu item
+					$('#mm').menu('appendItem', {
+						text: '查看广告位',
+						onclick: onViewAdspace
+					});
+					// append a menu separator
+					$('#mm').menu('appendItem', {
+						separator: true
+					});
+					$('#mm').menu('appendItem', {
+						text: '查看',
+						onclick: viewRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '编辑',
+						onclick: editRow
+					});
+					$('#mm').menu('appendItem', {
+						text: '删除',
+						onclick: deleteRow
+					});
+				}
 				
 				//新建需求方平台弹窗
 				function addrow(){
@@ -73,7 +99,7 @@
 		
 				function onViewAdspace() {
 					var row = $('#dg').datagrid('getSelected');		
-					var href = "/pmp/demand/getAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";		              
+					var href = "/pmp/demand/getDemandAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";		              
 					var newtabTitle = "View DSP";
 					openNewTab(href, newtabTitle);
 				}
@@ -181,13 +207,7 @@
 				<a href="#" class="easyui-linkbutton" id='cancelbutton' onclick="cancelNew()">Close</a>
 			</div>
 			
-			<div id="mm" class="easyui-menu" style="width:120px;">
-				<div onclick="javascript:onViewAdspace()">查看广告位</div>
-				<div>--------------</div>
-				<div onclick="javascript:viewRow()">查看</div>
-				<div onclick="javascript:editRow()">编辑</div>
-				<div onclick="javascript:deleteRow()">删除</div>
-			</div>
+			<div id="mm" class="easyui-menu" style="width:120px;"></div>
 			
 		</body>
 	</html>

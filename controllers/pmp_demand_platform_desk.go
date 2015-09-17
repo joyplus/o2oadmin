@@ -49,9 +49,7 @@ func (this *PmpDemandPlatformDeskController) GetDemandList(){
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &demands
+//		this.Data["json"] = &demands
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
@@ -110,9 +108,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 	c.Data["maingridrowid"] = adspaceId
 	c.Data["startdate"] = date
 	if (usetpl) {
-		tree := c.GetTree()
-		c.Data["tree"] = &tree
-		c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
+		//c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
@@ -139,11 +135,11 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 		y,m,d = startdate.Date()
 		days[i] = strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
 	}
-	var lastdemandname string = ""
+	var lastdemandadspaceid int = -1
 	for _, v := range dailyAllocations {	
-		if lastdemandname != v.Name {
+		if lastdemandadspaceid != v.DemandAdspaceId {
 			demandVos = append(demandVos, DemandVo{Name:v.Name, DemandAdspaceId:v.DemandAdspaceId, Proportion:v.Priority, DemandAdspaceName:v.DemandAdspaceName})
-			lastdemandname = v.Name
+			lastdemandadspaceid = v.DemandAdspaceId
 		}
 		y,m,d  := v.AdDate.Date()
 		addate := strconv.Itoa(y) + "-" + m.String() + "-" + strconv.Itoa(d)
@@ -289,7 +285,7 @@ func (c *PmpDemandPlatformDeskController) GetAll() {
 	var sortby []string
 	var order []string
 	var query map[string]string = make(map[string]string)
-	var limit int64 = 10
+	var limit int64 = 1000
 	var offset int64 = 0
 
 	// fields: col1,col2,entity.col3

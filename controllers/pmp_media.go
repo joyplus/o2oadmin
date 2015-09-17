@@ -107,9 +107,7 @@ func (this * PmpMediaController) GetMediaList() {
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &medias
+		//this.Data["json"] = &medias
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
@@ -138,7 +136,7 @@ func (c *PmpMediaController) GetAll() {
 	var sortby []string
 	var order []string
 	var query map[string]string = make(map[string]string)
-	var limit int64 = 100
+	var limit int64 = 1000
 	var offset int64 = 0
 
 	// fields: col1,col2,entity.col3

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"o2oadmin/lib"
 )
 
 type PmpAdspace struct {
@@ -43,6 +44,13 @@ func init() {
 func AddPmpAdspace(m *PmpAdspace) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
+	if err == nil {
+		// generate PmpAdspaceKey automatically
+		pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + m.Name)
+		o.Read(m)
+		m.PmpAdspaceKey = pmpAdspaceKey
+		_, err = o.Update(m)
+	}
 	return
 }
 
@@ -56,7 +64,29 @@ func AddPmpAdspaceAndMapDemand(v *AdspaceVo) (id int64, err error) {
         o.Rollback()
         return -1, err
     }
-    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId}
+	// generate PmpAdspaceKey automatically
+	pmpAdspaceKey := lib.GetMd5String(strconv.Itoa(int(id)) + "#" + v.Name);
+	var m *PmpAdspace = &PmpAdspace{}
+	m.Id = int(id)
+	o.Read(m)
+	m.PmpAdspaceKey = pmpAdspaceKey
+	_, err = o.Update(m)
+	if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+	sql := "SELECT id FROM pmp_demand_adspace WHERE demand_id = ? order by id desc limit 1"
+	var maps []orm.Params
+	_, err = o.Raw(sql, v.DemandId).Values(&maps)
+	if err != nil {
+        o.Rollback()
+        return -1, err
+    }
+	var daid int
+	if idv, ok := maps[0]["id"].(string); ok {	
+		daid,_ = strconv.Atoi(idv)		
+	}
+    matrix := PmpAdspaceMatrix{PmpAdspaceId:int(id), DemandId:v.DemandId, DemandAdspaceId:daid}
     id, err = o.Insert(&matrix)
     if err != nil {
         o.Rollback()
@@ -108,44 +138,6 @@ type AdspaceVo struct {
 	Description string
 }
 
-// get adspace list by demand id , may filtered by adspace name
-func GetAdspaceListByDemandId(page int64, page_size int64, sort string, demandid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
-	var sql = "select adspace.id, adspace.name, adspace.media_id, adspace.secret_key,adspace.pmp_adspace_key,adspace.description, demand.id as demand_id, demand.name as demand_name from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id where demand.id=? "
-	var offset int64
-	if page <= 1 {
-		offset = 0
-	} else {
-		offset = (page - 1) * page_size
-	}
-	o := orm.NewOrm()
-	var r orm.RawSeter
-	if adspacename == "" {
-		if sort == "" {
-			sort = "ORDER BY adspace.id ASC limit ? offset ?"
-		} else {
-			sort = "ORDER BY " + sort + " " + "limit ? offset ?"
-		}
-		sql = sql + sort
-		r = o.Raw(sql, demandid, page_size, offset)
-	} else {
-		sql = sql + "and adspace.name like ? "
-		if sort == "" {
-			sort = "ORDER BY adspace.id ASC limit ? offset ?"
-		} else {
-			sort = "ORDER BY " + sort + " " + "limit ? offset ?"
-		}
-		sql = sql + sort
-		adspacename = "%" + adspacename + "%"
-		r = o.Raw(sql, demandid, adspacename, page_size, offset)
-	}
-	count, err := r.QueryRows(&adspaceVos)
-	if err == nil {
-		return adspaceVos, count
-	} else {
-		return nil, 0	
-	}
-}
-
 // get adspace list, may filtered by adspace name
 func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
 	var offset int64
@@ -157,7 +149,7 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 	var maps []orm.Params
 	o := orm.NewOrm()
 	var r orm.RawSeter
-	var query string = "SELECT a.id, a.name, a.media_id, a.description, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.del_flg != 1 "
+	var query string = "SELECT a.id, a.name, a.media_id, a.description, a.pmp_adspace_key, m.name as media, a.est_daily_imp, a.est_daily_clk, a.est_daily_ctr FROM pmp_adspace a, pmp_media m WHERE a.media_id = m.id AND a.del_flg != 1 "
 	var adspacenamecon string = "%" + adspacename + "%"
     if mediaid == -1 && adspacename == "" {		
 		query = query + "ORDER BY a.id ASC limit ? offset ?"
@@ -186,14 +178,13 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 		return nil, 0
 	}
 	fmt.Println(maps)
+	var impstr,clkstr,ctrstr,descstr string
+	var idint,mediaidint int	
+	var namestr, mediastr,pmpAdspaceKeystr string
 	for index := 0; index < len(maps); index++ {
 		imp := maps[index]["est_daily_imp"]
 		clk := maps[index]["est_daily_clk"]
 		ctr := maps[index]["est_daily_ctr"]
-	
-		var impstr,clkstr,ctrstr,descstr string
-		var idint,mediaidint int	
-		var namestr, mediastr string
 		
 		if impv, ok := imp.(string); ok {
 			impstr = impv
@@ -225,7 +216,11 @@ func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspa
 		if descv, ok := maps[index]["description"].(string); ok {
 			descstr = descv
 		}
-		adspaceVos = append(adspaceVos, AdspaceVo{Id:idint, Name:namestr, MediaName:mediastr, EstDaily:est, MediaId:mediaidint, Description:descstr})
+		if v, ok := maps[index]["pmp_adspace_key"].(string); ok {
+			pmpAdspaceKeystr = v
+		}
+		
+		adspaceVos = append(adspaceVos, AdspaceVo{Id:idint, Name:namestr, MediaName:mediastr, EstDaily:est, MediaId:mediaidint, Description:descstr, PmpAdspaceKey:pmpAdspaceKeystr})
 	}
 
 	return adspaceVos, int64(len(adspaceVos))
