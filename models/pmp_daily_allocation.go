@@ -153,7 +153,7 @@ type PmpDailyAllocationVo struct {
 // Query PmpDailyAllocation
 func GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceid int, startdate string, enddate string)[]PmpDailyAllocationVo {
 	var querysql string = "select ad.name, ad.demand_adspace_name, ad.demand_adspace_id, ad.priority, da.imp, da.clk, da.ctr, da.ad_date from " +
-							"(select matrix.pmp_adspace_id, matrix.demand_id as demand_id, demand.name, demandspace.name as demand_adspace_name, matrix.demand_adspace_id, matrix.priority from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_adspace demandspace on matrix.demand_adspace_id=demandspace.id inner join pmp_demand_platform_desk as demand on demandspace.demand_id=demand.id where adspace.id=?) as ad " +
+							"(select matrix.pmp_adspace_id, matrix.demand_id as demand_id, demand.name, demandspace.name as demand_adspace_name, matrix.demand_adspace_id, matrix.priority from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_adspace demandspace on matrix.demand_adspace_id=demandspace.id inner join pmp_demand_platform_desk as demand on demandspace.demand_id=demand.id where adspace.id=? and demandspace.del_flg != 1 and (demand.del_flg is null OR demand.del_flg != 1)) as ad " +
 							"left join " + 
 							"(select * from pmp_daily_allocation where ad_date >= STR_TO_DATE(?,'%Y-%m-%d') and ad_date <= STR_TO_DATE(?,'%Y-%m-%d')) as da on ad.demand_adspace_id = da.demand_adspace_id order by ad.demand_adspace_id"
 	o := orm.NewOrm()
@@ -170,12 +170,12 @@ func GetPmpDailyAllocationByAdspaceIdAndAdDate(adspaceid int, startdate string, 
 }
 
 // Update Imp by DemandAdspaceId and AdDate
-func UpdateImpByDemandAdpaceIdAndAdDate(demandadspaceid int, proportion int, datestrs []string, imps []int)(int64, error) {
+func UpdateImpByDemandAdpaceIdAndAdDate(demandadspaceid int, proportion int, datestrs []string, imps []int, adspaceid int)(int64, error) {
 	fmt.Println(" datestrs: ", datestrs," demandadspaceid: ", demandadspaceid,  " imps: ", imps, " proportion: ", proportion)
 	const layout = "2006-1-2"
 	o := orm.NewOrm()
 	proportionSql := "update pmp_adspace_matrix set priority = ? where demand_adspace_id = ?"
-	p, sqlerr := o.Raw("update pmp_daily_allocation set imp=? where demand_adspace_id=? and ad_date=STR_TO_DATE(?,'%Y-%m-%d')").Prepare()	
+	p, sqlerr := o.Raw("update pmp_daily_allocation set imp=? where demand_adspace_id=? and pmp_adspace_id=? and ad_date=STR_TO_DATE(?,'%Y-%m-%d')").Prepare()	
 	defer p.Close()
 	if sqlerr != nil {
 		fmt.Println("SQL Syntax Error")
@@ -193,7 +193,7 @@ func UpdateImpByDemandAdpaceIdAndAdDate(demandadspaceid int, proportion int, dat
 		if imps[i] == -1 {
 			continue
 		}
-		res, err := p.Exec(imps[i], demandadspaceid, datestrs[i])
+		res, err := p.Exec(imps[i], demandadspaceid, adspaceid, datestrs[i])
 		if err != nil {
 			o.Rollback()
 			fmt.Println("SQL Syntax Error")
@@ -203,8 +203,8 @@ func UpdateImpByDemandAdpaceIdAndAdDate(demandadspaceid int, proportion int, dat
 			if n == 0 {
 				// need to insert new record
 				d,_ := time.Parse(layout, datestrs[i])
-				v, _ := GetPmpAdspaceMatrixByDemandSpaceId(demandadspaceid);
-				model := PmpDailyAllocation{DemandAdspaceId:demandadspaceid, PmpAdspaceId:v.PmpAdspaceId, Imp:imps[i], AdDate:d}
+//				v, _ := GetPmpAdspaceMatrixByDemandSpaceId(demandadspaceid);
+				model := PmpDailyAllocation{DemandAdspaceId:demandadspaceid, PmpAdspaceId:adspaceid, Imp:imps[i], AdDate:d}
 				id, err := o.Insert(&model)
 				if err == nil {
 				    fmt.Println("Insert PmpDailyAllocation:", id)
