@@ -10,3 +10,10 @@ UPDATE node SET name='report/getPdbMediaReport' WHERE id=35;
 UPDATE node SET name='report/getPdbDspReport' WHERE id=36;
 
 INSERT INTO `pmp`.`node` (`id`, `title`, `name`, `level`, `pid`, `remark`, `status`, `group_id`) VALUES (NULL, '创建活动', 'campaign/add', '2', '31', NULL, '2', '2');
+
+#2015-09-20#
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB space list','index',3,32,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP management','index',3,33,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media management','index',3,34,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media report','getPdbMediaReport',3,35,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP report','getPdbDspReport',3,36,NULL,2,2);
