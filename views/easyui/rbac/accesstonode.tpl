@@ -10,10 +10,11 @@ $(function(){
         valueField:'Id',
         textField:'Name',
         value:roleid,
+		panelHeight:'auto',
         onSelect:function(record){
             var group_id = $("#group").combobox("getValue");
             vac.ajax(URL+"/AccessToNode",{Id:record.Id,group_id:group_id},"POST",function(data){
-                        $("#treegrid").treegrid("loadData",data)
+						$("#treegrid").treegrid("loadData",data);
                     }
             )
         }
@@ -35,7 +36,9 @@ $(function(){
             for(var i=0;i<data.rows.length;i++){
                 if(data.rows[i].checked == 1){
                     $(this).treegrid('select',data.rows[i].Id);
-                }
+                } else {
+					$(this).treegrid('unselect',data.rows[i].Id);
+				}
             }
         },
         onSelect:function(row){
@@ -65,6 +68,7 @@ $(function(){
         "textField":'Title',
         data:grouplist,
         value:1,
+		panelHeight:'auto',
         onSelect:function(record){
             var roleid = $("#combobox1").combobox("getValue");
             vac.ajax(URL+"/AccessToNode",{group_id:record.Id,Id:roleid},"POST",function(data){
@@ -76,7 +80,7 @@ $(function(){
 });
     //保存授权
     function saveaccess(){
-        $.messager.progress();
+        //$.messager.progress();
         var tdata = $("#treegrid").treegrid('getSelections');
         var data=new Array(tdata.length);
         for(var i=0;i<tdata.length;i++){
@@ -86,7 +90,7 @@ $(function(){
         var group_id = $("#group").combobox("getValue");
         vac.ajax(URL+'/AddAccess', {roleid:roleid,group_id:group_id,ids:data.join(",")}, 'POST', function(r){
             $.messager.alert('提示',r.info,'info');
-            $.messager.progress('close');
+            //$.messager.progress('close');
         })
     }
 	
@@ -99,8 +103,8 @@ $(function(){
 <div id="tbr" style="padding:5px;height:auto"> 
     <div style="margin-bottom:5px">
 		<a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a>
-        分组：<input id="group" name="name" >
-        当前组：<input id="combobox1" name="name" >
+        节点分组：<input id="group" name="name" >
+        角色：<input id="combobox1" name="name" >
         <a href="#"  class="easyui-linkbutton" iconCls="icon-save" title="保存" plain="true" onclick="saveaccess()">保存</a>
     </div>
 </div>
