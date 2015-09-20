@@ -94,6 +94,7 @@ type DemandVo struct {
 	Day7 int
 	Operation string
 	DemandAdspaceName string
+	AdspaceId int
 }
 
 // Get demands by adspace id
@@ -183,6 +184,7 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 		this.Rsp(false, err.Error())
 		return
 	}
+	beego.Info("****** demandVo:", u)
 	const layout = "2006-1-2"
 	startdate, _ := time.Parse(layout, u.Operation)
 	startdate = startdate.Local()
@@ -200,7 +202,7 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 		datestrs = append(datestrs, tempdate.Format(layout))
 	}
 	beego.Info(" **** datestrs:" , datestrs, " DemandAdspaceId: ", u.DemandAdspaceId, " imps: ", imps)
-	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId,u.Proportion, datestrs, imps)
+	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId,u.Proportion, datestrs, imps, u.AdspaceId)
 	if err == nil {
 		beego.Info(" **** Number of rows updated: ", num)
 		this.Rsp(true, "Success")

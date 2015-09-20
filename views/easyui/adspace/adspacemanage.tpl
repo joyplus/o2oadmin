@@ -44,7 +44,7 @@
 						]],
 		                view: detailview,
 		                detailFormatter:function(index,row){
-		                    return '<div class="ddv"><iframe frameborder="0" scrolling="auto" style="width:100%;" ></iframe></div>';
+		                    return '<div class="ddv"><iframe frameborder="0" scrolling="auto" style="width:100%;min-height:150px;"></iframe></div>';
 		                },
 		                onExpandRow: function(index,row){
 							var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');

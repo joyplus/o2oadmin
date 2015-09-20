@@ -89,6 +89,7 @@ $(function(){
             }
             changes.DemandAdspaceId = data.DemandAdspaceId;
 			changes.Operation = startDate; //use field Operation to pass start date
+			changes.AdspaceId = maingridrowid;
 			//alert(JSON.stringify(changes))
             vac.ajax(URL+'/updateDailyAllocation', changes, 'POST', function(r){
                 if(!r.status){
