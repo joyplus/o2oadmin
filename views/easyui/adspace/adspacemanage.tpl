@@ -44,7 +44,7 @@
 						]],
 		                view: detailview,
 		                detailFormatter:function(index,row){
-		                    return '<div class="ddv"><iframe frameborder="0" scrolling="auto" style="width:100%;min-height:300px;" ></iframe></div>';
+		                    return '<div class="ddv"><iframe frameborder="0" scrolling="auto" style="width:100%;" ></iframe></div>';
 		                },
 		                onExpandRow: function(index,row){
 							var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
@@ -287,7 +287,7 @@
 	          </div>
 			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'"></div>
 			</div>
-		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
+		    <table id="dg" title="广告位列表" style="width:1000px;height:580px"
 	            url="/pmp/adspace/index"
 		            pagination="true"
 		            fitColumns="true" singleSelect="true"
