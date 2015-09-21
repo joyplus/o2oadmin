@@ -43,6 +43,8 @@ func (this *ReportController) GetPdbMediaReportData() {
 
 	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
 
+	beego.Debug("startDate: ", request.StartDate)
+
 	if err != nil {
 		beego.Debug("failed to get pmp daily report")
 	} else {

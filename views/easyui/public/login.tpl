@@ -57,6 +57,19 @@ window.document.onkeydown=SubmitOrHidden;//当有键按下时执行函数
         <td>密码：</td><td><input type="password" class="easyui-validatebox" required="true" name="password" missingMessage="请输入密码"/></td>
     </tr>
 </table>
+    <!--<p>-->
+        <!--<label for="user_login">用户名<br />-->
+            <!--<input type="text" name="log" id="user_login" class="input" value="" size="20" /></label>-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--<label for="user_pass">密码<br />-->
+            <!--<input type="password" name="pwd" id="user_pass" class="input" value="" size="20" /></label>-->
+    <!--</p>-->
+    <!--<p class="submit">-->
+        <!--<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="登录" />-->
+        <!--<input type="hidden" name="redirect_to" value="http://www.xyztang.com/wp-admin/" />-->
+        <!--<input type="hidden" name="testcookie" value="1" />-->
+    <!--</p>-->
 </form>
 </div>
 </div>
