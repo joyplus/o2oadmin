@@ -14,22 +14,22 @@
         <form id="campaign_edit" action="campaign_chk.php?type=1"  method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="83" />
             <div id="creat_title">
-                <span style="margin-left:10px">Edit Campaign</span>
+                <span style="margin-left:10px">项目编辑</span>
                 <div style="float:right">
-                    <a class="user_creat_button" onclick="return Creatcampaign();" >Save</a>
-                    <a class="user_cancel_button" onclick="return cancelcampaign();">Cancel</a>
+                    <a class="action_button" onclick="return Creatcampaign();" >保存</a>
+                    <a class="cancel_button" onclick="return cancelcampaign();">取消</a>
                 </div>
             </div>
             <div class="creat_area1" style="height:345px;">
                 <div>
-                    <div class="are_unit"><span class="unit_title">Advertiser</span>
+                    <div class="are_unit"><span class="unit_title">广告主</span>
                         <select class="easyui-combobox" name="f_adname" id="f_adid" style="width:365px;height:32px;" >
                         </select>
                     </div>
-                    <div class="are_unit"><span class="unit_title">Campaign Name</span><input name="f_name" id="f_name" class="f1 easyui-textbox" data-options="required:true,missingMessage:'Please input the Name!'" value="test new campaign"  style="width:365px;height:32px;" maxlength="20" /></div>
+                    <div class="are_unit"><span class="unit_title">项目名称</span><input name="f_name" id="f_name" class="f1 easyui-textbox" data-options="required:true,missingMessage:'Please input the Name!'" value="测试项目"  style="width:365px;height:32px;" maxlength="20" /></div>
                 </div>
                 <div class="are_unita">
-                    <span class="unit_title">Application</span><span class="right rightb">
+                    <span class="unit_title">应用</span><span class="right rightb">
 		    <select class="easyui-combobox" name="f_appid" id="f_appid" style="width:365px;height:32px;" >
                 <option value="98" selected='selected'>1211--Android</option>
                 <option value="125" >g666ssd--IOS</option>
@@ -37,18 +37,17 @@
 		</span>
                 </div>
                 <div style="float:left;width:100%;">
-                    <div class="are_unit"><span class="unit_title">IO Budget</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="11.00"  style="width:365px;height:32px;" id="f_budget"/></div>
-                    <div class="are_unit"><span class="unit_title">Advertiser Price <img src="images/altb.png" style="cursor:pointer;margin-top:-8px" title="Campaign offer price given by advertiser." alt="Campaign offer price given by advertiser."></span><input name="f_price" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'Please input the Price!'" value="1.00"  style="width:365px;height:32px;" id="f_price"/></div>
+                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="11.00"  style="width:365px;height:32px;" id="f_budget"/></div>
                 </div>
                 <div class="are_unita" style="margin-top:4px">
-                    <span class="unit_title">Description</span><textarea rows="3" name="f_description" class="f1" style="border-radius:5px;border:0;font-size:12px" data-options="required:true,missingMessage:'Please input the App Description'" >1</textarea>
+                    <span class="unit_title">描述</span><textarea rows="3" name="f_description" class="f1" style="border-radius:5px;border:0;font-size:12px" data-options="required:true,missingMessage:'请输入应用描述'" >1</textarea>
                 </div>
             </div>
         </form>
         <!-------------------unit unit unit unit----------------------------------->
         <div id="search_area">
             <div style="text-align:center;">
-                <input type="image" src="images/other.png" class="user_search_button" style="width:109px;margin-left:10px;" onclick="return newApp();" value="Create New Flight" id="button03" />
+                <input type="image" src="/static/images/other.png" class="action_button" style="width:109px;margin-left:10px;" onclick="return newApp();" value="创建新活动" id="button03" />
             </div>
         </div>
         <div id="data_area" class="result_area" style="display:none;">
@@ -75,19 +74,16 @@
         </div>
 
         <div id="result_area" style="border:0">
-            <table id="comp_list" title="Flight List" style="width:100%;height:90%"
+            <table id="comp_list" title="活动列表" style="width:100%;height:90%"
                    data-options="rownumbers:false,singleSelect:true,url:'get_unit.php?cid=83',method:'get'" pagination="true">
                 <thead>
                 <tr>
-                    <th data-options="field:'f_pstatus',width:80,formatter:formatPstatus"><b>Status</b></th>
-                    <th data-options="field:'f_name',width:120"><b>Name</b></th>
-                    <th data-options="field:'f_channel_name',width:120"><b>Channel</b></th>
-                    <th data-options="field:'f_bidding',width:78,formatter:formatBidding"><b>Bidding</b></th>
-                    <th data-options="field:'f_price',width:120"><b>Channel Price($)</b></th>
-                    <th data-options="field:'f_day_budget',width:120"><b>Budget</b></th>
-                    <th data-options="field:'f_start',width:160,formatter:formatDate"><b>Date</b></th>
-                    <th data-options="field:'f_id',width:320,align:'left',formatter:formatEventEdit"><b>Operation</b></th>
-                    <th data-options="field:'f_cid',width:120,formatter:formatDataImport"><b>Data Import</b></th>
+                    <th data-options="field:'f_pstatus',width:80,formatter:formatPstatus"><b>状态</b></th>
+                    <th data-options="field:'f_name',width:120"><b>名称</b></th>
+                    <th data-options="field:'f_channel_name',width:120"><b>短链</b></th>
+                    <th data-options="field:'f_day_budget',width:120"><b>预算</b></th>
+                    <th data-options="field:'f_start',width:160,formatter:formatDate"><b>创建日期</b></th>
+                    <th data-options="field:'f_id',width:320,align:'left',formatter:formatEventEdit"><b>操作</b></th>
                 </tr>
                 </thead>
             </table>
@@ -149,12 +145,12 @@
             </div>-->
 
             <div id="setting_dlg" class="easyui-dialog" style="width:520px;height:560px;padding:10px 20px" closed="true" draggable="false" modal="true">
-                <form id="setting_edit" action="unit_chk.php?type=1" method="post" enctype="multipart/form-data">
+                <form id="setting_edit" action="SaveFlight" method="post" enctype="multipart/form-data">
                     <table style="font-size:12px;">
                         <tr>
                         <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Flight Name</b></td>
-                            <td style="width:70%"><input type="text" name="f_name" class="f1 easyui-textbox" style="width:310px;height:32px;" data-options="required:true,missingMessage:'Please input the Name'" id="f_uname"></td>
+                            <td style="width:25%"><b>活动名称</b></td>
+                            <td style="width:70%"><input type="text" name="f_name" class="f1 easyui-textbox" style="width:310px;height:32px;" data-options="required:true,missingMessage:'请输入活动名称'" id="f_uname"></td>
                         </tr>
                         <tr>
                         <tr style="height:45px;width:95%;display:none;">
@@ -162,7 +158,7 @@
                             <td style="width:70%"><input name="f_cname" id = "f_cname" style="width:290px;height:32px;" value="test new campaign" readonly /></td>
                         </tr>
                         <tr style="height:45px;width:95%;" id="f_channel">
-                            <td style="width:25%;"><b>Channel</b></td>
+                            <td style="width:25%;"><b>短链</b></td>
                             <td style="width:70%"><select class="easyui-combobox" name="f_channelid" style="width:310px;height:32px;">
                                 <option value="00002">Inmobi</option>
                                 <option value="00003">SmartMad</option>
@@ -172,52 +168,8 @@
                             </select></td>
                         </tr>
                         <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Date</b></td>
-                            <td style="width:70%">From <input name="f_start" class="easyui-datebox" id="start_date" value="2015-09-21" style="width:120px;height:32px" /> To <input name="f_end" class="easyui-datebox" id="end_date" value="2015-09-28" style="width:120px;height:32px" /></td>
-                        </tr>
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Budget</b></td>
+                            <td style="width:25%"><b>预算</b></td>
                             <td style="width:70%"><input name="f_day_budget" class="f1 easyui-numberbox" style="width:235px;height:32px;" data-options="max:999999999.00,precision:2,required:true,missingMessage:'Please input the Budget'" id="f_day_budget"/></td>
-                        </tr>
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Cost Price</b></td>
-                            <td style="width:70%"><input name="f_price" class="f1 easyui-numberbox" style="width:235px;height:32px;" data-options="max:999999999.00,precision:2,required:true,missingMessage:'Please input the Cost Price'" id="f_uprice"/></td>
-                        </tr>
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Bidding</b></td>
-                            <td style="width:70%">
-                                <select class="easyui-combobox" name="f_bidding" style="width:235px;height:32px;">
-                                    <option value="2">CPA</option>
-                                    <option value="1">CPC</option>
-                                </select></td>
-                        </tr>
-                        <!--<tr style="height:45px;width:95%">
-                        <td style="width:25%"><b>Geo Tag</b></td>
-                        <td style="width:70%"><input name="f_geotag" class="f1 easyui-textbox" style="width:235px;height:32px;" data-options="required:true,missingMessage:'Please input the Geo Tag'" maxlength="20" /></td>
-                        </tr>-->
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Geo Tag</b></td>
-                            <td style="width:70%">
-                                <select class="easyui-combobox" id="f_geotag" name="f_geotag" style="width:310px;height:32px;" data-options="multiple:true,onSelect:onGeoSelect">
-                                    <option value="">Select ALL</option>
-                                    <option value="AF">Afghanistan</option>
-                                    <option value="AL">Albania</option>
-                                    <option value="DZ">Algeria</option>
-                                    <option value="AS">AmericanSamoa</option>
-                                    <option value="AD">Andorra</option>
-                                </select>
-                        </tr>
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Install Postback</b></td>
-                            <td style="width:70%"><input type="radio" name="f_pbacktag" value="1" checked="checked"/>Attributed Installs<input  type="radio" name="f_pbacktag" value="2" style="margin-left:10px;"/>All Installs</td>
-                        </tr>
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Cost based on</b></td>
-                            <td style="width:70%"><input type="radio" name="f_cost_based_on" value="1" />Performad‘s data<input  type="radio" name="f_cost_based_on" value="2" style="margin-left:10px;"/>Channel’s data</td>
-                        </tr>
-                        <tr style="height:45px;width:95%">
-                            <td style="width:25%"><b>Event Postback</b></td>
-                            <td style="width:70%"><input type="checkbox" name="f_eventtag" style="vertical-align: middle;" value="1" /></td>
                         </tr>
                     </table>
                     <div style="float:right;margin-top:5px;">
@@ -266,22 +218,22 @@
     }
 
     $("#button01").mouseover(function(){
-        $(this).attr("src","images/facebook2.png");
+        $(this).attr("src","/static/images/facebook2.png");
     });
     $("#button01").mouseout(function(){
-        $(this).attr("src","images/facebook.png");
+        $(this).attr("src","/static/images/facebook.png");
     });
     $("#button02").mouseover(function(){
-        $(this).attr("src","images/google2.png");
+        $(this).attr("src","/static/images/google2.png");
     });
     $("#button02").mouseout(function(){
-        $(this).attr("src","images/google.png");
+        $(this).attr("src","/static/images/google.png");
     });
     $("#button03").mouseover(function(){
-        $(this).attr("src","images/other2.png");
+        $(this).attr("src","/static/images/other2.png");
     });
     $("#button03").mouseout(function(){
-        $(this).attr("src","images/other.png");
+        $(this).attr("src","/static/images/other.png");
     });
 
     $("#start_date").datebox();
@@ -408,55 +360,15 @@
     var cam_budget = "11.00";
 
     function saveSetting(){
-        //$('#setting_dlg').dialog('close');
-        var namelen = $("#f_uname").val().length;
-        if(namelen > 50){
-            alert("The maximum length of 50 characters");
-            return false;
-        }
-
-        var budgetval = $("#f_day_budget").val();
-        if(parseInt(budgetval) > parseInt(cam_budget)){
-            alert("budget cannot be more than IO budget");
-            return false;
-        }
-        if(parseInt(budgetval)<0){
-            alert("budget can't be negative");
-            return false;
-        }
-        var priceval = $("#f_uprice").val();
-        if(parseInt(priceval)<0){
-            alert("Cost Price can't be negative");
-            return false;
-        }
-        var cost_base = $("input[name='f_cost_based_on']:checked ").val();
-
-        if(cost_base!=1 && cost_base!=2){
-            alert("please select Cost based on");
-            return false;
-        }
-        var f_geotag = $('#f_geotag').combobox('getText');
 
         $('#setting_edit').form('submit',
                 {
-                    url: url + "&geotag="+f_geotag,
+                    url: "SaveFlight",
                     onSubmit: function(){
-                        return $(this).form('validate');
+                        return true;
                     },
                     success: function(result){
-                        var obj = new Function("return" + result)();
-                        if(obj.result > 0){
-                            var res="save success";
-                            $('#setting_edit').form('clear');
-                            $('#setting_dlg').dialog('close');
-                            $('#comp_list').datagrid('reload');
-                            $.messager.alert('Info', res);
-                            scriptcampaign(cid);//运行campaign脚本
-
-                        }else{
-                            $.messager.alert("error",obj.msg);
-
-                        }
+                        console.log("got result: " + result);
 
                     }
                 });
@@ -773,10 +685,10 @@
 
     var cid = "83";
 
-    function newApp(){
-        $('#setting_dlg').dialog('open').dialog('setTitle','Create New Flight');
+    function newApp() {
+        $('#setting_dlg').dialog('open').dialog('setTitle', '创建新活动');
         $('#setting_edit').form('reset');
-        url = 'unit_chk.php?type=1&s=add&f_cid='+cid;
+        url = 'unit_chk.php?type=1&s=add&f_cid=' + cid;
     }
 
     function editEvent(row){

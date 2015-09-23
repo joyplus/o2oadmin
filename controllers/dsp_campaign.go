@@ -47,6 +47,12 @@ func (c *DspCampaignController) DetailPage() {
 func (c *DspCampaignController) FullReportPage() {
     c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
 }
+// @router /SaveFlight [post]
+func (c *DspCampaignController) SaveFlight() {
+
+    c.Data["json"] = "save sucessful"
+    c.ServeJson()
+}
 
 // @Title Post
 // @Description create DspCampaign

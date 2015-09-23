@@ -7,30 +7,26 @@
 </head>
 <body>
 <div id="main">
-    <<div id="main_content">
+    <div id="main_content">
     <div id="content_area">
         <input type="hidden" name="cid" value="83" />
         <div id="creat_title">
-            <span style="margin-left:10px">Campaign Details</span>
+            <span style="margin-left:10px">项目明细</span>
             <div style="float:right">
-                <span class="user_creat_button" onclick="return editCampaign();">Edit</span>
+                <span class="action_button" onclick="return editCampaign();">编辑</span>
             </div>
         </div>
         <div class="creat_area1 creat_area2">
             <div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">Advertiser</span><span>adt</span></div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">Name</span><span>test new campaign</span></div>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">广告主</span><span>CMGE</span></div>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">名称</span><span>test new campaign</span></div>
             </div>
             <div class="are_unit are_unitb">
-                <span class="unit_title unit_titleb">Application</span><span class="right rightb">
+                <span class="unit_title unit_titleb">应用</span><span class="right rightb">
 			            1211--Android		</span>
             </div>
             <div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">IO Budget</span><span>11.00</span></div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">Advertiser Price </span><span>1.00</span></div>
-            </div>
-            <div class="are_unit are_unitb">
-                <span class="unit_title unit_titleb">Target Link</span><span>http://www.baidu.com</span>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">预算</span><span>11.00</span></div>
             </div>
         </div>
         <!----------------------------viewreport------------------------------------------------------>
@@ -39,41 +35,7 @@
                 <select  name="f_advertiser" id="f_advertiser" style="height:32px;width:210px;">
                     <option value="">Choose Advertiser</option>
                     <option  value="1">madhouse</option>
-                    <option  value="2">wechat</option>
-                    <option  value="5">erte</option>
-                    <option  value="7">easym</option>
-                    <option  value="8">madtestad1</option>
-                    <option  value="9">madhouse11</option>
-                    <option  value="10">adt</option>
-                    <option  value="11">Touchpal</option>
-                    <option  value="12">Apus</option>
-                    <option  value="13">Elex</option>
                     <option selected value="14">CMGE</option>
-                    <option  value="15">Efun</option>
-                    <option  value="16">4399</option>
-                    <option  value="17">MyAdvertiserName01</option>
-                    <option  value="18">&lt;a&gt;&lt;/a&gt;</option>
-                    <option  value="19">活动1</option>
-                    <option  value="20">eee</option>
-                    <option  value="21">bbb</option>
-                    <option  value="22">cvvv</option>
-                    <option  value="23">cvvvb</option>
-                    <option  value="24">cvvvcvg</option>
-                    <option  value="25">cvvvcvg456</option>
-                    <option  value="26">cvvvcvg4565</option>
-                    <option  value="27">cvvvcvg45651</option>
-                    <option  value="28">cvvvcvg456512</option>
-                    <option  value="29">ab34</option>
-                    <option  value="30">ab343</option>
-                    <option  value="31">ab3432</option>
-                    <option  value="33">ab343212</option>
-                    <option  value="34">ab3432121</option>
-                    <option  value="35">Star Games</option>
-                    <option  value="36">testsdfd</option>
-                    <option  value="37">cam1</option>
-                    <option  value="38">Elex Android</option>
-                    <option  value="39">MadClient</option>
-                    <option  value="40">Taiwan Adv test</option>
                 </select>
             </div>
             <div style="float:left;margin-left:10px;" id="f_campaign_div" >
@@ -166,22 +128,14 @@
                    data-options="rownumbers:false,singleSelect:true,method:'get'" pagination="true" fitcolumns="true">
                 <thead>
                 <tr>
-                    <th data-options="field:'f_pstatus',width:60,formatter:formatPstatus,sortable:true"><b>Status</b></th>
-                    <th data-options="field:'f_name',width:180,formatter:formatName"><b>Name</b></th>
-                    <!--
-                    <th data-options="field:'f_bidding',width:50,formatter:formatBidding"><b>Bidding</b></th>
-                    -->
-                    <th data-options="field:'f_start',width:95,formatter:formatADate"><b>Date</b></th>
-                    <th data-options="field:'f_price',width:115,sortable:true"><b>Channel Price($)</b></th>
-                    <th data-options="field:'beClickTotal',width:80,formatter:formatClick,sortable:true"><b>Click</b></th>
-                    <th data-options="field:'beInstallTotal',width:80,formatter:formatInstall,sortable:true"><b>Install</b></th>
-                    <th data-options="field:'succInstallTotal',width:110,formatter:formatPInstall,sortable:true"><b>postback install</b></th>
-                    <th data-options="field:'unitPriceTotal',width:115,formatter:formatSpend,sortable:true"><b>Channel Spend($)</b></th>
-                    <th data-options="field:'succPriceTotal',width:110,formatter:formatCost,sortable:true"><b>Billing Spend($)</b></th>
-                    <th data-options="field:'revenuePriceTotal',width:132,formatter:formatRevenue,sortable:true"><b>Advertiser Spend($)</b></th>
-                    <th data-options="field:'inappRevnueTotal',width:100,formatter:formatEcpc,sortable:true"><b>In-app Revenue</b></th>
+                    <th data-options="field:'f_pstatus',width:60,formatter:formatPstatus,sortable:true"><b>状态</b></th>
+                    <th data-options="field:'f_name',width:180,formatter:formatName"><b>名称</b></th>
+                    <th data-options="field:'f_start',width:95,formatter:formatADate"><b>日期</b></th>
+                    <th data-options="field:'beClickTotal',width:80,formatter:formatClick,sortable:true"><b>点击数</b></th>
+                    <th data-options="field:'beInstallTotal',width:80,formatter:formatInstall,sortable:true"><b>安装数</b></th>
+                    <th data-options="field:'inappRevnueTotal',width:100,formatter:formatEcpc,sortable:true"><b>收入</b></th>
                     <th data-options="field:'ecpa',width:80,formatter:formatEcpa,sortable:true"><b>eCPA</b></th>
-                    <th data-options="field:'f_offer_id',width:60,align:'center',formatter:formatExPort"><b>Export</b></th>
+                    <th data-options="field:'f_offer_id',width:60,align:'center',formatter:formatExPort"><b>导出</b></th>
                 </tr>
                 </thead>
             </table>
@@ -252,11 +206,7 @@
     </div>
 </div>
 
-    <div id="foot_area">
-        <a href="http://www.madhouse.cn/index.php?lang=en" target="_blank" style="color:#666666;">Powered by Madhouse</a>
-    </div>
 </div>
-<script src="echartsjs/echarts-all.js"></script>
 <script type="text/javascript">
 
     function VDoc(id){
@@ -301,7 +251,7 @@
     });
     function unit_list(ustart,uend){
         $('#comp_list').datagrid({
-            url:'get_unit.php?cid=83'+'&start='+ustart+'&end='+uend,
+            url:'GetAllFlights',
             view: detailview,
             pageSize:10,
             nowrap:false,
@@ -339,18 +289,18 @@
                 return '<div class="ddv" style="padding:5px 0"></div>';
             },
             onExpandRow: function(index,row){
-                //console.log(index);
-                //console.log(row);
-                var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
-                ddv.panel({
-                    border:false,
-                    cache:false,
-                    href:'get_unit.php?cid=83&act=1&unitid='+row.f_id+'&start='+ustart+'&end='+uend,
-                    onLoad:function(){
-                        $('#comp_list').datagrid('fixDetailRowHeight',index);
-                    }
-                });
-                $('#comp_list').datagrid('fixDetailRowHeight',index);
+//                //console.log(index);
+//                //console.log(row);
+//                var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
+//                ddv.panel({
+//                    border:false,
+//                    cache:false,
+//                    href:'get_unit.php?cid=83&act=1&unitid='+row.f_id+'&start='+ustart+'&end='+uend,
+//                    onLoad:function(){
+//                        $('#comp_list').datagrid('fixDetailRowHeight',index);
+//                    }
+//                });
+//                $('#comp_list').datagrid('fixDetailRowHeight',index);
             }
         });
     }

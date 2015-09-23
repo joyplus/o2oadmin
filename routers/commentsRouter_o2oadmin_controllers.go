@@ -141,6 +141,13 @@ func init() {
 
 	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
 		beego.ControllerComments{
+			"SaveFlight",
+			`/SaveFlight`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},

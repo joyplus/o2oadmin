@@ -173,18 +173,12 @@
                     <th data-options="field:'f_status',width:80,formatter:formatStatus,sortable:true"><b>状态</b></th>
                     <th data-options="field:'f_name',width:169,formatter:formatCName"><b>名称</b></th>
                     <th data-options="field:'f_adname',width:109"><b>广告主</b></th>
-                    <th data-options="field:'f_track_type',width:100,formatter:formatTrack"><b> Tracking</b></th>
-                    <th data-options="field:'flights',width:60,formatter:formatFlight,sortable:true"><b>Flight No.</b></th>
-                    <th data-options="field:'spend',width:100,formatter:formatSpend,sortable:true"><b>渠道成本</b></th>
+                    <th data-options="field:'spend',width:100,formatter:formatSpend,sortable:true"><b>成本</b></th>
                     <th data-options="field:'revenue',width:120,formatter:formatRevenue,sortable:true"><b>广告主支出(元)</b></th>
-                    <th data-options="field:'install',width:80,formatter:formatInstall,sortable:true"><b>总安装数</b></th>
-                    <th data-options="field:'pinstall',width:100,formatter:formatSuccInstall,sortable:true"><b>回传安装数</b></th>
-                    <!--
-                    <th data-options="field:'ecpc',width:100,formatter:formatEcpc,sortable:true"><b>In-app Revenue</b></th>
-                    -->
+                    <th data-options="field:'install',width:80,formatter:formatInstall,sortable:true"><b>安装数</b></th>
                     <th data-options="field:'inappRevnueTotal',width:100,formatter:formatappRevenue,sortable:true"><b>收入</b></th>
                     <th data-options="field:'ecpa',width:60,formatter:formatEcpa,sortable:true"><b>eCPA</b></th>
-                    <th data-options="field:'f_id',width:60,align:'center',formatter:formatExPort"><b>Export</b></th>
+                    <th data-options="field:'f_id',width:60,align:'center',formatter:formatExPort"><b>导出</b></th>
                 </tr>
                 </thead>
             </table>
