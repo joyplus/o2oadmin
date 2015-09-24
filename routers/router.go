@@ -49,7 +49,12 @@ func init() {
 
         beego.NSNamespace("/Campaign",
             beego.NSInclude(
-                &controllers.DspCampaignController{},
+                &controllers.LtvDashboardController{},
+            ),
+        ),
+        beego.NSNamespace("/FlightGroup",
+            beego.NSInclude(
+                &controllers.LtvFlightGroupController{},
             ),
         ),
     )

@@ -7,15 +7,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/beego/admin/src/rbac"
+	"github.com/astaxie/beego"
 )
 
-// oprations for DspCampaign
-type DspCampaignController struct {
-	rbac.CommonController
+// oprations for LtvFlightDaily
+type LtvFlightDailyController struct {
+	beego.Controller
 }
 
-func (c *DspCampaignController) URLMapping() {
+func (c *LtvFlightDailyController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -23,66 +23,33 @@ func (c *DspCampaignController) URLMapping() {
 	c.Mapping("Delete", c.Delete)
 }
 
-// @Title Get
-// @Description index page of campaign creation
-// @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.DspCampaign
-// @Failure 500 failed to load index page of campaign creation
-// @router /Create [get]
-func (c *DspCampaignController) CreatePage() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_create.tpl"
-}
-
-// @router /Edit [get]
-func (c *DspCampaignController) EditPage() {
-    c.TplNames = c.GetTemplatetype() + "/performance/project_edit.tpl"
-}
-
-// @router /Detail [get]
-func (c *DspCampaignController) DetailPage() {
-    c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
-}
-
-// @router /FullReport [get]
-func (c *DspCampaignController) FullReportPage() {
-    c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
-}
-// @router /SaveFlight [post]
-func (c *DspCampaignController) SaveFlight() {
-
-    c.Data["json"] = "save sucessful"
-    c.ServeJson()
-}
-
 // @Title Post
-// @Description create DspCampaign
-// @Param	body		body 	models.DspCampaign	true		"body for DspCampaign content"
-// @Success 200 {int} models.DspCampaign.Id
+// @Description create LtvFlightDaily
+// @Param	body		body 	models.LtvFlightDaily	true		"body for LtvFlightDaily content"
+// @Success 200 {int} models.LtvFlightDaily.Id
 // @Failure 403 body is empty
 // @router / [post]
-func (c *DspCampaignController) Post() {
-	var v models.DspCampaign
+func (c *LtvFlightDailyController) Post() {
+	var v models.LtvFlightDaily
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if id, err := models.AddDspCampaign(&v); err == nil {
+	if id, err := models.AddLtvFlightDaily(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
 		c.Data["json"] = err.Error()
 	}
-//	c.ServeJson()
-
-    c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
+	c.ServeJson()
 }
 
 // @Title Get
-// @Description get DspCampaign by id
+// @Description get LtvFlightDaily by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.DspCampaign
+// @Success 200 {object} models.LtvFlightDaily
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *DspCampaignController) GetOne() {
+func (c *LtvFlightDailyController) GetOne() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetDspCampaignById(id)
+	v, err := models.GetLtvFlightDailyById(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -92,17 +59,17 @@ func (c *DspCampaignController) GetOne() {
 }
 
 // @Title Get All
-// @Description get DspCampaign
+// @Description get LtvFlightDaily
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.DspCampaign
+// @Success 200 {object} models.LtvFlightDaily
 // @Failure 403
 // @router / [get]
-func (c *DspCampaignController) GetAll() {
+func (c *LtvFlightDailyController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -144,7 +111,7 @@ func (c *DspCampaignController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllDspCampaign(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllLtvFlightDaily(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -154,18 +121,18 @@ func (c *DspCampaignController) GetAll() {
 }
 
 // @Title Update
-// @Description update the DspCampaign
+// @Description update the LtvFlightDaily
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.DspCampaign	true		"body for DspCampaign content"
-// @Success 200 {object} models.DspCampaign
+// @Param	body		body 	models.LtvFlightDaily	true		"body for LtvFlightDaily content"
+// @Success 200 {object} models.LtvFlightDaily
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *DspCampaignController) Put() {
+func (c *LtvFlightDailyController) Put() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v := models.DspCampaign{Id: id}
+	v := models.LtvFlightDaily{Id: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateDspCampaignById(&v); err == nil {
+	if err := models.UpdateLtvFlightDailyById(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
@@ -174,15 +141,15 @@ func (c *DspCampaignController) Put() {
 }
 
 // @Title Delete
-// @Description delete the DspCampaign
+// @Description delete the LtvFlightDaily
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *DspCampaignController) Delete() {
+func (c *LtvFlightDailyController) Delete() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteDspCampaign(id); err == nil {
+	if err := models.DeleteLtvFlightDaily(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

@@ -96,7 +96,7 @@
             </div>
             <div style="float:left;margin-left:10px">
                 <select class="easyui-combobox" name="f_camname" id="f_camid" style="width:210px;height:32px;font-size:12px;">
-                    <option value="">所有活动</option>
+                    <option value="">所有项目</option>
                 </select>
             </div>
             <!--
@@ -128,7 +128,7 @@
                 <div class="top_button">
                     <div style="float:left;margin-left:0px">
                         <select name="f_select" id="f_select" style="width:210px;height:30px;font-size:14px;">
-                            <option value="campaign">最优的5个活动</option>
+                            <option value="campaign">最优的5个项目</option>
                             <option value="channel">最优的5个渠道</option>
                         </select>
                     </div>
@@ -144,34 +144,25 @@
 
         <div id="search_area" style="margin-top:0px">
             <div style="float:left;margin-left:0px">
-                <input name="f_s_name" id="f_s_name" type="text" class="f1 easyui-textbox" data-options="prompt:'请输入活动名称'"  style="height:32px;width:200px;" maxlength="30" />
+                <input name="f_s_name" id="f_s_name" type="text" class="f1 easyui-textbox" data-options="prompt:'请输入项目名称'"  style="height:32px;width:200px;" maxlength="30" />
             </div>
-            <!--<div style="float:left;margin-left:10px">
-                <select class="easyui-combobox" name="f_status" id="f_status" style="width:200px;height:32px;font-size:12px;">
-                        <option value="">All Status</option>
-                        <option value="0">Draft</option>
-                        <option value="1">Planned</option>
-                        <option value="2">Running</option>
-                        <option value="3">Finished</option>
-                </select>
-            </div>-->
             <div style="float:left;margin-left:10px">
                 <!--<input type="button" id="f_search" name="f_search" class="user_search_button" onclick="return showUserSearch();" value="Search" style="height:35px;margin-top:4px;"/>-->
                 <a id="f_search" href="javascript:showUserSearch();" class="easyui-linkbutton" style="height:32px;width:80px;">查找</a>
             </div>
             <div style="float:right">
                 <!--<input type="button" id="f_new" name="f_new" class="user_search_button" style="width:150px;height:35px;margin-top:4px;" onclick="return createCampaign();" value="New Campaign" />-->
-                <a id="f_new" href="javascript:createCampaign();" class="easyui-linkbutton" style="height:32px;width:150px;">新建活动</a>
+                <a id="f_new" href="javascript:createCampaign();" class="easyui-linkbutton" style="height:32px;width:150px;">新建项目</a>
             </div>
         </div>
 
         <div id="result_area" style="margin-top:10px;border:0">
-            <table id="comp_list" title="活动列表" style="width:100%;height:95%"
-                   data-options="rownumbers:false,singleSelect:true,url:'get_campaign.php',method:'get'" pagination="true">
+            <table id="comp_list" title="项目列表" style="width:100%;height:95%"
+                   data-options="rownumbers:false,singleSelect:true,url:'FlightGroup',method:'get'" pagination="true">
                 <thead>
                 <tr>
-                    <th data-options="field:'f_status',width:80,formatter:formatStatus,sortable:true"><b>状态</b></th>
-                    <th data-options="field:'f_name',width:169,formatter:formatCName"><b>名称</b></th>
+                    <th data-options="field:'status',width:80,formatter:formatStatus,sortable:true"><b>状态</b></th>
+                    <th data-options="field:'name',width:169,formatter:formatCName"><b>名称</b></th>
                     <th data-options="field:'f_adname',width:109"><b>广告主</b></th>
                     <th data-options="field:'spend',width:100,formatter:formatSpend,sortable:true"><b>成本</b></th>
                     <th data-options="field:'revenue',width:120,formatter:formatRevenue,sortable:true"><b>广告主支出(元)</b></th>
@@ -189,7 +180,6 @@
 </div>
 
 </div>
-<script src="/static/echartsjs/echarts-all.js"></script>
 <script type="text/javascript">
 
     function VDoc(id){
@@ -263,7 +253,7 @@
         }
     });
 
-    getfournums(daytype="",act="preview",aid="",cid="");//默认取值
+//    getfournums(daytype="",act="preview",aid="",cid="");//默认取值
 
     function getfournums(daytype,act,aid,cid){
         if(daytype){
@@ -289,7 +279,7 @@
         }
         jQuery.ajax({
             type: "get",
-            url: "ajax_campaign.php",
+            url: "GetAll",
             data:"act="+act+"&aid="+aid+"&cid="+cid+"&day="+fournum_day,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -516,12 +506,13 @@
         }
         jQuery.ajax({
             type: "get",
-            url: "ajax_campaign.php",
+            url: "Campaign/GetTop5Campaign",
             data:"act="+act+"&type="+type+"&tname="+tname,
             cache:false,
             beforeSend: function(XMLHttpRequest){
             },
             success: function(data, textStatus){
+                data = '{"项目1":[{"date":1,"nums":0},{"date":2,"nums":0},{"date":3,"nums":0},{"date":4,"nums":0},{"date":5,"nums":0},{"date":6,"nums":0},{"date":7,"nums":0},{"date":8,"nums":0},{"date":9,"nums":0},{"date":10,"nums":0},{"date":11,"nums":0},{"date":12,"nums":0},{"date":13,"nums":0},{"date":14,"nums":0},{"date":15,"nums":0},{"date":16,"nums":0},{"date":17,"nums":0},{"date":18,"nums":0},{"date":19,"nums":0},{"date":20,"nums":0},{"date":21,"nums":0},{"date":22,"nums":0},{"date":23,"nums":0},{"date":24,"nums":0},{"date":25,"nums":0},{"date":26,"nums":"250"},{"date":27,"nums":"250"},{"date":28,"nums":"250"},{"date":29,"nums":"250"},{"date":30,"nums":"250"}],"项目2":[{"date":1,"nums":0},{"date":2,"nums":0},{"date":3,"nums":0},{"date":4,"nums":0},{"date":5,"nums":0},{"date":6,"nums":0},{"date":7,"nums":0},{"date":8,"nums":0},{"date":9,"nums":0},{"date":10,"nums":0},{"date":11,"nums":0},{"date":12,"nums":0},{"date":13,"nums":0},{"date":14,"nums":0},{"date":15,"nums":0},{"date":16,"nums":0},{"date":17,"nums":0},{"date":18,"nums":0},{"date":19,"nums":0},{"date":20,"nums":0},{"date":21,"nums":0},{"date":22,"nums":0},{"date":23,"nums":0},{"date":24,"nums":0},{"date":25,"nums":0},{"date":26,"nums":"50"},{"date":27,"nums":"50"},{"date":28,"nums":"50"},{"date":29,"nums":"50"},{"date":30,"nums":"50"}],"项目3":[{"date":1,"nums":0},{"date":2,"nums":0},{"date":3,"nums":0},{"date":4,"nums":0},{"date":5,"nums":0},{"date":6,"nums":0},{"date":7,"nums":0},{"date":8,"nums":0},{"date":9,"nums":0},{"date":10,"nums":0},{"date":11,"nums":0},{"date":12,"nums":0},{"date":13,"nums":0},{"date":14,"nums":0},{"date":15,"nums":0},{"date":16,"nums":0},{"date":17,"nums":0},{"date":18,"nums":0},{"date":19,"nums":0},{"date":20,"nums":0},{"date":21,"nums":0},{"date":22,"nums":0},{"date":23,"nums":0},{"date":24,"nums":0},{"date":25,"nums":0},{"date":26,"nums":"50"},{"date":27,"nums":"50"},{"date":28,"nums":"50"},{"date":29,"nums":"50"},{"date":30,"nums":"50"}]}';
                 var date_array=[];
                 var series_array=[];
                 var key_array = [];

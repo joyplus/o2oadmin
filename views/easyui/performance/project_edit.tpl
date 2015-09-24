@@ -11,7 +11,7 @@
 
     <div id="content_area">
 
-        <form id="campaign_edit" action="campaign_chk.php?type=1"  method="post" enctype="multipart/form-data">
+        <form id="campaign_edit" action="Save"  method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="83" />
             <div id="creat_title">
                 <span style="margin-left:10px">项目编辑</span>
@@ -236,57 +236,6 @@
         $(this).attr("src","/static/images/other.png");
     });
 
-    $("#start_date").datebox();
-    var c=$("#start_date").datebox("calendar");
-    c.calendar({
-        validator:function(date){
-            var now=new Date();
-
-            var Y=now.getFullYear();
-            var M=now.getMonth();
-            var D=now.getDate();
-            var start=new Date(Y, M, D);
-            var end=new Date(Y, M, D + 7);
-            var selectable=date >= start;
-            //return selectable;
-            return true;
-        }
-
-    });
-
-    $("#end_date").datebox();
-    var c=$("#end_date").datebox("calendar");
-    c.calendar({
-        validator:function(date){
-            var now=new Date();
-            var Y=now.getFullYear();
-            var M=now.getMonth();
-            var D=now.getDate();
-            var start=new Date(Y, M, D);
-            var end=new Date(Y, M, D + 7);
-            var selectable=date >= start;
-            return selectable;
-            //return true;
-        }
-
-    });
-
-    $("#r_end_date").datebox();
-    var c=$("#r_end_date").datebox("calendar");
-    c.calendar({
-        validator:function(date){
-            var now=new Date();
-            var Y=now.getFullYear();
-            var M=now.getMonth();
-            var D=now.getDate();
-            var start=new Date(Y, M, D);
-            var end=new Date(Y, M, D + 7);
-            var selectable=date >= start;
-            //return selectable;
-            return true;
-        }
-
-    });
     var f_adid = '10';
     $('#f_adid').combobox({
         url:'ajax_getad.php?adid='+f_adid,
@@ -708,9 +657,9 @@
     }
 
     if(cid!=''){
-        var url = 'campaign_chk.php?type=1&s=edit';
+        var url = 'Save';
     }else{
-        var url = 'campaign_chk.php?type=1&s=add';
+        var url = 'Create';
     }
 
     function Creatcampaign(){
@@ -722,40 +671,11 @@
         var f_adname = $('#f_adid').combobox('getValue');
         var f_appid = $('#f_appid').combobox('getValue');
         var budget_val = $('#f_budget').val().length;
-        var price_val = $('#f_price').val().length;
         if(budget_val > 11){
             $.messager.alert("error","Please enter budget value between 1 and 8!");
             return;
         }
-        if(price_val > 11){
-            $.messager.alert("error","Please enter price value between 1 and 8!");
-            return;
-        }
-        var f_url = $('#f_url').val();
-        var f_track_type = $('input[name="f_track_type"]').filter(':checked').val();
 
-        if(f_url==''){
-            $.messager.alert("error","please input Target Link!");
-            return;
-        }else{
-            var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
-            var objExp=new RegExp(Expression);
-            if(objExp.test(f_url)==false){
-                $.messager.alert("error","Please enter a valid URL!");
-                return;
-            }
-
-            if(f_track_type==2 || f_track_type==3){
-                var t1 = f_url.indexOf("{CAMPAIGN_ID}");
-                var t2 = f_url.indexOf("{CHANNEL_ID}");
-                if(t1<0 || t2 <0){
-                    var resinfo = "Please enter a valid URL，at least two macros（ {CAMPAIGN_ID} and {CHANNEL_ID}） in the target url，the URL is like “http://app.appsflyer.com/id2015231?pid=smartmadintl_int&c={CAMPAIGN_ID}&clickid={REF_ID}&sub_publisher={CHANNEL_ID}&sub5={SUB5}&sub4={SUB4}&sub3={SUB3}&sub2={SUB2}&sub1={SUB1}”";
-                    $.messager.alert('Info', resinfo, 'info');
-                    return;
-                }
-            }
-        }
-        url = url+"&f_adname="+encodeURIComponent(f_adname)+"&f_appid="+f_appid+"&f_track_type="+f_track_type+"&f_url="+encodeURIComponent(f_url);
         $('#campaign_edit').form('submit',
                 {
                     url: url,
@@ -778,7 +698,7 @@
                             res="save success";
                         }
                         $.messager.alert('Info', res, 'info');
-                        window.location.href="detail_campaign.php?cid=83";
+                        window.location.href="Detail?cid=83";
                     }
                 });
     }
@@ -792,7 +712,7 @@
     });
 
     function cancelcampaign(){
-        window.location.href="campaign.php";
+        window.location.href="Detail";
     }
     function getCompNowData(){
         $('#comp_list').datagrid('load',{date:$('#ndate2').datebox('getValue'),f_mobile:$('#f_mobile2').val(),f_card:$('#f_card2').val()});

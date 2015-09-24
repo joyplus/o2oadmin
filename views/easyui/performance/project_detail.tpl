@@ -28,6 +28,9 @@
             <div>
                 <div class="are_unit are_unitb"><span class="unit_title unit_titleb">预算</span><span>11.00</span></div>
             </div>
+            <div>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">说明</span><span>xxxxxx</span></div>
+            </div>
         </div>
         <!----------------------------viewreport------------------------------------------------------>
         <div id="search_area" >
@@ -87,11 +90,11 @@
 
 
             <div style="float:left;margin-left:10px">
-                <span class="action_button"  onclick="return getChart();">Get Report</span>
+                <span class="action_button"  onclick="return getChart();">查询</span>
             </div>
 
             <div style="float:right;margin-left:10px">
-                <span class="action_button"  onclick="return fullreport();">Full Report</span>
+                <span class="action_button"  onclick="return fullreport();">全方位报表</span>
             </div>
         </div>
 
@@ -124,7 +127,7 @@
             </div>-->
         </div>
         <div id="result_area" style="border:0">
-            <table id="comp_list" title="Flight List" style="width:100%;height:90%"
+            <table id="comp_list" title="活动列表" style="width:100%;height:90%"
                    data-options="rownumbers:false,singleSelect:true,method:'get'" pagination="true" fitcolumns="true">
                 <thead>
                 <tr>

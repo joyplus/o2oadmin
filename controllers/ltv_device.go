@@ -10,12 +10,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
-// oprations for DspAdvertiser
-type DspAdvertiserController struct {
+// oprations for LtvDevice
+type LtvDeviceController struct {
 	beego.Controller
 }
 
-func (c *DspAdvertiserController) URLMapping() {
+func (c *LtvDeviceController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -24,15 +24,15 @@ func (c *DspAdvertiserController) URLMapping() {
 }
 
 // @Title Post
-// @Description create DspAdvertiser
-// @Param	body		body 	models.DspAdvertiser	true		"body for DspAdvertiser content"
-// @Success 200 {int} models.DspAdvertiser.Id
+// @Description create LtvDevice
+// @Param	body		body 	models.LtvDevice	true		"body for LtvDevice content"
+// @Success 200 {int} models.LtvDevice.Id
 // @Failure 403 body is empty
 // @router / [post]
-func (c *DspAdvertiserController) Post() {
-	var v models.DspAdvertiser
+func (c *LtvDeviceController) Post() {
+	var v models.LtvDevice
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if id, err := models.AddDspAdvertiser(&v); err == nil {
+	if id, err := models.AddLtvDevice(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
 		c.Data["json"] = err.Error()
@@ -41,15 +41,15 @@ func (c *DspAdvertiserController) Post() {
 }
 
 // @Title Get
-// @Description get DspAdvertiser by id
+// @Description get LtvDevice by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.DspAdvertiser
+// @Success 200 {object} models.LtvDevice
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *DspAdvertiserController) GetOne() {
+func (c *LtvDeviceController) GetOne() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetDspAdvertiserById(id)
+	v, err := models.GetLtvDeviceById(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -59,17 +59,17 @@ func (c *DspAdvertiserController) GetOne() {
 }
 
 // @Title Get All
-// @Description get DspAdvertiser
+// @Description get LtvDevice
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.DspAdvertiser
+// @Success 200 {object} models.LtvDevice
 // @Failure 403
 // @router / [get]
-func (c *DspAdvertiserController) GetAll() {
+func (c *LtvDeviceController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -111,7 +111,7 @@ func (c *DspAdvertiserController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllDspAdvertiser(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllLtvDevice(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -121,18 +121,18 @@ func (c *DspAdvertiserController) GetAll() {
 }
 
 // @Title Update
-// @Description update the DspAdvertiser
+// @Description update the LtvDevice
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.DspAdvertiser	true		"body for DspAdvertiser content"
-// @Success 200 {object} models.DspAdvertiser
+// @Param	body		body 	models.LtvDevice	true		"body for LtvDevice content"
+// @Success 200 {object} models.LtvDevice
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *DspAdvertiserController) Put() {
+func (c *LtvDeviceController) Put() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v := models.DspAdvertiser{Id: id}
+	v := models.LtvDevice{Id: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateDspAdvertiserById(&v); err == nil {
+	if err := models.UpdateLtvDeviceById(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
@@ -141,15 +141,15 @@ func (c *DspAdvertiserController) Put() {
 }
 
 // @Title Delete
-// @Description delete the DspAdvertiser
+// @Description delete the LtvDevice
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *DspAdvertiserController) Delete() {
+func (c *LtvDeviceController) Delete() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteDspAdvertiser(id); err == nil {
+	if err := models.DeleteLtvDevice(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

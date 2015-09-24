@@ -6,245 +6,378 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
 		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
 		beego.ControllerComments{
 			"GetOne",
 			`/:id`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
 		beego.ControllerComments{
 			"GetAll",
 			`/`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
 		beego.ControllerComments{
 			"Put",
 			`/:id`,
 			[]string{"put"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdunitController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
 		beego.ControllerComments{
 			"Delete",
 			`/:id`,
 			[]string{"delete"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"],
 		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"],
 		beego.ControllerComments{
 			"GetOne",
 			`/:id`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"],
 		beego.ControllerComments{
 			"GetAll",
 			`/`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"],
 		beego.ControllerComments{
 			"Put",
 			`/:id`,
 			[]string{"put"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspAdvertiserController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"],
 		beego.ControllerComments{
 			"Delete",
 			`/:id`,
 			[]string{"delete"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"],
-		beego.ControllerComments{
-			"Post",
-			`/`,
-			[]string{"post"},
-			nil})
-
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"],
-		beego.ControllerComments{
-			"GetOne",
-			`/:id`,
-			[]string{"get"},
-			nil})
-
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"],
-		beego.ControllerComments{
-			"GetAll",
-			`/`,
-			[]string{"get"},
-			nil})
-
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"],
-		beego.ControllerComments{
-			"Put",
-			`/:id`,
-			[]string{"put"},
-			nil})
-
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspApplicationController"],
-		beego.ControllerComments{
-			"Delete",
-			`/:id`,
-			[]string{"delete"},
-			nil})
-
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
 		beego.ControllerComments{
 			"CreatePage",
 			`/Create`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
 		beego.ControllerComments{
 			"EditPage",
 			`/Edit`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
 		beego.ControllerComments{
 			"DetailPage",
 			`/Detail`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
+		beego.ControllerComments{
+			"Save",
+			`/Save`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
 		beego.ControllerComments{
 			"FullReportPage",
 			`/FullReport`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
 		beego.ControllerComments{
 			"SaveFlight",
 			`/SaveFlight`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
+		beego.ControllerComments{
+			"GetTop5Campaign",
+			`/GetTop5Campaign`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
+		beego.ControllerComments{
+			"GetTop5Channel",
+			`/GetTop5Channel`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDashboardController"],
 		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"],
+		beego.ControllerComments{
+			"Post",
+			`/`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"],
 		beego.ControllerComments{
 			"GetOne",
 			`/:id`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"],
 		beego.ControllerComments{
 			"GetAll",
 			`/`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"],
 		beego.ControllerComments{
 			"Put",
 			`/:id`,
 			[]string{"put"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspCampaignController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvDeviceController"],
 		beego.ControllerComments{
 			"Delete",
 			`/:id`,
 			[]string{"delete"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"],
 		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"],
 		beego.ControllerComments{
 			"GetOne",
 			`/:id`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"],
 		beego.ControllerComments{
 			"GetAll",
 			`/`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"],
 		beego.ControllerComments{
 			"Put",
 			`/:id`,
 			[]string{"put"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:DspChannelController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvEventLogController"],
 		beego.ControllerComments{
 			"Delete",
 			`/:id`,
 			[]string{"delete"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"],
 		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"],
 		beego.ControllerComments{
 			"GetOne",
 			`/:id`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"],
 		beego.ControllerComments{
 			"GetAll",
 			`/`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"],
 		beego.ControllerComments{
 			"Put",
 			`/:id`,
 			[]string{"put"},
 			nil})
 
-	beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:FeLovController"],
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightController"],
+		beego.ControllerComments{
+			"Delete",
+			`/:id`,
+			[]string{"delete"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"],
+		beego.ControllerComments{
+			"Post",
+			`/`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"],
+		beego.ControllerComments{
+			"GetOne",
+			`/:id`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"],
+		beego.ControllerComments{
+			"GetAll",
+			`/`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"],
+		beego.ControllerComments{
+			"Put",
+			`/:id`,
+			[]string{"put"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightCopy2Controller"],
+		beego.ControllerComments{
+			"Delete",
+			`/:id`,
+			[]string{"delete"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"],
+		beego.ControllerComments{
+			"Post",
+			`/`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"],
+		beego.ControllerComments{
+			"GetOne",
+			`/:id`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"],
+		beego.ControllerComments{
+			"GetAll",
+			`/`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"],
+		beego.ControllerComments{
+			"Put",
+			`/:id`,
+			[]string{"put"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyController"],
+		beego.ControllerComments{
+			"Delete",
+			`/:id`,
+			[]string{"delete"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"],
+		beego.ControllerComments{
+			"Post",
+			`/`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"],
+		beego.ControllerComments{
+			"GetOne",
+			`/:id`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"],
+		beego.ControllerComments{
+			"GetAll",
+			`/`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"],
+		beego.ControllerComments{
+			"Put",
+			`/:id`,
+			[]string{"put"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightDailyDetailController"],
+		beego.ControllerComments{
+			"Delete",
+			`/:id`,
+			[]string{"delete"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"],
+		beego.ControllerComments{
+			"Post",
+			`/`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"],
+		beego.ControllerComments{
+			"GetOne",
+			`/:id`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"],
+		beego.ControllerComments{
+			"GetAll",
+			`/`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"],
+		beego.ControllerComments{
+			"Put",
+			`/:id`,
+			[]string{"put"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvFlightGroupController"],
 		beego.ControllerComments{
 			"Delete",
 			`/:id`,

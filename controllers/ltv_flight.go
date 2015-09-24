@@ -10,12 +10,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
-// oprations for DspChannel
-type DspChannelController struct {
+// oprations for LtvFlight
+type LtvFlightController struct {
 	beego.Controller
 }
 
-func (c *DspChannelController) URLMapping() {
+func (c *LtvFlightController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -24,15 +24,15 @@ func (c *DspChannelController) URLMapping() {
 }
 
 // @Title Post
-// @Description create DspChannel
-// @Param	body		body 	models.DspChannel	true		"body for DspChannel content"
-// @Success 200 {int} models.DspChannel.Id
+// @Description create LtvFlight
+// @Param	body		body 	models.LtvFlight	true		"body for LtvFlight content"
+// @Success 200 {int} models.LtvFlight.Id
 // @Failure 403 body is empty
 // @router / [post]
-func (c *DspChannelController) Post() {
-	var v models.DspChannel
+func (c *LtvFlightController) Post() {
+	var v models.LtvFlight
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if id, err := models.AddDspChannel(&v); err == nil {
+	if id, err := models.AddLtvFlight(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
 		c.Data["json"] = err.Error()
@@ -41,15 +41,15 @@ func (c *DspChannelController) Post() {
 }
 
 // @Title Get
-// @Description get DspChannel by id
+// @Description get LtvFlight by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.DspChannel
+// @Success 200 {object} models.LtvFlight
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *DspChannelController) GetOne() {
+func (c *LtvFlightController) GetOne() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetDspChannelById(id)
+	v, err := models.GetLtvFlightById(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -59,17 +59,17 @@ func (c *DspChannelController) GetOne() {
 }
 
 // @Title Get All
-// @Description get DspChannel
+// @Description get LtvFlight
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.DspChannel
+// @Success 200 {object} models.LtvFlight
 // @Failure 403
 // @router / [get]
-func (c *DspChannelController) GetAll() {
+func (c *LtvFlightController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -111,7 +111,7 @@ func (c *DspChannelController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllDspChannel(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllLtvFlight(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -121,18 +121,18 @@ func (c *DspChannelController) GetAll() {
 }
 
 // @Title Update
-// @Description update the DspChannel
+// @Description update the LtvFlight
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.DspChannel	true		"body for DspChannel content"
-// @Success 200 {object} models.DspChannel
+// @Param	body		body 	models.LtvFlight	true		"body for LtvFlight content"
+// @Success 200 {object} models.LtvFlight
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *DspChannelController) Put() {
+func (c *LtvFlightController) Put() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v := models.DspChannel{Id: id}
+	v := models.LtvFlight{Id: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateDspChannelById(&v); err == nil {
+	if err := models.UpdateLtvFlightById(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
@@ -141,15 +141,15 @@ func (c *DspChannelController) Put() {
 }
 
 // @Title Delete
-// @Description delete the DspChannel
+// @Description delete the LtvFlight
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *DspChannelController) Delete() {
+func (c *LtvFlightController) Delete() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteDspChannel(id); err == nil {
+	if err := models.DeleteLtvFlight(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

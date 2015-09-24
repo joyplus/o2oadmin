@@ -9,50 +9,50 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type DspCampaign struct {
-	Id           int     `orm:"column(id);auto"`
-	AdvertiserId int     `orm:"column(advertiser_id);null"`
-	AppId        int     `orm:"column(app_id);null"`
-	Name         string  `orm:"column(name);size(45);null"`
-	Budget       float32 `orm:"column(budget);null"`
-	Price        float32 `orm:"column(price);null"`
-	Description  string  `orm:"column(description);size(255);null"`
-	TargetLink   string  `orm:"column(target_link);size(45);null"`
+type LtvDevice struct {
+	Id   int    `orm:"column(id);pk"`
+	Os   int    `orm:"column(os);null"`
+	Idfa string `orm:"column(idfa);size(45);null"`
+	Mac  string `orm:"column(mac);size(45);null"`
+	Imei string `orm:"column(imei);size(45);null"`
+	Aid  string `orm:"column(aid);size(45);null"`
+	Aaid string `orm:"column(aaid);size(45);null"`
+	Gpid string `orm:"column(gpid);size(45);null"`
 }
 
-func (t *DspCampaign) TableName() string {
-	return "dsp_campaign"
+func (t *LtvDevice) TableName() string {
+	return "ltv_device"
 }
 
 func init() {
-	orm.RegisterModel(new(DspCampaign))
+	orm.RegisterModel(new(LtvDevice))
 }
 
-// AddDspCampaign insert a new DspCampaign into database and returns
+// AddLtvDevice insert a new LtvDevice into database and returns
 // last inserted Id on success.
-func AddDspCampaign(m *DspCampaign) (id int64, err error) {
+func AddLtvDevice(m *LtvDevice) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetDspCampaignById retrieves DspCampaign by Id. Returns error if
+// GetLtvDeviceById retrieves LtvDevice by Id. Returns error if
 // Id doesn't exist
-func GetDspCampaignById(id int) (v *DspCampaign, err error) {
+func GetLtvDeviceById(id int) (v *LtvDevice, err error) {
 	o := orm.NewOrm()
-	v = &DspCampaign{Id: id}
+	v = &LtvDevice{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllDspCampaign retrieves all DspCampaign matches certain condition. Returns empty list if
+// GetAllLtvDevice retrieves all LtvDevice matches certain condition. Returns empty list if
 // no records exist
-func GetAllDspCampaign(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllLtvDevice(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(DspCampaign))
+	qs := o.QueryTable(new(LtvDevice))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -98,7 +98,7 @@ func GetAllDspCampaign(query map[string]string, fields []string, sortby []string
 		}
 	}
 
-	var l []DspCampaign
+	var l []LtvDevice
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -121,11 +121,11 @@ func GetAllDspCampaign(query map[string]string, fields []string, sortby []string
 	return nil, err
 }
 
-// UpdateDspCampaign updates DspCampaign by Id and returns error if
+// UpdateLtvDevice updates LtvDevice by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateDspCampaignById(m *DspCampaign) (err error) {
+func UpdateLtvDeviceById(m *LtvDevice) (err error) {
 	o := orm.NewOrm()
-	v := DspCampaign{Id: m.Id}
+	v := LtvDevice{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -136,15 +136,15 @@ func UpdateDspCampaignById(m *DspCampaign) (err error) {
 	return
 }
 
-// DeleteDspCampaign deletes DspCampaign by Id and returns error if
+// DeleteLtvDevice deletes LtvDevice by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteDspCampaign(id int) (err error) {
+func DeleteLtvDevice(id int) (err error) {
 	o := orm.NewOrm()
-	v := DspCampaign{Id: id}
+	v := LtvDevice{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&DspCampaign{Id: id}); err == nil {
+		if num, err = o.Delete(&LtvDevice{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

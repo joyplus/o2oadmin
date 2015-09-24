@@ -10,51 +10,56 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type DspAdunit struct {
-	Id            int       `orm:"column(id);pk"`
-	Name          string    `orm:"column(name);size(45);null"`
-	DspCampaignId int       `orm:"column(dsp_campaign_id);null"`
-	DspChannelId  int       `orm:"column(dsp_channel_id);null"`
-	StartDate     time.Time `orm:"column(start_date);type(datetime);null"`
-	EndDate       time.Time `orm:"column(end_date);type(datetime);null"`
-	Budget        float32   `orm:"column(budget);null"`
-	Price         float32   `orm:"column(price);null"`
-	BiddingType   int       `orm:"column(bidding_type);null"`
+type LtvFlightDailyDetail struct {
+	Id              int       `orm:"column(id);auto"`
+	FlightId        int       `orm:"column(flight_id)"`
+	AdDate          time.Time `orm:"column(ad_date);type(date)"`
+	SpreadUrl       string    `orm:"column(spread_url);size(50)"`
+	Spending        float32   `orm:"column(spending);null"`
+	Cost            float32   `orm:"column(cost);null"`
+	Imp             int       `orm:"column(imp);null"`
+	Clk             int       `orm:"column(clk);null"`
+	Install         int       `orm:"column(install);null"`
+	PostbackInstall int       `orm:"column(postback_install);null"`
+	Register        int       `orm:"column(register);null"`
+	Conversion      int       `orm:"column(conversion);null"`
+	Revenue         float32   `orm:"column(revenue);null"`
+	ECPA            float32   `orm:"column(eCPA);null"`
 }
 
-func (t *DspAdunit) TableName() string {
-	return "dsp_adunit"
+func (t *LtvFlightDailyDetail) TableName() string {
+	return "ltv_flight_daily_detail"
 }
 
 func init() {
-	orm.RegisterModel(new(DspAdunit))
+	orm.RegisterModel(new(LtvFlightDailyDetail))
 }
 
-// AddDspAdunit insert a new DspAdunit into database and returns
+// AddLtvFlightDailyDetail insert a new LtvFlightDailyDetail into database and returns
 // last inserted Id on success.
-func AddDspAdunit(m *DspAdunit) (id int64, err error) {
+func AddLtvFlightDailyDetail(m *LtvFlightDailyDetail) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetDspAdunitById retrieves DspAdunit by Id. Returns error if
+// GetLtvFlightDailyDetailById retrieves LtvFlightDailyDetail by Id. Returns error if
 // Id doesn't exist
-func GetDspAdunitById(id int) (v *DspAdunit, err error) {
+func GetLtvFlightDailyDetailById(id int) (v *LtvFlightDailyDetail, err error) {
 	o := orm.NewOrm()
-	v = &DspAdunit{Id: id}
+	v = &LtvFlightDailyDetail{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllDspAdunit retrieves all DspAdunit matches certain condition. Returns empty list if
+// GetAllLtvFlightDailyDetail retrieves all LtvFlightDailyDetail matches certain condition. Returns empty list if
 // no records exist
-func GetAllDspAdunit(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllLtvFlightDailyDetail(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(DspAdunit))
+	qs := o.QueryTable(new(LtvFlightDailyDetail))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -100,7 +105,7 @@ func GetAllDspAdunit(query map[string]string, fields []string, sortby []string, 
 		}
 	}
 
-	var l []DspAdunit
+	var l []LtvFlightDailyDetail
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -123,11 +128,11 @@ func GetAllDspAdunit(query map[string]string, fields []string, sortby []string, 
 	return nil, err
 }
 
-// UpdateDspAdunit updates DspAdunit by Id and returns error if
+// UpdateLtvFlightDailyDetail updates LtvFlightDailyDetail by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateDspAdunitById(m *DspAdunit) (err error) {
+func UpdateLtvFlightDailyDetailById(m *LtvFlightDailyDetail) (err error) {
 	o := orm.NewOrm()
-	v := DspAdunit{Id: m.Id}
+	v := LtvFlightDailyDetail{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -138,15 +143,15 @@ func UpdateDspAdunitById(m *DspAdunit) (err error) {
 	return
 }
 
-// DeleteDspAdunit deletes DspAdunit by Id and returns error if
+// DeleteLtvFlightDailyDetail deletes LtvFlightDailyDetail by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteDspAdunit(id int) (err error) {
+func DeleteLtvFlightDailyDetail(id int) (err error) {
 	o := orm.NewOrm()
-	v := DspAdunit{Id: id}
+	v := LtvFlightDailyDetail{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&DspAdunit{Id: id}); err == nil {
+		if num, err = o.Delete(&LtvFlightDailyDetail{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

@@ -63,7 +63,7 @@
                 <!--
                 <input type="button" id="f_search" name="f_search" class="user_search_button" onclick="return showUserSearch();" value="Search" />
                 -->
-                <a id="f_search" href="javascript:showUserSearch();" class="easyui-linkbutton" style="height:32px;width:80px;">Search</a>
+                <a id="f_search" href="javascript:showUserSearch();" class="easyui-linkbutton" style="height:32px;width:80px;">查询</a>
             </div>
 
             <div style="float:right;font-size:16px;width:250px;">
@@ -105,40 +105,18 @@
 
         <div id="result_area" style="display:none;">
             <div class="easyui-tabs" style="width:1240px;height:487px" id="tabsbox">
-                <div title="iap"  style="padding:30px 10px 10px 10px;">
+                <div title="收入"  style="padding:30px 10px 10px 10px;">
                     <div id="nec_area_iap" style="height:400px;width:1220px;float:left;">
 
                     </div>
                 </div>
-                <div title="pay"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_pay" style="height:400px;width:1220px;float:left;">
-
-                    </div>
-                </div>
-                <div title="start"  style="padding:30px 10px 10px 10px;">
+                <div title="启动"  style="padding:30px 10px 10px 10px;">
                     <div id="nec_area_start" style="height:400px;width:1220px;float:left;">
 
                     </div>
                 </div>
-                <!--
-    <div title="Retention" style="padding:10px">
-        <div id="ec_area_7" style="height:400px;width:1220px;float:left;">
-
-        </div>
-    </div>
-    -->
                 <div title="ROI" style="padding:30px 10px 10px 10px;" selected="true">
                     <div id="ec_area_1" style="height:400px;width:1220px;float:left;">
-
-                    </div>
-                </div>
-                <div title="Cohort" style="padding:30px 10px 10px 10px;">
-                    <div id="ec_area_2" style="height:400px;width:1220px;float:left;">
-
-                    </div>
-                </div>
-                <div title="Payback Period" style="padding:40px 10px 10px 10px;">
-                    <div id="ec_area_3" style="height:400px;width:1220px;float:left;">
 
                     </div>
                 </div>

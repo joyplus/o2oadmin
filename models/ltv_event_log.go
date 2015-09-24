@@ -5,53 +5,53 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type DspChannel struct {
-	Id                 int    `orm:"column(id);pk"`
-	ChannelId          string `orm:"column(channel_id);size(45);null"`
-	Name               string `orm:"column(name);size(45);null"`
-	LogoUrl            string `orm:"column(logo_url);size(200);null"`
-	PostbackUrlIos     string `orm:"column(postback_url_ios);size(200);null"`
-	PostbackUrlAndroid string `orm:"column(postback_url_android);size(200);null"`
-	RefId              string `orm:"column(ref_id);size(45);null"`
+type LtvEventLog struct {
+	Id         int       `orm:"column(id);auto"`
+	FlightId   int       `orm:"column(flight_id);null"`
+	AdDate     time.Time `orm:"column(ad_date);type(date);null"`
+	DeviceId   int       `orm:"column(device_id);null"`
+	Event      string    `orm:"column(event);size(45);null"`
+	EventExtra string    `orm:"column(event_extra);size(45);null"`
 }
 
-func (t *DspChannel) TableName() string {
-	return "dsp_channel"
+func (t *LtvEventLog) TableName() string {
+	return "ltv_event_log"
 }
 
 func init() {
-	orm.RegisterModel(new(DspChannel))
+	orm.RegisterModel(new(LtvEventLog))
 }
 
-// AddDspChannel insert a new DspChannel into database and returns
+// AddLtvEventLog insert a new LtvEventLog into database and returns
 // last inserted Id on success.
-func AddDspChannel(m *DspChannel) (id int64, err error) {
+func AddLtvEventLog(m *LtvEventLog) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetDspChannelById retrieves DspChannel by Id. Returns error if
+// GetLtvEventLogById retrieves LtvEventLog by Id. Returns error if
 // Id doesn't exist
-func GetDspChannelById(id int) (v *DspChannel, err error) {
+func GetLtvEventLogById(id int) (v *LtvEventLog, err error) {
 	o := orm.NewOrm()
-	v = &DspChannel{Id: id}
+	v = &LtvEventLog{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllDspChannel retrieves all DspChannel matches certain condition. Returns empty list if
+// GetAllLtvEventLog retrieves all LtvEventLog matches certain condition. Returns empty list if
 // no records exist
-func GetAllDspChannel(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllLtvEventLog(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(DspChannel))
+	qs := o.QueryTable(new(LtvEventLog))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -97,7 +97,7 @@ func GetAllDspChannel(query map[string]string, fields []string, sortby []string,
 		}
 	}
 
-	var l []DspChannel
+	var l []LtvEventLog
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -120,11 +120,11 @@ func GetAllDspChannel(query map[string]string, fields []string, sortby []string,
 	return nil, err
 }
 
-// UpdateDspChannel updates DspChannel by Id and returns error if
+// UpdateLtvEventLog updates LtvEventLog by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateDspChannelById(m *DspChannel) (err error) {
+func UpdateLtvEventLogById(m *LtvEventLog) (err error) {
 	o := orm.NewOrm()
-	v := DspChannel{Id: m.Id}
+	v := LtvEventLog{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -135,15 +135,15 @@ func UpdateDspChannelById(m *DspChannel) (err error) {
 	return
 }
 
-// DeleteDspChannel deletes DspChannel by Id and returns error if
+// DeleteLtvEventLog deletes LtvEventLog by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteDspChannel(id int) (err error) {
+func DeleteLtvEventLog(id int) (err error) {
 	o := orm.NewOrm()
-	v := DspChannel{Id: id}
+	v := LtvEventLog{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&DspChannel{Id: id}); err == nil {
+		if num, err = o.Delete(&LtvEventLog{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

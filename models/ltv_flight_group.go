@@ -9,47 +9,45 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type DspAdvertiser struct {
-	Id      int    `orm:"column(id);auto"`
-	Name    string `orm:"column(name);size(45);null"`
-	Mobile  string `orm:"column(mobile);size(45);null"`
-	Email   string `orm:"column(email);size(45);null"`
-	Campany string `orm:"column(campany);size(45);null"`
+type LtvFlightGroup struct {
+	Id     int     `orm:"column(id);auto"`
+	Name   string  `orm:"column(name);size(45)"`
+	Budget float32 `orm:"column(budget)"`
 }
 
-func (t *DspAdvertiser) TableName() string {
-	return "dsp_advertiser"
+func (t *LtvFlightGroup) TableName() string {
+	return "ltv_flight_group"
 }
 
 func init() {
-	orm.RegisterModel(new(DspAdvertiser))
+	orm.RegisterModel(new(LtvFlightGroup))
 }
 
-// AddDspAdvertiser insert a new DspAdvertiser into database and returns
+// AddLtvFlightGroup insert a new LtvFlightGroup into database and returns
 // last inserted Id on success.
-func AddDspAdvertiser(m *DspAdvertiser) (id int64, err error) {
+func AddLtvFlightGroup(m *LtvFlightGroup) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetDspAdvertiserById retrieves DspAdvertiser by Id. Returns error if
+// GetLtvFlightGroupById retrieves LtvFlightGroup by Id. Returns error if
 // Id doesn't exist
-func GetDspAdvertiserById(id int) (v *DspAdvertiser, err error) {
+func GetLtvFlightGroupById(id int) (v *LtvFlightGroup, err error) {
 	o := orm.NewOrm()
-	v = &DspAdvertiser{Id: id}
+	v = &LtvFlightGroup{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllDspAdvertiser retrieves all DspAdvertiser matches certain condition. Returns empty list if
+// GetAllLtvFlightGroup retrieves all LtvFlightGroup matches certain condition. Returns empty list if
 // no records exist
-func GetAllDspAdvertiser(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllLtvFlightGroup(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(DspAdvertiser))
+	qs := o.QueryTable(new(LtvFlightGroup))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -95,7 +93,7 @@ func GetAllDspAdvertiser(query map[string]string, fields []string, sortby []stri
 		}
 	}
 
-	var l []DspAdvertiser
+	var l []LtvFlightGroup
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -118,11 +116,11 @@ func GetAllDspAdvertiser(query map[string]string, fields []string, sortby []stri
 	return nil, err
 }
 
-// UpdateDspAdvertiser updates DspAdvertiser by Id and returns error if
+// UpdateLtvFlightGroup updates LtvFlightGroup by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateDspAdvertiserById(m *DspAdvertiser) (err error) {
+func UpdateLtvFlightGroupById(m *LtvFlightGroup) (err error) {
 	o := orm.NewOrm()
-	v := DspAdvertiser{Id: m.Id}
+	v := LtvFlightGroup{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -133,15 +131,15 @@ func UpdateDspAdvertiserById(m *DspAdvertiser) (err error) {
 	return
 }
 
-// DeleteDspAdvertiser deletes DspAdvertiser by Id and returns error if
+// DeleteLtvFlightGroup deletes LtvFlightGroup by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteDspAdvertiser(id int) (err error) {
+func DeleteLtvFlightGroup(id int) (err error) {
 	o := orm.NewOrm()
-	v := DspAdvertiser{Id: id}
+	v := LtvFlightGroup{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&DspAdvertiser{Id: id}); err == nil {
+		if num, err = o.Delete(&LtvFlightGroup{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

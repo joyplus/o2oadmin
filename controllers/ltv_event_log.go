@@ -10,12 +10,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
-// oprations for DspAdunit
-type DspAdunitController struct {
+// oprations for LtvEventLog
+type LtvEventLogController struct {
 	beego.Controller
 }
 
-func (c *DspAdunitController) URLMapping() {
+func (c *LtvEventLogController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -24,15 +24,15 @@ func (c *DspAdunitController) URLMapping() {
 }
 
 // @Title Post
-// @Description create DspAdunit
-// @Param	body		body 	models.DspAdunit	true		"body for DspAdunit content"
-// @Success 200 {int} models.DspAdunit.Id
+// @Description create LtvEventLog
+// @Param	body		body 	models.LtvEventLog	true		"body for LtvEventLog content"
+// @Success 200 {int} models.LtvEventLog.Id
 // @Failure 403 body is empty
 // @router / [post]
-func (c *DspAdunitController) Post() {
-	var v models.DspAdunit
+func (c *LtvEventLogController) Post() {
+	var v models.LtvEventLog
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if id, err := models.AddDspAdunit(&v); err == nil {
+	if id, err := models.AddLtvEventLog(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
 	} else {
 		c.Data["json"] = err.Error()
@@ -41,15 +41,15 @@ func (c *DspAdunitController) Post() {
 }
 
 // @Title Get
-// @Description get DspAdunit by id
+// @Description get LtvEventLog by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.DspAdunit
+// @Success 200 {object} models.LtvEventLog
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *DspAdunitController) GetOne() {
+func (c *LtvEventLogController) GetOne() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetDspAdunitById(id)
+	v, err := models.GetLtvEventLogById(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -59,17 +59,17 @@ func (c *DspAdunitController) GetOne() {
 }
 
 // @Title Get All
-// @Description get DspAdunit
+// @Description get LtvEventLog
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.DspAdunit
+// @Success 200 {object} models.LtvEventLog
 // @Failure 403
 // @router / [get]
-func (c *DspAdunitController) GetAll() {
+func (c *LtvEventLogController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -111,7 +111,7 @@ func (c *DspAdunitController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllDspAdunit(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllLtvEventLog(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -121,18 +121,18 @@ func (c *DspAdunitController) GetAll() {
 }
 
 // @Title Update
-// @Description update the DspAdunit
+// @Description update the LtvEventLog
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.DspAdunit	true		"body for DspAdunit content"
-// @Success 200 {object} models.DspAdunit
+// @Param	body		body 	models.LtvEventLog	true		"body for LtvEventLog content"
+// @Success 200 {object} models.LtvEventLog
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *DspAdunitController) Put() {
+func (c *LtvEventLogController) Put() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	v := models.DspAdunit{Id: id}
+	v := models.LtvEventLog{Id: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateDspAdunitById(&v); err == nil {
+	if err := models.UpdateLtvEventLogById(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
@@ -141,15 +141,15 @@ func (c *DspAdunitController) Put() {
 }
 
 // @Title Delete
-// @Description delete the DspAdunit
+// @Description delete the LtvEventLog
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *DspAdunitController) Delete() {
+func (c *LtvEventLogController) Delete() {
 	idStr := c.Ctx.Input.Params[":id"]
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteDspAdunit(id); err == nil {
+	if err := models.DeleteLtvEventLog(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
