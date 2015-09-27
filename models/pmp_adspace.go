@@ -138,44 +138,6 @@ type AdspaceVo struct {
 	Description string
 }
 
-// get adspace list by demand id , may filtered by adspace name
-func GetAdspaceListByDemandId(page int64, page_size int64, sort string, demandid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
-	var sql = "select distinct adspace.id, adspace.name, adspace.media_id, adspace.secret_key,adspace.pmp_adspace_key,adspace.description, demand.id as demand_id, demand.name as demand_name from pmp_adspace_matrix as matrix inner join pmp_adspace as adspace on matrix.pmp_adspace_id=adspace.id inner join pmp_demand_platform_desk as demand on matrix.demand_id=demand.id where demand.id=? "
-	var offset int64
-	if page <= 1 {
-		offset = 0
-	} else {
-		offset = (page - 1) * page_size
-	}
-	o := orm.NewOrm()
-	var r orm.RawSeter
-	if adspacename == "" {
-		if sort == "" {
-			sort = "ORDER BY adspace.id ASC limit ? offset ?"
-		} else {
-			sort = "ORDER BY " + sort + " " + "limit ? offset ?"
-		}
-		sql = sql + sort
-		r = o.Raw(sql, demandid, page_size, offset)
-	} else {
-		sql = sql + "and adspace.name like ? "
-		if sort == "" {
-			sort = "ORDER BY adspace.id ASC limit ? offset ?"
-		} else {
-			sort = "ORDER BY " + sort + " " + "limit ? offset ?"
-		}
-		sql = sql + sort
-		adspacename = "%" + adspacename + "%"
-		r = o.Raw(sql, demandid, adspacename, page_size, offset)
-	}
-	count, err := r.QueryRows(&adspaceVos)
-	if err == nil {
-		return adspaceVos, count
-	} else {
-		return nil, 0	
-	}
-}
-
 // get adspace list, may filtered by adspace name
 func GetAdspaceList(page int64, page_size int64, sort string, mediaid int, adspacename string) (adspaceVos []AdspaceVo, count int64) {
 	var offset int64

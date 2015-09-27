@@ -44,7 +44,7 @@
 						]],
 		                view: detailview,
 		                detailFormatter:function(index,row){
-		                    return '<div class="ddv"><iframe frameborder="0" scrolling="auto" style="width:100%;min-height:300px;" ></iframe></div>';
+		                    return '<div class="ddv"><iframe frameborder="0" scrolling="auto" style="width:100%;min-height:150px;"></iframe></div>';
 		                },
 		                onExpandRow: function(index,row){
 							var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
@@ -154,6 +154,8 @@
 				var allChanges = [];	
 				var adspaceid;			
 				function allocateToDemands() {
+					$("#field2").val("");
+					$('#demandcc').combobox("setValue", "需求方平台");
 					var row = $('#dg').datagrid('getSelected');
 					aid = row.Id;
 					adspaceid = aid;
@@ -285,7 +287,7 @@
 	          </div>
 			<div style="float:right"><input id="mediacc" class="easyui-combobox" name="media" data-options="valueField:'Id',textField:'Text',url:'/pmp/adspace/medias', panelHeight:'auto'"></div>
 			</div>
-		    <table id="dg" title="广告位列表" style="width:1000px;height:550px"
+		    <table id="dg" title="广告位列表" style="width:1000px;height:580px"
 	            url="/pmp/adspace/index"
 		            pagination="true"
 		            fitColumns="true" singleSelect="true"
@@ -342,7 +344,7 @@
 							<td width="300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				            <td><input id="demandcc" name="DemandId" class="easyui-combobox" data-options="valueField:'Id',textField:'Name',url:'/pmp/demand/demands', panelHeight:'auto'" /></td>
 				            <td>
-				                <input type="text" class="" id="field2" placeholder="请输入部分需求方平台名称"/>	
+				                <input id="field2" type="text" placeholder="请输入部分需求方平台名称"/>	
 				            </td>
 				            <td><a href="#" icon='icon-reload' plain="true" onclick="filterData2()" class="easyui-linkbutton">搜索</a></td>
 				            <td>

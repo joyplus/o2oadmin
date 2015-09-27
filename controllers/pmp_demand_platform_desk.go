@@ -49,9 +49,7 @@ func (this *PmpDemandPlatformDeskController) GetDemandList(){
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &demands
+//		this.Data["json"] = &demands
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
@@ -96,6 +94,7 @@ type DemandVo struct {
 	Day7 int
 	Operation string
 	DemandAdspaceName string
+	AdspaceId int
 }
 
 // Get demands by adspace id
@@ -110,9 +109,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 	c.Data["maingridrowid"] = adspaceId
 	c.Data["startdate"] = date
 	if (usetpl) {
-		tree := c.GetTree()
-		c.Data["tree"] = &tree
-		c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
+		//c.Data["json"] = &map[string]interface{}{"total": 2, "rows": []DemandVo{}}
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
@@ -187,6 +184,7 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 		this.Rsp(false, err.Error())
 		return
 	}
+	beego.Info("****** demandVo:", u)
 	const layout = "2006-1-2"
 	startdate, _ := time.Parse(layout, u.Operation)
 	startdate = startdate.Local()
@@ -204,7 +202,7 @@ func (this *PmpDemandPlatformDeskController) UpdateDailyAllocation() {
 		datestrs = append(datestrs, tempdate.Format(layout))
 	}
 	beego.Info(" **** datestrs:" , datestrs, " DemandAdspaceId: ", u.DemandAdspaceId, " imps: ", imps)
-	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId,u.Proportion, datestrs, imps)
+	num, err := models.UpdateImpByDemandAdpaceIdAndAdDate(u.DemandAdspaceId,u.Proportion, datestrs, imps, u.AdspaceId)
 	if err == nil {
 		beego.Info(" **** Number of rows updated: ", num)
 		this.Rsp(true, "Success")

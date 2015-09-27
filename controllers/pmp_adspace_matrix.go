@@ -172,8 +172,6 @@ func (c *PmpAdspaceMatrixController) DeleteByDemandIdAndAdspaceId() {
 // Update demand & adspace maps
 func (c *PmpAdspaceMatrixController) UpdateAdspaceMatrix() {
 	var v []models.DemandMappingVo
-//	beego.Info("===========:",c.Ctx.Request.Body)
-//	beego.Info("&&&&&&&&&&&&&:",c.Ctx.Input.RequestBody)
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
 	beego.Info("***** parsed form:", v)
 	if err := models.UpdateAdspaceMatrix(v); err == nil {

@@ -22,7 +22,7 @@ func init() {
         beego.NSRouter("demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList"),
         beego.NSRouter("report/getPdbMediaReport", &controllers.ReportController{}, "*:GetPdbMediaReport"),
         beego.NSRouter("report/getPdbMediaReportData", &controllers.ReportController{}, "*:GetPdbMediaReportData"),
-        //	beego.NSRouter("report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll"),
+        //  beego.NSRouter("report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll"),
         beego.NSRouter("report/getPdbDspReport", &controllers.ReportController{}, "*:GetPdbDspReport"),
         beego.NSRouter("report/getPdbDspReportData", &controllers.ReportController{}, "*:GetPdbDspReportData"),
 
@@ -30,7 +30,9 @@ func init() {
         beego.NSRouter("demand/deldemand", &controllers.PmpDemandPlatformDeskController{}, "*:Delete"),
         beego.NSRouter("demand/getDemandsMappingInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandsMappingInfo"),
 
-        beego.NSRouter("demand/getAdspaceByDemand", &controllers.PmpAdspaceController{}, "*:GetAdspaceListByDemand"),
+        beego.NSRouter("demand/getDemandAdspaceByDemand", &controllers.PmpDemandAdspaceController{}, "*:GetDemandAdspaceListByDemand"),
+        beego.NSRouter("adspace/updatedemandadspace", &controllers.PmpDemandAdspaceController{}, "*:SaveOrUpdateDemandAdspace"),
+        beego.NSRouter("adspace/deldemandadspace", &controllers.PmpDemandAdspaceController{}, "*:Delete"),
 
         beego.NSRouter("media/index", &controllers.PmpMediaController{}, "*:GetMediaList"),
         beego.NSRouter("media/updatemedia", &controllers.PmpMediaController{}, "*:SaveOrUpdateMedia"),
@@ -39,11 +41,14 @@ func init() {
         beego.NSRouter("adspacematrix/deladspacematrix", &controllers.PmpAdspaceMatrixController{}, "*:DeleteByDemandIdAndAdspaceId"),
         beego.NSRouter("adspacematrix/updateAdspaceMatrix", &controllers.PmpAdspaceMatrixController{}, "*:UpdateAdspaceMatrix"),
 
+        
+        beego.NSRouter("operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant"),
+        beego.NSRouter("operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant"),
+        beego.NSRouter("operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant"),
+        beego.NSRouter("operation/merchant/index", &controllers.MerchantController{}, "*:Index"),
 
-        beego.NSRouter("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant"),
-        beego.NSRouter("/operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant"),
-        beego.NSRouter("/operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant"),
-        beego.NSRouter("/operation/merchant/index", &controllers.MerchantController{}, "*:Index"),
+        //Campaign
+        beego.NSRouter("campaign/add", &controllers.CampaignController{}, "*:Add"),
 
         beego.NSRouter("Performance", &controllers.PerformanceController{}),
 
@@ -66,6 +71,10 @@ func init() {
 
     beego.AddNamespace(ns)
     admin.Run()
+
+    beego.Info("o2oadmin start")
+
+	
 
 }
 

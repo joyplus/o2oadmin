@@ -71,44 +71,6 @@ func (c *PmpAdspaceController) SaveOrUpdateAdspace() {
 	c.ServeJson()
 }
 
-// get adspace list by demand id
-func (c *PmpAdspaceController) GetAdspaceListByDemand() {
-	beego.Info("********* demandid:", c.GetString("demandid"), "********** adspacename:", c.GetString("adspacename"))
-	id,err := c.GetInt("demandid")
-	adspacename := c.GetString("adspacename")
-	page, _ := c.GetInt64("page")
-	page_size, _ := c.GetInt64("rows")
-	sort := c.GetString("sort")
-	order := c.GetString("order")
-	usetpl,_ := c.GetBool("usetpl")
-	if len(order) > 0 {
-		if order == "desc" {
-			sort = " " + sort + " DESC"
-		}
-	} else {
-		sort = "Id"
-	}
-	var adspaceVos []models.AdspaceVo
-	var count int64
-	if err == nil {
-		adspaceVos, count = models.GetAdspaceListByDemandId(page, page_size, sort, id, adspacename)
-	}
-	if usetpl {
-		tree := c.GetTree()
-		c.Data["tree"] = &tree
-		c.Data["json"] = &adspaceVos
-		c.Data["demandid"] = id
-		if c.GetTemplatetype() != "easyui" {
-			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
-		}
-		c.TplNames = c.GetTemplatetype() + "/adspace/adspacelist.tpl"			
-		return
-	} else {
-		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaceVos}		
-		c.ServeJson()
-	}
-}
-
 // @Title Get
 // @Description get PmpAdspace by id
 // @Param	id		path 	string	true		"The key for staticblock"
@@ -222,9 +184,7 @@ func (this *PmpAdspaceController) GetAdspaceList() {
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
-		this.Data["json"] = &adspaces
+		//this.Data["json"] = &adspaces
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}

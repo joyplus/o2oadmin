@@ -3,24 +3,28 @@
     var roleid = {{.roleid}};
     var URL="/rbac/role"
 $(function(){
-    //用户列表
+    //get role list
     $("#combobox").combobox({
         url:URL+'/Getlist',
         valueField:'Id',
         textField:'Name',
         value:roleid,
         onSelect:function(record){
-            $("#datagrid2").datagrid("reload",{Id:record.Id});
+			roleid = record.Id;
+            $("#datagrid2").datagrid("load", {Id:roleid});
         }
     });
     //组用户列表
     $("#datagrid2").datagrid({
-        url:URL+'/RoleToUserList?Id='+roleid,
+        url:URL+'/RoleToUserList',
         method:'get',
         fitColumns:false,
         striped:true,
         rownumbers:true,
         idField:'Id',
+		queryParams: {
+			Id: roleid
+		},
         columns:[[
             {field:'Id',title:'ID',width:50,align:'center'},
             {field:'Username',title:'用户名',width:140,align:'center'},
@@ -70,7 +74,7 @@ $(function(){
 <div id="tb2" style="padding:5px;height:auto">
     <div style="margin-bottom:5px">
 		<a href="#" icon='icon-back' plain="true" onclick="back()" class="easyui-linkbutton" >返回</a>
-        当前组：<input id="combobox" name="name" >
+        角色：<input id="combobox" name="name" >
         <a href="#"  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="saveselect()">保存</a>
     </div>
     <div style="margin-bottom:5px">

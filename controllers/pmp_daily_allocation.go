@@ -126,9 +126,7 @@ func (c *PmpDailyAllocationController) GetAll() {
 		c.ServeJson()
 		return
 	} else {
-		tree := c.GetTree()
-		c.Data["tree"] = &tree
-		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &l}
+		//c.Data["json"] = &map[string]interface{}{"total": count, "rows": &l}
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}

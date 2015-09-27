@@ -8,36 +8,19 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego"
+	"github.com/beego/admin/src/rbac"
 )
 
 // oprations for PmpDemandAdspace
 type PmpDemandAdspaceController struct {
-	beego.Controller
+	rbac.CommonController
 }
 
 func (c *PmpDemandAdspaceController) URLMapping() {
-	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
 	c.Mapping("Put", c.Put)
 	c.Mapping("Delete", c.Delete)
-}
-
-// @Title Post
-// @Description create PmpDemandAdspace
-// @Param	body		body 	models.PmpDemandAdspace	true		"body for PmpDemandAdspace content"
-// @Success 200 {int} models.PmpDemandAdspace.Id
-// @Failure 403 body is empty
-// @router / [post]
-func (c *PmpDemandAdspaceController) Post() {
-	var v models.PmpDemandAdspace
-	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if id, err := models.AddPmpDemandAdspace(&v); err == nil {
-		c.Data["json"] = map[string]int64{"id": id}
-	} else {
-		c.Data["json"] = err.Error()
-	}
-	c.ServeJson()
 }
 
 // @Title Get
@@ -147,12 +130,74 @@ func (c *PmpDemandAdspaceController) Put() {
 // @Failure 403 id is empty
 // @router /:id [delete]
 func (c *PmpDemandAdspaceController) Delete() {
-	idStr := c.Ctx.Input.Params[":id"]
-	id, _ := strconv.Atoi(idStr)
-	if err := models.DeletePmpDemandAdspace(id); err == nil {
+	id, err := c.GetInt("adspaceid")
+	beego.Info("param adspaceid:", c.GetString("adspaceid"))
+	if err != nil {
+		c.Data["json"] = err.Error()
+		c.ServeJson()
+		return 
+	}
+	if err = models.DeletePmpDemandAdspace(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
 	}
+	c.ServeJson()
+}
+
+// get demand adspace list by demand id
+func (c *PmpDemandAdspaceController) GetDemandAdspaceListByDemand() {
+	beego.Info("********* demandid:", c.GetString("demandid"), "********** demand_adspace_name:", c.GetString("name"))
+	id,err := c.GetInt("demandid")
+	adspacename := c.GetString("name")
+	page, _ := c.GetInt64("page")
+	page_size, _ := c.GetInt64("rows")
+	sort := c.GetString("sort")
+	order := c.GetString("order")
+	usetpl,_ := c.GetBool("usetpl")
+	if len(order) > 0 {
+		if order == "desc" {
+			sort = " " + sort + " DESC"
+		}
+	} else {
+		sort = "Id"
+	}
+	var adspaceVos []models.DemandAdspaceVo
+	var count int64
+	if err == nil {
+		adspaceVos, count = models.GetDemandAdspaceListByDemandId(page, page_size, sort, id, adspacename)
+	}
+	if usetpl {
+//		c.Data["json"] = &adspaceVos
+		c.Data["demandid"] = id
+		if c.GetTemplatetype() != "easyui" {
+			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
+		}
+		c.TplNames = c.GetTemplatetype() + "/adspace/demandadspacelist.tpl"			
+		return
+	} else {
+		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaceVos}		
+		c.ServeJson()
+	}
+}
+
+// save or update adspace with param models.DemandAdspaceVo
+func (c *PmpDemandAdspaceController) SaveOrUpdateDemandAdspace() {
+	var v models.DemandAdspaceVo
+	c.ParseForm(&v)
+	beego.Info("*********** pased form values:", v)
+	if v.Id == 0 {
+		if id, err := models.AddPmpDemandAdspace(&v); err == nil {
+			c.Data["json"] = map[string]int64{"id": id}
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	} else {
+		if err := models.UpdatePmpDemandAdspace(&v); err == nil {
+			c.Data["json"] = "OK"
+		} else {
+			c.Data["json"] = err.Error()
+		}
+	}	
 	c.ServeJson()
 }

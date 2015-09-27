@@ -1,7 +1,7 @@
 {{template "../public/header.tpl"}}
 <script type="text/javascript" src="/static/easyui/jquery-easyui/accounting.min.js"></script>
 <script type="text/javascript">
-var date_format = 'MM/dd/yyyy';
+var date_format = 'yyyy-MM-dd';
 var date_format_to_server = "yyyy-MM-dd";
 var URL="/pmp/demand";
 var maingridrowid = {{.maingridrowid}}
@@ -89,6 +89,7 @@ $(function(){
             }
             changes.DemandAdspaceId = data.DemandAdspaceId;
 			changes.Operation = startDate; //use field Operation to pass start date
+			changes.AdspaceId = maingridrowid;
 			//alert(JSON.stringify(changes))
             vac.ajax(URL+'/updateDailyAllocation', changes, 'POST', function(r){
                 if(!r.status){

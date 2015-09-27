@@ -99,7 +99,7 @@
 		
 				function onViewAdspace() {
 					var row = $('#dg').datagrid('getSelected');		
-					var href = "/pmp/demand/getAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";		              
+					var href = "/pmp/demand/getDemandAdspaceByDemand?demandid=" + row.Id + "&usetpl=true";		              
 					var newtabTitle = "View DSP";
 					openNewTab(href, newtabTitle);
 				}
