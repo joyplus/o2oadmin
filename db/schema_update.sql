@@ -167,3 +167,43 @@ ALTER TABLE `pmp_campaign_daily_report` ADD `cost` FLOAT NOT NULL AFTER `spendin
 
 /*20150915*/
 ALTER TABLE `pmp_campaign` ADD `imp` INT NOT NULL AFTER `bid_price`, ADD `clk` INT NOT NULL AFTER `imp`;
+
+/*20150927*/
+CREATE TABLE `ltv_app` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `pkgname` varchar(100) DEFAULT NULL,
+  `app_key` varchar(45) DEFAULT NULL,
+  `security_key` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ltv_flight` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `budget` float DEFAULT NULL,
+  `spending` float DEFAULT NULL,
+  `cost` float DEFAULT NULL,
+  `imp` int(11) DEFAULT NULL,
+  `clk` int(11) DEFAULT NULL,
+  `install` int(11) DEFAULT NULL,
+  `postback_install` int(11) DEFAULT NULL,
+  `register` int(11) DEFAULT NULL,
+  `submit` int(11) DEFAULT NULL,
+  `conversion` int(11) DEFAULT NULL,
+  `revenue` float DEFAULT NULL,
+  `eCPA` float DEFAULT NULL,
+  `del_flg` tinyint(4) NOT NULL DEFAULT '0',
+  `spread_url` varchar(500) DEFAULT NULL,
+  `spread_name` varchar(45) DEFAULT NULL,
+  `ltv_app_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ltv_flight_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `budget` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;

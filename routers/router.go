@@ -1,78 +1,86 @@
 package routers
 
 import (
-	"github.com/astaxie/beego"
-	"github.com/beego/admin"
-	"o2oadmin/controllers"
+    "github.com/astaxie/beego"
+    "github.com/beego/admin"
+    "o2oadmin/controllers"
 )
 
 func init() {
-	beego.Router("/pmp/adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList")
-	beego.Router("/pmp/adspace/addadspace", &controllers.PmpAdspaceController{}, "*:Post")
-	beego.Router("/pmp/adspace/medias", &controllers.PmpMediaController{}, "*:GetAll")
-	beego.Router("/pmp/adspace/updateadspace", &controllers.PmpAdspaceController{}, "*:SaveOrUpdateAdspace")
-	beego.Router("/pmp/adspace/deladspace", &controllers.PmpAdspaceController{}, "*:Delete")
 
-	beego.Router("/pmp/demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandByAdspace")
-	beego.Router("/pmp/demand/demands", &controllers.PmpDemandPlatformDeskController{}, "*:GetAll")
-	beego.Router("/pmp/demand/updateDailyAllocation", &controllers.PmpDemandPlatformDeskController{}, "*:UpdateDailyAllocation")
+    ns := beego.NewNamespace("/pmp",
+        beego.NSRouter("adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList"),
+        beego.NSRouter("adspace/addadspace", &controllers.PmpAdspaceController{}, "*:Post"),
+        beego.NSRouter("adspace/medias", &controllers.PmpMediaController{}, "*:GetAll"),
+        beego.NSRouter("adspace/updateadspace", &controllers.PmpAdspaceController{}, "*:SaveOrUpdateAdspace"),
+        beego.NSRouter("adspace/deladspace", &controllers.PmpAdspaceController{}, "*:Delete"),
 
-	beego.Router("/pmp/demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList")
-	beego.Router("/pmp/report/getPdbMediaReport", &controllers.ReportController{}, "*:GetPdbMediaReport")
-	beego.Router("/pmp/report/getPdbMediaReportData", &controllers.ReportController{}, "*:GetPdbMediaReportData")
-	//	beego.Router("/pmp/report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll")
-	beego.Router("/pmp/report/getPdbDspReport", &controllers.ReportController{}, "*:GetPdbDspReport")
-	beego.Router("/pmp/report/getPdbDspReportData", &controllers.ReportController{}, "*:GetPdbDspReportData")
+        beego.NSRouter("demand/demandInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandByAdspace"),
+        beego.NSRouter("demand/demands", &controllers.PmpDemandPlatformDeskController{}, "*:GetAll"),
+        beego.NSRouter("demand/updateDailyAllocation", &controllers.PmpDemandPlatformDeskController{}, "*:UpdateDailyAllocation"),
 
-	beego.Router("/pmp/demand/updatedemand", &controllers.PmpDemandPlatformDeskController{}, "*:SaveOrUpdateDemand")
-	beego.Router("/pmp/demand/deldemand", &controllers.PmpDemandPlatformDeskController{}, "*:Delete")
-	beego.Router("/pmp/demand/getDemandsMappingInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandsMappingInfo")
+        beego.NSRouter("demand/index", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandList"),
+        beego.NSRouter("report/getPdbMediaReport", &controllers.ReportController{}, "*:GetPdbMediaReport"),
+        beego.NSRouter("report/getPdbMediaReportData", &controllers.ReportController{}, "*:GetPdbMediaReportData"),
+        //  beego.NSRouter("report/GetPdbMediaReportData", &controllers.PmpDailyRequestReportController{}, "*:GetAll"),
+        beego.NSRouter("report/getPdbDspReport", &controllers.ReportController{}, "*:GetPdbDspReport"),
+        beego.NSRouter("report/getPdbDspReportData", &controllers.ReportController{}, "*:GetPdbDspReportData"),
 
-	beego.Router("/pmp/demand/getDemandAdspaceByDemand", &controllers.PmpDemandAdspaceController{}, "*:GetDemandAdspaceListByDemand")
-	beego.Router("/pmp/adspace/updatedemandadspace", &controllers.PmpDemandAdspaceController{}, "*:SaveOrUpdateDemandAdspace")
-	beego.Router("/pmp/adspace/deldemandadspace", &controllers.PmpDemandAdspaceController{}, "*:Delete")
+        beego.NSRouter("demand/updatedemand", &controllers.PmpDemandPlatformDeskController{}, "*:SaveOrUpdateDemand"),
+        beego.NSRouter("demand/deldemand", &controllers.PmpDemandPlatformDeskController{}, "*:Delete"),
+        beego.NSRouter("demand/getDemandsMappingInfo", &controllers.PmpDemandPlatformDeskController{}, "*:GetDemandsMappingInfo"),
 
-	beego.Router("/pmp/media/index", &controllers.PmpMediaController{}, "*:GetMediaList")
-	beego.Router("/pmp/media/updatemedia", &controllers.PmpMediaController{}, "*:SaveOrUpdateMedia")
-	beego.Router("/pmp/media/delmedia", &controllers.PmpMediaController{}, "*:Delete")
+        beego.NSRouter("demand/getDemandAdspaceByDemand", &controllers.PmpDemandAdspaceController{}, "*:GetDemandAdspaceListByDemand"),
+        beego.NSRouter("adspace/updatedemandadspace", &controllers.PmpDemandAdspaceController{}, "*:SaveOrUpdateDemandAdspace"),
+        beego.NSRouter("adspace/deldemandadspace", &controllers.PmpDemandAdspaceController{}, "*:Delete"),
 
-	beego.Router("/pmp/adspacematrix/deladspacematrix", &controllers.PmpAdspaceMatrixController{}, "*:DeleteByDemandIdAndAdspaceId")
-	beego.Router("/pmp/adspacematrix/updateAdspaceMatrix", &controllers.PmpAdspaceMatrixController{}, "*:UpdateAdspaceMatrix")
+        beego.NSRouter("media/index", &controllers.PmpMediaController{}, "*:GetMediaList"),
+        beego.NSRouter("media/updatemedia", &controllers.PmpMediaController{}, "*:SaveOrUpdateMedia"),
+        beego.NSRouter("media/delmedia", &controllers.PmpMediaController{}, "*:Delete"),
 
-	admin.Run()
-	beego.Info("o2oadmin start")
-	beego.Router("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant")
-	beego.Router("/operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant")
-	beego.Router("/operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant")
-	beego.Router("/operation/merchant/index", &controllers.MerchantController{}, "*:Index")
+        beego.NSRouter("adspacematrix/deladspacematrix", &controllers.PmpAdspaceMatrixController{}, "*:DeleteByDemandIdAndAdspaceId"),
+        beego.NSRouter("adspacematrix/updateAdspaceMatrix", &controllers.PmpAdspaceMatrixController{}, "*:UpdateAdspaceMatrix"),
 
-	beego.Router("/api/customer/requestOTP", &controllers.CustomerController{}, "*:RequestOTP")
-	beego.Router("/api/customer/verifyOTP", &controllers.CustomerController{}, "*:VerifyOTP")
+        
+        beego.NSRouter("operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant"),
+        beego.NSRouter("operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant"),
+        beego.NSRouter("operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant"),
+        beego.NSRouter("operation/merchant/index", &controllers.MerchantController{}, "*:Index"),
 
-	beego.Router("/api/resturant/getLovList", &controllers.ResturantController{}, "*:GetLovList")
-	beego.Router("/api/resturant/getMaterialListByCategory", &controllers.ResturantController{}, "*:GetMaterialListByCategory")
+        //Campaign
+        beego.NSRouter("campaign/add", &controllers.CampaignController{}, "*:Add"),
 
-	beego.Router("/api/resturant/getSupplierList", &controllers.ResturantController{}, "*:GetSupplierList")
-	beego.Router("/api/resturant/queryPrice", &controllers.ResturantController{}, "*:QueryPrice")
-	beego.Router("/api/resturant/getRequestOrderList", &controllers.ResturantController{}, "*:GetRequestOrderList")
-	beego.Router("/api/resturant/placeOrder", &controllers.ResturantController{}, "*:PlaceOrder")
-	beego.Router("/api/resturant/cancelOrder", &controllers.ResturantController{}, "*:CancelOrder")
+        beego.NSRouter("Performance", &controllers.PerformanceController{}),
 
-	beego.Router("/api/activity/getList", &controllers.ActivityController{}, "*:GetActiveActivityList")
-	beego.Router("/api/resturant/getCategoryList", &controllers.ResturantController{}, "*:GetCategoryList")
-	beego.Router("/api/resturant/getTransactionList", &controllers.ResturantController{}, "*:GetTransactionList")
-	beego.Router("/api/resturant/getTransactionDetail", &controllers.ResturantController{}, "*:GetTransactionDetail")
-	beego.Router("/api/resturant/getRegularMaterialList", &controllers.ResturantController{}, "*:GetRegularMaterialList")
+        beego.NSNamespace("/Campaign",
+            beego.NSInclude(
+                &controllers.LtvDashboardController{},
+            ),
+        ),
+        beego.NSNamespace("/FlightGroup",
+            beego.NSInclude(
+                &controllers.LtvFlightGroupController{},
+            ),
+        ),
+        beego.NSNamespace("/Flight",
+            beego.NSInclude(
+                &controllers.LtvFlightController{},
+            ),
+        ),
+    )
 
-	//Campaign
-	beego.Router("/pmp/campaign/add", &controllers.CampaignController{}, "*:Add")
-	beego.Router("/api/addcampaign", &controllers.CampaignController{}, "*:Add")
+    beego.AddNamespace(ns)
+    admin.Run()
+
+    beego.Info("o2oadmin start")
+
+	
 
 }
 
 //func router() {
-//	beego.Router("/merchant/addMerchant", &controllers.MerchantController{}, "*:addMerchant")
-//	beego.Router("/merchant/updateMerchant", &controllers.MerchantController{}, "*:updateMerchant")
-//	beego.Router("/merchant/deleteMerchant", &controllers.MerchantController{}, "*:delMerchant")
-//	beego.Router("/merchant/index", &controllers.MerchantController{}, "*:Index")
+//	beego.NSRouter("/merchant/addMerchant", &controllers.MerchantController{}, "*:addMerchant")
+//	beego.NSRouter("/merchant/updateMerchant", &controllers.MerchantController{}, "*:updateMerchant")
+//	beego.NSRouter("/merchant/deleteMerchant", &controllers.MerchantController{}, "*:delMerchant")
+//	beego.NSRouter("/merchant/index", &controllers.MerchantController{}, "*:Index")
 //}
