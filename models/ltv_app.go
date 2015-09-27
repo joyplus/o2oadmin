@@ -15,6 +15,7 @@ type LtvApp struct {
 	Pkgname     string `orm:"column(pkgname);size(100);null"`
 	AppKey      string `orm:"column(app_key);size(45);null"`
 	SecurityKey string `orm:"column(security_key);size(45);null"`
+
 }
 
 func (t *LtvApp) TableName() string {

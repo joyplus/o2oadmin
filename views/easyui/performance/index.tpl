@@ -5,99 +5,29 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=1280,target-densitydpi=high-dpi,user-scalable=no" />
     {{template "../public/header.tpl"}}
-    <!------Main Styles------>
-    <style type="text/css">
-        #loading{
-            width:1280px;
-            height:722px;
-            background: #FFFFFF;
-            position: absolute;
-            top: 0px;
-            left: 0;
-            z-index:999;
-            opacity:1;
-            -webkit-transition:all 1s ease 0s;
-            -moz-transition:all 1s ease 0s;
-            -ms-transition:all 1s ease 0s;
-            -o-transition:all 1s ease 0s;
-            transition:all 1s ease 0s;
-        }
-
-        .textbox .textbox-text{
-            font-size: 12px;
-        }
-
-        .combobox-item, .combobox-group {
-            font-size: 12px;
-            padding: 3px 0px 3px 3px;
-        }
-
-        .datagrid-row-selected{
-            /*background:#d7ebf9;*/
-            background:#FFF0BC;
-            color:#000;
-        }
-
-        .datagrid-row-click{
-            background:#3baae3;
-            color:#fff;
-        }
-
-        /*
-        .panel-title {
-            font-weight: bold;
-            height: 22px;
-            line-height: 22px;
-            font-size: 14px;
-        }
-        */
-        .datagrid-header-row, .datagrid-row {
-            height: 32px;
-        }
-        .panel-title {
-            font-weight: bold;
-            color: #4D3667;
-            height: 22px;
-            line-height: 22px;
-            font-size: 12px;
-        }
-        #result_area a{
-            color:#000;
-        }
-
-        #timezone_info{
-            position:absolute;
-            z-index:2;
-            right:10px;
-            top:420px;
-            color:gray;
-        }
-
-        a:hover{
-            text-decoration:underline;
-        }
-    </style>
 </head>
 <body>
 <div id="main_content">
     <div id="content_area" style="height:1100px;">
         <div id="search_areab">
-            <div style="float:left;margin-left:0px">
-                <select name="f_adname" id="f_adid" style="width:210px;height:32px;font-size:12px;">
-                    <option value="">所有广告主</option>
-                    <option value="1">madhouse</option>
-                    <option value="2">wechat</option>
-                    <option value="13">Elex</option>
-                    <option value="14">CMGE</option>
-                    <option value="15">Efun</option>
-                    <option value="16">4399</option>
-                    <option value="38">Elex Android</option>
-                </select>
-            </div>
+            <!--<div style="float:left;margin-left:0px">-->
+                <!--<select name="f_adname" id="f_adid" style="width:210px;height:32px;font-size:12px;">-->
+                    <!--<option value="">所有广告主</option>-->
+                    <!--<option value="1">madhouse</option>-->
+                    <!--<option value="2">wechat</option>-->
+                    <!--<option value="13">Elex</option>-->
+                    <!--<option value="14">CMGE</option>-->
+                    <!--<option value="15">Efun</option>-->
+                    <!--<option value="16">4399</option>-->
+                    <!--<option value="38">Elex Android</option>-->
+                <!--</select>-->
+                <!--<input id="f_adid" name="f_adid" style="width:210px;height:32px;font-size:12px;" />-->
+            <!--</div>-->
             <div style="float:left;margin-left:10px">
-                <select class="easyui-combobox" name="f_camname" id="f_camid" style="width:210px;height:32px;font-size:12px;">
-                    <option value="">所有项目</option>
-                </select>
+                <!--<select class="easyui-combobox" name="f_camname" id="f_camid" style="width:210px;height:32px;font-size:12px;">-->
+                    <!--<option value="">所有项目</option>-->
+                <!--</select>-->
+                <input id="f_camid" name="f_camname" style="width:210px;height:32px;font-size:12px;" />
             </div>
             <!--
             <div style="float:left;margin-left:10px;margin-top:1px;">
@@ -158,18 +88,22 @@
 
         <div id="result_area" style="margin-top:10px;border:0">
             <table id="comp_list" title="项目列表" style="width:100%;height:95%"
-                   data-options="rownumbers:false,singleSelect:true,url:'FlightGroup',method:'get'" pagination="true">
+                   data-options="rownumbers:false,singleSelect:true,url:'FlightGroup/GetSummaryList',method:'get'" pagination="true">
                 <thead>
                 <tr>
-                    <th data-options="field:'status',width:80,formatter:formatStatus,sortable:true"><b>状态</b></th>
-                    <th data-options="field:'name',width:169,formatter:formatCName"><b>名称</b></th>
-                    <th data-options="field:'f_adname',width:109"><b>广告主</b></th>
-                    <th data-options="field:'spend',width:100,formatter:formatSpend,sortable:true"><b>成本</b></th>
-                    <th data-options="field:'revenue',width:120,formatter:formatRevenue,sortable:true"><b>广告主支出(元)</b></th>
-                    <th data-options="field:'install',width:80,formatter:formatInstall,sortable:true"><b>安装数</b></th>
-                    <th data-options="field:'inappRevnueTotal',width:100,formatter:formatappRevenue,sortable:true"><b>收入</b></th>
-                    <th data-options="field:'ecpa',width:60,formatter:formatEcpa,sortable:true"><b>eCPA</b></th>
-                    <th data-options="field:'f_id',width:60,align:'center',formatter:formatExPort"><b>导出</b></th>
+                    <th data-options="field:'Name',width:100,formatter:formatGroupName"><b>名称</b></th>
+                    <th data-options="field:'Budget',width:120"><b>预算(元)</b></th>
+                    <th data-options="field:'Spending',width:120,sortable:true"><b>广告主支出(元)</b></th>
+                    <th data-options="field:'Cost',width:120,sortable:true"><b>成本(元)</b></th>
+                    <th data-options="field:'Imp',width:80,sortable:true"><b>展示</b></th>
+                    <th data-options="field:'Clk',width:80,sortable:true"><b>点击</b></th>
+                    <th data-options="field:'Install',width:80,sortable:true"><b>普通激活</b></th>
+                    <th data-options="field:'PostbackInstall',width:80,sortable:true"><b>激活</b></th>
+                    <th data-options="field:'Register',width:80,sortable:true"><b>注册</b></th>
+                    <th data-options="field:'Submit',width:80,sortable:true"><b>申请</b></th>
+                    <th data-options="field:'Conversion',width:80,sortable:true"><b>申请成功</b></th>
+                    <th data-options="field:'Revenue',width:80,sortable:true"><b>收入</b></th>
+                    <th data-options="field:'ECPA',width:80,sortable:true"><b>eCPA</b></th>
                 </tr>
                 </thead>
             </table>
@@ -227,30 +161,35 @@
         //
     }
 
-    $('#f_adid').combobox({
-        onSelect: function () {
-            var adid = $('#f_adid').combobox('getValue');
-            getfournums(daytype="",act="preview",adid,cdid="");
-            $('#f_camid').combobox({
-                url:'ajax_getcampaign.php?pid='+adid,
-                valueField:'f_id',
-                textField:'f_name',
-                onLoadSuccess: function () { //加载完成后,设置选中第一项
-                    var val = $(this).combobox("getData");
-                    for (var item in val[0]) {
-                        if (item == "f_id") {
-                            $(this).combobox("select", val[0][item]);
-                        }
-                    }
-                    //$(this).combobox("select", "");
-                },
-                onSelect: function () {
-                    var adid = $('#f_adid').combobox('getValue');
-                    var cdid = $('#f_camid').combobox('getValue');
-                    getfournums(daytype="",act="preview",adid,cdid);
-                }
-            });
-        }
+    $('#f_camid').combobox({
+        method: 'get',
+        url: '/pmp/FlightGroup',
+        valueField: 'Id',
+        textField: 'Name',
+        prompt: '请选择项目'
+//        onSelect: function () {
+//            var adid = $('#f_adid').combobox('getValue');
+//            getfournums(daytype="",act="preview",adid,cdid="");
+//            $('#f_camid').combobox({
+//                url:'ajax_getcampaign.php?pid='+adid,
+//                valueField:'f_id',
+//                textField:'f_name',
+//                onLoadSuccess: function () { //加载完成后,设置选中第一项
+//                    var val = $(this).combobox("getData");
+//                    for (var item in val[0]) {
+//                        if (item == "f_id") {
+//                            $(this).combobox("select", val[0][item]);
+//                        }
+//                    }
+//                    //$(this).combobox("select", "");
+//                },
+//                onSelect: function () {
+//                    var adid = $('#f_adid').combobox('getValue');
+//                    var cdid = $('#f_camid').combobox('getValue');
+//                    getfournums(daytype="",act="preview",adid,cdid);
+//                }
+//            });
+//        }
     });
 
 //    getfournums(daytype="",act="preview",aid="",cid="");//默认取值
@@ -590,9 +529,9 @@
         $('#comp_list').datagrid({
             pageSize:10,
             nowrap:false,
-            sortName:"b.beInstallTotal",
+            sortName:"Name",
             showFooter: true,
-            sortOrder:"desc",
+            sortOrder:"asc",
             /*remoteSort:false,multiSort:true,*/
             onBeforeLoad:function(param){
                 //return false;
@@ -644,9 +583,9 @@
         });
     });
 
-    function formatCName(val,row){
+    function formatGroupName(val,row){
         if(val != undefined){
-            return "<a href='detail_campaign.php?cid="+row.f_id+"' style='color:#5A7ACF'>"+val+"</a>";
+            return "<a href='/pmp/FlightGroup/Detail/"+row.Id+"' style='color:#5A7ACF'>"+val+"</a>";
         }else{
             return '';
         }

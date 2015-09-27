@@ -7,6 +7,8 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego/orm"
+	"strconv"
+	"o2oadmin/vo"
 )
 
 type LtvFlightGroup struct {
@@ -145,3 +147,71 @@ func DeleteLtvFlightGroup(id int) (err error) {
 	}
 	return
 }
+
+
+//  ########  below are newly added functions
+func GetFlightGroupSummaryList(advertiserId string, flightGroupId string,sortby string, order string,
+	offset int, limit int) (result []vo.LtvFlightGroupVO, count int, err error) {
+
+	o := orm.NewOrm()
+
+	selectFields := []string{
+		"lg.id as id",
+		"lg.name as name",
+
+		"sum(l.budget) as budget",
+		"sum(l.spending) as spending",
+		"sum(l.cost) as cost",
+		"sum(l.imp) as imp",
+		"sum(l.clk) as clk",
+		"sum(l.install) as install",
+		"sum(l.postback_install) as postback_install",
+		"sum(l.register) as register",
+		"sum(l.submit) as submit",
+		"sum(l.conversion) as conversion",
+		"sum(l.revenue) as revenue",
+		"avg(l.eCPA) as eCPA",
+
+//		"l.del_flg as del_flg",
+//		"l.spread_url as spread_url",
+//		"l.spread_name as spread_name",
+//		"l.ltv_app_id as ltv_app_id",
+
+	}
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	qb.Select(strings.Join(selectFields, ", ")).
+	From("ltv_flight l").
+	InnerJoin("ltv_flight_group lg").
+	Where("1=1").
+    And("del_flg = 0").
+	GroupBy("group_id")
+
+	// order by:
+	if sortby != "" {
+		qb.OrderBy(sortby)
+		if order == "desc"{
+			qb.Desc()
+		} else {
+			qb.Asc()
+		}
+	}
+	// TODO default order by ???
+
+	qbCount, _ := orm.NewQueryBuilder("mysql")
+	qbCount.Select("count(*) as cnt").
+	From("(" + qb.String() + ") as sub")
+
+	var countResult []orm.Params
+	o.Raw(qbCount.String()).Values(&countResult)
+	count, _ = strconv.Atoi(countResult[0]["cnt"].(string))
+
+	qb.Limit(limit).Offset(offset)
+
+	report := []vo.LtvFlightGroupVO{}
+
+	_, err = o.Raw(qb.String()).QueryRows(&report)
+	return report, count, err
+}
+

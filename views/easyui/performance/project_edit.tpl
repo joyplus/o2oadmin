@@ -11,7 +11,7 @@
 
     <div id="content_area">
 
-        <form id="campaign_edit" action="Save"  method="post" enctype="multipart/form-data">
+        <form id="campaign_edit" action="/pmp/FlightGroup/Save"  method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="83" />
             <div id="creat_title">
                 <span style="margin-left:10px">项目编辑</span>
@@ -20,27 +20,10 @@
                     <a class="cancel_button" onclick="return cancelcampaign();">取消</a>
                 </div>
             </div>
-            <div class="creat_area1" style="height:345px;">
-                <div>
-                    <div class="are_unit"><span class="unit_title">广告主</span>
-                        <select class="easyui-combobox" name="f_adname" id="f_adid" style="width:365px;height:32px;" >
-                        </select>
-                    </div>
-                    <div class="are_unit"><span class="unit_title">项目名称</span><input name="f_name" id="f_name" class="f1 easyui-textbox" data-options="required:true,missingMessage:'Please input the Name!'" value="测试项目"  style="width:365px;height:32px;" maxlength="20" /></div>
-                </div>
-                <div class="are_unita">
-                    <span class="unit_title">应用</span><span class="right rightb">
-		    <select class="easyui-combobox" name="f_appid" id="f_appid" style="width:365px;height:32px;" >
-                <option value="98" selected='selected'>1211--Android</option>
-                <option value="125" >g666ssd--IOS</option>
-            </select>
-		</span>
-                </div>
+            <div class="creat_area1" style="height:80px;">
                 <div style="float:left;width:100%;">
-                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="11.00"  style="width:365px;height:32px;" id="f_budget"/></div>
-                </div>
-                <div class="are_unita" style="margin-top:4px">
-                    <span class="unit_title">描述</span><textarea rows="3" name="f_description" class="f1" style="border-radius:5px;border:0;font-size:12px" data-options="required:true,missingMessage:'请输入应用描述'" >1</textarea>
+                    <div class="are_unit"><span class="unit_title">名称</span><input name="f_budget" class="f1 easyui-textbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="百度"  style="width:365px;height:32px;" id="f_budget"/></div>
+                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="50000"  style="width:365px;height:32px;" id="f_budget"/></div>
                 </div>
             </div>
         </form>
@@ -75,15 +58,23 @@
 
         <div id="result_area" style="border:0">
             <table id="comp_list" title="活动列表" style="width:100%;height:90%"
-                   data-options="rownumbers:false,singleSelect:true,url:'get_unit.php?cid=83',method:'get'" pagination="true">
+                   data-options="rownumbers:false,singleSelect:true,method:'get'" pagination="true">
                 <thead>
                 <tr>
-                    <th data-options="field:'f_pstatus',width:80,formatter:formatPstatus"><b>状态</b></th>
-                    <th data-options="field:'f_name',width:120"><b>名称</b></th>
-                    <th data-options="field:'f_channel_name',width:120"><b>短链</b></th>
-                    <th data-options="field:'f_day_budget',width:120"><b>预算</b></th>
-                    <th data-options="field:'f_start',width:160,formatter:formatDate"><b>创建日期</b></th>
-                    <th data-options="field:'f_id',width:320,align:'left',formatter:formatEventEdit"><b>操作</b></th>
+                    <!--<th data-options="field:'f_pstatus',width:80,formatter:formatPstatus"><b>状态</b></th>-->
+                    <!--<th data-options="field:'f_name',width:120"><b>名称</b></th>-->
+                    <!--<th data-options="field:'f_channel_name',width:120"><b>短链</b></th>-->
+                    <!--<th data-options="field:'f_day_budget',width:120"><b>预算</b></th>-->
+                    <!--<th data-options="field:'f_start',width:160,formatter:formatDate"><b>创建日期</b></th>-->
+                    <!--<th data-options="field:'f_id',width:320,align:'left',formatter:formatEventEdit"><b>操作</b></th>-->
+
+                    <th data-options="field:'Name',width:100,editor:'text'"><b>名称</b></th>
+                    <th data-options="field:'LtvApp.Name',width:100,editor:'text'"><b>应用</b></th>
+                    <th data-options="field:'Budget',width:120,editor:'text'"><b>预算(元)</b></th>
+                    <th data-options="field:'Spending',width:120,sortable:true,editor:'numberbox'"><b>广告主支出(元)</b></th>
+                    <th data-options="field:'Cost',width:120,sortable:true,editor:'numberbox'"><b>成本(元)</b></th>
+                    <th data-options="field:'SpreadUrl',width:120,sortable:true,editor:'text'"><b>短链</b></th>
+                    <th data-options="field:'SpreadName',width:120,sortable:true,editor:'text'"><b>短链名称</b></th>
                 </tr>
                 </thead>
             </table>
@@ -147,25 +138,25 @@
             <div id="setting_dlg" class="easyui-dialog" style="width:520px;height:560px;padding:10px 20px" closed="true" draggable="false" modal="true">
                 <form id="setting_edit" action="SaveFlight" method="post" enctype="multipart/form-data">
                     <table style="font-size:12px;">
-                        <tr>
                         <tr style="height:45px;width:95%">
                             <td style="width:25%"><b>活动名称</b></td>
                             <td style="width:70%"><input type="text" name="f_name" class="f1 easyui-textbox" style="width:310px;height:32px;" data-options="required:true,missingMessage:'请输入活动名称'" id="f_uname"></td>
                         </tr>
-                        <tr>
-                        <tr style="height:45px;width:95%;display:none;">
-                            <td style="width:25%"><b>Campaign</b></td>
-                            <td style="width:70%"><input name="f_cname" id = "f_cname" style="width:290px;height:32px;" value="test new campaign" readonly /></td>
-                        </tr>
                         <tr style="height:45px;width:95%;" id="f_channel">
-                            <td style="width:25%;"><b>短链</b></td>
+                            <td style="width:25%;"><b>应用</b></td>
                             <td style="width:70%"><select class="easyui-combobox" name="f_channelid" style="width:310px;height:32px;">
-                                <option value="00002">Inmobi</option>
-                                <option value="00003">SmartMad</option>
-                                <option value="00004">Tapjoy</option>
-                                <option value="00005">SponsorPay</option>
-                                <option value="00006">MillennialMedia</option>
+                                <option value="">请选择应用</option>
+                                <option value="00002">切水果</option>
+                                <option value="00003">愤怒的小鸟</option>
                             </select></td>
+                        </tr>
+                        <tr style="height:45px;width:95%">
+                            <td style="width:25%"><b>推广名称</b></td>
+                            <td style="width:70%"><input type="text" name="f_name" class="f1 easyui-textbox" style="width:310px;height:32px;" data-options="required:true,missingMessage:'请输入活动名称'" id="f_uname"></td>
+                        </tr>
+                        <tr style="height:45px;width:95%">
+                            <td style="width:25%"><b>短链</b></td>
+                            <td style="width:70%"><input type="text" name="f_name" class="f1 easyui-textbox" style="width:310px;height:32px;" data-options="required:true,missingMessage:'请输入活动名称'" id="f_uname"></td>
                         </tr>
                         <tr style="height:45px;width:95%">
                             <td style="width:25%"><b>预算</b></td>
@@ -173,8 +164,8 @@
                         </tr>
                     </table>
                     <div style="float:right;margin-top:5px;">
-                        <a class="action_button" onclick="return saveSetting();" href="#">Save</a>
-                        <a class="cancel_button" href="javascript:$('#setting_dlg').dialog('close');void(0);">Cancel</a>
+                        <a class="action_button" onclick="return saveSetting();" href="#">保存</a>
+                        <a class="cancel_button" href="javascript:$('#setting_dlg').dialog('close');void(0);">取消</a>
                     </div>
                 </form>
             </div>
@@ -268,7 +259,8 @@
         //
     }
     $(function(){
-        $('#comp_list').datagrid({
+        var compListGrid = $('#comp_list').datagrid({
+            url: '/pmp/Flight?group_id=2',
             pageSize:10,
             nowrap:false,
             /*rowStyler:function(index,row){
@@ -312,7 +304,8 @@
 
         $('#setting_edit').form('submit',
                 {
-                    url: "SaveFlight",
+                    url: "/pmp/Flight",
+                    method: 'post',
                     onSubmit: function(){
                         return true;
                     },
@@ -657,9 +650,9 @@
     }
 
     if(cid!=''){
-        var url = 'Save';
+        var url = '/pmp/FlightGroup/' + cid;
     }else{
-        var url = 'Create';
+        var url = '/pmp/FlightGroup';
     }
 
     function Creatcampaign(){
@@ -668,8 +661,6 @@
             $.messager.alert("error","please input name!");
             //alert("please input name!");
         }
-        var f_adname = $('#f_adid').combobox('getValue');
-        var f_appid = $('#f_appid').combobox('getValue');
         var budget_val = $('#f_budget').val().length;
         if(budget_val > 11){
             $.messager.alert("error","Please enter budget value between 1 and 8!");
@@ -679,26 +670,13 @@
         $('#campaign_edit').form('submit',
                 {
                     url: url,
+                    method: 'post',
                     onSubmit: function(){
                         //return $(this).form('validate');
                     },
                     success: function(result){
-                        //alert(result);return;
-                        var rtmp = parseInt(result);
-                        if(rtmp=="-9"){
-                            $.messager.alert('Info','Same campaign has been existed');
-                            return;
-                        }
-                        var res;
-                        if(rtmp > 0){
-                            res="save success";
-                            //window.location.href="edit_campaign.php?cid="+result;
-                        }else{
-                            //res="save fail";
-                            res="save success";
-                        }
-                        $.messager.alert('Info', res, 'info');
-                        window.location.href="Detail?cid=83";
+
+                        window.location.href="/pmp/FlightGroup/Detail/1";
                     }
                 });
     }
@@ -712,7 +690,7 @@
     });
 
     function cancelcampaign(){
-        window.location.href="Detail";
+        window.location.href="/pmp/FlightGroup/Detail/1";
     }
     function getCompNowData(){
         $('#comp_list').datagrid('load',{date:$('#ndate2').datebox('getValue'),f_mobile:$('#f_mobile2').val(),f_card:$('#f_card2').val()});

@@ -17,30 +17,12 @@
                     <a class="cancel_button" onclick="return cancelcampaign();">取消</a>
                 </div>
             </div>
-            <div class="creat_area1" style="height:345px">
-                <div>
-                    <div class="are_unit"><span class="unit_title">广告主</span><select name="f_adname" id="f_adid" style="width:365px;height:32px;">
-                        <option value="">请选择广告主</option>
-                        <option value="1">madhouse</option>
-                        <option value="2">wechat</option>
-                    </select>
-                    </div>
+            <div class="creat_area1" style="height:160px">
+                <div style="float:left;width:100%;">
                     <div class="are_unit"><span class="unit_title">项目名称</span><input name="f_name" id="f_name" class="f1 easyui-textbox" data-options="required:true,missingMessage:'请输入名称!'"  style="height:32px;width:365px;" maxlength="20" /></div>
-                </div>
-                <div class="are_unita">
-                    <span class="unit_title">应用</span>
-		<span class="right rightb">
-		  <select class="easyui-combobox" data-options="required:true" name="f_appid" id="f_appid" style="width:365px;height:32px;" >
-              <option value="">请选择应用</option>
-              <option value="COK">COK</option>
-          </select>
-		</span>
                 </div>
                 <div style="float:left;width:100%;">
                     <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'请输入预算!'" style="width:365px;height:32px;" id="f_budget" validType="length[1,8]"/></div>
-                </div>
-                <div class="are_unita" style="margin-top:4px">
-                    <span class="unit_title">说明</span><textarea rows="3" name="f_description" class="f1" data-options="required:true,missingMessage:'请输入描述信息'" id="f_description" style="border-radius:5px;border:0;font-size:12px"></textarea>
                 </div>
             </div>
         </form>

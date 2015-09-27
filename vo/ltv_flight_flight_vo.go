@@ -1,8 +1,10 @@
 package vo
 
-type FlightGroupVO struct {
-    Status          string
+type LtvFlightGroupVO struct {
+    Id              int
     Name            string
+
+    // below are from ltv_flight
     Budget          float32
     Spending        float32
     Cost            float32
@@ -14,10 +16,5 @@ type FlightGroupVO struct {
     Submit          int
     Conversion      int
     Revenue         float32
-    ECPA            float32
-    AdvertiserName  string
-    SpreadUrl       string
-    SpreadName      string
-
-
+    ECPA            float32     `orm:"column(eCPA);null"`
 }

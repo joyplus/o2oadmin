@@ -8,11 +8,22 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego"
+    "github.com/beego/admin/src/rbac"
 )
 
 // oprations for LtvFlightGroup
 type LtvFlightGroupController struct {
-	beego.Controller
+    rbac.CommonController
+}
+
+type FlightGroupSummaryRequest struct {
+	Page         int    `form:"page"`
+	Rows         int    `form:"rows"`
+	Sortby       string `form:"sort"`
+	Order        string `form:"order"`
+
+	AdvertiserId string `form:"advertiserId`
+	GroupId      string `form:"groupId`
 }
 
 func (c *LtvFlightGroupController) URLMapping() {
@@ -32,11 +43,14 @@ func (c *LtvFlightGroupController) URLMapping() {
 func (c *LtvFlightGroupController) Post() {
 	var v models.LtvFlightGroup
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if id, err := models.AddLtvFlightGroup(&v); err == nil {
-		c.Data["json"] = map[string]int64{"id": id}
-	} else {
-		c.Data["json"] = err.Error()
-	}
+    if v.Name != "" {
+        if id, err := models.AddLtvFlightGroup(&v); err == nil {
+            c.Data["json"] = map[string]int64{"id": id}
+        } else {
+            c.Data["json"] = err.Error()
+        }
+    }
+
 	c.ServeJson()
 }
 
@@ -155,4 +169,53 @@ func (c *LtvFlightGroupController) Delete() {
 		c.Data["json"] = err.Error()
 	}
 	c.ServeJson()
+}
+
+// @Title Delete
+// @Description delete the LtvFlightGroup
+// @Param	advertiserId		path 	string	true		"The advertiser id you want to query"
+// @Param	groupId				path 	string	true		"The flight group id you want to query"
+// @Success 200 {string} get the summary list sucessfully!
+// @Failure 403 failed to get query
+// @router /GetSummaryList [get]
+func (c *LtvFlightGroupController) GetSummaryList() {
+
+	request := FlightGroupSummaryRequest{}
+	c.ParseForm(&request)
+    beego.Debug(request)
+
+	result, count, err := models.GetFlightGroupSummaryList(request.AdvertiserId, request.GroupId, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
+
+	if err != nil {
+		beego.Debug("failed to get ltv flight group summary report")
+	} else {
+		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &result}
+	}
+	c.ServeJson()
+}
+
+// ~~~~~~~~~~~~~   below are custom methods  ~~~~~~~~~~~~~~~ //
+// @router /Detail/:id [get]
+func (c *LtvFlightGroupController) Detail() {
+    c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
+}
+
+// @router /Edit/:id [get]
+func (c *LtvFlightGroupController) Edit() {
+    c.TplNames = c.GetTemplatetype() + "/performance/project_edit.tpl"
+}
+
+// @router /Save [post]
+func (c *LtvFlightGroupController) Save() {
+    c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
+}
+
+// @router /FullReport/:id [get]
+func (c *LtvFlightGroupController) FullReportPage() {
+    c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
+}
+
+// @router /FullReport [get]
+func (c *LtvFlightGroupController) FullReportPageAll() {
+    c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
 }

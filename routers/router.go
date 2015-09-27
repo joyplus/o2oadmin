@@ -57,6 +57,11 @@ func init() {
                 &controllers.LtvFlightGroupController{},
             ),
         ),
+        beego.NSNamespace("/Flight",
+            beego.NSInclude(
+                &controllers.LtvFlightController{},
+            ),
+        ),
     )
 
     beego.AddNamespace(ns)

@@ -18,32 +18,15 @@
         </div>
         <div class="creat_area1 creat_area2">
             <div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">广告主</span><span>CMGE</span></div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">名称</span><span>test new campaign</span></div>
-            </div>
-            <div class="are_unit are_unitb">
-                <span class="unit_title unit_titleb">应用</span><span class="right rightb">
-			            1211--Android		</span>
-            </div>
-            <div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">预算</span><span>11.00</span></div>
-            </div>
-            <div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">说明</span><span>xxxxxx</span></div>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">组名</span><span>第一单</span></div>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">预算</span><span>50000</span></div>
             </div>
         </div>
         <!----------------------------viewreport------------------------------------------------------>
         <div id="search_area" >
-            <div style="float:left;margin-left:40px">
-                <select  name="f_advertiser" id="f_advertiser" style="height:32px;width:210px;">
-                    <option value="">Choose Advertiser</option>
-                    <option  value="1">madhouse</option>
-                    <option selected value="14">CMGE</option>
-                </select>
-            </div>
             <div style="float:left;margin-left:10px;" id="f_campaign_div" >
                 <select  name="f_campaign" id="f_campaign" class="easyui-combobox" style="height:32px;width:210px;" >
-                    <option value="" >Choose Campaign</option>
+                    <option value="" >选择项目</option>
                 </select>
             </div>
 
@@ -94,7 +77,7 @@
             </div>
 
             <div style="float:right;margin-left:10px">
-                <span class="action_button"  onclick="return fullreport();">全方位报表</span>
+                <span class="action_button"  onclick="return fullreport();">综合报表</span>
             </div>
         </div>
 
@@ -131,14 +114,19 @@
                    data-options="rownumbers:false,singleSelect:true,method:'get'" pagination="true" fitcolumns="true">
                 <thead>
                 <tr>
-                    <th data-options="field:'f_pstatus',width:60,formatter:formatPstatus,sortable:true"><b>状态</b></th>
-                    <th data-options="field:'f_name',width:180,formatter:formatName"><b>名称</b></th>
-                    <th data-options="field:'f_start',width:95,formatter:formatADate"><b>日期</b></th>
-                    <th data-options="field:'beClickTotal',width:80,formatter:formatClick,sortable:true"><b>点击数</b></th>
-                    <th data-options="field:'beInstallTotal',width:80,formatter:formatInstall,sortable:true"><b>安装数</b></th>
-                    <th data-options="field:'inappRevnueTotal',width:100,formatter:formatEcpc,sortable:true"><b>收入</b></th>
-                    <th data-options="field:'ecpa',width:80,formatter:formatEcpa,sortable:true"><b>eCPA</b></th>
-                    <th data-options="field:'f_offer_id',width:60,align:'center',formatter:formatExPort"><b>导出</b></th>
+                    <th data-options="field:'Name',width:100,formatter:formatName"><b>名称</b></th>
+                    <th data-options="field:'Budget',width:120"><b>预算(元)</b></th>
+                    <th data-options="field:'Spending',width:120,sortable:true"><b>广告主支出(元)</b></th>
+                    <th data-options="field:'Cost',width:120,sortable:true"><b>成本(元)</b></th>
+                    <th data-options="field:'Imp',width:80,sortable:true"><b>展示</b></th>
+                    <th data-options="field:'Clk',width:80,sortable:true"><b>点击</b></th>
+                    <th data-options="field:'Install',width:80,sortable:true"><b>普通激活</b></th>
+                    <th data-options="field:'PostbackInstall',width:80,sortable:true"><b>激活</b></th>
+                    <th data-options="field:'Register',width:80,sortable:true"><b>注册</b></th>
+                    <th data-options="field:'Submit',width:80,sortable:true"><b>申请</b></th>
+                    <th data-options="field:'Conversion',width:80,sortable:true"><b>申请成功</b></th>
+                    <th data-options="field:'Revenue',width:80,sortable:true"><b>收入</b></th>
+                    <th data-options="field:'ECPA',width:80,sortable:true"><b>eCPA</b></th>
                 </tr>
                 </thead>
             </table>
@@ -254,11 +242,11 @@
     });
     function unit_list(ustart,uend){
         $('#comp_list').datagrid({
-            url:'GetAllFlights',
+            url:'/pmp/Flight?group_id=1',
             view: detailview,
             pageSize:10,
             nowrap:false,
-            sortName:"b.beInstallTotal",
+            sortName:"Name",
             showFooter: true,
             sortOrder:"desc",
             rowStyler:function(index,row){
@@ -349,7 +337,7 @@
     function formatName(val,row){
         if(val=="ft_flg") return '';
         row_array[row.f_id] = row;
-        var s = "<a href='javascript:showUinfo("+row.f_id+");void(0);'>"+row.f_name+"</a>";
+        var s = "<a href='javascript:showUinfo("+row.Id+");void(0);'>"+row.Name+"</a>";
         return s;
     }
 
@@ -512,11 +500,11 @@
     }
 
     function editCampaign(){
-        window.location.href="Edit";
+        window.location.href="/pmp/FlightGroup/Edit/1";
     }
 
     function fullreport(){
-        window.location.href="FullReport";
+        window.location.href="/pmp/FlightGroup/FullReport/1";
     }
 
     function getCompNowData(){

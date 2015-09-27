@@ -90,7 +90,7 @@ func (c *LtvFlightController) GetAll() {
 		offset = v
 	}
 	// sortby: col1,col2
-	if v := c.GetString("sortby"); v != "" {
+	if v := c.GetString("sort"); v != "" {
 		sortby = strings.Split(v, ",")
 	}
 	// order: desc,asc
@@ -156,3 +156,6 @@ func (c *LtvFlightController) Delete() {
 	}
 	c.ServeJson()
 }
+
+// ~~~~~~~~  below are custom methods  ~~~~~~~
+

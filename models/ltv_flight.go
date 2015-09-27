@@ -28,7 +28,9 @@ type LtvFlight struct {
 	DelFlg          int8    `orm:"column(del_flg)"`
 	SpreadUrl       string  `orm:"column(spread_url);size(500);null"`
 	SpreadName      string  `orm:"column(spread_name);size(45);null"`
-	LtvAppId        int     `orm:"column(ltv_app_id);null"`
+//	LtvAppId        int     `orm:"column(ltv_app_id);null"`
+
+	LtvApp    			*LtvApp  `orm:"rel(fk);"`
 }
 
 func (t *LtvFlight) TableName() string {

@@ -12,50 +12,8 @@
     <div id="content_area">
 
         <div id="search_area">
-            <div style="float:left;margin-left:0px">
-                <select name="f_pid" id="f_pid" style="width:230px;height:32px;font-size:12px;">
-                    <option value="">Choose Advertiser</option>
-                    <option value="1"  >madhouse</option>
-                    <option value="2"  >wechat</option>
-                    <option value="5"  >erte</option>
-                    <option value="7"  >easym</option>
-                    <option value="8"  >madtestad1</option>
-                    <option value="9"  >madhouse11</option>
-                    <option value="10"  >adt</option>
-                    <option value="11"  >Touchpal</option>
-                    <option value="12"  >Apus</option>
-                    <option value="13"  >Elex</option>
-                    <option value="14" selected >CMGE</option>
-                    <option value="15"  >Efun</option>
-                    <option value="16"  >4399</option>
-                    <option value="17"  >MyAdvertiserName01</option>
-                    <option value="18"  >&lt;a&gt;&lt;/a&gt;</option>
-                    <option value="19"  >活动1</option>
-                    <option value="20"  >eee</option>
-                    <option value="21"  >bbb</option>
-                    <option value="22"  >cvvv</option>
-                    <option value="23"  >cvvvb</option>
-                    <option value="24"  >cvvvcvg</option>
-                    <option value="25"  >cvvvcvg456</option>
-                    <option value="26"  >cvvvcvg4565</option>
-                    <option value="27"  >cvvvcvg45651</option>
-                    <option value="28"  >cvvvcvg456512</option>
-                    <option value="29"  >ab34</option>
-                    <option value="30"  >ab343</option>
-                    <option value="31"  >ab3432</option>
-                    <option value="33"  >ab343212</option>
-                    <option value="34"  >ab3432121</option>
-                    <option value="35"  >Star Games</option>
-                    <option value="36"  >testsdfd</option>
-                    <option value="37"  >cam1</option>
-                    <option value="38"  >Elex Android</option>
-                    <option value="39"  >MadClient</option>
-                    <option value="40"  >Taiwan Adv test</option>
-                </select>
-            </div>
             <div style="float:left;margin-left:10px">
                 <select class="easyui-combobox" name="f_cid" id="f_cid" style="width:230px;height:32px;" >
-                    <option value="">Choose Campaign</option>
 
                 </select>
             </div>
@@ -105,18 +63,23 @@
 
         <div id="result_area" style="display:none;">
             <div class="easyui-tabs" style="width:1240px;height:487px" id="tabsbox">
-                <div title="收入"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_iap" style="height:400px;width:1220px;float:left;">
-
-                    </div>
-                </div>
                 <div title="启动"  style="padding:30px 10px 10px 10px;">
                     <div id="nec_area_start" style="height:400px;width:1220px;float:left;">
 
                     </div>
                 </div>
-                <div title="ROI" style="padding:30px 10px 10px 10px;" selected="true">
-                    <div id="ec_area_1" style="height:400px;width:1220px;float:left;">
+                <div title="注册"  style="padding:30px 10px 10px 10px;">
+                    <div id="nec_area_register" style="height:400px;width:1220px;float:left;">
+
+                    </div>
+                </div>
+                <div title="收入"  style="padding:30px 10px 10px 10px;">
+                    <div id="nec_area_iap" style="height:400px;width:1220px;float:left;">
+
+                    </div>
+                </div>
+                <div title="投资回报率" style="padding:30px 10px 10px 10px;" selected="true">
+                    <div id="ec_area_roi" style="height:400px;width:1220px;float:left;">
 
                     </div>
                 </div>
@@ -142,12 +105,9 @@
 
                 </select>
             </div>
-            <div class="datelimitbox" style="width:400px;font-size:12px">
-                Total revenue in  <select name="datelimit" id="roilimit"><option value="7">7</option><option value="15">15</option><option value="30">30</option></select> days from first APP launch
-            </div>
 
             <div class="datelimitbox3" style="right:70px">
-                <select name="rio" id="roitype"><option value="1">ROI</option><option value="2">Revenue</option></select>
+                <select name="rio" id="roitype"><option value="1">投资回报率</option><option value="2">收入</option></select>
             </div>
 
             <div class="cohort_control" style="display:none;">
@@ -236,13 +196,9 @@
     </div>
 </div>
 
-    <div id="foot_area">
-        <a href="http://www.madhouse.cn/index.php?lang=en" target="_blank" style="color:#666666;">Powered by Madhouse</a>
-    </div>
 </div>
-<script src="echartsjs/echarts-all.js"></script>
 <script type="text/javascript">
-    var myChart1 = echarts.init(VDoc('ec_area_1'));
+    var myChart1 = echarts.init(VDoc('ec_area_roi'));
     var start='2015-08-23';//开始时间
     var end='2015-09-21';//结束时间
     var channel="";
@@ -291,26 +247,6 @@
         return 0;
     }
 
-    $('#f_pid').combobox({
-        onSelect: function () {
-            var pid = $('#f_pid').combobox('getValue');
-
-            $('#f_cid').combobox({
-                url:'ajax_getcampaign.php?pid='+pid,
-                valueField:'f_id',
-                textField:'f_name',
-                onLoadSuccess: function () { //加载完成后,设置选中第一项
-                    var val = $(this).combobox("getData");
-                    for (var item in val[0]) {
-                        if (item == "f_id") {
-                            $(this).combobox("select", val[0][item]);
-                        }
-                    }
-                }
-            });
-        }
-    });
-
     function showUserSearch(){
         //$("#result_area").show();
 
@@ -346,30 +282,30 @@
         var cvid = "70";
         jQuery.ajax({
             type: "get",
-            url: "interface/getChannels.php",
+            url: "/pmp/Flight",
             data:"cvid="+cvid,
             cache:false,
             beforeSend: function(XMLHttpRequest){
             },
             success: function(data, textStatus){
-                var chtml ="";
-                var checkvalues = "";
-                var json =(new Function("","return "+data))();
-                for(var i=0;i<=(json.rows.length-1);i++){
-                    chtml += "<div class='c_change'><input type='checkbox' name='channel' value="+json.rows[i].f_id+"  checked='checked' onclick='selectchannel(this)'/><span>"+json.rows[i].f_name+"</span></div>";
-                    checkvalues += json.rows[i].f_id+",";
-                }
-                channel = checkvalues;//默认全部channel
-                channel = channel.substring(0,channel.length-1);
-                //$(".c_content").html(chtml);
-                //$("#channelbox").show();
-                if(currenttitle=="roi"){
-                    getRoi(cvid,channel,roilimit,roitype);
-                }else if(currenttitle=="payback period"){
-                    getPayback(cvid,uid="");
-                }else{
-                    getConversion(cvid,channel,currenttitle,sflight,slabel);//获取conversion
-                }
+//                var chtml ="";
+//                var checkvalues = "";
+//                var json =(new Function("","return "+data))();
+//                for(var i=0;i<=(json.rows.length-1);i++){
+//                    chtml += "<div class='c_change'><input type='checkbox' name='channel' value="+json.rows[i].f_id+"  checked='checked' onclick='selectchannel(this)'/><span>"+json.rows[i].f_name+"</span></div>";
+//                    checkvalues += json.rows[i].f_id+",";
+//                }
+//                channel = checkvalues;//默认全部channel
+//                channel = channel.substring(0,channel.length-1);
+//                //$(".c_content").html(chtml);
+//                //$("#channelbox").show();
+//                if(currenttitle=="roi"){
+//                    getRoi(cvid,channel,roilimit,roitype);
+//                }else if(currenttitle=="payback"){
+//                    getPayback(cvid,uid="");
+//                }else{
+//                    getConversion(cvid,channel,currenttitle,sflight,slabel);//获取conversion
+//                }
             },
             complete: function(XMLHttpRequest, textStatus){
             },
@@ -388,9 +324,11 @@
             var name_y = '';
             var tablename = "Conversion";
         }
+
+        var startData = ''
         jQuery.ajax({
             type: "get",
-            url: "interface/getConversion.php",
+            url: "/pmp/Flight",
             data:data_url,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -406,7 +344,18 @@
                 var channel_array = [];
                 var tkey = 0;
                 var tablehtml = "<table width='100%' bordercolor='#ccc' border='1' cellspacing='0' cellpadding='0'><tr class='tbodyc' style='background-color:#86CEFA'><td style='color:white'>Channel</td><td style='color:white'>"+tablename+"</td><td style='color:white'>"+tablename+" %</td></tr>";
-                var json =(new Function("","return "+data))();
+
+                var iapData = '{"result":1,"msg":"\u6210\u529f","total":5,"rows":{"Mobpartner":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"546.00"},{"f_date":"2015-07-05","f_nums":"548.80"},{"f_date":"2015-07-06","f_nums":"546.00"},{"f_date":"2015-07-07","f_nums":"554.40"},{"f_date":"2015-07-08","f_nums":"537.60"},{"f_date":"2015-07-09","f_nums":"548.80"},{"f_date":"2015-07-10","f_nums":"557.20"},{"f_date":"2015-07-11","f_nums":"1170.00"},{"f_date":"2015-07-12","f_nums":"1164.00"},{"f_date":"2015-07-13","f_nums":"1134.00"},{"f_date":"2015-07-14","f_nums":"0.00"},{"f_date":"2015-07-15","f_nums":"0.00"},{"f_date":"2015-07-16","f_nums":"0.00"},{"f_date":"2015-07-17","f_nums":"0.00"},{"f_date":"2015-07-18","f_nums":"0.00"},{"f_date":"2015-07-19","f_nums":"0.00"},{"f_date":"2015-07-20","f_nums":"0.00"},{"f_date":"2015-07-21","f_nums":"0.00"},{"f_date":"2015-07-22","f_nums":"0.00"},{"f_date":"2015-07-23","f_nums":"0.00"},{"f_date":"2015-07-24","f_nums":"0.00"},{"f_date":"2015-07-25","f_nums":"0.00"},{"f_date":"2015-07-26","f_nums":"0.00"},{"f_date":"2015-07-27","f_nums":"0.00"},{"f_date":"2015-07-28","f_nums":"0.00"},{"f_date":"2015-07-29","f_nums":"0.00"},{"f_date":"2015-07-30","f_nums":"0.00"},{"f_date":"2015-07-31","f_nums":"0.00"}],"MobileCore":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"570.00"},{"f_date":"2015-07-05","f_nums":"570.00"},{"f_date":"2015-07-06","f_nums":"570.00"},{"f_date":"2015-07-07","f_nums":"570.00"},{"f_date":"2015-07-08","f_nums":"2400.00"},{"f_date":"2015-07-09","f_nums":"2392.00"},{"f_date":"2015-07-10","f_nums":"1600.00"},{"f_date":"2015-07-11","f_nums":"1600.00"},{"f_date":"2015-07-12","f_nums":"1600.00"},{"f_date":"2015-07-13","f_nums":"1600.00"},{"f_date":"2015-07-14","f_nums":"1600.00"},{"f_date":"2015-07-15","f_nums":"1600.00"},{"f_date":"2015-07-16","f_nums":"1600.00"},{"f_date":"2015-07-17","f_nums":"1600.00"},{"f_date":"2015-07-18","f_nums":"1600.00"},{"f_date":"2015-07-19","f_nums":"1600.00"},{"f_date":"2015-07-20","f_nums":"1600.00"},{"f_date":"2015-07-21","f_nums":"1600.00"},{"f_date":"2015-07-22","f_nums":"1600.00"},{"f_date":"2015-07-23","f_nums":"1600.00"},{"f_date":"2015-07-24","f_nums":"1600.00"},{"f_date":"2015-07-25","f_nums":"1600.00"},{"f_date":"2015-07-26","f_nums":"1600.00"},{"f_date":"2015-07-27","f_nums":"1600.00"},{"f_date":"2015-07-28","f_nums":"1600.00"},{"f_date":"2015-07-29","f_nums":"1600.00"},{"f_date":"2015-07-30","f_nums":"1600.00"},{"f_date":"2015-07-31","f_nums":"1592.00"}],"Leadbolt":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"0.00"},{"f_date":"2015-07-05","f_nums":"933.10"},{"f_date":"2015-07-06","f_nums":"939.30"},{"f_date":"2015-07-07","f_nums":"926.90"},{"f_date":"2015-07-08","f_nums":"3322.00"},{"f_date":"2015-07-09","f_nums":"3322.00"},{"f_date":"2015-07-10","f_nums":"5200.00"},{"f_date":"2015-07-11","f_nums":"5200.00"},{"f_date":"2015-07-12","f_nums":"5200.00"},{"f_date":"2015-07-13","f_nums":"5200.00"},{"f_date":"2015-07-14","f_nums":"5200.00"},{"f_date":"2015-07-15","f_nums":"7875.00"},{"f_date":"2015-07-16","f_nums":"7875.00"},{"f_date":"2015-07-17","f_nums":"7875.00"},{"f_date":"2015-07-18","f_nums":"7875.00"},{"f_date":"2015-07-19","f_nums":"7860.00"},{"f_date":"2015-07-20","f_nums":"9826.00"},{"f_date":"2015-07-21","f_nums":"9826.00"},{"f_date":"2015-07-22","f_nums":"9826.00"},{"f_date":"2015-07-23","f_nums":"9826.00"},{"f_date":"2015-07-24","f_nums":"9826.00"},{"f_date":"2015-07-25","f_nums":"9826.00"},{"f_date":"2015-07-26","f_nums":"9826.00"},{"f_date":"2015-07-27","f_nums":"9826.00"},{"f_date":"2015-07-28","f_nums":"9826.00"},{"f_date":"2015-07-29","f_nums":"9826.00"},{"f_date":"2015-07-30","f_nums":"9826.00"},{"f_date":"2015-07-31","f_nums":"9826.00"}],"Komli":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"0.00"},{"f_date":"2015-07-05","f_nums":"880.00"},{"f_date":"2015-07-06","f_nums":"880.00"},{"f_date":"2015-07-07","f_nums":"880.00"},{"f_date":"2015-07-08","f_nums":"880.00"},{"f_date":"2015-07-09","f_nums":"4800.00"},{"f_date":"2015-07-10","f_nums":"6286.00"},{"f_date":"2015-07-11","f_nums":"6272.00"},{"f_date":"2015-07-12","f_nums":"6286.00"},{"f_date":"2015-07-13","f_nums":"6286.00"},{"f_date":"2015-07-14","f_nums":"6286.00"},{"f_date":"2015-07-15","f_nums":"9456.00"},{"f_date":"2015-07-16","f_nums":"9456.00"},{"f_date":"2015-07-17","f_nums":"9472.00"},{"f_date":"2015-07-18","f_nums":"9456.00"},{"f_date":"2015-07-19","f_nums":"9456.00"},{"f_date":"2015-07-20","f_nums":"11232.00"},{"f_date":"2015-07-21","f_nums":"11250.00"},{"f_date":"2015-07-22","f_nums":"11250.00"},{"f_date":"2015-07-23","f_nums":"11250.00"},{"f_date":"2015-07-24","f_nums":"11250.00"},{"f_date":"2015-07-25","f_nums":"11250.00"},{"f_date":"2015-07-26","f_nums":"11250.00"},{"f_date":"2015-07-27","f_nums":"11250.00"},{"f_date":"2015-07-28","f_nums":"11250.00"},{"f_date":"2015-07-29","f_nums":"11250.00"},{"f_date":"2015-07-30","f_nums":"11250.00"},{"f_date":"2015-07-31","f_nums":"11250.00"}],"ArtOfClick":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"798.00"},{"f_date":"2015-07-05","f_nums":"798.00"},{"f_date":"2015-07-06","f_nums":"800.00"},{"f_date":"2015-07-07","f_nums":"4800.00"},{"f_date":"2015-07-08","f_nums":"4800.00"},{"f_date":"2015-07-09","f_nums":"4800.00"},{"f_date":"2015-07-10","f_nums":"4200.00"},{"f_date":"2015-07-11","f_nums":"4188.00"},{"f_date":"2015-07-12","f_nums":"4200.00"},{"f_date":"2015-07-13","f_nums":"4200.00"},{"f_date":"2015-07-14","f_nums":"4200.00"},{"f_date":"2015-07-15","f_nums":"4200.00"},{"f_date":"2015-07-16","f_nums":"3500.00"},{"f_date":"2015-07-17","f_nums":"3500.00"},{"f_date":"2015-07-18","f_nums":"3500.00"},{"f_date":"2015-07-19","f_nums":"3500.00"},{"f_date":"2015-07-20","f_nums":"2500.00"},{"f_date":"2015-07-21","f_nums":"2500.00"},{"f_date":"2015-07-22","f_nums":"2250.00"},{"f_date":"2015-07-23","f_nums":"2250.00"},{"f_date":"2015-07-24","f_nums":"2250.00"},{"f_date":"2015-07-25","f_nums":"2250.00"},{"f_date":"2015-07-26","f_nums":"2250.00"},{"f_date":"2015-07-27","f_nums":"2241.00"},{"f_date":"2015-07-28","f_nums":"2250.00"},{"f_date":"2015-07-29","f_nums":"2250.00"},{"f_date":"2015-07-30","f_nums":"2241.00"},{"f_date":"2015-07-31","f_nums":"2250.00"}]},"f_total":547766.1,"table":{"Mobpartner":7306.8,"MobileCore":42264,"Leadbolt":192715.3,"Komli":222014,"ArtOfClick":83466}}';
+                var startData = '{"result":1,"msg":"\u6210\u529f","total":5,"rows":{"Mobpartner":[{"f_date":"2015-07-01","f_nums":"194.00"},{"f_date":"2015-07-02","f_nums":"196.00"},{"f_date":"2015-07-03","f_nums":"193.00"},{"f_date":"2015-07-04","f_nums":"195.00"},{"f_date":"2015-07-05","f_nums":"196.00"},{"f_date":"2015-07-06","f_nums":"195.00"},{"f_date":"2015-07-07","f_nums":"198.00"},{"f_date":"2015-07-08","f_nums":"192.00"},{"f_date":"2015-07-09","f_nums":"196.00"},{"f_date":"2015-07-10","f_nums":"199.00"},{"f_date":"2015-07-11","f_nums":"195.00"},{"f_date":"2015-07-12","f_nums":"194.00"},{"f_date":"2015-07-13","f_nums":"189.00"},{"f_date":"2015-07-14","f_nums":"0.00"},{"f_date":"2015-07-15","f_nums":"0.00"},{"f_date":"2015-07-16","f_nums":"0.00"},{"f_date":"2015-07-17","f_nums":"0.00"},{"f_date":"2015-07-18","f_nums":"0.00"},{"f_date":"2015-07-19","f_nums":"0.00"},{"f_date":"2015-07-20","f_nums":"0.00"},{"f_date":"2015-07-21","f_nums":"0.00"},{"f_date":"2015-07-22","f_nums":"0.00"},{"f_date":"2015-07-23","f_nums":"0.00"},{"f_date":"2015-07-24","f_nums":"0.00"},{"f_date":"2015-07-25","f_nums":"0.00"},{"f_date":"2015-07-26","f_nums":"0.00"},{"f_date":"2015-07-27","f_nums":"0.00"},{"f_date":"2015-07-28","f_nums":"0.00"},{"f_date":"2015-07-29","f_nums":"0.00"},{"f_date":"2015-07-30","f_nums":"0.00"},{"f_date":"2015-07-31","f_nums":"0.00"}],"MobileCore":[{"f_date":"2015-07-01","f_nums":"300.00"},{"f_date":"2015-07-02","f_nums":"300.00"},{"f_date":"2015-07-03","f_nums":"300.00"},{"f_date":"2015-07-04","f_nums":"300.00"},{"f_date":"2015-07-05","f_nums":"300.00"},{"f_date":"2015-07-06","f_nums":"300.00"},{"f_date":"2015-07-07","f_nums":"300.00"},{"f_date":"2015-07-08","f_nums":"300.00"},{"f_date":"2015-07-09","f_nums":"300.00"},{"f_date":"2015-07-10","f_nums":"200.00"},{"f_date":"2015-07-11","f_nums":"200.00"},{"f_date":"2015-07-12","f_nums":"200.00"},{"f_date":"2015-07-13","f_nums":"200.00"},{"f_date":"2015-07-14","f_nums":"200.00"},{"f_date":"2015-07-15","f_nums":"200.00"},{"f_date":"2015-07-16","f_nums":"200.00"},{"f_date":"2015-07-17","f_nums":"200.00"},{"f_date":"2015-07-18","f_nums":"200.00"},{"f_date":"2015-07-19","f_nums":"200.00"},{"f_date":"2015-07-20","f_nums":"200.00"},{"f_date":"2015-07-21","f_nums":"200.00"},{"f_date":"2015-07-22","f_nums":"200.00"},{"f_date":"2015-07-23","f_nums":"200.00"},{"f_date":"2015-07-24","f_nums":"200.00"},{"f_date":"2015-07-25","f_nums":"200.00"},{"f_date":"2015-07-26","f_nums":"200.00"},{"f_date":"2015-07-27","f_nums":"200.00"},{"f_date":"2015-07-28","f_nums":"200.00"},{"f_date":"2015-07-29","f_nums":"200.00"},{"f_date":"2015-07-30","f_nums":"200.00"},{"f_date":"2015-07-31","f_nums":"200.00"}],"Leadbolt":[{"f_date":"2015-07-01","f_nums":"389.00"},{"f_date":"2015-07-02","f_nums":"301.00"},{"f_date":"2015-07-03","f_nums":"299.00"},{"f_date":"2015-07-04","f_nums":"301.00"},{"f_date":"2015-07-05","f_nums":"301.00"},{"f_date":"2015-07-06","f_nums":"303.00"},{"f_date":"2015-07-07","f_nums":"300.00"},{"f_date":"2015-07-08","f_nums":"302.00"},{"f_date":"2015-07-09","f_nums":"302.00"},{"f_date":"2015-07-10","f_nums":"400.00"},{"f_date":"2015-07-11","f_nums":"400.00"},{"f_date":"2015-07-12","f_nums":"400.00"},{"f_date":"2015-07-13","f_nums":"400.00"},{"f_date":"2015-07-14","f_nums":"400.00"},{"f_date":"2015-07-15","f_nums":"525.00"},{"f_date":"2015-07-16","f_nums":"525.00"},{"f_date":"2015-07-17","f_nums":"525.00"},{"f_date":"2015-07-18","f_nums":"525.00"},{"f_date":"2015-07-19","f_nums":"525.00"},{"f_date":"2015-07-20","f_nums":"578.00"},{"f_date":"2015-07-21","f_nums":"579.00"},{"f_date":"2015-07-22","f_nums":"579.00"},{"f_date":"2015-07-23","f_nums":"578.00"},{"f_date":"2015-07-24","f_nums":"578.00"},{"f_date":"2015-07-25","f_nums":"578.00"},{"f_date":"2015-07-26","f_nums":"578.00"},{"f_date":"2015-07-27","f_nums":"578.00"},{"f_date":"2015-07-28","f_nums":"578.00"},{"f_date":"2015-07-29","f_nums":"578.00"},{"f_date":"2015-07-30","f_nums":"578.00"},{"f_date":"2015-07-31","f_nums":"578.00"}],"Komli":[{"f_date":"2015-07-01","f_nums":"400.00"},{"f_date":"2015-07-02","f_nums":"400.00"},{"f_date":"2015-07-03","f_nums":"400.00"},{"f_date":"2015-07-04","f_nums":"400.00"},{"f_date":"2015-07-05","f_nums":"400.00"},{"f_date":"2015-07-06","f_nums":"400.00"},{"f_date":"2015-07-07","f_nums":"400.00"},{"f_date":"2015-07-08","f_nums":"400.00"},{"f_date":"2015-07-09","f_nums":"400.00"},{"f_date":"2015-07-10","f_nums":"449.00"},{"f_date":"2015-07-11","f_nums":"449.00"},{"f_date":"2015-07-12","f_nums":"450.00"},{"f_date":"2015-07-13","f_nums":"449.00"},{"f_date":"2015-07-14","f_nums":"450.00"},{"f_date":"2015-07-15","f_nums":"592.00"},{"f_date":"2015-07-16","f_nums":"591.00"},{"f_date":"2015-07-17","f_nums":"593.00"},{"f_date":"2015-07-18","f_nums":"591.00"},{"f_date":"2015-07-19","f_nums":"592.00"},{"f_date":"2015-07-20","f_nums":"625.00"},{"f_date":"2015-07-21","f_nums":"625.00"},{"f_date":"2015-07-22","f_nums":"625.00"},{"f_date":"2015-07-23","f_nums":"625.00"},{"f_date":"2015-07-24","f_nums":"625.00"},{"f_date":"2015-07-25","f_nums":"625.00"},{"f_date":"2015-07-26","f_nums":"625.00"},{"f_date":"2015-07-27","f_nums":"625.00"},{"f_date":"2015-07-28","f_nums":"625.00"},{"f_date":"2015-07-29","f_nums":"625.00"},{"f_date":"2015-07-30","f_nums":"625.00"},{"f_date":"2015-07-31","f_nums":"625.00"}],"ArtOfClick":[{"f_date":"2015-07-01","f_nums":"400.00"},{"f_date":"2015-07-02","f_nums":"400.00"},{"f_date":"2015-07-03","f_nums":"400.00"},{"f_date":"2015-07-04","f_nums":"400.00"},{"f_date":"2015-07-05","f_nums":"399.00"},{"f_date":"2015-07-06","f_nums":"400.00"},{"f_date":"2015-07-07","f_nums":"400.00"},{"f_date":"2015-07-08","f_nums":"400.00"},{"f_date":"2015-07-09","f_nums":"400.00"},{"f_date":"2015-07-10","f_nums":"350.00"},{"f_date":"2015-07-11","f_nums":"350.00"},{"f_date":"2015-07-12","f_nums":"350.00"},{"f_date":"2015-07-13","f_nums":"350.00"},{"f_date":"2015-07-14","f_nums":"350.00"},{"f_date":"2015-07-15","f_nums":"350.00"},{"f_date":"2015-07-16","f_nums":"350.00"},{"f_date":"2015-07-17","f_nums":"350.00"},{"f_date":"2015-07-18","f_nums":"350.00"},{"f_date":"2015-07-19","f_nums":"350.00"},{"f_date":"2015-07-20","f_nums":"250.00"},{"f_date":"2015-07-21","f_nums":"250.00"},{"f_date":"2015-07-22","f_nums":"250.00"},{"f_date":"2015-07-23","f_nums":"250.00"},{"f_date":"2015-07-24","f_nums":"250.00"},{"f_date":"2015-07-25","f_nums":"250.00"},{"f_date":"2015-07-26","f_nums":"250.00"},{"f_date":"2015-07-27","f_nums":"250.00"},{"f_date":"2015-07-28","f_nums":"250.00"},{"f_date":"2015-07-29","f_nums":"250.00"},{"f_date":"2015-07-30","f_nums":"250.00"},{"f_date":"2015-07-31","f_nums":"250.00"}]},"f_total":50398,"table":{"Mobpartner":2532,"MobileCore":7100,"Leadbolt":14361,"Komli":16306,"ArtOfClick":10099}}';
+                if (title == 'start') {
+                    data = startData;
+                } else if (title == 'iap') {
+                    data = iapData;
+                } else if (title == 'register') {
+                    data = startData;
+                }
+
+                var json = JSON.parse(data)
                 $.each(json.table, function(i, item) {
                     tkey ++ ;
                     if(tablename=="In-app Revenue"){
@@ -507,10 +456,13 @@
 
         jQuery.ajax({
             type: "get",
-            url: "interface/getlabel.php",
+            url: "/pmp/Flight",
             data:"cvid="+lcvid+"&action="+title,
             success: function(data, textStatus){
-                var json =(new Function("","return "+data))();
+                data = '{"result":1,"msg":"\u6210\u529f","total":5,"rows":{"Mobpartner":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"546.00"},{"f_date":"2015-07-05","f_nums":"548.80"},{"f_date":"2015-07-06","f_nums":"546.00"},{"f_date":"2015-07-07","f_nums":"554.40"},{"f_date":"2015-07-08","f_nums":"537.60"},{"f_date":"2015-07-09","f_nums":"548.80"},{"f_date":"2015-07-10","f_nums":"557.20"},{"f_date":"2015-07-11","f_nums":"1170.00"},{"f_date":"2015-07-12","f_nums":"1164.00"},{"f_date":"2015-07-13","f_nums":"1134.00"},{"f_date":"2015-07-14","f_nums":"0.00"},{"f_date":"2015-07-15","f_nums":"0.00"},{"f_date":"2015-07-16","f_nums":"0.00"},{"f_date":"2015-07-17","f_nums":"0.00"},{"f_date":"2015-07-18","f_nums":"0.00"},{"f_date":"2015-07-19","f_nums":"0.00"},{"f_date":"2015-07-20","f_nums":"0.00"},{"f_date":"2015-07-21","f_nums":"0.00"},{"f_date":"2015-07-22","f_nums":"0.00"},{"f_date":"2015-07-23","f_nums":"0.00"},{"f_date":"2015-07-24","f_nums":"0.00"},{"f_date":"2015-07-25","f_nums":"0.00"},{"f_date":"2015-07-26","f_nums":"0.00"},{"f_date":"2015-07-27","f_nums":"0.00"},{"f_date":"2015-07-28","f_nums":"0.00"},{"f_date":"2015-07-29","f_nums":"0.00"},{"f_date":"2015-07-30","f_nums":"0.00"},{"f_date":"2015-07-31","f_nums":"0.00"}],"MobileCore":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"570.00"},{"f_date":"2015-07-05","f_nums":"570.00"},{"f_date":"2015-07-06","f_nums":"570.00"},{"f_date":"2015-07-07","f_nums":"570.00"},{"f_date":"2015-07-08","f_nums":"2400.00"},{"f_date":"2015-07-09","f_nums":"2392.00"},{"f_date":"2015-07-10","f_nums":"1600.00"},{"f_date":"2015-07-11","f_nums":"1600.00"},{"f_date":"2015-07-12","f_nums":"1600.00"},{"f_date":"2015-07-13","f_nums":"1600.00"},{"f_date":"2015-07-14","f_nums":"1600.00"},{"f_date":"2015-07-15","f_nums":"1600.00"},{"f_date":"2015-07-16","f_nums":"1600.00"},{"f_date":"2015-07-17","f_nums":"1600.00"},{"f_date":"2015-07-18","f_nums":"1600.00"},{"f_date":"2015-07-19","f_nums":"1600.00"},{"f_date":"2015-07-20","f_nums":"1600.00"},{"f_date":"2015-07-21","f_nums":"1600.00"},{"f_date":"2015-07-22","f_nums":"1600.00"},{"f_date":"2015-07-23","f_nums":"1600.00"},{"f_date":"2015-07-24","f_nums":"1600.00"},{"f_date":"2015-07-25","f_nums":"1600.00"},{"f_date":"2015-07-26","f_nums":"1600.00"},{"f_date":"2015-07-27","f_nums":"1600.00"},{"f_date":"2015-07-28","f_nums":"1600.00"},{"f_date":"2015-07-29","f_nums":"1600.00"},{"f_date":"2015-07-30","f_nums":"1600.00"},{"f_date":"2015-07-31","f_nums":"1592.00"}],"Leadbolt":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"0.00"},{"f_date":"2015-07-05","f_nums":"933.10"},{"f_date":"2015-07-06","f_nums":"939.30"},{"f_date":"2015-07-07","f_nums":"926.90"},{"f_date":"2015-07-08","f_nums":"3322.00"},{"f_date":"2015-07-09","f_nums":"3322.00"},{"f_date":"2015-07-10","f_nums":"5200.00"},{"f_date":"2015-07-11","f_nums":"5200.00"},{"f_date":"2015-07-12","f_nums":"5200.00"},{"f_date":"2015-07-13","f_nums":"5200.00"},{"f_date":"2015-07-14","f_nums":"5200.00"},{"f_date":"2015-07-15","f_nums":"7875.00"},{"f_date":"2015-07-16","f_nums":"7875.00"},{"f_date":"2015-07-17","f_nums":"7875.00"},{"f_date":"2015-07-18","f_nums":"7875.00"},{"f_date":"2015-07-19","f_nums":"7860.00"},{"f_date":"2015-07-20","f_nums":"9826.00"},{"f_date":"2015-07-21","f_nums":"9826.00"},{"f_date":"2015-07-22","f_nums":"9826.00"},{"f_date":"2015-07-23","f_nums":"9826.00"},{"f_date":"2015-07-24","f_nums":"9826.00"},{"f_date":"2015-07-25","f_nums":"9826.00"},{"f_date":"2015-07-26","f_nums":"9826.00"},{"f_date":"2015-07-27","f_nums":"9826.00"},{"f_date":"2015-07-28","f_nums":"9826.00"},{"f_date":"2015-07-29","f_nums":"9826.00"},{"f_date":"2015-07-30","f_nums":"9826.00"},{"f_date":"2015-07-31","f_nums":"9826.00"}],"Komli":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"0.00"},{"f_date":"2015-07-05","f_nums":"880.00"},{"f_date":"2015-07-06","f_nums":"880.00"},{"f_date":"2015-07-07","f_nums":"880.00"},{"f_date":"2015-07-08","f_nums":"880.00"},{"f_date":"2015-07-09","f_nums":"4800.00"},{"f_date":"2015-07-10","f_nums":"6286.00"},{"f_date":"2015-07-11","f_nums":"6272.00"},{"f_date":"2015-07-12","f_nums":"6286.00"},{"f_date":"2015-07-13","f_nums":"6286.00"},{"f_date":"2015-07-14","f_nums":"6286.00"},{"f_date":"2015-07-15","f_nums":"9456.00"},{"f_date":"2015-07-16","f_nums":"9456.00"},{"f_date":"2015-07-17","f_nums":"9472.00"},{"f_date":"2015-07-18","f_nums":"9456.00"},{"f_date":"2015-07-19","f_nums":"9456.00"},{"f_date":"2015-07-20","f_nums":"11232.00"},{"f_date":"2015-07-21","f_nums":"11250.00"},{"f_date":"2015-07-22","f_nums":"11250.00"},{"f_date":"2015-07-23","f_nums":"11250.00"},{"f_date":"2015-07-24","f_nums":"11250.00"},{"f_date":"2015-07-25","f_nums":"11250.00"},{"f_date":"2015-07-26","f_nums":"11250.00"},{"f_date":"2015-07-27","f_nums":"11250.00"},{"f_date":"2015-07-28","f_nums":"11250.00"},{"f_date":"2015-07-29","f_nums":"11250.00"},{"f_date":"2015-07-30","f_nums":"11250.00"},{"f_date":"2015-07-31","f_nums":"11250.00"}],"ArtOfClick":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"798.00"},{"f_date":"2015-07-05","f_nums":"798.00"},{"f_date":"2015-07-06","f_nums":"800.00"},{"f_date":"2015-07-07","f_nums":"4800.00"},{"f_date":"2015-07-08","f_nums":"4800.00"},{"f_date":"2015-07-09","f_nums":"4800.00"},{"f_date":"2015-07-10","f_nums":"4200.00"},{"f_date":"2015-07-11","f_nums":"4188.00"},{"f_date":"2015-07-12","f_nums":"4200.00"},{"f_date":"2015-07-13","f_nums":"4200.00"},{"f_date":"2015-07-14","f_nums":"4200.00"},{"f_date":"2015-07-15","f_nums":"4200.00"},{"f_date":"2015-07-16","f_nums":"3500.00"},{"f_date":"2015-07-17","f_nums":"3500.00"},{"f_date":"2015-07-18","f_nums":"3500.00"},{"f_date":"2015-07-19","f_nums":"3500.00"},{"f_date":"2015-07-20","f_nums":"2500.00"},{"f_date":"2015-07-21","f_nums":"2500.00"},{"f_date":"2015-07-22","f_nums":"2250.00"},{"f_date":"2015-07-23","f_nums":"2250.00"},{"f_date":"2015-07-24","f_nums":"2250.00"},{"f_date":"2015-07-25","f_nums":"2250.00"},{"f_date":"2015-07-26","f_nums":"2250.00"},{"f_date":"2015-07-27","f_nums":"2241.00"},{"f_date":"2015-07-28","f_nums":"2250.00"},{"f_date":"2015-07-29","f_nums":"2250.00"},{"f_date":"2015-07-30","f_nums":"2241.00"},{"f_date":"2015-07-31","f_nums":"2250.00"}]},"f_total":547766.1,"table":{"Mobpartner":7306.8,"MobileCore":42264,"Leadbolt":192715.3,"Komli":222014,"ArtOfClick":83466}}';
+
+//                var json =(new Function("","return "+data))();
+                var json = JSON.parse(data);
 
                 if(json.total==0){
                     //type=0;
@@ -529,7 +481,7 @@
                     idstr = idstr.substring(0,idstr.length-1);
 
                     $('#label').combobox({
-                        url:'ajax_getlabel.php?idstr='+idstr+'&sflight='+sflight+'&slabel='+slabel,
+                        url: "/pmp/Flight",
                         valueField:'id',
                         textField:'label',
                         onLoadSuccess: function () { //加载完成后,设置选中第一项
@@ -565,11 +517,11 @@
             var ryname = "Revenue";
         }
 
-        myChart1 = echarts.init(VDoc('ec_area_1'));
+        myChart1 = echarts.init(VDoc('ec_area_roi'));
 
         jQuery.ajax({
             type: "get",
-            url: "interface/getRoi.php",
+            url: "/pmp/Flight",
             data:"cvid="+cvid+"&start="+start+"&end="+end+"&channel="+channel+"&date_limit="+roilimit+"&type="+roitype,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -579,6 +531,7 @@
                 });
             },
             success: function(data, textStatus){
+                data = '{"result":1,"msg":"成功","info":{"Mobpartner":{"roi":2.6154,"budget":"20256.00"},"MobileCore":{"roi":6.1105,"budget":"54400.00"},"Leadbolt":{"roi":13.7428,"budget":"111776.00"},"Komli":{"roi":13.9164,"budget":"127248.00"},"ArtOfClick":{"roi":8.4512,"budget":"77592.00"}}}';
                 var roi_data = [];
                 var budget_data = [];
                 var key_array = [];
@@ -703,7 +656,7 @@
         //$(".tablearea").hide();//table隐藏
         jQuery.ajax({
             type: "get",
-            url: "ajax_cohort.php",
+            url: "/pmp/Flight",
             data:"cvid="+cvid+"&start="+start+"&end="+end+"&act="+co_act+"&dtype="+co_dtype+"&group="+co_group+"&times="+co_times+"&dataType="+dataType,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -720,7 +673,7 @@
                 var key_array = [];
                 var channel_array = [];
 
-                var json =(new Function("","return "+data))();
+                json = JSON.parse(data);
                 $.each(json, function(i, item) {
                     key_array.push(i);
                 });
@@ -807,7 +760,7 @@
 
         jQuery.ajax({
             type: "get",
-            url: "ajax_payback.php",
+            url: "/pmp/Flight",
             data:"cvid="+cvid+"&uid="+uid+"&start="+start+"&end="+end,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -822,7 +775,7 @@
                 var key_array = [];
                 var channel_array = [];
 
-                var json =(new Function("","return "+data))();
+                var json = JSON.parse(data)
                 $.each(json, function(i, item) {
                     if(i!="node"){
                         key_array.push(i);
@@ -895,7 +848,7 @@
                 };
                 myChart.hideLoading();
                 myChart.setOption(option);
-                showtable(title="Payback Period",tablehtml);//表格数据
+                showtable(title="payback",tablehtml);//表格数据
             },
             complete: function(XMLHttpRequest, textStatus){
             },
@@ -906,33 +859,15 @@
 
     }
 
-    function selectchannel(){
-        //var cvid = $("#f_cvid").val();
-        var cvid = "70";
-        var checkvalues="";
-        $("input:checkbox:checked").each(function(i){
-            checkvalues += $(this).val() + ",";
-        });
-        channel = checkvalues;
-        channel = channel.substring(0,channel.length-1);
-        if(currenttitle=="roi"){
-            getRoi(cvid,channel,roilimit,roitype)
-        }else if(currenttitle=="payback period"){
-            getPayback(cvid,uid="");
-        }else{
-            getConversion(cvid,channel,currenttitle,sflight,slabel);
-        }
-    }
-
     var tmp_d = '"iap","pay","start"';
 
     function onDocLoaded(){
-        var pid = $('#f_pid').combobox('getValue');
 
         $('#f_cid').combobox({
-            url:'ajax_getcampaign.php?pid='+pid+"&cid=70",
-            valueField:'f_id',
-            textField:'f_name'/*,
+            url: "/pmp/FlightGroup",
+            method: 'get',
+            valueField:'Id',
+            textField:'Name'/*,
              onLoadSuccess: function () { //加载完成后,设置选中第一项
              var val = $(this).combobox("getData");
              for (var item in val[0]) {
@@ -951,15 +886,12 @@
         //set default roi display 20150825
         $(".datelimitbox").show();
         $(".datelimitbox3").show();
+
+        getRoi('','','','');
     }
 
-
-    if(tmp_d!=''){
-        var title_array = ["iap","pay","start","roi","cohort","payback period"];
-    }else{
-        currenttitle="roi";
-        var title_array = ["roi","cohort","payback period"];
-    }
+//    var title_array = ["start","register","iap", "roi","payback"];
+    var title_array = ["start","register","iap", "roi"];
     //set default roi display 20150825
     currenttitle="roi";
 
@@ -993,7 +925,7 @@
                     $("#eventflightbox").hide();
                     $("#labelbox").hide();
                     getRoi(cvid,channel,roilimit,roitype);
-                }else if(title=="payback period"){
+                }else if(title=="payback"){
                     $(".payback_control_rb").show();
                     $(".datelimitbox").hide();
                     $(".datelimitbox3").hide();
@@ -1014,7 +946,27 @@
                     $("#eventflightbox").hide();
                     $("#labelbox").hide();
                     getCohort(cvid,co_act,co_group,co_dtype,co_times,dataType,1);
-                }else{
+                }else if(title=="iap"){
+                    $(".datelimitbox").hide();
+                    $(".datelimitbox3").hide();
+                    $(".cohort_control").hide();
+                    $(".payback_control").hide();
+                    $(".payback_control_r").hide();
+                    //$("#channelbox").show();
+                    $("#eventflightbox").show();
+                    $("#labelbox").show();
+                    getConversion(cvid,channel,title,sflight,slabel);
+                }else if(title=="start"){
+                    $(".datelimitbox").hide();
+                    $(".datelimitbox3").hide();
+                    $(".cohort_control").hide();
+                    $(".payback_control").hide();
+                    $(".payback_control_r").hide();
+                    //$("#channelbox").show();
+                    $("#eventflightbox").show();
+                    $("#labelbox").show();
+                    getConversion(cvid,channel,title,sflight,slabel);
+                }else if(title=="register"){
                     $(".datelimitbox").hide();
                     $(".datelimitbox3").hide();
                     $(".cohort_control").hide();
@@ -1144,7 +1096,7 @@
         $(".tablearea").show();//table显示
         $(".tablename").html(title);//修改table name
         $("#tablebox").html(tablehtml);
-        if(title=="Payback Period"){
+        if(title=="payback"){
             $("#tablebox").css("height","140px");
         }else{
             $("#tablebox").css("height","400px");
