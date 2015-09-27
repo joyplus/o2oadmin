@@ -12,11 +12,11 @@ UPDATE node SET name='report/getPdbDspReport' WHERE id=36;
 INSERT INTO `pmp`.`node` (`id`, `title`, `name`, `level`, `pid`, `remark`, `status`, `group_id`) VALUES (NULL, '创建活动', 'campaign/add', '2', '31', NULL, '2', '2');
 
 #2015-09-20#
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB space list','index',3,32,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP management','index',3,33,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media management','index',3,34,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media report','getPdbMediaReport',3,35,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP report','getPdbDspReport',3,36,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB space list','index',3,31,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP management','index',3,31,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media management','index',3,31,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media report','getPdbMediaReport',3,31,NULL,2,2);
+INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP report','getPdbDspReport',3,31,NULL,2,2);
 
 -- 添加 效果监测 菜单入口
 INSERT INTO `node` (`title`, `name`, `level`, `pid`, `status`, `group_id`) VALUES ('效果监测', 'Performance', '2', '32', '2', '2');
