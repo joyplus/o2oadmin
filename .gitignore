@@ -32,3 +32,6 @@ logs/
 
 .idea/
 .DS_Store
+routers/commentsRouter_o2oadmin_controllers.go
+
+lastupdate.tmp

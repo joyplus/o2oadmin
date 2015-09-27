@@ -18,6 +18,6 @@ INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_i
 INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media report','getPdbMediaReport',3,31,NULL,2,2);
 INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP report','getPdbDspReport',3,31,NULL,2,2);
 
--- 添加 效果监测 菜单入口
+#添加 效果监测 菜单入口#
 INSERT INTO `node` (`title`, `name`, `level`, `pid`, `status`, `group_id`) VALUES ('效果监测', 'Performance', '2', '32', '2', '2');
 INSERT INTO `node` (`title`, `name`, `level`, `pid`, `status`, `group_id`) VALUES ('综合报表', 'FlightGroup/FullReport', '2', '32', '2', '2');
