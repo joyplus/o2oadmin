@@ -35,5 +35,3 @@ logs/
 routers/commentsRouter*.go
 
 lastupdate.tmp
-
-routers/commentsRouter_o2oadmin_controllers.go
