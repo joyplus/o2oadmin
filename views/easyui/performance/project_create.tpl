@@ -98,7 +98,7 @@
     var url = '';
 
     function Creatcampaign(){
-        window.location.href="Detail";
+        window.location.href="Detail/1";
     }
 
     $.extend($.fn.validatebox.defaults.rules, {
@@ -110,7 +110,7 @@
     });
 
     function cancelcampaign(){
-        window.location.href="/pmp/Performance";
+        window.location.href="/pmp/performance";
     }
     function getCompNowData(){
         $('#comp_list').datagrid('load',{date:$('#ndate2').datebox('getValue'),f_mobile:$('#f_mobile2').val(),f_card:$('#f_card2').val()});

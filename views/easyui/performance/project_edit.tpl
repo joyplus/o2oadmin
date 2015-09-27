@@ -11,7 +11,7 @@
 
     <div id="content_area">
 
-        <form id="campaign_edit" action="/pmp/FlightGroup/Save"  method="post" enctype="multipart/form-data">
+        <form id="campaign_edit" action="/pmp/flightGroup/Save"  method="post" enctype="multipart/form-data">
             <input type="hidden" name="cid" value="83" />
             <div id="creat_title">
                 <span style="margin-left:10px">项目编辑</span>
@@ -260,7 +260,7 @@
     }
     $(function(){
         var compListGrid = $('#comp_list').datagrid({
-            url: '/pmp/Flight?group_id=2',
+            url: '/pmp/flight?group_id=2',
             pageSize:10,
             nowrap:false,
             /*rowStyler:function(index,row){
@@ -304,7 +304,7 @@
 
         $('#setting_edit').form('submit',
                 {
-                    url: "/pmp/Flight",
+                    url: "/pmp/flight",
                     method: 'post',
                     onSubmit: function(){
                         return true;
@@ -650,9 +650,9 @@
     }
 
     if(cid!=''){
-        var url = '/pmp/FlightGroup/' + cid;
+        var url = '/pmp/flightGroup/' + cid;
     }else{
-        var url = '/pmp/FlightGroup';
+        var url = '/pmp/flightGroup';
     }
 
     function Creatcampaign(){
@@ -676,7 +676,7 @@
                     },
                     success: function(result){
 
-                        window.location.href="/pmp/FlightGroup/Detail/1";
+                        window.location.href="/pmp/flightGroup/Detail/1";
                     }
                 });
     }
@@ -690,7 +690,7 @@
     });
 
     function cancelcampaign(){
-        window.location.href="/pmp/FlightGroup/Detail/1";
+        window.location.href="/pmp/flightGroup/Detail/1";
     }
     function getCompNowData(){
         $('#comp_list').datagrid('load',{date:$('#ndate2').datebox('getValue'),f_mobile:$('#f_mobile2').val(),f_card:$('#f_card2').val()});

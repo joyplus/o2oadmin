@@ -195,6 +195,11 @@ func (c *LtvFlightGroupController) GetSummaryList() {
 }
 
 // ~~~~~~~~~~~~~   below are custom methods  ~~~~~~~~~~~~~~~ //
+// @router /create [get]
+func (c *LtvFlightGroupController) Create() {
+    c.TplNames = c.GetTemplatetype() + "/performance/project_create.tpl"
+}
+
 // @router /Detail/:id [get]
 func (c *LtvFlightGroupController) Detail() {
     c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
@@ -210,12 +215,12 @@ func (c *LtvFlightGroupController) Save() {
     c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
 }
 
-// @router /FullReport/:id [get]
+// @router /fullReport/:id [get]
 func (c *LtvFlightGroupController) FullReportPage() {
     c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
 }
 
-// @router /FullReport [get]
+// @router /fullReport [get]
 func (c *LtvFlightGroupController) FullReportPageAll() {
     c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
 }

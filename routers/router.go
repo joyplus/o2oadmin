@@ -8,6 +8,11 @@ import (
 
 func init() {
 
+    beego.Router("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant")
+    beego.Router("/operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant")
+    beego.Router("/operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant")
+    beego.Router("/operation/merchant/index", &controllers.MerchantController{}, "*:Index")
+
     ns := beego.NewNamespace("/pmp",
         beego.NSRouter("adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList"),
         beego.NSRouter("adspace/addadspace", &controllers.PmpAdspaceController{}, "*:Post"),
@@ -42,27 +47,22 @@ func init() {
         beego.NSRouter("adspacematrix/updateAdspaceMatrix", &controllers.PmpAdspaceMatrixController{}, "*:UpdateAdspaceMatrix"),
 
         
-        beego.NSRouter("operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant"),
-        beego.NSRouter("operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant"),
-        beego.NSRouter("operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant"),
-        beego.NSRouter("operation/merchant/index", &controllers.MerchantController{}, "*:Index"),
-
         //Campaign
         beego.NSRouter("campaign/add", &controllers.CampaignController{}, "*:Add"),
 
-        beego.NSRouter("Performance", &controllers.PerformanceController{}),
+        beego.NSRouter("performance", &controllers.PerformanceController{}),
 
-        beego.NSNamespace("/Campaign",
+        beego.NSNamespace("/dashboard",
             beego.NSInclude(
                 &controllers.LtvDashboardController{},
             ),
         ),
-        beego.NSNamespace("/FlightGroup",
+        beego.NSNamespace("/flightGroup",
             beego.NSInclude(
                 &controllers.LtvFlightGroupController{},
             ),
         ),
-        beego.NSNamespace("/Flight",
+        beego.NSNamespace("/flight",
             beego.NSInclude(
                 &controllers.LtvFlightController{},
             ),
