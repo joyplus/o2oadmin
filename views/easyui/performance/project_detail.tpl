@@ -242,7 +242,7 @@
     });
     function unit_list(ustart,uend){
         $('#comp_list').datagrid({
-            url:'/pmp/Flight?group_id=1',
+            url:'/pmp/flight?group_id=1',
             view: detailview,
             pageSize:10,
             nowrap:false,
@@ -500,11 +500,11 @@
     }
 
     function editCampaign(){
-        window.location.href="/pmp/FlightGroup/Edit/1";
+        window.location.href="/pmp/flightGroup/Edit/1";
     }
 
     function fullreport(){
-        window.location.href="/pmp/FlightGroup/FullReport/1";
+        window.location.href="/pmp/flightGroup/FullReport/1";
     }
 
     function getCompNowData(){

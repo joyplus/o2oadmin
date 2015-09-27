@@ -81,14 +81,14 @@
                 <a id="f_search" href="javascript:showUserSearch();" class="easyui-linkbutton" style="height:32px;width:80px;">查找</a>
             </div>
             <div style="float:right">
-                <!--<input type="button" id="f_new" name="f_new" class="user_search_button" style="width:150px;height:35px;margin-top:4px;" onclick="return createCampaign();" value="New Campaign" />-->
-                <a id="f_new" href="javascript:createCampaign();" class="easyui-linkbutton" style="height:32px;width:150px;">新建项目</a>
+                <!--<input type="button" id="f_new" name="f_new" class="user_search_button" style="width:150px;height:35px;margin-top:4px;" onclick="return createFlightGroup();" value="New Campaign" />-->
+                <a id="f_new" href="javascript:createFlightGroup();" class="easyui-linkbutton" style="height:32px;width:150px;">新建项目</a>
             </div>
         </div>
 
         <div id="result_area" style="margin-top:10px;border:0">
             <table id="comp_list" title="项目列表" style="width:100%;height:95%"
-                   data-options="rownumbers:false,singleSelect:true,url:'FlightGroup/GetSummaryList',method:'get'" pagination="true">
+                   data-options="rownumbers:false,singleSelect:true,url:'flightGroup/GetSummaryList',method:'get'" pagination="true">
                 <thead>
                 <tr>
                     <th data-options="field:'Name',width:100,formatter:formatGroupName"><b>名称</b></th>
@@ -163,7 +163,7 @@
 
     $('#f_camid').combobox({
         method: 'get',
-        url: '/pmp/FlightGroup',
+        url: '/pmp/flightGroup',
         valueField: 'Id',
         textField: 'Name',
         prompt: '请选择项目'
@@ -445,7 +445,7 @@
         }
         jQuery.ajax({
             type: "get",
-            url: "Campaign/GetTop5Campaign",
+            url: "/GetTop5Campaign",
             data:"act="+act+"&type="+type+"&tname="+tname,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -585,7 +585,7 @@
 
     function formatGroupName(val,row){
         if(val != undefined){
-            return "<a href='/pmp/FlightGroup/Detail/"+row.Id+"' style='color:#5A7ACF'>"+val+"</a>";
+            return "<a href='/pmp/flightGroup/Detail/"+row.Id+"' style='color:#5A7ACF'>"+val+"</a>";
         }else{
             return '';
         }
@@ -701,8 +701,8 @@
     function formatEventEdit(val,row){
 
     }
-    function createCampaign(){
-        window.location.href="/pmp/Campaign/Create";
+    function createFlightGroup(){
+        window.location.href="/pmp/flightGroup/create";
     }
 
     function DataReport(id){

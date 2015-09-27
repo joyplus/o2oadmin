@@ -73,6 +73,16 @@
 
                     </div>
                 </div>
+                <div title="申请"  style="padding:30px 10px 10px 10px;">
+                    <div id="nec_area_submit" style="height:400px;width:1220px;float:left;">
+
+                    </div>
+                </div>
+                <div title="转化"  style="padding:30px 10px 10px 10px;">
+                    <div id="nec_area_conversion" style="height:400px;width:1220px;float:left;">
+
+                    </div>
+                </div>
                 <div title="收入"  style="padding:30px 10px 10px 10px;">
                     <div id="nec_area_iap" style="height:400px;width:1220px;float:left;">
 
@@ -282,7 +292,7 @@
         var cvid = "70";
         jQuery.ajax({
             type: "get",
-            url: "/pmp/Flight",
+            url: "/pmp/flight",
             data:"cvid="+cvid,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -328,7 +338,7 @@
         var startData = ''
         jQuery.ajax({
             type: "get",
-            url: "/pmp/Flight",
+            url: "/pmp/flight",
             data:data_url,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -351,7 +361,7 @@
                     data = startData;
                 } else if (title == 'iap') {
                     data = iapData;
-                } else if (title == 'register') {
+                } else {
                     data = startData;
                 }
 
@@ -456,7 +466,7 @@
 
         jQuery.ajax({
             type: "get",
-            url: "/pmp/Flight",
+            url: "/pmp/flight",
             data:"cvid="+lcvid+"&action="+title,
             success: function(data, textStatus){
                 data = '{"result":1,"msg":"\u6210\u529f","total":5,"rows":{"Mobpartner":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"546.00"},{"f_date":"2015-07-05","f_nums":"548.80"},{"f_date":"2015-07-06","f_nums":"546.00"},{"f_date":"2015-07-07","f_nums":"554.40"},{"f_date":"2015-07-08","f_nums":"537.60"},{"f_date":"2015-07-09","f_nums":"548.80"},{"f_date":"2015-07-10","f_nums":"557.20"},{"f_date":"2015-07-11","f_nums":"1170.00"},{"f_date":"2015-07-12","f_nums":"1164.00"},{"f_date":"2015-07-13","f_nums":"1134.00"},{"f_date":"2015-07-14","f_nums":"0.00"},{"f_date":"2015-07-15","f_nums":"0.00"},{"f_date":"2015-07-16","f_nums":"0.00"},{"f_date":"2015-07-17","f_nums":"0.00"},{"f_date":"2015-07-18","f_nums":"0.00"},{"f_date":"2015-07-19","f_nums":"0.00"},{"f_date":"2015-07-20","f_nums":"0.00"},{"f_date":"2015-07-21","f_nums":"0.00"},{"f_date":"2015-07-22","f_nums":"0.00"},{"f_date":"2015-07-23","f_nums":"0.00"},{"f_date":"2015-07-24","f_nums":"0.00"},{"f_date":"2015-07-25","f_nums":"0.00"},{"f_date":"2015-07-26","f_nums":"0.00"},{"f_date":"2015-07-27","f_nums":"0.00"},{"f_date":"2015-07-28","f_nums":"0.00"},{"f_date":"2015-07-29","f_nums":"0.00"},{"f_date":"2015-07-30","f_nums":"0.00"},{"f_date":"2015-07-31","f_nums":"0.00"}],"MobileCore":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"570.00"},{"f_date":"2015-07-05","f_nums":"570.00"},{"f_date":"2015-07-06","f_nums":"570.00"},{"f_date":"2015-07-07","f_nums":"570.00"},{"f_date":"2015-07-08","f_nums":"2400.00"},{"f_date":"2015-07-09","f_nums":"2392.00"},{"f_date":"2015-07-10","f_nums":"1600.00"},{"f_date":"2015-07-11","f_nums":"1600.00"},{"f_date":"2015-07-12","f_nums":"1600.00"},{"f_date":"2015-07-13","f_nums":"1600.00"},{"f_date":"2015-07-14","f_nums":"1600.00"},{"f_date":"2015-07-15","f_nums":"1600.00"},{"f_date":"2015-07-16","f_nums":"1600.00"},{"f_date":"2015-07-17","f_nums":"1600.00"},{"f_date":"2015-07-18","f_nums":"1600.00"},{"f_date":"2015-07-19","f_nums":"1600.00"},{"f_date":"2015-07-20","f_nums":"1600.00"},{"f_date":"2015-07-21","f_nums":"1600.00"},{"f_date":"2015-07-22","f_nums":"1600.00"},{"f_date":"2015-07-23","f_nums":"1600.00"},{"f_date":"2015-07-24","f_nums":"1600.00"},{"f_date":"2015-07-25","f_nums":"1600.00"},{"f_date":"2015-07-26","f_nums":"1600.00"},{"f_date":"2015-07-27","f_nums":"1600.00"},{"f_date":"2015-07-28","f_nums":"1600.00"},{"f_date":"2015-07-29","f_nums":"1600.00"},{"f_date":"2015-07-30","f_nums":"1600.00"},{"f_date":"2015-07-31","f_nums":"1592.00"}],"Leadbolt":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"0.00"},{"f_date":"2015-07-05","f_nums":"933.10"},{"f_date":"2015-07-06","f_nums":"939.30"},{"f_date":"2015-07-07","f_nums":"926.90"},{"f_date":"2015-07-08","f_nums":"3322.00"},{"f_date":"2015-07-09","f_nums":"3322.00"},{"f_date":"2015-07-10","f_nums":"5200.00"},{"f_date":"2015-07-11","f_nums":"5200.00"},{"f_date":"2015-07-12","f_nums":"5200.00"},{"f_date":"2015-07-13","f_nums":"5200.00"},{"f_date":"2015-07-14","f_nums":"5200.00"},{"f_date":"2015-07-15","f_nums":"7875.00"},{"f_date":"2015-07-16","f_nums":"7875.00"},{"f_date":"2015-07-17","f_nums":"7875.00"},{"f_date":"2015-07-18","f_nums":"7875.00"},{"f_date":"2015-07-19","f_nums":"7860.00"},{"f_date":"2015-07-20","f_nums":"9826.00"},{"f_date":"2015-07-21","f_nums":"9826.00"},{"f_date":"2015-07-22","f_nums":"9826.00"},{"f_date":"2015-07-23","f_nums":"9826.00"},{"f_date":"2015-07-24","f_nums":"9826.00"},{"f_date":"2015-07-25","f_nums":"9826.00"},{"f_date":"2015-07-26","f_nums":"9826.00"},{"f_date":"2015-07-27","f_nums":"9826.00"},{"f_date":"2015-07-28","f_nums":"9826.00"},{"f_date":"2015-07-29","f_nums":"9826.00"},{"f_date":"2015-07-30","f_nums":"9826.00"},{"f_date":"2015-07-31","f_nums":"9826.00"}],"Komli":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"0.00"},{"f_date":"2015-07-05","f_nums":"880.00"},{"f_date":"2015-07-06","f_nums":"880.00"},{"f_date":"2015-07-07","f_nums":"880.00"},{"f_date":"2015-07-08","f_nums":"880.00"},{"f_date":"2015-07-09","f_nums":"4800.00"},{"f_date":"2015-07-10","f_nums":"6286.00"},{"f_date":"2015-07-11","f_nums":"6272.00"},{"f_date":"2015-07-12","f_nums":"6286.00"},{"f_date":"2015-07-13","f_nums":"6286.00"},{"f_date":"2015-07-14","f_nums":"6286.00"},{"f_date":"2015-07-15","f_nums":"9456.00"},{"f_date":"2015-07-16","f_nums":"9456.00"},{"f_date":"2015-07-17","f_nums":"9472.00"},{"f_date":"2015-07-18","f_nums":"9456.00"},{"f_date":"2015-07-19","f_nums":"9456.00"},{"f_date":"2015-07-20","f_nums":"11232.00"},{"f_date":"2015-07-21","f_nums":"11250.00"},{"f_date":"2015-07-22","f_nums":"11250.00"},{"f_date":"2015-07-23","f_nums":"11250.00"},{"f_date":"2015-07-24","f_nums":"11250.00"},{"f_date":"2015-07-25","f_nums":"11250.00"},{"f_date":"2015-07-26","f_nums":"11250.00"},{"f_date":"2015-07-27","f_nums":"11250.00"},{"f_date":"2015-07-28","f_nums":"11250.00"},{"f_date":"2015-07-29","f_nums":"11250.00"},{"f_date":"2015-07-30","f_nums":"11250.00"},{"f_date":"2015-07-31","f_nums":"11250.00"}],"ArtOfClick":[{"f_date":"2015-07-01","f_nums":"0.00"},{"f_date":"2015-07-02","f_nums":"0.00"},{"f_date":"2015-07-03","f_nums":"0.00"},{"f_date":"2015-07-04","f_nums":"798.00"},{"f_date":"2015-07-05","f_nums":"798.00"},{"f_date":"2015-07-06","f_nums":"800.00"},{"f_date":"2015-07-07","f_nums":"4800.00"},{"f_date":"2015-07-08","f_nums":"4800.00"},{"f_date":"2015-07-09","f_nums":"4800.00"},{"f_date":"2015-07-10","f_nums":"4200.00"},{"f_date":"2015-07-11","f_nums":"4188.00"},{"f_date":"2015-07-12","f_nums":"4200.00"},{"f_date":"2015-07-13","f_nums":"4200.00"},{"f_date":"2015-07-14","f_nums":"4200.00"},{"f_date":"2015-07-15","f_nums":"4200.00"},{"f_date":"2015-07-16","f_nums":"3500.00"},{"f_date":"2015-07-17","f_nums":"3500.00"},{"f_date":"2015-07-18","f_nums":"3500.00"},{"f_date":"2015-07-19","f_nums":"3500.00"},{"f_date":"2015-07-20","f_nums":"2500.00"},{"f_date":"2015-07-21","f_nums":"2500.00"},{"f_date":"2015-07-22","f_nums":"2250.00"},{"f_date":"2015-07-23","f_nums":"2250.00"},{"f_date":"2015-07-24","f_nums":"2250.00"},{"f_date":"2015-07-25","f_nums":"2250.00"},{"f_date":"2015-07-26","f_nums":"2250.00"},{"f_date":"2015-07-27","f_nums":"2241.00"},{"f_date":"2015-07-28","f_nums":"2250.00"},{"f_date":"2015-07-29","f_nums":"2250.00"},{"f_date":"2015-07-30","f_nums":"2241.00"},{"f_date":"2015-07-31","f_nums":"2250.00"}]},"f_total":547766.1,"table":{"Mobpartner":7306.8,"MobileCore":42264,"Leadbolt":192715.3,"Komli":222014,"ArtOfClick":83466}}';
@@ -481,7 +491,7 @@
                     idstr = idstr.substring(0,idstr.length-1);
 
                     $('#label').combobox({
-                        url: "/pmp/Flight",
+                        url: "/pmp/flight",
                         valueField:'id',
                         textField:'label',
                         onLoadSuccess: function () { //加载完成后,设置选中第一项
@@ -521,7 +531,7 @@
 
         jQuery.ajax({
             type: "get",
-            url: "/pmp/Flight",
+            url: "/pmp/flight",
             data:"cvid="+cvid+"&start="+start+"&end="+end+"&channel="+channel+"&date_limit="+roilimit+"&type="+roitype,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -656,7 +666,7 @@
         //$(".tablearea").hide();//table隐藏
         jQuery.ajax({
             type: "get",
-            url: "/pmp/Flight",
+            url: "/pmp/flight",
             data:"cvid="+cvid+"&start="+start+"&end="+end+"&act="+co_act+"&dtype="+co_dtype+"&group="+co_group+"&times="+co_times+"&dataType="+dataType,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -760,7 +770,7 @@
 
         jQuery.ajax({
             type: "get",
-            url: "/pmp/Flight",
+            url: "/pmp/flight",
             data:"cvid="+cvid+"&uid="+uid+"&start="+start+"&end="+end,
             cache:false,
             beforeSend: function(XMLHttpRequest){
@@ -864,7 +874,7 @@
     function onDocLoaded(){
 
         $('#f_cid').combobox({
-            url: "/pmp/FlightGroup",
+            url: "/pmp/flightGroup",
             method: 'get',
             valueField:'Id',
             textField:'Name'/*,
@@ -891,7 +901,7 @@
     }
 
 //    var title_array = ["start","register","iap", "roi","payback"];
-    var title_array = ["start","register","iap", "roi"];
+    var title_array = ["start","register","submit","conversion","iap", "roi"];
     //set default roi display 20150825
     currenttitle="roi";
 
@@ -956,7 +966,7 @@
                     $("#eventflightbox").show();
                     $("#labelbox").show();
                     getConversion(cvid,channel,title,sflight,slabel);
-                }else if(title=="start"){
+                }else if(title=="start" || title == "submit" || title == "conversion"){
                     $(".datelimitbox").hide();
                     $(".datelimitbox3").hide();
                     $(".cohort_control").hide();
