@@ -5,65 +5,50 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type PmpCampaign struct {
-	Id              int       `orm:"column(id);auto"`
-	GroupId         int       `orm:"column(group_id)"`
-	Name            string    `orm:"column(name);size(45)"`
-	StartDate       time.Time `orm:"column(start_date);type(date);null"`
-	EndDate         time.Time `orm:"column(end_date);type(date);null"`
-	CampaignStatus  int       `orm:"column(campaign_status)"`
-	DemandAdspaceId int       `orm:"column(demand_adspace_id)"`
-	ImpTrackingUrl  string    `orm:"column(imp_tracking_url);size(1000);null"`
-	ClkTrackingUrl  string    `orm:"column(clk_tracking_url);size(1000);null"`
-	LandingUrl      string    `orm:"column(landing_url);size(1000);null"`
-	AdType          int       `orm:"column(ad_type);null"`
-	CampaignType    int       `orm:"column(campaign_type);null"`
-	AccurateType    int       `orm:"column(accurate_type);null"`
-	PricingType     int       `orm:"column(pricing_type);null"`
-	StrategyType    int       `orm:"column(strategy_type);null"`
-	BudgetType      int       `orm:"column(budget_type);null"`
-	Budget          int       `orm:"column(budget);null"`
-	BidPrice        float32   `orm:"column(bid_price);null"`
+type PmpCity struct {
+	Id         int    `orm:"column(city_id);pk"`
+	CityName   string `orm:"column(city_name);size(50);null"`
+	Zipcode    string `orm:"column(zipcode);size(50);null"`
+	ProvinceId int64  `orm:"column(province_id);null"`
 }
 
-func (t *PmpCampaign) TableName() string {
-	return "pmp_campaign"
+func (t *PmpCity) TableName() string {
+	return "pmp_city"
 }
 
 func init() {
-	orm.RegisterModel(new(PmpCampaign))
+	orm.RegisterModel(new(PmpCity))
 }
 
-// AddPmpCampaign insert a new PmpCampaign into database and returns
+// AddPmpCity insert a new PmpCity into database and returns
 // last inserted Id on success.
-func AddPmpCampaign(m *PmpCampaign) (id int64, err error) {
+func AddPmpCity(m *PmpCity) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetPmpCampaignById retrieves PmpCampaign by Id. Returns error if
+// GetPmpCityById retrieves PmpCity by Id. Returns error if
 // Id doesn't exist
-func GetPmpCampaignById(id int) (v *PmpCampaign, err error) {
+func GetPmpCityById(id int) (v *PmpCity, err error) {
 	o := orm.NewOrm()
-	v = &PmpCampaign{Id: id}
+	v = &PmpCity{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllPmpCampaign retrieves all PmpCampaign matches certain condition. Returns empty list if
+// GetAllPmpCity retrieves all PmpCity matches certain condition. Returns empty list if
 // no records exist
-func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllPmpCity(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(PmpCampaign))
+	qs := o.QueryTable(new(PmpCity))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -109,7 +94,7 @@ func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string
 		}
 	}
 
-	var l []PmpCampaign
+	var l []PmpCity
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -132,11 +117,11 @@ func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string
 	return nil, err
 }
 
-// UpdatePmpCampaign updates PmpCampaign by Id and returns error if
+// UpdatePmpCity updates PmpCity by Id and returns error if
 // the record to be updated doesn't exist
-func UpdatePmpCampaignById(m *PmpCampaign) (err error) {
+func UpdatePmpCityById(m *PmpCity) (err error) {
 	o := orm.NewOrm()
-	v := PmpCampaign{Id: m.Id}
+	v := PmpCity{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -147,15 +132,15 @@ func UpdatePmpCampaignById(m *PmpCampaign) (err error) {
 	return
 }
 
-// DeletePmpCampaign deletes PmpCampaign by Id and returns error if
+// DeletePmpCity deletes PmpCity by Id and returns error if
 // the record to be deleted doesn't exist
-func DeletePmpCampaign(id int) (err error) {
+func DeletePmpCity(id int) (err error) {
 	o := orm.NewOrm()
-	v := PmpCampaign{Id: id}
+	v := PmpCity{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&PmpCampaign{Id: id}); err == nil {
+		if num, err = o.Delete(&PmpCity{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

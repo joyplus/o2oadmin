@@ -5,65 +5,58 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type PmpCampaign struct {
-	Id              int       `orm:"column(id);auto"`
-	GroupId         int       `orm:"column(group_id)"`
-	Name            string    `orm:"column(name);size(45)"`
-	StartDate       time.Time `orm:"column(start_date);type(date);null"`
-	EndDate         time.Time `orm:"column(end_date);type(date);null"`
-	CampaignStatus  int       `orm:"column(campaign_status)"`
-	DemandAdspaceId int       `orm:"column(demand_adspace_id)"`
-	ImpTrackingUrl  string    `orm:"column(imp_tracking_url);size(1000);null"`
-	ClkTrackingUrl  string    `orm:"column(clk_tracking_url);size(1000);null"`
-	LandingUrl      string    `orm:"column(landing_url);size(1000);null"`
-	AdType          int       `orm:"column(ad_type);null"`
-	CampaignType    int       `orm:"column(campaign_type);null"`
-	AccurateType    int       `orm:"column(accurate_type);null"`
-	PricingType     int       `orm:"column(pricing_type);null"`
-	StrategyType    int       `orm:"column(strategy_type);null"`
-	BudgetType      int       `orm:"column(budget_type);null"`
-	Budget          int       `orm:"column(budget);null"`
-	BidPrice        float32   `orm:"column(bid_price);null"`
+type PmpCampaignCreative struct {
+	Id             int    `orm:"column(id);auto"`
+	CampaignId     int    `orm:"column(campaign_id)"`
+	Name           string `orm:"column(name);size(45);null"`
+	Width          int    `orm:"column(width);null"`
+	Height         int    `orm:"column(height);null"`
+	CreativeUrl    string `orm:"column(creative_url);size(255);null"`
+	CreativeStatus int    `orm:"column(creative_status);null"`
+	LandingUrl     string `orm:"column(landing_url);size(500);null"`
+	ImpTrackingUrl string `orm:"column(imp_tracking_url);size(1000);null"`
+	ClkTrackingUrl string `orm:"column(clk_tracking_url);size(1000)"`
+	DisplayTitle   string `orm:"column(display_title);size(200);null"`
+	DisplayText    string `orm:"column(display_text);size(1000);null"`
 }
 
-func (t *PmpCampaign) TableName() string {
-	return "pmp_campaign"
+func (t *PmpCampaignCreative) TableName() string {
+	return "pmp_campaign_creative"
 }
 
 func init() {
-	orm.RegisterModel(new(PmpCampaign))
+	orm.RegisterModel(new(PmpCampaignCreative))
 }
 
-// AddPmpCampaign insert a new PmpCampaign into database and returns
+// AddPmpCampaignCreative insert a new PmpCampaignCreative into database and returns
 // last inserted Id on success.
-func AddPmpCampaign(m *PmpCampaign) (id int64, err error) {
+func AddPmpCampaignCreative(m *PmpCampaignCreative) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetPmpCampaignById retrieves PmpCampaign by Id. Returns error if
+// GetPmpCampaignCreativeById retrieves PmpCampaignCreative by Id. Returns error if
 // Id doesn't exist
-func GetPmpCampaignById(id int) (v *PmpCampaign, err error) {
+func GetPmpCampaignCreativeById(id int) (v *PmpCampaignCreative, err error) {
 	o := orm.NewOrm()
-	v = &PmpCampaign{Id: id}
+	v = &PmpCampaignCreative{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllPmpCampaign retrieves all PmpCampaign matches certain condition. Returns empty list if
+// GetAllPmpCampaignCreative retrieves all PmpCampaignCreative matches certain condition. Returns empty list if
 // no records exist
-func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllPmpCampaignCreative(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(PmpCampaign))
+	qs := o.QueryTable(new(PmpCampaignCreative))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -109,7 +102,7 @@ func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string
 		}
 	}
 
-	var l []PmpCampaign
+	var l []PmpCampaignCreative
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -132,11 +125,11 @@ func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string
 	return nil, err
 }
 
-// UpdatePmpCampaign updates PmpCampaign by Id and returns error if
+// UpdatePmpCampaignCreative updates PmpCampaignCreative by Id and returns error if
 // the record to be updated doesn't exist
-func UpdatePmpCampaignById(m *PmpCampaign) (err error) {
+func UpdatePmpCampaignCreativeById(m *PmpCampaignCreative) (err error) {
 	o := orm.NewOrm()
-	v := PmpCampaign{Id: m.Id}
+	v := PmpCampaignCreative{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -147,15 +140,15 @@ func UpdatePmpCampaignById(m *PmpCampaign) (err error) {
 	return
 }
 
-// DeletePmpCampaign deletes PmpCampaign by Id and returns error if
+// DeletePmpCampaignCreative deletes PmpCampaignCreative by Id and returns error if
 // the record to be deleted doesn't exist
-func DeletePmpCampaign(id int) (err error) {
+func DeletePmpCampaignCreative(id int) (err error) {
 	o := orm.NewOrm()
-	v := PmpCampaign{Id: id}
+	v := PmpCampaignCreative{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&PmpCampaign{Id: id}); err == nil {
+		if num, err = o.Delete(&PmpCampaignCreative{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
