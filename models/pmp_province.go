@@ -2,10 +2,8 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -20,25 +18,6 @@ func (t *PmpProvince) TableName() string {
 
 func init() {
 	orm.RegisterModel(new(PmpProvince))
-}
-
-// AddPmpProvince insert a new PmpProvince into database and returns
-// last inserted Id on success.
-func AddPmpProvince(m *PmpProvince) (id int64, err error) {
-	o := orm.NewOrm()
-	id, err = o.Insert(m)
-	return
-}
-
-// GetPmpProvinceById retrieves PmpProvince by Id. Returns error if
-// Id doesn't exist
-func GetPmpProvinceById(id int) (v *PmpProvince, err error) {
-	o := orm.NewOrm()
-	v = &PmpProvince{Id: id}
-	if err = o.Read(v); err == nil {
-		return v, nil
-	}
-	return nil, err
 }
 
 // GetAllPmpProvince retrieves all PmpProvince matches certain condition. Returns empty list if
@@ -113,34 +92,4 @@ func GetAllPmpProvince(query map[string]string, fields []string, sortby []string
 		return ml, nil
 	}
 	return nil, err
-}
-
-// UpdatePmpProvince updates PmpProvince by Id and returns error if
-// the record to be updated doesn't exist
-func UpdatePmpProvinceById(m *PmpProvince) (err error) {
-	o := orm.NewOrm()
-	v := PmpProvince{Id: m.Id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Update(m); err == nil {
-			fmt.Println("Number of records updated in database:", num)
-		}
-	}
-	return
-}
-
-// DeletePmpProvince deletes PmpProvince by Id and returns error if
-// the record to be deleted doesn't exist
-func DeletePmpProvince(id int) (err error) {
-	o := orm.NewOrm()
-	v := PmpProvince{Id: id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Delete(&PmpProvince{Id: id}); err == nil {
-			fmt.Println("Number of records deleted in database:", num)
-		}
-	}
-	return
 }
