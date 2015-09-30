@@ -207,3 +207,16 @@ CREATE TABLE `ltv_flight_group` (
   `budget` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `pmp_ad_category`
+-- 20150930
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pmp_ad_category`;
+CREATE TABLE `pmp_ad_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=latin1;
+
