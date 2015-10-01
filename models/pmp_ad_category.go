@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"fmt"
 )
 
 type PmpAdCategory struct {
@@ -19,14 +20,16 @@ func init() {
 }
 
 // Get the categorys in first level
-func GetPmpAdCategoryOne()(categorys *PmpAdCategory, count int64) {
+func GetPmpAdCategoryOne()(categorys []*PmpAdCategory, count int64) {
 	o := orm.NewOrm()
-	count, _ = o.QueryTable("PmpAdCategory").Filter("ParentId", nil).OrderBy("Id").All(&categorys)
+	var err error
+	count, err = o.QueryTable("PmpAdCategory").Filter("parent_id__isnull", true).OrderBy("Id").All(&categorys)
+	fmt.Println("****** count:", count, "****** err:", err)
 	return categorys, count
 }
 
 // Get the categorys by id of parent category
-func GetPmpAdCategoryByParentId(parentId int)(categorys *PmpAdCategory, count int64) {
+func GetPmpAdCategoryByParentId(parentId int)(categorys []*PmpAdCategory, count int64) {
 	o := orm.NewOrm()
 	count, _ = o.QueryTable("PmpAdCategory").Filter("ParentId", parentId).OrderBy("Id").All(&categorys)
 	return categorys, count

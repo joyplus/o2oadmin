@@ -18,3 +18,5 @@ type LtvFlightGroupVO struct {
     Revenue         float32
     ECPA            float32     `orm:"column(eCPA);null"`
 }
+
+// for campain
