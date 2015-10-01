@@ -26,9 +26,9 @@ func init() {
 }
 
 // get all the lov key-value maps, filtered by lov code
-func GetPmpLovByCode(code string)(lovs *PmpLov, err error) {
+func GetPmpLovByCode(code string)(lovs []*PmpLov, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("PmpLov").Filter("LovCode", code).OrderBy("-DispOrder").All(&lovs)
+	_, err = o.QueryTable("PmpLov").Filter("LovCode", code).OrderBy("DispOrder").All(&lovs)
 	if err != nil {
 		return nil, err
 	}
@@ -36,9 +36,9 @@ func GetPmpLovByCode(code string)(lovs *PmpLov, err error) {
 }
 
 // get all the lov key-value maps
-func GetAllPmpLov() (lovs *PmpLov, err error) {
+func GetAllPmpLov() (lovs []PmpLov, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("PmpLov").OrderBy("-LovCode").OrderBy("-DispOrder").All(&lovs)
+	_, err = o.QueryTable("PmpLov").OrderBy("DispOrder").All(&lovs)
 	if err != nil {
 		return nil, err	
 	}
