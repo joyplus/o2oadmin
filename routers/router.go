@@ -51,7 +51,8 @@ func init() {
         beego.NSRouter("campaign/add", &controllers.CampaignController{}, "*:Add"),
 		beego.NSRouter("campaign/getCategoryByParentId", &controllers.CampaignController{}, "*:GetCategoryByParentId"),
         beego.NSRouter("performance", &controllers.PerformanceController{}),
-
+		beego.NSRouter("campaign/newCreative", &controllers.CampaignController{}, "*:NewCampaignCreative"),
+		
         beego.NSNamespace("/dashboard",
             beego.NSInclude(
                 &controllers.LtvDashboardController{},

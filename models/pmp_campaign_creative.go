@@ -27,3 +27,10 @@ func init() {
 	orm.RegisterModel(new(PmpCampaignCreative))
 }
 
+func AddPmpCampaignCreative(v *PmpCampaignCreative) (err error) {
+	o := orm.NewOrm()
+//	o.Begin()
+	_, err = o.Insert(v)
+	return err
+//	o.Commit()
+}
