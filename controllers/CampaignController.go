@@ -5,37 +5,44 @@ import (
 	"o2oadmin/models"
 	"github.com/astaxie/beego"
 //	"fmt"
+	"o2oadmin/vo"
 )
 
 type CampaignController struct {
 	rbac.CommonController
 }
 
-const (
-	 AD_TYPE string = "ad_type"
-	 CAMPAIGN_TYPE string = "campaign_type"
-	 ACCURATE_TYPE string = "accurate_type"
-	 PRICING_TYPE string = "pricing_type"
-	 STRATEGY_TYPE string = "strategy_type"
-	 BUDGET_TYPE string = "budget_type"
-	 CAMPAIGN_STATUS string = "campaign_status"
-	 GENDER string = "gender"
-	 TEMPRETURE string = "tempreture"
-	 HUMIDITY string = "humidity"
-	 WIND string = "wind"
-	 WEATHER string = "weather"
-	 OCCUPATION string = "occupation"
-	 OPERATOR string = "operator"
-	 PLATEFORM string = "plateform"
-	 PHONE_BRAND string = "phone_brand"
-	 INTERNET string = "internet")
-
 func (this *CampaignController) Add() {
-    categorys, _ := models.GetPmpAdCategoryOne()
-	this.Data["categoryones"] = categorys
-	lovMaps := this.GetPmpLovs()
-	this.Data["lovmaps"] = &lovMaps
-	this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
+	if this.IsAjax() {
+		var campaignPageVo vo.CampaingnPageVO
+		this.ParseForm(&campaignPageVo)
+		err := models.SaveOrCreateCampaign(campaignPageVo)
+		if err == nil {
+			this.Data["json"] = "ok"
+		} else {
+			this.Data["json"] = "failed"
+		}
+		this.ServeJson()
+	} else {
+		categorys, _ := models.GetPmpAdCategoryOne()
+		this.Data["categoryones"] = categorys
+		lovMaps := this.GetPmpLovs()
+		this.Data["lovmaps"] = &lovMaps
+		this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
+	}
+    
+}
+
+func (this *CampaignController) NewCampaignCreative() {
+	v := models.PmpCampaignCreative{}
+	this.ParseForm(&v)
+	err := models.AddPmpCampaignCreative(&v)
+	if err == nil {
+		this.Data["json"] = "ok"
+	} else {
+		this.Data["json"] = "failed"
+	}
+	this.ServeJson()
 }
 
 func (this *CampaignController) GetCategoryByParentId() {
