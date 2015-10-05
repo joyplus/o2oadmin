@@ -70,3 +70,9 @@ func (this *CampaignController) GetPmpLovs() map[string][]models.PmpLov {
 //	fmt.Println("****", "LovMaps:", lovMaps)
 	return lovMaps
 }
+
+func (this *CampaignController) GetAllGroups(){
+	groups := models.GetAllCampaignGroup()
+	this.Data["groups"] = &groups
+	this.ServeJson()
+}
