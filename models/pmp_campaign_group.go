@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"o2oadmin/vo"
 )
 
 type PmpCampaignGroup struct {
@@ -17,4 +18,11 @@ func (t *PmpCampaignGroup) TableName() string {
 
 func init() {
 	orm.RegisterModel(new(PmpCampaignGroup))
+}
+
+func GetAllCampaignGroup()[]vo.PmpCampaignGroupVO {
+	groups := []vo.PmpCampaignGroupVO{}
+	o := orm.NewOrm()
+	o.QueryTable("PmpCampaignGroup").All(groups)
+	return groups
 }

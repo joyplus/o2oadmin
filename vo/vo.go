@@ -86,3 +86,11 @@ type PmpCampaignCreativeVO struct {
 	DisplayTitle   string 
 	DisplayText    string 
 }
+
+// campaign group vo
+type PmpCampaignGroupVO struct {
+	Id           int
+	AdvertiserId int
+	Name         string
+	Budget       int 
+}
