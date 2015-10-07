@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     {{template "../public/header.tpl"}}
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap2.min.css" />
 </head>
 <body>
 <div id="main">
@@ -504,7 +505,7 @@
     }
 
     function fullreport(){
-        window.location.href="/pmp/flightGroup/FullReport/1";
+        window.location.href="/pmp/flightGroup/fullReport/1";
     }
 
     function getCompNowData(){

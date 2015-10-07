@@ -19,10 +19,10 @@
             </div>
             <div class="creat_area1" style="height:160px">
                 <div style="float:left;width:100%;">
-                    <div class="are_unit"><span class="unit_title">项目名称</span><input name="f_name" id="f_name" class="f1 easyui-textbox" data-options="required:true,missingMessage:'请输入名称!'"  style="height:32px;width:365px;" maxlength="20" /></div>
+                    <div class="are_unit"><span class="unit_title">项目名称</span><input name="f_name" id="f_name" class="f1 easyui-textbox" data-options="required:true,missingMessage:'请输入名称!'"  style="height:32px;width:265px;" maxlength="20" /></div>
                 </div>
                 <div style="float:left;width:100%;">
-                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'请输入预算!'" style="width:365px;height:32px;" id="f_budget" validType="length[1,8]"/></div>
+                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'请输入预算!'" style="width:265px;height:32px;" id="f_budget" validType="length[1,8]"/></div>
                 </div>
             </div>
         </form>
