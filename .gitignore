@@ -33,5 +33,3 @@ logs/
 .idea/
 .DS_Store
 routers/commentsRouter*.go
-
-lastupdate.tmp
