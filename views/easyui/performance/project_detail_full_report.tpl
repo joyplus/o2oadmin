@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     {{template "../public/header.tpl"}}
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap2.min.css" />
 </head>
 <body>
 <div id="main">
@@ -62,34 +63,34 @@
         </div>
 
         <div id="result_area" style="display:none;">
-            <div class="easyui-tabs" style="width:1240px;height:487px" id="tabsbox">
+            <div class="easyui-tabs" style="height:487px" id="tabsbox">
                 <div title="启动"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_start" style="height:400px;width:1220px;float:left;">
+                    <div id="nec_area_start" style="height:400px;width:100%;float:left;">
 
                     </div>
                 </div>
                 <div title="注册"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_register" style="height:400px;width:1220px;float:left;">
+                    <div id="nec_area_register" style="height:400px;width:100%;float:left;">
 
                     </div>
                 </div>
                 <div title="申请"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_submit" style="height:400px;width:1220px;float:left;">
+                    <div id="nec_area_submit" style="height:400px;width:100%;float:left;">
 
                     </div>
                 </div>
                 <div title="转化"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_conversion" style="height:400px;width:1220px;float:left;">
+                    <div id="nec_area_conversion" style="height:400px;width:100%;float:left;">
 
                     </div>
                 </div>
                 <div title="收入"  style="padding:30px 10px 10px 10px;">
-                    <div id="nec_area_iap" style="height:400px;width:1220px;float:left;">
+                    <div id="nec_area_iap" style="height:400px;width:100%;float:left;">
 
                     </div>
                 </div>
                 <div title="投资回报率" style="padding:30px 10px 10px 10px;" selected="true">
-                    <div id="ec_area_roi" style="height:400px;width:1220px;float:left;">
+                    <div id="ec_area_roi" style="height:400px;width:100%;float:left;">
 
                     </div>
                 </div>
@@ -477,13 +478,13 @@
                 if(json.total==0){
                     //type=0;
                     $("#eventflightbox").hide();
-                    $("#labelbox").hide();
+//                    $("#labelbox").hide();
                     data_url="cvid="+cvid+"&start="+start+"&end="+end+"&channel="+channel+"&eventen="+title+"&evid="+getEvidByName(title)+"&type=0";
                     showLazyAjax(data_url,myChart,title);
 
                 }else{
                     $("#eventflightbox").show();
-                    $("#labelbox").show();
+//                    $("#labelbox").show();
                     var idstr = "";
                     $.each(json.rows, function(i, item) {
                         idstr += item.id+",";
@@ -933,7 +934,7 @@
                     $(".payback_control_r").hide();
                     //$("#channelbox").show();
                     $("#eventflightbox").hide();
-                    $("#labelbox").hide();
+//                    $("#labelbox").hide();
                     getRoi(cvid,channel,roilimit,roitype);
                 }else if(title=="payback"){
                     $(".payback_control_rb").show();
@@ -944,7 +945,7 @@
                     $(".payback_control_r").show();
                     //$("#channelbox").show();
                     $("#eventflightbox").hide();
-                    $("#labelbox").hide();
+//                    $("#labelbox").hide();
                     getPayback(cvid,uid="");
                 }else if(title=="cohort"){
                     $(".datelimitbox").hide();
@@ -954,7 +955,7 @@
                     $(".payback_control_r").hide();
                     //$("#channelbox").hide();
                     $("#eventflightbox").hide();
-                    $("#labelbox").hide();
+//                    $("#labelbox").hide();
                     getCohort(cvid,co_act,co_group,co_dtype,co_times,dataType,1);
                 }else if(title=="iap"){
                     $(".datelimitbox").hide();
@@ -964,7 +965,7 @@
                     $(".payback_control_r").hide();
                     //$("#channelbox").show();
                     $("#eventflightbox").show();
-                    $("#labelbox").show();
+//                    $("#labelbox").show();
                     getConversion(cvid,channel,title,sflight,slabel);
                 }else if(title=="start" || title == "submit" || title == "conversion"){
                     $(".datelimitbox").hide();
@@ -974,7 +975,7 @@
                     $(".payback_control_r").hide();
                     //$("#channelbox").show();
                     $("#eventflightbox").show();
-                    $("#labelbox").show();
+//                    $("#labelbox").show();
                     getConversion(cvid,channel,title,sflight,slabel);
                 }else if(title=="register"){
                     $(".datelimitbox").hide();
@@ -984,7 +985,7 @@
                     $(".payback_control_r").hide();
                     //$("#channelbox").show();
                     $("#eventflightbox").show();
-                    $("#labelbox").show();
+//                    $("#labelbox").show();
                     getConversion(cvid,channel,title,sflight,slabel);
                 }
             }

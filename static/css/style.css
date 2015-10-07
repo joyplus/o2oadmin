@@ -138,10 +138,7 @@ body {
     background-image: url(about:blank);
     background-attachment: fixed;
 }
-::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-}
+
 ::-webkit-scrollbar-track-piece {
     background-color: #ffffff;
     -webkit-border-radius: 3px;
@@ -375,7 +372,7 @@ transform:translate3d(0,0,0)
 
 
 #header .topinfo{
-    width:1280px;
+    width:100%;
     position:relative;
     overflow:hidden;
     height:65px;
@@ -434,7 +431,8 @@ transform:translate3d(0,0,0)
 }
 
 #main {
-    width: 1280px;
+    width: 100%;
+    min-width: 900px;
     /*height: 722px;*/
     /*
     height:100%;
@@ -509,7 +507,7 @@ transform:translate3d(0,0,0)
 }
 */
 #main_content {
-    width:1280px;
+    width:100%;
     /*
     height:100%;
     position:absolute;
@@ -521,7 +519,7 @@ transform:translate3d(0,0,0)
     /*background-color:#F1F4F9;*/
 }
 #top_title{
-    width:1240px;
+    width:100%;
     height:35px;
     margin-top:75px;
     margin-left:20px;
@@ -533,7 +531,7 @@ transform:translate3d(0,0,0)
 }
 
 #bread_area{
-    width:1280px;
+    width:100%;
     height:35px;
     margin-top:65px;
     position: relative;
@@ -548,15 +546,16 @@ transform:translate3d(0,0,0)
 
 
 #content_area{
-    width:1280px;
+    width:100%;
     position: relative;
     background-color:white;
     padding-top:1px;
     border-radius: 5px;
+    padding-right: 40px;
 }
 
 #search_area,#search_areab{
-    width:1240px;
+    width:100%;
     height:40px;
     margin-top:20px;
     margin-left:20px;
@@ -590,14 +589,14 @@ transform:translate3d(0,0,0)
 }
 
 #result_area{
-    width:1240px;
+    width:100%;
     height:490px;
     margin-top:20px;
     margin-left:20px;
     position: relative;
     font-size:12px;
     text-align:left;
-    line-height:40px;
+    /*line-height:40px;*/
     border:1px solid #DBDDEA;
     overflow:auto;
     overflow-x: hidden;
@@ -728,7 +727,7 @@ transform:translate3d(0,0,0)
 
 /*2015-02-05*/
 .tablearea{
-    width:1240px;
+    width:100%;
     height:490px;
     margin:10px 0px 80px 20px;
     position: relative;
@@ -899,7 +898,7 @@ transform:translate3d(0,0,0)
 
 }
 #creat_title{
-    width:1250px;
+    width:100%;
     height:35px;
     margin-top:15px;
     margin-left:10px;
@@ -911,7 +910,7 @@ transform:translate3d(0,0,0)
     line-height:35px;
 }
 .creat_area1{
-    width:1240px;
+    width:100%;
     height:380px;
     padding:20px 20px 20px 20px;
     margin-top:20px;
@@ -956,7 +955,7 @@ transform:translate3d(0,0,0)
     margin-right:1%;
 }
 .are_unita textarea{
-    width:962px;
+    width:862px;
 }
 .are_unita .right{
     width:80%;
@@ -1015,7 +1014,7 @@ transform:translate3d(0,0,0)
     text-align:left;
 }
 .mam_area{
-    width:1280px;
+    width:100%;
     height:45px;
     margin-top:10px;
     /*
@@ -1100,7 +1099,7 @@ transform:translate3d(0,0,0)
     margin-right:25px;
 }
 .toparea1{
-    width:1240px;
+    width:100%;
     margin:10px 0px 20px 20px;
     float:left;
 }
@@ -1246,3 +1245,16 @@ transform:translate3d(0,0,0)
     line-height: 30px;
     cursor: pointer;
 }
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+
+#eventflightbox {
+     position: absolute;
+     top: 39px;
+     left: 20px;
+     padding: 5px;
+     color: #999;
+ }
