@@ -445,7 +445,7 @@
         }
         jQuery.ajax({
             type: "get",
-            url: "/GetTop5Campaign",
+            url: "/pmp/dashboard/GetTop5Campaign",
             data:"act="+act+"&type="+type+"&tname="+tname,
             cache:false,
             beforeSend: function(XMLHttpRequest){
