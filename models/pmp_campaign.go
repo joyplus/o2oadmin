@@ -1,33 +1,262 @@
 package models
 
 import (
-	"errors"
-	"fmt"
-	"reflect"
-	"strings"
 	"time"
-
+	"fmt"
 	"github.com/astaxie/beego/orm"
+	"o2oadmin/vo"
+	"strings"
+	"strconv"
 )
 
 type PmpCampaign struct {
-	Id          int       `orm:"column(id);auto"`
-	Name        string    `orm:"column(name);size(45);null"`
-	StartDate   time.Time `orm:"column(start_date);type(date);null"`
-	EndDate     time.Time `orm:"column(end_date);type(date);null"`
-	Width       int       `orm:"column(width);null"`
-	Height      int       `orm:"column(height);null"`
-	CreativeUrl string    `orm:"column(creative_url);size(255);null"`
-	Status      int       `orm:"column(status);null"`
-	LandingUrl  string    `orm:"column(landing_url);size(500)"`
+	Id              int       `orm:"column(id);auto"`
+	GroupId         int       `orm:"column(group_id)"`
+	Name            string    `orm:"column(name);size(45)"`
+	StartDate       time.Time `orm:"column(start_date);type(date);null"`
+	EndDate         time.Time `orm:"column(end_date);type(date);null"`
+	CampaignStatus  int       `orm:"column(campaign_status)"`
+	DemandAdspaceId int       `orm:"column(demand_adspace_id)"`
+	ImpTrackingUrl  string    `orm:"column(imp_tracking_url);size(1000);null"`
+	ClkTrackingUrl  string    `orm:"column(clk_tracking_url);size(1000);null"`
+	LandingUrl      string    `orm:"column(landing_url);size(1000);null"`
+	AdType          int       `orm:"column(ad_type);null"`
+	CampaignType    int       `orm:"column(campaign_type);null"`
+	AccurateType    int       `orm:"column(accurate_type);null"`
+	PricingType     int       `orm:"column(pricing_type);null"`
+	StrategyType    int       `orm:"column(strategy_type);null"`
+	BudgetType      int       `orm:"column(budget_type);null"`
+	Budget          int       `orm:"column(budget);null"`
+	BidPrice        float32   `orm:"column(bid_price);null"`
+	AdCategory 		int       `orm:"column(ad_category);null"`
 }
 
+const (
+	 AD_TYPE string = "ad_type"
+	 CAMPAIGN_TYPE string = "campaign_type"
+	 ACCURATE_TYPE string = "accurate_type"
+	 PRICING_TYPE string = "pricing_type"
+	 STRATEGY_TYPE string = "strategy_type"
+	 BUDGET_TYPE string = "budget_type"
+	 CAMPAIGN_STATUS string = "campaign_status"
+	 GENDER string = "gender"
+	 TEMPRETURE string = "tempreture"
+	 HUMIDITY string = "humidity"
+	 WIND string = "wind"
+	 WEATHER string = "weather"
+	 OCCUPATION string = "occupation"
+	 OPERATOR string = "operator"
+	 PLATEFORM string = "plateform"
+	 PHONE_BRAND string = "phone_brand"
+	 INTERNET string = "internet"
+	 CITY string = "CITY"
+	 PROVINCE string = "PROVINCE") 
+	
 func (t *PmpCampaign) TableName() string {
 	return "pmp_campaign"
 }
 
 func init() {
 	orm.RegisterModel(new(PmpCampaign))
+}
+
+// update or create a new campaign
+func SaveOrCreateCampaign(campaignPageVo vo.CampaingnPageVO) (err error) {
+	o := orm.NewOrm()
+	o.Begin()
+	if campaignPageVo.Campaign.Id == 0 {
+		// create new campaign group
+		group := PmpCampaignGroup{Name:campaignPageVo.Campaign.GroupName}
+		var id int64
+		_, id, err = o.ReadOrCreate(&group, "Name")
+		if err != nil {
+			fmt.Errorf("Failed to ReadOrCreate PmpCampaignGroup!")
+			o.Rollback()
+			return	
+		}	
+		groupId := int(id)
+		// create new Campaign			
+		campaign := PmpCampaign{GroupId:groupId, CampaignStatus:0, ImpTrackingUrl:campaignPageVo.Campaign.ImpTrackingUrl,
+					ClkTrackingUrl:campaignPageVo.Campaign.ClkTrackingUrl, LandingUrl:campaignPageVo.Campaign.LandingUrl, AdType:campaignPageVo.Campaign.AdType, AccurateType:campaignPageVo.Campaign.AccurateType,
+					PricingType:campaignPageVo.Campaign.PricingType, StrategyType:campaignPageVo.Campaign.StrategyType, BudgetType:campaignPageVo.Campaign.BudgetType,
+					Budget:campaignPageVo.Campaign.Budget, BidPrice:campaignPageVo.Campaign.BidPrice, AdCategory:campaignPageVo.Campaign.AdCategory}
+					
+		if campaignPageVo.Campaign.StartDate != "" {
+			startDate, er := campaign.ParseDate(campaignPageVo.Campaign.StartDate)
+			if er == nil {
+				campaign.StartDate = startDate
+			}
+			
+			endDate, er1 := campaign.ParseDate(campaignPageVo.Campaign.EndDate)
+			if er1 == nil {
+				campaign.EndDate = endDate
+			}			
+		}
+		id, err = o.Insert(&campaign)
+		if err != nil {
+			fmt.Errorf("Failed to insert campaign!")
+			o.Rollback();
+			return
+		}
+		
+		// create new PmpCampaignTargeting
+		campaignId := int(id)
+		campaignTargetings := []PmpCampaignTargeting{{CampaignId:campaignId, TargetingType:GENDER, TargetingId:campaignPageVo.Gender}, {CampaignId:campaignId, TargetingType:TEMPRETURE, TargetingId:campaignPageVo.Tempreture},
+								{CampaignId:campaignId, TargetingType:HUMIDITY, TargetingId:campaignPageVo.Humidity}, {CampaignId:campaignId, TargetingType:WIND, TargetingId:campaignPageVo.Wind}, {CampaignId:campaignId, TargetingType:WEATHER, TargetingId:campaignPageVo.Weather},
+								{CampaignId:campaignId, TargetingType:OCCUPATION, TargetingId:campaignPageVo.Occupation}, {CampaignId:campaignId, TargetingType:OPERATOR, TargetingId:campaignPageVo.Operator}, {CampaignId:campaignId, TargetingType:PLATEFORM, TargetingId:campaignPageVo.Plateform},
+								{CampaignId:campaignId, TargetingType:PHONE_BRAND, TargetingId:campaignPageVo.PhoneBrand}, {CampaignId:campaignId, TargetingType:INTERNET, TargetingId:campaignPageVo.Internet}}
+		_, err = o.InsertMulti(10, campaignTargetings)
+		if err != nil {
+			fmt.Errorf("Failed to insert CampaignTargetings!")
+			o.Rollback()
+			return
+		}
+		campaignTargetings = []PmpCampaignTargeting{}
+		for _, value := range campaignPageVo.Cities {
+			campaignTargetings = append(campaignTargetings, PmpCampaignTargeting{CampaignId:campaignId, TargetingType:CITY, TargetingId:value})
+		}
+		_, err = o.InsertMulti(len(campaignPageVo.Cities), campaignTargetings)
+		if err != nil {
+			fmt.Errorf("Failed to insert CITY CampaignTargetings!")
+			o.Rollback()
+			return
+		}
+		
+		// create PmpCampaignDailyConfig
+		campaignConfigs := []PmpCampaignDailyConfig{}
+		for _, val := range campaignPageVo.AdvertiseTime {
+			timeArray := strings.Split(val, ";")
+			weekday,_ := strconv.Atoi(timeArray[0])
+			config := PmpCampaignDailyConfig{CampaignId:campaignId, WeekDay:weekday, TargetHours:timeArray[1]}
+			campaignConfigs = append(campaignConfigs, config)
+		}
+		_, err = o.InsertMulti(len(campaignPageVo.AdvertiseTime), campaignConfigs)
+		if err != nil {
+			fmt.Errorf("Failed to insert PmpCampaignDailyConfig!")
+			o.Rollback()
+			return
+		}
+		
+	} else {
+		// update the existing campaign
+		campaign := PmpCampaign{Id: campaignPageVo.Campaign.Id}
+		o.Read(&campaign)
+		// create new campaign group
+		group := PmpCampaignGroup{Name:campaignPageVo.Campaign.GroupName}
+		var id int64
+		_, id, err = o.ReadOrCreate(&group, "Name")
+		if err != nil {
+			fmt.Errorf("Failed to ReadOrCreate PmpCampaignGroup!")
+			o.Rollback()
+			return	
+		}	
+		groupId := int(id)
+		// update new Campaign			
+		campaign.GroupId = groupId
+		campaign.ImpTrackingUrl = campaignPageVo.Campaign.ImpTrackingUrl
+		campaign.ClkTrackingUrl = campaignPageVo.Campaign.ClkTrackingUrl
+		campaign.LandingUrl = campaignPageVo.Campaign.LandingUrl
+		campaign.AdType = campaignPageVo.Campaign.AdType
+		campaign.AccurateType = campaignPageVo.Campaign.AccurateType
+		campaign.PricingType = campaignPageVo.Campaign.PricingType
+		campaign.StrategyType = campaignPageVo.Campaign.StrategyType
+		campaign.BudgetType = campaignPageVo.Campaign.BudgetType
+		campaign.Budget = campaignPageVo.Campaign.Budget
+		campaign.BidPrice = campaignPageVo.Campaign.BidPrice
+		campaign.AdCategory = campaignPageVo.Campaign.AdCategory
+					
+		if campaignPageVo.Campaign.StartDate != "" {
+			startDate, er := campaign.ParseDate(campaignPageVo.Campaign.StartDate)
+			if er == nil {
+				campaign.StartDate = startDate
+			}
+			
+			endDate, er1 := campaign.ParseDate(campaignPageVo.Campaign.EndDate)
+			if er1 == nil {
+				campaign.EndDate = endDate
+			}			
+		}
+		id, err = o.Update(&campaign)
+		if err != nil {
+			fmt.Errorf("Failed to update campaign!")
+			o.Rollback();
+			return
+		}
+		
+		// update new PmpCampaignTargeting
+		// delete existed campaign targetings
+		delSql := "DELETE FROM pmp_campaign_targeting WHERE CampaignId=?"
+		_, err = o.Raw(delSql, campaign.Id).Exec()
+		if err != nil {
+			fmt.Errorf("Failed to delete campaign targetings!")
+			o.Rollback()
+			return
+		}
+		campaignId := campaign.Id
+		campaignTargetings := []PmpCampaignTargeting{{CampaignId:campaignId, TargetingType:GENDER, TargetingId:campaignPageVo.Gender}, {CampaignId:campaignId, TargetingType:TEMPRETURE, TargetingId:campaignPageVo.Tempreture},
+								{CampaignId:campaignId, TargetingType:HUMIDITY, TargetingId:campaignPageVo.Humidity}, {CampaignId:campaignId, TargetingType:WIND, TargetingId:campaignPageVo.Wind}, {CampaignId:campaignId, TargetingType:WEATHER, TargetingId:campaignPageVo.Weather},
+								{CampaignId:campaignId, TargetingType:OCCUPATION, TargetingId:campaignPageVo.Occupation}, {CampaignId:campaignId, TargetingType:OPERATOR, TargetingId:campaignPageVo.Operator}, {CampaignId:campaignId, TargetingType:PLATEFORM, TargetingId:campaignPageVo.Plateform},
+								{CampaignId:campaignId, TargetingType:PHONE_BRAND, TargetingId:campaignPageVo.PhoneBrand}, {CampaignId:campaignId, TargetingType:INTERNET, TargetingId:campaignPageVo.Internet}}
+		_, err = o.InsertMulti(10, campaignTargetings)
+		if err != nil {
+			fmt.Errorf("Failed to insert CampaignTargetings!")
+			o.Rollback()
+			return
+		}
+		campaignTargetings = []PmpCampaignTargeting{}
+		for _, value := range campaignPageVo.Cities {
+			campaignTargetings = append(campaignTargetings, PmpCampaignTargeting{CampaignId:campaignId, TargetingType:CITY, TargetingId:value})
+		}
+		_, err = o.InsertMulti(len(campaignPageVo.Cities), campaignTargetings)
+		if err != nil {
+			fmt.Errorf("Failed to insert CITY CampaignTargetings!")
+			o.Rollback()
+			return
+		}
+		
+		// create PmpCampaignDailyConfig
+		// delete PmpCampaignDailyConfig at first
+		delSql = "DELETE FROM PmpCampaignDailyConfig WHERE CampaignId=?"
+		_, err = o.Raw(delSql, campaign.Id).Exec()
+		if err != nil {
+			fmt.Errorf("Failed to delete PmpCampaignDailyConfig!")
+			o.Rollback()
+			return
+		}
+		campaignConfigs := []PmpCampaignDailyConfig{}
+		for _, val := range campaignPageVo.AdvertiseTime {
+			timeArray := strings.Split(val, ";")
+			weekday,_ := strconv.Atoi(timeArray[0])
+			config := PmpCampaignDailyConfig{CampaignId:campaignId, WeekDay:weekday, TargetHours:timeArray[1]}
+			campaignConfigs = append(campaignConfigs, config)
+		}
+		_, err = o.InsertMulti(len(campaignPageVo.AdvertiseTime), campaignConfigs)
+		if err != nil {
+			fmt.Errorf("Failed to insert PmpCampaignDailyConfig!")
+			o.Rollback()
+			return
+		}
+		// delete no more related campaign creative
+		delSql = "DELETE FROM pmp_campaign_creative WHERE campaign_id=? AND id NOT IN ?"
+		creativeIds := []int{}
+		for _, val := range campaignPageVo.CampaignCreatives {
+			creativeIds = append(creativeIds, val.Id)
+		}
+		_, err = o.Raw(delSql, campaign.Id, creativeIds).Exec()
+		if err != nil {
+			fmt.Errorf("Failed to delete PmpCampaignCreative!")
+			o.Rollback()
+			return
+		}
+	}
+	o.Commit()
+	return nil
+}
+
+func (this *PmpCampaign) ParseDate(datestr string)(date time.Time, err error) {
+	var layout = "2006-1-2"
+	date, err = time.Parse(layout, datestr)
+	return date, err
 }
 
 // AddPmpCampaign insert a new PmpCampaign into database and returns
@@ -49,80 +278,6 @@ func GetPmpCampaignById(id int) (v *PmpCampaign, err error) {
 	return nil, err
 }
 
-// GetAllPmpCampaign retrieves all PmpCampaign matches certain condition. Returns empty list if
-// no records exist
-func GetAllPmpCampaign(query map[string]string, fields []string, sortby []string, order []string,
-	offset int64, limit int64) (ml []interface{}, err error) {
-	o := orm.NewOrm()
-	qs := o.QueryTable(new(PmpCampaign))
-	// query k=v
-	for k, v := range query {
-		// rewrite dot-notation to Object__Attribute
-		k = strings.Replace(k, ".", "__", -1)
-		qs = qs.Filter(k, v)
-	}
-	// order by:
-	var sortFields []string
-	if len(sortby) != 0 {
-		if len(sortby) == len(order) {
-			// 1) for each sort field, there is an associated order
-			for i, v := range sortby {
-				orderby := ""
-				if order[i] == "desc" {
-					orderby = "-" + v
-				} else if order[i] == "asc" {
-					orderby = v
-				} else {
-					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
-				}
-				sortFields = append(sortFields, orderby)
-			}
-			qs = qs.OrderBy(sortFields...)
-		} else if len(sortby) != len(order) && len(order) == 1 {
-			// 2) there is exactly one order, all the sorted fields will be sorted by this order
-			for _, v := range sortby {
-				orderby := ""
-				if order[0] == "desc" {
-					orderby = "-" + v
-				} else if order[0] == "asc" {
-					orderby = v
-				} else {
-					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
-				}
-				sortFields = append(sortFields, orderby)
-			}
-		} else if len(sortby) != len(order) && len(order) != 1 {
-			return nil, errors.New("Error: 'sortby', 'order' sizes mismatch or 'order' size is not 1")
-		}
-	} else {
-		if len(order) != 0 {
-			return nil, errors.New("Error: unused 'order' fields")
-		}
-	}
-
-	var l []PmpCampaign
-	qs = qs.OrderBy(sortFields...)
-	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
-		if len(fields) == 0 {
-			for _, v := range l {
-				ml = append(ml, v)
-			}
-		} else {
-			// trim unused fields
-			for _, v := range l {
-				m := make(map[string]interface{})
-				val := reflect.ValueOf(v)
-				for _, fname := range fields {
-					m[fname] = val.FieldByName(fname).Interface()
-				}
-				ml = append(ml, m)
-			}
-		}
-		return ml, nil
-	}
-	return nil, err
-}
-
 // UpdatePmpCampaign updates PmpCampaign by Id and returns error if
 // the record to be updated doesn't exist
 func UpdatePmpCampaignById(m *PmpCampaign) (err error) {
@@ -133,21 +288,6 @@ func UpdatePmpCampaignById(m *PmpCampaign) (err error) {
 		var num int64
 		if num, err = o.Update(m); err == nil {
 			fmt.Println("Number of records updated in database:", num)
-		}
-	}
-	return
-}
-
-// DeletePmpCampaign deletes PmpCampaign by Id and returns error if
-// the record to be deleted doesn't exist
-func DeletePmpCampaign(id int) (err error) {
-	o := orm.NewOrm()
-	v := PmpCampaign{Id: id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Delete(&PmpCampaign{Id: id}); err == nil {
-			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
 	return

@@ -17,6 +17,7 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	
   </head>
   <body>
     <div class="container">
@@ -27,8 +28,17 @@
             <div class="form-group" input-name="ad_category" input-value="" ng-controller="CategoryCtrl">
                 <label class="col-sm-3 control-label" label-for="ad_category">广告分类</label>
                 <div class="category-selects append-bottom-10 category-wrap">
-                    <select class="form-control" id="" name="" >
-                        <option value="">请选择一级分类</option>
+                    <select class="form-control" id="category_one_id" name="" >					
+                       <option value="">请选择一级分类</option>
+						{{range .categoryones}}
+						 	<option value="{{.Id}}">{{.Name}}</option>
+						{{end}}
+                    </select>
+					<select class="form-control" id="category_two_id" name="" >					
+                       <option value="">请选择二级分类</option>						
+                    </select>
+					<select class="form-control" id="category_three_id" name="" >					
+                       <option value="">请选择三级分类</option>						
                     </select>
                 </div>
             </div>
@@ -41,20 +51,18 @@
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">广告类型</label>
-                <div class="col-sm-8">
-                    <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="2" checked="checked"> 开屏
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="3"> 信息流
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="4"> 焦点图
-                    </label>
-					 <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="5"> Banner
-                    </label>
-                    
+                <div class="col-sm-8">					
+					{{range index .lovmaps "ad_type"}}
+						{{if eq .DispOrder 0}}
+		                    <label class="radio-inline">
+		                        <input type="radio" name="ad_type" value="{{.LovKey}}" checked="checked"> {{.LovValue}}
+		                    </label>
+						{{else}}
+							<label class="radio-inline">
+	                        		<input type="radio" name="ad_type" value="{{.LovKey}}"> {{.LovValue}}
+	                   	 	</label>
+						{{end}}
+					{{end}}
                 </div>
             </div>
 
@@ -140,13 +148,11 @@
             <div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">性别</label>
                 <div class="col-sm-8">
-                    <!-- ngRepeat: item in audienceItems.gender --><label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-                        <input type="radio" name="gender" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value=""><span ng-bind="item.label" class="ng-binding">不限</span>
-                    </label><!-- end ngRepeat: item in audienceItems.gender --><label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-                        <input type="radio" name="gender" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="1"><span ng-bind="item.label" class="ng-binding">男</span>
-                    </label><!-- end ngRepeat: item in audienceItems.gender --><label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-                        <input type="radio" name="gender" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="2"><span ng-bind="item.label" class="ng-binding">女</span>
-                    </label><!-- end ngRepeat: item in audienceItems.gender -->
+					{{range index .lovmaps "gender"}}
+						<label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
+	                        <input type="radio" name="gender" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
+	                    </label>
+					{{end}}         
                 </div>
             </div>
             <div class="form-group audience-group">
@@ -243,6 +249,7 @@
 
 <label for="" class="col-sm-3 control-label">投放时间</label>
 <div class="col-sm-8" id="delivery-time">
+   <!--
     <div class="radio">
         <label>
             <input type="radio" name="schedule_type" value="1">从现在开始一直投放
@@ -254,6 +261,7 @@
             </span>
         </label>
     </div>
+   -->
 
     <div class="radio">
         <label>
@@ -313,12 +321,11 @@
             <div class="form-group" for-radio="pricing" data-value="1,2" id="BudgetMode" input-name="budget_mode" input-value="0" style="display: block;">
                 <label for="" class="col-sm-3 control-label">预算方式</label>
                 <div class="col-sm-8">
-                    <label class="radio-inline">
-                        <input type="radio" name="budget_mode" class="budget-radio" value="0"> 日预算
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="budget_mode" class="budget-radio" value="1"> 总预算
-                    </label>
+					{{range index .lovmaps "budget_type"}}
+                        <label class="radio-inline">
+	                        <input type="radio" name="budget_mode" class="budget-radio" value="{{.LovKey}}"> {{.LovValue}}
+	                    </label>
+					{{end}}
                 </div>
             </div>
             <div class="form-group" for-radio="pricing" data-value="1,2" id="PricingBudget" style="display: block;">
@@ -367,6 +374,82 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!--<script src="js/bootstrap.min.js"></script>-->
+    <script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var url_prefix = "/pmp/campaign";
+		var url_separator = "/";
+        $(function(){
+			$("#category_two_id").css("display","none");
+			$("#category_three_id").css("display","none");
+			
+			$("#category_one_id").bind("change", function(){
+				$("#category_three_id").css("display","none");
+				if ($(this).val() != "") {
+					parentId = $(this).val();
+					$("#category_two_id").css("display","inline");
+					jQuery.ajax({
+			            type: "get",
+			            url: url_prefix + url_separator + "getCategoryByParentId",
+			            data:"parentId=" + parentId,
+			            cache:false,
+			            beforeSend: function(XMLHttpRequest){
+			            },
+			            success: function(data, textStatus){
+							if ("success" == textStatus) {
+								if (data != "") {
+									$("#category_two_id").css("display","inline");
+									$("#category_two_id").html('<option value="">请选择二级分类</option>	');
+									$.each(data, function(key, value) {
+										optionhtml = "<option value='" + value.Id + "'>" + value.Name + "</option>";	
+										$("#category_two_id").append(optionhtml);
+									    
+									});
+								} else {
+									$("#category_two_id").css("display","none");			
+								}
+								
+							}
+							
+						}
+					});
+				} else {
+					$("#category_two_id").css("display","none");
+				}
+			});
+			
+			$("#category_two_id").bind("change", function(){
+				if ($(this).val() != "") {
+					parentId = $(this).val();
+					jQuery.ajax({
+			            type: "get",
+			            url: url_prefix + url_separator + "getCategoryByParentId",
+			            data:"parentId=" + parentId,
+			            cache:false,
+			            beforeSend: function(XMLHttpRequest){
+			            },
+			            success: function(data, textStatus){
+							if ("success" == textStatus) {
+								if (data != "") {
+									$("#category_three_id").css("display","inline");
+									$("#category_three_id").html('<option value="">请选择三级分类</option>	');
+									$.each(data, function(key, value) {
+										optionhtml = "<option value='" + value.Id + "'>" + value.Name + "</option>";	
+										$("#category_three_id").append(optionhtml);
+									    
+									});
+								} else {
+									$("#category_three_id").css("display","none");
+								}
+								
+							}
+							
+						}
+					});
+				} else {
+					$("#category_three_id").css("display","none");
+				}
+			});
+		});
+	</script>
   </body>
 </html>
