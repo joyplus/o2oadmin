@@ -133,18 +133,8 @@
             <div class="page-header">
                 <h3 id="download" class="text-center">选择受众</h3>
             </div>
-            <div class="bs-callout bs-callout-info audience-callout col-sm-12 affix-top" ng-show="audience.is_smart==1" style="width: 1140px;">
-                    <h4 class="text-center">系统将自动根据您对广告的分类,描述,广告创意中的信息,自动匹配受众.</h4>
-                    <div class="selected-audience row clearfix">
-                        <div class="audience-info col-sm-10">
-                            <div ng-show="audienceText">您选择了:</div>
-                            <span ng-bind="audienceText" class="ng-binding">智能托管: (是), 频道: (推荐)</span>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-primary pull-right">复制目标人群</button>
-                        </div>
-                    </div>
-            </div>
+
+
             <div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">性别</label>
                 <div class="col-sm-8">
