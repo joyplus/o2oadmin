@@ -21,12 +21,6 @@ INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_i
 -- 添加 效果监测 菜单入口
 INSERT INTO `node` (`title`, `name`, `level`, `pid`, `status`, `group_id`) VALUES ('效果监测', 'performance', '2', '32', '2', '2');
 INSERT INTO `node` (`title`, `name`, `level`, `pid`, `status`, `group_id`) VALUES ('综合报表', 'flightGroup/FullReport', '2', '32', '2', '2');
-=======
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB space list','index',3,32,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP management','index',3,33,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media management','index',3,34,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'PDB media report','getPdbMediaReport',3,35,NULL,2,2);
-INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'DSP report','getPdbDspReport',3,36,NULL,2,2);
 
 -- 2015-09-21
 INSERT INTO `node` (`id`,`title`,`name`,`level`,`pid`,`remark`,`status`,`group_id`) VALUES (NULL,'创建','add',3,37,NULL,2,2);

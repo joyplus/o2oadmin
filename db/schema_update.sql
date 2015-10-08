@@ -221,7 +221,7 @@ CREATE TABLE `pmp_ad_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=latin1;
 
 -- 2015-10-01
-ALTER TABLE `o2oadmin`.`pmp_campaign` ADD COLUMN `ad_category` INT NULL DEFAULT NULL COMMENT '' AFTER `bid_price`;
+ALTER TABLE `pmp_campaign` ADD COLUMN `ad_category` INT NULL DEFAULT NULL COMMENT '' AFTER `bid_price`;
 
 /*20150930*/
 ALTER TABLE `pmp_tracking_log` ADD `width` INT NOT NULL AFTER `lat`, ADD `height` INT NOT NULL AFTER `width`;
