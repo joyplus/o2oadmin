@@ -38,4 +38,17 @@ type PdbDemandReportVo struct {
 	FillRate			float32		`orm:"-"`
 }
 
+type PmpCampaignDailyReportVo struct {
+	AdDate    time.Time `orm:"column(ad_date);type(datetime);"`
+	Name      string  	`orm:"column(name)"`
+	GroupName string  	`orm:"column(group_name)"`
+	Imp       int       `orm:"column(imp);null"`
+	Clk       int       `orm:"column(clk);null"`
+	Ctr       float32   `orm:"column(ctr);null"`
+	Ecpm      float32   `orm:"column(ecpm);null"`
+	Ecpc      float32   `orm:"column(ecpc);null"`
+	Spending  float32   `orm:"column(spending);null"`
+	Cost      float32   `orm:"column(cost);null"`
+}
+
 
