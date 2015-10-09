@@ -46,13 +46,20 @@ func init() {
         beego.NSRouter("adspacematrix/deladspacematrix", &controllers.PmpAdspaceMatrixController{}, "*:DeleteByDemandIdAndAdspaceId"),
         beego.NSRouter("adspacematrix/updateAdspaceMatrix", &controllers.PmpAdspaceMatrixController{}, "*:UpdateAdspaceMatrix"),
 
-        
-        //Campaign
-        beego.NSRouter("campaign/add", &controllers.CampaignController{}, "*:Add"),
-		beego.NSRouter("campaign/getCategoryByParentId", &controllers.CampaignController{}, "*:GetCategoryByParentId"),
+
         beego.NSRouter("performance", &controllers.PerformanceController{}),
-		beego.NSRouter("campaign/newCreative", &controllers.CampaignController{}, "*:NewCampaignCreative"),
-		beego.NSRouter("campaign/loadGroups", &controllers.CampaignController{}, "*:GetAllGroups"),
+
+        //Campaign
+//        beego.NSRouter("campaign/add", &controllers.CampaignController{}, "*:Add"),
+//        beego.NSRouter("campaign/getCategoryByParentId", &controllers.CampaignController{}, "*:GetCategoryByParentId"),
+//		beego.NSRouter("campaign/newCreative", &controllers.CampaignController{}, "*:NewCampaignCreative"),
+//		beego.NSRouter("campaign/loadGroups", &controllers.CampaignController{}, "*:GetAllGroups"),
+
+        beego.NSNamespace("/campaign",
+            beego.NSInclude(
+                &controllers.CampaignController{},
+            ),
+        ),
 		
         beego.NSNamespace("/dashboard",
             beego.NSInclude(

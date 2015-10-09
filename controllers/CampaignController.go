@@ -12,6 +12,7 @@ type CampaignController struct {
 	rbac.CommonController
 }
 
+// @router /add [*]
 func (this *CampaignController) Add() {
 	if this.IsAjax() {
 		var campaignPageVo vo.CampaingnPageVO
@@ -33,6 +34,7 @@ func (this *CampaignController) Add() {
     
 }
 
+// @router /newCreative [*]
 func (this *CampaignController) NewCampaignCreative() {
 	v := models.PmpCampaignCreative{}
 	this.ParseForm(&v)
@@ -45,6 +47,7 @@ func (this *CampaignController) NewCampaignCreative() {
 	this.ServeJson()
 }
 
+// @Router /getCategoryByParentId [*]
 func (this *CampaignController) GetCategoryByParentId() {
 	parentId,_ := this.GetInt("parentId")
 	beego.Info("*** parentId:", parentId)
@@ -71,8 +74,43 @@ func (this *CampaignController) GetPmpLovs() map[string][]models.PmpLov {
 	return lovMaps
 }
 
+// @router /loadGroups [*]
 func (this *CampaignController) GetAllGroups(){
 	groups := models.GetAllCampaignGroup()
 	this.Data["groups"] = &groups
 	this.ServeJson()
+}
+// @router /getCampaignReport [get]
+func (this *CampaignController) GetCampaignReport(){
+
+	request := ReportQueryRequest{}
+	this.ParseForm(&request)
+
+	// Dimension here only have two value, 0 or 1
+	report, count, err := models.GetPmpCampaignDailyReport(request.Dimension[0], request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
+
+	beego.Debug("startDate: ", request.StartDate)
+
+	if err != nil {
+		beego.Debug("failed to get pmp daily report")
+	} else {
+		// 如果需要以活动组分组，则需要重新计算 ctr, eCPM, eCPC,
+		if request.Dimension[0] == "1" {
+			for idx, _ := range report {
+				rawReportItem := report[idx]
+				rawReportItem.Ctr = float32(rawReportItem.Clk) / float32(rawReportItem.Imp)
+				// TODO eCPM, eCPC ???
+//				rawReportItem.Ecpm =
+			}
+		}
+
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
+	}
+	this.ServeJson()
+
+}
+
+// @router /index [get]
+func (this *CampaignController) Index() {
+	this.TplNames = this.GetTemplatetype() + "/campaign/index.tpl"
 }
