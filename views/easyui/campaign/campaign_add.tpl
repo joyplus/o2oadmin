@@ -138,7 +138,7 @@
                     <div class="selected-audience row clearfix">
                         <div class="audience-info col-sm-10">
                             <div ng-show="audienceText">您选择了:</div>
-                            <span ng-bind="audienceText" class="ng-binding">智能托管: (是), 频道: (推荐), <span>省市(</span><span id="cityshow_append"></span>)</span>
+                            <span ng-bind="audienceText" class="ng-binding"><span>省市(</span><span id="cityshow_append"></span>)</span>
                         </div>
                         <div class="col-sm-2">
                             <button type="button" class="btn btn-primary pull-right">复制目标人群</button>
@@ -195,7 +195,7 @@
                         <input type="checkbox" name="exclude_district" ng-model="model.exclude_district" ng-true-value="'1'" ng-false-value="''" value="1" ng-change="confirmExclude()" class="ng-pristine ng-untouched ng-valid"> 过滤下面城市
                     </label>
                     <div class="embed">
-                        <input class="cityinput  form-control ng-isolate-scope" style="width:400px; " placeholder="(支持拼音/拼音首字母/汉字查询)" id="cityinput" readonly="readonly">
+                        <input class="cityinput  form-control ng-isolate-scope" style="width:400px; " placeholder="模糊查询" id="cityinput" readonly="readonly">
                         <input type="hidden" id="city_codes" name="city" ng-value="model.city" value="">
                         <input type="hidden" id="province_codes" name="province" ng-value="model.province" value="">
                     </div>
@@ -412,7 +412,7 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="/static/js/datetimepicker.min.js"></script>
     <script src="/static/js/campaign_weektime.js"></script>
-	
+	<script src="/static/js/campaign/campaignadd.js"></script>
 	<script type="text/javascript">
 		$('#start_date').datetimepicker({
             format: 'yyyy-mm-dd'
@@ -425,80 +425,13 @@
                 var test = new citySelector.cityInit("cityinput");
             });
         });
-			
-		var url_prefix = "/pmp/campaign";
-		var url_separator = "/";
+					
         $(function(){
-			$("#category_two_id").css("display","none");
-			$("#category_three_id").css("display","none");
-			
-			$("#category_one_id").bind("change", function(){
-				$("#category_three_id").css("display","none");
-				if ($(this).val() != "") {
-					parentId = $(this).val();
-					$("#category_two_id").css("display","inline");
-					jQuery.ajax({
-			            type: "get",
-			            url: url_prefix + url_separator + "getCategoryByParentId",
-			            data:"parentId=" + parentId,
-			            cache:false,
-			            beforeSend: function(XMLHttpRequest){
-			            },
-			            success: function(data, textStatus){
-							if ("success" == textStatus) {
-								if (data != "") {
-									$("#category_two_id").css("display","inline");
-									$("#category_two_id").html('<option value="">请选择二级分类</option>	');
-									$.each(data, function(key, value) {
-										optionhtml = "<option value='" + value.Id + "'>" + value.Name + "</option>";	
-										$("#category_two_id").append(optionhtml);
-									    
-									});
-								} else {
-									$("#category_two_id").css("display","none");			
-								}
-								
-							}
-							
-						}
-					});
-				} else {
-					$("#category_two_id").css("display","none");
-				}
-			});
-			
-			$("#category_two_id").bind("change", function(){
-				if ($(this).val() != "") {
-					parentId = $(this).val();
-					jQuery.ajax({
-			            type: "get",
-			            url: url_prefix + url_separator + "getCategoryByParentId",
-			            data:"parentId=" + parentId,
-			            cache:false,
-			            beforeSend: function(XMLHttpRequest){
-			            },
-			            success: function(data, textStatus){
-							if ("success" == textStatus) {
-								if (data != "") {
-									$("#category_three_id").css("display","inline");
-									$("#category_three_id").html('<option value="">请选择三级分类</option>	');
-									$.each(data, function(key, value) {
-										optionhtml = "<option value='" + value.Id + "'>" + value.Name + "</option>";	
-										$("#category_three_id").append(optionhtml);
-									    
-									});
-								} else {
-									$("#category_three_id").css("display","none");
-								}
-								
-							}
-							
-						}
-					});
-				} else {
-					$("#category_three_id").css("display","none");
-				}
-			});
+			bindCategoryChange();
+			$("#cityinput").bind("keyup", function(){
+                //searchcity($(this).val());
+            });
+
 		});
 	</script>
   </body>
