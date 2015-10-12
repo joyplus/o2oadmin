@@ -47,7 +47,7 @@ func (this *CampaignController) NewCampaignCreative() {
 	this.ServeJson()
 }
 
-// @Router /getCategoryByParentId [*]
+// @router /getCategoryByParentId [get]
 func (this *CampaignController) GetCategoryByParentId() {
 	parentId,_ := this.GetInt("parentId")
 	beego.Info("*** parentId:", parentId)
@@ -80,6 +80,7 @@ func (this *CampaignController) GetAllGroups(){
 	this.Data["groups"] = &groups
 	this.ServeJson()
 }
+
 // @router /getCampaignReport [get]
 func (this *CampaignController) GetCampaignReport(){
 
