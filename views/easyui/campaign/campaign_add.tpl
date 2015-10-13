@@ -21,9 +21,9 @@
   </head>
   <body>
     <div class="container">
-        <div class="page-header">
-
-        </div>
+            <div class="page-header">
+                <h3 id="download" class="text-center">基本信息</h3>
+            </div>
         <form class="form-horizontal" role="form" method="POST"  id="create_form"   action="#"  autocomplete="off" > 
             <div class="form-group" input-name="ad_category" input-value="" ng-controller="CategoryCtrl">
                 <label class="col-sm-3 control-label" label-for="ad_category">广告分类</label>
