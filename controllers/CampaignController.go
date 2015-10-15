@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"github.com/beego/admin/src/rbac"
-	"o2oadmin/models"
+	"admin/src/rbac"
 	"github.com/astaxie/beego"
-//	"fmt"
+	"o2oadmin/models"
+	//	"fmt"
 	"o2oadmin/vo"
 )
 
@@ -31,7 +31,7 @@ func (this *CampaignController) Add() {
 		this.Data["lovmaps"] = &lovMaps
 		this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
 	}
-    
+
 }
 
 // @router /newCreative [*]
@@ -49,16 +49,16 @@ func (this *CampaignController) NewCampaignCreative() {
 
 // @router /getCategoryByParentId [get]
 func (this *CampaignController) GetCategoryByParentId() {
-	parentId,_ := this.GetInt("parentId")
+	parentId, _ := this.GetInt("parentId")
 	beego.Info("*** parentId:", parentId)
-	categorys,_ := models.GetPmpAdCategoryByParentId(parentId)
+	categorys, _ := models.GetPmpAdCategoryByParentId(parentId)
 	this.Data["json"] = categorys
 	this.ServeJson()
 }
 
 func (this *CampaignController) GetPmpLovs() map[string][]models.PmpLov {
 	var lovs []models.PmpLov
-	lovs,_ = models.GetAllPmpLov()
+	lovs, _ = models.GetAllPmpLov()
 	lovMaps := make(map[string][]models.PmpLov)
 	for _, lov := range lovs {
 		if lovslice, ok := lovMaps[lov.LovCode]; ok {
@@ -70,25 +70,25 @@ func (this *CampaignController) GetPmpLovs() map[string][]models.PmpLov {
 			lovMaps[lov.LovCode] = lovslice
 		}
 	}
-//	fmt.Println("****", "LovMaps:", lovMaps)
+	//	fmt.Println("****", "LovMaps:", lovMaps)
 	return lovMaps
 }
 
 // @router /loadGroups [*]
-func (this *CampaignController) GetAllGroups(){
+func (this *CampaignController) GetAllGroups() {
 	groups := models.GetAllCampaignGroup()
 	this.Data["groups"] = &groups
 	this.ServeJson()
 }
 
 // @router /getCampaignReport [get]
-func (this *CampaignController) GetCampaignReport(){
+func (this *CampaignController) GetCampaignReport() {
 
 	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
 	// Dimension here only have two value, 0 or 1
-	report, count, err := models.GetPmpCampaignDailyReport(request.Dimension[0], request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
+	report, count, err := models.GetPmpCampaignDailyReport(request.Dimension[0], request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
 
 	beego.Debug("startDate: ", request.StartDate)
 
@@ -101,7 +101,7 @@ func (this *CampaignController) GetCampaignReport(){
 				rawReportItem := report[idx]
 				rawReportItem.Ctr = float32(rawReportItem.Clk) / float32(rawReportItem.Imp)
 				// TODO eCPM, eCPC ???
-//				rawReportItem.Ecpm =
+				//				rawReportItem.Ecpm =
 			}
 		}
 

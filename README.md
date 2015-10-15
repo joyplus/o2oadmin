@@ -5,7 +5,7 @@
  http://beego.me/quickstart
 
 3. install beego admin  
- https://github.com/beego/admin
+ https://github.com/joyplus/admin
 
 4. install Go client for Redis database  
  go get github.com/garyburd/redigo/redis

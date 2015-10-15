@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/beego/admin/src/rbac"
+	"admin/src/rbac"
 	"github.com/astaxie/beego"
 )
 
@@ -78,7 +78,7 @@ func (c *PmpDailyAllocationController) GetAll() {
 	var limit int64 = 10
 	var offset int64 = 0
 	params := "fields:" + c.GetString("fields") + " ****** limit:" + c.GetString("limit") + " ****** offset:" + c.GetString("offset") + " ****** sortby:" + c.GetString("sortby") +
-				" ****** query:" + c.GetString("query") + " ******* page: " + c.GetString("page") + " ****** rows:" + c.GetString("rows") + " **** sort:" + c.GetString("sort")  + " ****** order:" + c.GetString("order")
+		" ****** query:" + c.GetString("query") + " ******* page: " + c.GetString("page") + " ****** rows:" + c.GetString("rows") + " **** sort:" + c.GetString("sort") + " ****** order:" + c.GetString("order")
 	beego.Info(params)
 
 	// fields: col1,col2,entity.col3
@@ -130,7 +130,7 @@ func (c *PmpDailyAllocationController) GetAll() {
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
-		c.TplNames = c.GetTemplatetype() + "/adspace/adspacemanage.tpl"	
+		c.TplNames = c.GetTemplatetype() + "/adspace/adspacemanage.tpl"
 	}
 
 }

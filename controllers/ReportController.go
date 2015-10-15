@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"github.com/beego/admin/src/rbac"
-	"time"
+	"admin/src/rbac"
 	"github.com/astaxie/beego"
 	"o2oadmin/models"
+	"time"
 )
 
 type ReportController struct {
@@ -12,23 +12,22 @@ type ReportController struct {
 }
 
 type ReportQueryRequest struct {
-	Dimension 	[]string `form:"dimension[]"`
-	Medias		[]string `form:"media[]"`
+	Dimension []string `form:"dimension[]"`
+	Medias    []string `form:"media[]"`
 
-	StartDate	time.Time `form:"startDate,2006-1-2"`
-	EndDate	time.Time `form:"endDate,2006-1-2"`
-	Page		int `form:"page"`
-	Rows		int `form:"rows"`
-	Sortby		string `form:"sortby"`
-	Order		string `form:"order"`
+	StartDate time.Time `form:"startDate,2006-1-2"`
+	EndDate   time.Time `form:"endDate,2006-1-2"`
+	Page      int       `form:"page"`
+	Rows      int       `form:"rows"`
+	Sortby    string    `form:"sortby"`
+	Order     string    `form:"order"`
 }
 
 type DspRequest struct {
-	Dimension 	int	`form:"dimension"`
-	Date		time.Time `form:"date"`
-	QueryStr    string	`form:"q"`
+	Dimension int       `form:"dimension"`
+	Date      time.Time `form:"date"`
+	QueryStr  string    `form:"q"`
 }
-
 
 func (this *ReportController) GetPdbMediaReport() {
 
@@ -41,7 +40,7 @@ func (this *ReportController) GetPdbMediaReportData() {
 	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
-	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
+	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
 
 	beego.Debug("startDate: ", request.StartDate)
 
@@ -72,7 +71,7 @@ func (this *ReportController) GetPdbDspReportData() {
 	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
-	report, count, err := models.GetGroupedPmpDemandDailyReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order,(request.Page-1)*request.Rows, request.Rows)
+	report, count, err := models.GetGroupedPmpDemandDailyReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
 
 	if err != nil {
 		beego.Debug("failed to get pmp demand daily report")
@@ -86,8 +85,8 @@ func (this *ReportController) GetPdbDspReportData() {
 				report[idx].FillRate = float32(reportItem.ReqSuccess) / float32(report[idx].ReqAll)
 			}
 			if report[idx].Imp > 0 {
-                report[idx].Ctr = float32(reportItem.Clk) / float32(reportItem.Imp)
-            }
+				report[idx].Ctr = float32(reportItem.Clk) / float32(reportItem.Imp)
+			}
 		}
 
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}

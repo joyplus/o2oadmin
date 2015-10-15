@@ -2,7 +2,7 @@
 
 <html>
   	<head>
-    	<title>PMP管理</title>
+    	<title>智选移动DSP</title>
     	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	
 		<style type="text/css">

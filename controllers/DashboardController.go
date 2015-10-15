@@ -1,21 +1,23 @@
 package controllers
+
 import (
-    "github.com/beego/admin/src/rbac"
+	"admin/src/rbac"
 )
 
 type LtvDashboardController struct {
-    rbac.CommonController
+	rbac.CommonController
 }
 
 // @router /GetTop5Campaign [get]
 func (c *LtvDashboardController) GetTop5Campaign() {
 
-    c.Data["json"] = "10,20,30"
-    c.ServeJson()
+	c.Data["json"] = "10,20,30"
+	c.ServeJson()
 }
+
 // @router /GetTop5Channel [get]
 func (c *LtvDashboardController) GetTop5Channel() {
 
-    c.Data["json"] = "save sucessful"
-    c.ServeJson()
+	c.Data["json"] = "save sucessful"
+	c.ServeJson()
 }

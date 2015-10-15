@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"admin/src/rbac"
 	"github.com/astaxie/beego"
-	"github.com/beego/admin/src/rbac"
 )
 
 // oprations for PmpDemandAdspace
@@ -135,7 +135,7 @@ func (c *PmpDemandAdspaceController) Delete() {
 	if err != nil {
 		c.Data["json"] = err.Error()
 		c.ServeJson()
-		return 
+		return
 	}
 	if err = models.DeletePmpDemandAdspace(id); err == nil {
 		c.Data["json"] = "OK"
@@ -148,13 +148,13 @@ func (c *PmpDemandAdspaceController) Delete() {
 // get demand adspace list by demand id
 func (c *PmpDemandAdspaceController) GetDemandAdspaceListByDemand() {
 	beego.Info("********* demandid:", c.GetString("demandid"), "********** demand_adspace_name:", c.GetString("name"))
-	id,err := c.GetInt("demandid")
+	id, err := c.GetInt("demandid")
 	adspacename := c.GetString("name")
 	page, _ := c.GetInt64("page")
 	page_size, _ := c.GetInt64("rows")
 	sort := c.GetString("sort")
 	order := c.GetString("order")
-	usetpl,_ := c.GetBool("usetpl")
+	usetpl, _ := c.GetBool("usetpl")
 	if len(order) > 0 {
 		if order == "desc" {
 			sort = " " + sort + " DESC"
@@ -168,15 +168,15 @@ func (c *PmpDemandAdspaceController) GetDemandAdspaceListByDemand() {
 		adspaceVos, count = models.GetDemandAdspaceListByDemandId(page, page_size, sort, id, adspacename)
 	}
 	if usetpl {
-//		c.Data["json"] = &adspaceVos
+		//		c.Data["json"] = &adspaceVos
 		c.Data["demandid"] = id
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
-		c.TplNames = c.GetTemplatetype() + "/adspace/demandadspacelist.tpl"			
+		c.TplNames = c.GetTemplatetype() + "/adspace/demandadspacelist.tpl"
 		return
 	} else {
-		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaceVos}		
+		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaceVos}
 		c.ServeJson()
 	}
 }
@@ -198,6 +198,6 @@ func (c *PmpDemandAdspaceController) SaveOrUpdateDemandAdspace() {
 		} else {
 			c.Data["json"] = err.Error()
 		}
-	}	
+	}
 	c.ServeJson()
 }

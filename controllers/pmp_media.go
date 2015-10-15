@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"admin/src/rbac"
 	"github.com/astaxie/beego"
-	"github.com/beego/admin/src/rbac"
 )
 
 // oprations for PmpMedia
@@ -41,7 +41,7 @@ func (c *PmpMediaController) SaveOrUpdateMedia() {
 		} else {
 			c.Data["json"] = err.Error()
 		}
-	}	
+	}
 	c.ServeJson()
 }
 
@@ -53,7 +53,7 @@ func (c *PmpMediaController) SaveOrUpdateMedia() {
 // @router / [post]
 func (c *PmpMediaController) Post() {
 	var v models.PmpMedia
-//	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
+	//	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
 	c.ParseForm(&v)
 	if id, err := models.AddPmpMedia(&v); err == nil {
 		c.Data["json"] = map[string]int64{"id": id}
@@ -81,10 +81,10 @@ func (c *PmpMediaController) GetOne() {
 	c.ServeJson()
 }
 
-// Get the media list 
-func (this * PmpMediaController) GetMediaList() {
-	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" + 
-				this.GetString("sort")  + " ****** order:" + this.GetString("order") + " ****** name: " + this.GetString("name")
+// Get the media list
+func (this *PmpMediaController) GetMediaList() {
+	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" +
+		this.GetString("sort") + " ****** order:" + this.GetString("order") + " ****** name: " + this.GetString("name")
 	beego.Info(params)
 	name := this.GetString("name")
 	page, _ := this.GetInt64("page")
@@ -98,7 +98,7 @@ func (this * PmpMediaController) GetMediaList() {
 	} else {
 		sort = "Id"
 	}
-	
+
 	medias, count := models.GetMediaList(page, page_size, sort, name)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &medias}
@@ -116,7 +116,7 @@ func (this * PmpMediaController) GetMediaList() {
 }
 
 type MediaVo struct {
-	Id int
+	Id   int
 	Text string
 }
 
@@ -180,14 +180,14 @@ func (c *PmpMediaController) GetAll() {
 		//	[{id: 1, text: "baidu"}, {id: 2, text: "google"}]
 		var medias []MediaVo
 		for _, v := range l {
-			if mediamodel , ok := v.(models.PmpMedia); ok {
-				m := MediaVo{mediamodel.Id, mediamodel.Name};
+			if mediamodel, ok := v.(models.PmpMedia); ok {
+				m := MediaVo{mediamodel.Id, mediamodel.Name}
 				medias = append(medias, m)
-			}						
-			
+			}
+
 		}
 		c.Data["json"] = &medias
-	}	
+	}
 	c.ServeJson()
 }
 
