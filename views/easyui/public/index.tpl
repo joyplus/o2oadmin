@@ -296,14 +296,7 @@ ul.top-menu{
     right: 0;
     left: auto;
 }
-.log-arrow-up {
-    background: url("../img/arrow-up.png") no-repeat;
-    width: 20px;
-    height: 11px;
-    position: absolute;
-    right: 20px;
-    top: -10px;
-}
+
 .dropdown-menu.extended.logout > li {
     float: left;
     text-align: center;

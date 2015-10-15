@@ -61,9 +61,9 @@ ALTER table pmp_demand_adspace add UNIQUE UNIQUE_DEMAND_ADSPACE_KEY(demand_adspa
 
 /*20150913*/
 -- -----------------------------------------------------
--- Table `pmp`.`pmp_campaign`
+-- Table `pmp_campaign`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pmp`.`pmp_campaign` (
+CREATE TABLE IF NOT EXISTS `pmp_campaign` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `group_id` INT NOT NULL,
   `name` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `pmp`.`pmp_campaign` (
   `demand_adspace_id` INT(11) NOT NULL,
   `imp_tracking_url` VARCHAR(1000) NULL,
   `clk_tracking_url` VARCHAR(1000) NULL,
-  `landing_url` VARCHAR(1000) NULL,
   `ad_type` INT NULL,
   `campaign_type` INT NULL COMMENT '0: 开屏，1: banner, 2: 信息流',
   `accurate_type` INT NULL COMMENT '0:精准,1:适中,2:广泛',
@@ -97,9 +96,9 @@ INSERT INTO `pmp_campaign` (`id`, `name`, `start_date`, `end_date`, `campaign_st
 
 
 -- -----------------------------------------------------
--- Table `pmp`.`pmp_campaign_group`
+-- Table `pmp_campaign_group`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pmp`.`pmp_campaign_group` (
+CREATE TABLE IF NOT EXISTS `pmp_campaign_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `advertiser_Id` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
@@ -109,9 +108,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `pmp`.`pmp_advertiser`
+-- Table `pmp_advertiser`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pmp`.`pmp_advertiser` (
+CREATE TABLE IF NOT EXISTS `pmp_advertiser` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   `description` VARCHAR(500) NULL,
@@ -123,9 +122,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `pmp`.`pmp_lov`
+-- Table `pmp_lov`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pmp`.`pmp_lov` (
+CREATE TABLE IF NOT EXISTS `pmp_lov` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `lov_code` VARCHAR(45) NOT NULL,
   `lov_key` INT NOT NULL,
@@ -136,9 +135,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `pmp`.`pmp_campaign_daily_config`
+-- Table `pmp_campaign_daily_config`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pmp`.`pmp_campaign_daily_config` (
+CREATE TABLE IF NOT EXISTS `pmp_campaign_daily_config` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `campaign_id` INT NOT NULL,
   `week_day` INT NOT NULL,
@@ -148,15 +147,33 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `pmp`.`pmp_campaign_targeting`
+-- Table `pmp_campaign_targeting`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pmp`.`pmp_campaign_targeting` (
+CREATE TABLE IF NOT EXISTS `pmp_campaign_targeting` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `campaign_id` INT NOT NULL,
   `targeting_type` VARCHAR(45) NULL,
   `targeting_id` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+--
+-- Table structure for table `pmp_campaign_daily_report`
+--
+
+CREATE TABLE `pmp_campaign_daily_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `campaign_id` int(11) NOT NULL,
+  `ad_date` date NOT NULL,
+  `imp` int(11) NOT NULL,
+  `clk` int(11) NOT NULL,
+  `ctr` float DEFAULT NULL,
+  `ecpm` float DEFAULT NULL,
+  `ecpc` float DEFAULT NULL,
+  `spending` float DEFAULT NULL,
+  `cost` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 ALTER TABLE `pmp_adspace` ADD `cpm` FLOAT NOT NULL AFTER `forever_flg`, ADD `cpc` FLOAT NOT NULL AFTER `cpm`, ADD `pricing_type` INT NOT NULL AFTER `cpc`;
