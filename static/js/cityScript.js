@@ -174,19 +174,19 @@ citySelector.cityInit = function (input) {
             cityList.push($(this).html());
             console.log(cityList);
             $("#selected-city-list-ul").append(appendtext);
-            $("#cityshow_append").append('<span class="cityshow_append_span">'+$(this).html()+' </span>');
+//            $("#cityshow_append").append('<span class="cityshow_append_span">'+$(this).html()+' </span>');
         });
 				
     });
 }
 
 		
-function delete_append(cityies){
-    $("#cityshow_append").html("");
-    $.each(cityies, function(i,val){      
-        $("#cityshow_append").append('<span class="cityshow_append_span">'+val+' </span>');
-    });
-};
+//function delete_append(cityies){
+//    $("#cityshow_append").html("");
+//    $.each(cityies, function(i,val){      
+//        $("#cityshow_append").append('<span class="cityshow_append_span">'+val+' </span>');
+//    });
+//};
 
 $("#list_shadow").bind("click",function(){
     //alert(123);
@@ -207,9 +207,17 @@ function onDeleteCity(obj) {
 	$temp = $(obj).parent().find('.get_html').html();
     $(obj).parent().remove();
 	cityList.removeCity($temp);
-    $('.cityshow_append_span').each(function(){
-        if($(this).html() == $temp + " "){
-            $(this).remove();
-        }
-    });
+//    $('.cityshow_append_span').each(function(){
+//        if($(this).html() == $temp + " "){
+//            $(this).remove();
+//        }
+//    });
+}
+
+function deleteAllSelected() {
+	$("#selected-city-list-ul").html("");
+	if (cityList.length > 0){
+		cityList.splice(0, cityList.length);
+	}
+	
 }
