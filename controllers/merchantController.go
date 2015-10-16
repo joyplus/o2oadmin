@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/beego/admin/src/rbac"
+	"admin/src/rbac"
 	m "o2oadmin/models"
 )
 

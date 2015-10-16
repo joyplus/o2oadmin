@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"admin/src/rbac"
 	"github.com/astaxie/beego"
-	"github.com/beego/admin/src/rbac"
 )
 
 // oprations for PmpAdspace
@@ -33,8 +33,8 @@ func (c *PmpAdspaceController) URLMapping() {
 func (c *PmpAdspaceController) Post() {
 	var v models.PmpAdspace
 	c.ParseForm(&v)
-	beego.Info("**** pased form:" , v)
-	if (v.Id == 0) {
+	beego.Info("**** pased form:", v)
+	if v.Id == 0 {
 		if id, err := models.AddPmpAdspace(&v); err == nil {
 			c.Data["json"] = map[string]int64{"id": id}
 		} else {
@@ -46,7 +46,7 @@ func (c *PmpAdspaceController) Post() {
 		} else {
 			c.Data["json"] = err.Error()
 		}
-	}	
+	}
 	c.ServeJson()
 }
 
@@ -67,7 +67,7 @@ func (c *PmpAdspaceController) SaveOrUpdateAdspace() {
 		} else {
 			c.Data["json"] = err.Error()
 		}
-	}	
+	}
 	c.ServeJson()
 }
 
@@ -153,17 +153,17 @@ func (c *PmpAdspaceController) GetAll() {
 
 // get adspace list by page
 func (this *PmpAdspaceController) GetAdspaceList() {
-	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" + 
-				this.GetString("sort")  + " ****** order:" + this.GetString("order") + " ****** mediaid: " + this.GetString("mediaid") +
-				 " ***** adspacename: " + this.GetString("adspacename")
+	params := "fields:" + this.GetString("fields") + " ******* page: " + this.GetString("page") + " ****** rows:" + this.GetString("rows") + " **** sort:" +
+		this.GetString("sort") + " ****** order:" + this.GetString("order") + " ****** mediaid: " + this.GetString("mediaid") +
+		" ***** adspacename: " + this.GetString("adspacename")
 	beego.Info(params)
-	
+
 	mediaid, err := this.GetInt("mediaid")
 	adspacename := this.GetString("adspacename")
 	if err != nil {
 		mediaid = -1
 	}
-	
+
 	page, _ := this.GetInt64("page")
 	page_size, _ := this.GetInt64("rows")
 	sort := this.GetString("sort")
@@ -175,7 +175,7 @@ func (this *PmpAdspaceController) GetAdspaceList() {
 	} else {
 		sort = "Id"
 	}
-	
+
 	adspaces, count := models.GetAdspaceList(page, page_size, sort, mediaid, adspacename)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaces}
@@ -219,7 +219,7 @@ func (c *PmpAdspaceController) Put() {
 // @Failure 403 id is empty
 // @router /:id [delete]
 func (c *PmpAdspaceController) Delete() {
-	id,_ := c.GetInt("id")
+	id, _ := c.GetInt("id")
 	if err := models.DeletePmpAdspace(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
