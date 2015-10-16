@@ -10,6 +10,7 @@
     <!-- Bootstrap -->
     <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/campaign.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,28 +18,28 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-	
+
   </head>
   <body>
     <div class="container">
         <div class="page-header">
 
         </div>
-        <form class="form-horizontal" role="form" method="POST"  id="create_form"   action="#"  autocomplete="off" > 
+        <form class="form-horizontal" role="form" method="POST"  id="create_form"   action="#"  autocomplete="off" >
             <div class="form-group" input-name="ad_category" input-value="" ng-controller="CategoryCtrl">
                 <label class="col-sm-3 control-label" label-for="ad_category">广告分类</label>
                 <div class="category-selects append-bottom-10 category-wrap">
-                    <select class="form-control" id="category_one_id" name="" >					
+                    <select class="form-control" id="category_one_id" name="" >
                        <option value="">请选择一级分类</option>
 						{{range .categoryones}}
 						 	<option value="{{.Id}}">{{.Name}}</option>
 						{{end}}
                     </select>
-					<select class="form-control" id="category_two_id" name="" >					
-                       <option value="">请选择二级分类</option>						
+					<select class="form-control" id="category_two_id" name="" >
+                       <option value="">请选择二级分类</option>
                     </select>
-					<select class="form-control" id="category_three_id" name="" >					
-                       <option value="">请选择三级分类</option>						
+					<select class="form-control" id="category_three_id" name="" >
+                       <option value="">请选择三级分类</option>
                     </select>
                 </div>
             </div>
@@ -51,7 +52,7 @@
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">广告类型</label>
-                <div class="col-sm-8">					
+                <div class="col-sm-8">
 					{{range index .lovmaps "ad_type"}}
 						{{if eq .DispOrder 0}}
 		                    <label class="radio-inline">
@@ -78,10 +79,10 @@
                     <label class="radio-inline">
                         <input type="radio" name="image_mode" value="4"> 组图(228x150)
                     </label>
-                    
+
                 </div>
             </div>
- 
+
 <div class="form-group">
             <label class="col-sm-3 control-label">
                 创意列表
@@ -145,7 +146,7 @@
                         </div>
                     </div>
             </div>
-			
+
 			<div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">匹配精度</label>
                 <div class="col-sm-8">
@@ -159,16 +160,16 @@
 		                        <input type="radio" name="Campaign.AccurateType" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
 		                    </label>
 						{{end}}
-						
-					{{end}}         
+
+					{{end}}
                 </div>
             </div>
 
             <div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">性别</label>
                 <div class="col-sm-8">
-					{{range index .lovmaps "gender"}}						
-						{{if eq .DispOrder 0}}		   
+					{{range index .lovmaps "gender"}}
+						{{if eq .DispOrder 0}}
 							<label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
 		                        <input type="radio" name="gender" checked="checked" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
 		                    </label>
@@ -176,11 +177,11 @@
 							<label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
 		                        <input type="radio" name="gender" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
 		                    </label>
-						{{end}}												
-					{{end}}         
+						{{end}}
+					{{end}}
                 </div>
             </div>
-            
+
 			<div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">地域</label>
                 <div class="col-sm-8">
@@ -201,12 +202,12 @@
                     </div>
                     <div id="selected-city-list" class="select-list">
                         <ul id="selected-city-list-ul">
-                            
+
                         </ul>
                     </div>
                 </div>
             </div>
-			
+
             <div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">平台</label>
                 <div class="col-sm-8">
@@ -234,7 +235,7 @@
                     <label class="radio-inline">
                         <input type="radio" name="image_mode" value="3"> 按品牌
                     </label>
- 
+
                 </div>
             </div>
 			<div class="form-group">
@@ -246,7 +247,7 @@
                     <label class="radio-inline">
                         <input type="radio" name="image_mode" value="3"> WIFI
                     </label>
- 
+
                 </div>
             </div>
             <div class="page-header" id="bidding-header">
@@ -274,7 +275,7 @@
                 </div>
             </div>
 			<div class="form-group" for-radio="pricing" data-value="1,2" style="display: block;">
-    
+
 
 <label for="" class="col-sm-3 control-label">投放时间</label>
 <div class="col-sm-8" id="delivery-time">
@@ -283,10 +284,10 @@
         <label>
             <input type="radio" name="schedule_type" value="1">从现在开始一直投放
             <span class="pricing-time" style="padding-left: 20px; display: none;" for-radio="schedule_type" data-value="1">
-            
+
                 2015-09-19 22:54 至 2016-09-19 22:54
                 <input type="hidden" name="from_time" value="2015-09-19 22:54">
-            
+
             </span>
         </label>
     </div>
@@ -297,8 +298,8 @@
             <input type="radio" name="schedule_type" value="2" checked="">选择起始时间
         </label>
         <div class="embed future_datetime" for-radio="schedule_type" data-value="2" style="display: block;">
-            开始  :  <input type="text" class="form-control form-control-inline" name="start_time" value="2015-09-20 00:00" data-ga="ga">
-            结束  :  <input type="text" class="form-control form-control-inline" name="end_time" value="2015-09-21 00:00" data-ga="ga">
+            开始  :  <input type="text" class="form-control form-control-inline" name="start_time" id="start_time" value="2015-09-20 00:00" data-ga="ga">
+            结束  :  <input type="text" class="form-control form-control-inline" name="end_time" id="end_time" value="2015-09-21 00:00" data-ga="ga">
         </div>
     </div>
 
@@ -328,13 +329,13 @@
         </div>
     </div>
 
-    
 
-    
+
+
 </div>
 
     </div>
-			
+
             <div class="form-group" for-radio="pricing" data-value="1,2" id="FlowControlMode" input-name="flow_control_mode" input-value="0" style="display: block;">
                 <label for="" class="col-sm-3 control-label">投放策略</label>
                 <div class="col-sm-8">
@@ -373,7 +374,7 @@
                 <label for="" class="col-sm-3 control-label">出价</label>
                 <div class="col-sm-8">
                     <input class="form-control form-control-inline" name="bid" type="text" onclick="this.select()" placeholder="¥" value="">
-                    
+
                     <span for-radio="pricing" data-value="1" style="display: none;">(最低出价
                         <span ng-show="baseInfo.image_mode==2">10</span>
                         <span ng-show="baseInfo.image_mode==3 || baseInfo.image_mode==5" class="ng-hide">15</span>
@@ -394,7 +395,7 @@
                             元.
                             <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="建议出价金额是根据定向受众和竞争广告的出价而确定的"></i>
                         </span>
-                    </span> 
+                    </span>
                 </div>
             </div>
             <div class="form-group" id="create-submit-group">
@@ -410,15 +411,22 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="/static/js/lazyload-min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="/static/js/datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/static/js/moment.min.js"></script>
+    <script src="/static/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/campaign_weektime.js"></script>
-	
+
 	<script type="text/javascript">
+		$('#start_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
+        $('#end_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
 		$('#start_date').datetimepicker({
-            format: 'yyyy-mm-dd'
+            format: 'YYYY-MM-DD'
         });
         $('#end_date').datetimepicker({
-            format: 'yyyy-mm-dd'
+            format: 'YYYY-MM-DD'
         });
         LazyLoad.css(["/static/css/cityStyle.css"], function () {
             LazyLoad.js(["/static/js/cityScript.js"], function () {
