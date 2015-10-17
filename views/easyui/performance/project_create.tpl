@@ -13,8 +13,9 @@
             <div id="creat_title">
                 <span style="margin-left:10px">创建项目</span>
                 <div style="float:right">
-                    <a class="action_button" onclick="return Creatcampaign();" >保存</a>
-                    <a class="cancel_button" onclick="return cancelcampaign();">取消</a>
+                    <a class="easyui-linkbutton" style="height:32px;width:80px;" onclick="return Creatcampaign();" >保存</a>
+
+                    <a class="easyui-linkbutton" style="height:32px;width:80px;" onclick="return cancelcampaign();">取消</a>
                 </div>
             </div>
             <div class="creat_area1" style="height:160px">

@@ -1220,7 +1220,9 @@ transform:translate3d(0,0,0)
 .action_button {
     width: 112px;
     height: 30px;
-    background-color: purple;
+    color: #444;
+    background: linear-gradient(to bottom,#ffffff 0,#e6e6e6 100%);
+    background-repeat: repeat-x;
     float: left;
     font-size: 12px;
     font-weight: bold;

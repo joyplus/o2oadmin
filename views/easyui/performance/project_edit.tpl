@@ -16,21 +16,21 @@
             <div id="creat_title">
                 <span style="margin-left:10px">项目编辑</span>
                 <div style="float:right">
-                    <a class="action_button" onclick="return Creatcampaign();" >保存</a>
-                    <a class="cancel_button" onclick="return cancelcampaign();">取消</a>
+                    <a class="easyui-linkbutton" style="height:32px;width:80px;" onclick="return Creatcampaign();" >保存</a>
+                    <a class="easyui-linkbutton" style="height:32px;width:80px;" onclick="return cancelcampaign();">取消</a>
                 </div>
             </div>
             <div class="creat_area1" style="height:80px;">
                 <div style="float:left;width:100%;">
-                    <div class="are_unit"><span class="unit_title">名称</span><input name="f_budget" class="f1 easyui-textbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="百度"  style="width:365px;height:32px;" id="f_budget"/></div>
-                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'Please input the Budget!'" value="50000"  style="width:365px;height:32px;" id="f_budget"/></div>
+                    <div class="are_unit"><span class="unit_title">名称</span><input name="f_budget" class="f1 easyui-textbox" data-options="precision:2,required:true,missingMessage:'请输入名称!'" value="百度"  style="width:50%;height:32px;" id="f_budget"/></div>
+                    <div class="are_unit"><span class="unit_title">预算</span><input name="f_budget" class="f1 easyui-numberbox" data-options="precision:2,required:true,missingMessage:'请输入预算!'" value="50000"  style="width:50%;height:32px;" id="f_budget"/></div>
                 </div>
             </div>
         </form>
         <!-------------------unit unit unit unit----------------------------------->
         <div id="search_area">
             <div style="text-align:center;">
-                <input type="image" src="/static/images/other.png" class="action_button" style="width:109px;margin-left:10px;" onclick="return newApp();" value="创建新活动" id="button03" />
+                <input type="image" src="/static/images/other.png" class="easyui-linkbutton" style="height:32px;width:80px;" style="width:109px;margin-left:10px;" onclick="return newApp();" value="创建新活动" id="button03" />
             </div>
         </div>
         <div id="data_area" class="result_area" style="display:none;">
@@ -164,7 +164,7 @@
                         </tr>
                     </table>
                     <div style="float:right;margin-top:5px;">
-                        <a class="action_button" onclick="return saveSetting();" href="#">保存</a>
+                        <a class="easyui-linkbutton" style="height:32px;width:80px;" onclick="return saveSetting();" href="#">保存</a>
                         <a class="cancel_button" href="javascript:$('#setting_dlg').dialog('close');void(0);">取消</a>
                     </div>
                 </form>
