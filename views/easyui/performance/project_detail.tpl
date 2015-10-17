@@ -14,7 +14,7 @@
         <div id="creat_title">
             <span style="margin-left:10px">项目明细</span>
             <div style="float:right">
-                <span class="action_button" onclick="return editCampaign();">编辑</span>
+                <span class="easyui-linkbutton" style="height:32px;width:80px;" onclick="return editCampaign();">编辑</span>
             </div>
         </div>
         <div class="creat_area1 creat_area2">
@@ -74,11 +74,11 @@
 
 
             <div style="float:left;margin-left:10px">
-                <span class="action_button"  onclick="return getChart();">查询</span>
+                <span class="easyui-linkbutton" style="height:32px;width:80px;"  onclick="return getChart();">查询</span>
             </div>
 
             <div style="float:right;margin-left:10px">
-                <span class="action_button"  onclick="return fullreport();">综合报表</span>
+                <span class="easyui-linkbutton" style="height:32px;width:80px;"  onclick="return fullreport();">综合报表</span>
             </div>
         </div>
 
