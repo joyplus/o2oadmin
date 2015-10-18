@@ -161,3 +161,27 @@ li {
     margin-left: 3px;
     cursor: pointer;
 }
+
+.P-campaignSpotChannelCon {
+  display: inline-block;
+  /*width: 800px;*/
+  vertical-align: top;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+}
+
+.P-campaignSpotChannelCon .M-formItem {
+  position: relative;
+  display: inline-block;
+  padding-right: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.M-formItem span{
+	/*width: 62px;*/
+    line-height: 30px;
+}

@@ -2,8 +2,8 @@ var url_prefix = "/pmp/campaign";
 var url_separator = "/";
 
 function bindCategoryChange() {
-	$("#category_two_id").css("display","none");
-	$("#category_three_id").css("display","none");
+//	$("#category_two_id").css("display","none");
+//	$("#category_three_id").css("display","none");
 	
 	$("#category_one_id").bind("change", function(){
 		$("#category_three_id").css("display","none");
@@ -55,7 +55,7 @@ function bindCategoryChange() {
 						if (data != "") {
 							$("#category_three_id").css("display","inline");
 							$("#category_three_id").html('<option value="">请选择三级分类</option>	');
-							$.each(data, function(key, value) {
+							$.each(data, function(index, value) {
 								optionhtml = "<option value='" + value.Id + "'>" + value.Name + "</option>";	
 								$("#category_three_id").append(optionhtml);
 							    
