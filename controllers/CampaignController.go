@@ -88,7 +88,7 @@ func (this *CampaignController) GetCampaignReport() {
 	this.ParseForm(&request)
 
 	// Dimension here only have two value, 0 or 1
-	report, count, err := models.GetPmpCampaignDailyReport(request.Dimension[0], request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
+	report, count, err := models.GetPmpCampaignDailyReport(request.Dimension[0], request.Medias, getLocalDate(request.StartDate), getLocalDate(request.EndDate), request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
 
 	beego.Debug("startDate: ", request.StartDate)
 
