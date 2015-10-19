@@ -31,76 +31,15 @@ define(function(require,exports) {
                             // 	,"iconCls":"nav-home"
                             // 	,"act": 1
                             // }
-                            {
-                                "name":LANG("活动")
-                                ,"uri":"#campaign"
-                                ,"iconCls":"nav-campaign"
-                                ,"act": 1
-                            }
-                            ,{
-                                "name":LANG("创意包")
-                                ,"uri":"#creative"
-                                ,"iconCls":"nav-creative"
-                                ,"filter": app.getUserAuth(app.config('auth/hide_creative'), 'isEmployee')
-                            }
-                            ,{
-                                "name":LANG("落地页")
-                                ,"uri":"#whisky"
-                                ,"iconCls":"nav-whisky"
-                            }
-                            ,{
-                                "name":LANG("广告位")
-                                ,"uri":"#ads"
-                                ,"iconCls":"nav-ads"
-                            }
-                            /*,{
-                             "name":LANG("媒体")
-                             ,"uri":"#media"
-                             ,"iconCls":"nav-media"
-                             }
-                             ,{
-                             "name":LANG("渠道")
-                             ,"uri":"#channel"
-                             ,"iconCls":"nav-channel"
-                             }*/
-                            ,{
-                                "name":LANG("产品")
-                                ,"uri":"#product"
-                                ,"iconCls":"nav-product"
-                            }
-                            /*,{
-                             "name":LANG("媒体资源")
-                             ,"uri":"#ads/priceList"
-                             ,"iconCls":"nav-pricelist"
-                             }
-                             ,{
-                             "name":LANG("平台")
-                             ,"uri":"#platform"
-                             ,"iconCls":"nav-platform"
-                             }*/
-                            ,{
-                                "name":LANG("组合维度")
-                                ,"uri":"#mixedDimension"
-                                ,"iconCls":"nav-Collect"
-                            }
-                            ,{
-                                "name":LANG("汇总")
-                                ,"uri":"#collect"
-                                ,"iconCls":"nav-collect"
-                            }
-                            ,{
-                                "name":LANG("管理后台")
-                                ,"uri":"#admin"
-                                ,"iconCls":"nav-Collect"
-                            }
+
                         ]
                     }
                     },
                     config||{}
                 );
 
-                this.build();
-                this.onUserLogin();
+                //this.build();
+                //this.onUserLogin();
             }
             /**
              * 宽/窄屏设置
