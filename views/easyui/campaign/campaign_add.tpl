@@ -1007,8 +1007,43 @@
 	                </div>                   
                 </div>
             </div>
-            <div id="tree"></div>
-
+            
+			<!-- tree view start-->
+			<div class="form-group audience-group ng-scope">
+			    <label for="" class="col-sm-3 control-label">其他人群</label>
+			    <div class="col-sm-8">
+			        <label class="radio-inline">
+			            <input type="radio" name="peoplecondition" checked="checked" value="0" id="peopleunlimited" class="ng-pristine ng-untouched ng-valid"> 不限
+			        </label>
+			        <label class="radio-inline">
+			            <input type="radio" name="peoplecondition" value="1" id="includepeopleid" class="ng-valid ng-dirty ng-valid-parse ng-touched"> 包含以下条件
+			        </label>
+			        <label class="radio-inline">
+			            <input type="radio" name="peoplecondition" value="1" id="excludepeopleid" class="ng-valid ng-dirty ng-valid-parse ng-touched"> 排除以下条件
+			        </label>
+			        <div class="prepend-top-15" id="peopleconditiondiv" style="display:none;">
+			            <div class="column-wrap clearfix ng-isolate-scope" title="所有条目" selected="selected">
+			                <div class="column-side left-side">
+			                    <div class="column-header ng-binding">所有条目</div>
+								<div style="max-height:408px;overflow-y:scroll;" id="sourcetree"></div>		                    
+			                </div>
+			
+			                <div class="column-side right-side">
+			                    <div class="column-header">已选择</div>
+								<div style="max-height:408px;overflow-y:scroll;" id="selectedtree"></div>
+								<!--
+								<div class="column-body">
+                                    <div class="category-list">  </div>
+								</div>
+								-->
+								
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!-- tree view end-->
+			
             <div class="form-group" id="create-submit-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-primary" id="creat_submit">提交</button>
@@ -1046,7 +1081,270 @@
                 var test = new citySelector.cityInit("cityinput");
             });
         });
+		
+		function TreeNode(text, href) {
+			this.text = text;
+			this.href = href;
+			//this.icon = "glyphicon glyphicon-stop";
+			//this.selectedIcon = "glyphicon glyphicon-stop";
+			this.nodes = null;
+			this.color = "blue";
+			this.backColor = "#FFFFFF";
+			this.selectable = true;
+		}	
+		
+		function TreeNode(text) {
+			this.text = text;
+			//this.href = href;
+			//this.icon = "glyphicon glyphicon-stop";
+			//this.selectedIcon = "glyphicon glyphicon-stop";
+			this.nodes = null;
+			this.color = "blue";
+			this.backColor = "#FFFFFF";
+			this.selectable = true;
+		}		
+				
+		function getTree() {
+			var treeNodes = new Array();
+			var p1 = new TreeNode("人口属性");
+			var p2 = new TreeNode("设备属性");
+			var p3 = new TreeNode("地理位置");
+			var p4 = new TreeNode("应用兴趣");
+			var p5 = new TreeNode("游戏偏好");
+			var p6 = new TreeNode("消费偏好");
+			p1.selectable = false;
+			p2.selectable = false;
+			p3.selectable = false;
+			p4.selectable = false;
+			p5.selectable = false;
+			p6.selectable = false;
+			
+			treeNodes.push(p1);
+			treeNodes.push(p2);
+			treeNodes.push(p3);
+			treeNodes.push(p4);
+			treeNodes.push(p5);
+			treeNodes.push(p6);
+								
+			var p11 = new TreeNode("性别");
+			var p12 = new TreeNode("人生阶段");
+			var p13 = new TreeNode("身份职业");
+			var p14 = new TreeNode("婚育阶段");
+			var p15 = new TreeNode("车辆条件");
+			p1.nodes = new Array();	
+			p11.selectable = false;
+			p12.selectable = false;
+			p13.selectable = false;
+			p14.selectable = false;
+			p15.selectable = false;
+				
+			p1.nodes.push(p11);	
+			p1.nodes.push(p12);
+			p1.nodes.push(p13);	
+			p1.nodes.push(p14);
+			p1.nodes.push(p15);	
+			
+			var p111 = new TreeNode("男");
+			var p112 = new TreeNode("女");
+			p11.nodes = new Array();
+			p11.nodes.push(p111);	
+			p11.nodes.push(p112);			
+			
+			var p121 = new TreeNode("少年");
+			var p122 = new TreeNode("青年");
+			var p123 = new TreeNode("中年");
+			var p124 = new TreeNode("老年");
+			p12.nodes = new Array();
+			p12.nodes.push(p121);
+			p12.nodes.push(p122);
+			p12.nodes.push(p123);
+			p12.nodes.push(p124);
+			
+			var p131 = new TreeNode("大学生");
+			var p132 = new TreeNode("非大学生");
+			p13.nodes = new Array();
+			p13.nodes.push(p131);
+			p13.nodes.push(p132);
+			
+			var p141 = new TreeNode("已婚");
+			var p142 = new TreeNode("未婚");
+			p14.nodes = new Array();
+			p14.nodes.push(p141);
+			p14.nodes.push(p142);
+			
+			var p151 = new TreeNode("有车");
+			var p152 = new TreeNode("无车");
+			p15.nodes = new Array();
+			p15.nodes.push(p151);
+			p15.nodes.push(p152);
+			
+			var p21 = new TreeNode("品牌");
+			var p22 = new TreeNode("上市价");
+			var p23 = new TreeNode("机型");
+			var p24 = new TreeNode("设备品类");
+			var p25 = new TreeNode("功能特性");
+			var p26 = new TreeNode("屏幕尺寸");
+			var p27 = new TreeNode("操纵系统");
+			var p28 = new TreeNode("硬件特性");
+			var p29 = new TreeNode("运营商");
+			var p2_10 = new TreeNode("网络");
+			p2.nodes = new Array();	
+			p21.selectable = false;
+			p22.selectable = false;
+			p23.selectable = false;
+			p24.selectable = false;
+			p25.selectable = false;
+			p26.selectable = false;
+			p27.selectable = false;
+			p28.selectable = false;
+			p29.selectable = false;
+			p2_10.selectable = false;
+			p2.nodes.push(p21);
+			p2.nodes.push(p22);
+			p2.nodes.push(p23);
+			p2.nodes.push(p24);
+			p2.nodes.push(p25);
+			p2.nodes.push(p26);
+			p2.nodes.push(p27);
+			p2.nodes.push(p28);
+			p2.nodes.push(p29);
+			p2.nodes.push(p2_10);
+			
+			var p211 = new TreeNode("苹果");
+			var p212 = new TreeNode("三星");
+			var p213 = new TreeNode("小米");
+			var p214 = new TreeNode("华为");
+			var p215 = new TreeNode("步步高");
+			var p216 = new TreeNode("OPPO");
+			var p217 = new TreeNode("联想");
+			var p218 = new TreeNode("宇龙酷派");
+			var p219 = new TreeNode("中兴");
+			var p21_10 = new TreeNode("魅族");
+			var p21_11 = new TreeNode("金立");
+			var p21_12 = new TreeNode("HTC");
+			var p21_13 = new TreeNode("索尼");
+			var p21_14 = new TreeNode("海信");
+			var p21_15 = new TreeNode("LG");
+			p21.nodes = new Array();
+			p21.nodes.push(p211);	
+			p21.nodes.push(p212);
+			p21.nodes.push(p213);
+			p21.nodes.push(p214);
+			p21.nodes.push(p215);
+			p21.nodes.push(p216);
+			p21.nodes.push(p217);
+			p21.nodes.push(p218);
+			p21.nodes.push(p219);
+			p21.nodes.push(p21_10);
+			p21.nodes.push(p21_11);
+			p21.nodes.push(p21_12);
+			p21.nodes.push(p21_13);
+			p21.nodes.push(p21_14);
+			p21.nodes.push(p21_15);
+			
+			var p221 = new TreeNode("1~499");
+			var p222 = new TreeNode("500~999");
+			var p223 = new TreeNode("1000~1999");
+			var p224 = new TreeNode("2000~3999");
+			var p225 = new TreeNode("4000以上");
+			p22.nodes = new Array();
+			p22.nodes.push(p221);	
+			p22.nodes.push(p222);
+			p22.nodes.push(p223);
+			p22.nodes.push(p224);
+			p22.nodes.push(p225);
+			
+			var p231 = new TreeNode("IPhone6 Plus");
+			var p232 = new TreeNode("IPhone6");
+			var p233 = new TreeNode("三星Galaxy S6");
+			var p234 = new TreeNode("三星Galaxy Note5");
+			var p235 = new TreeNode("华为荣耀7");
+			p23.nodes = new Array();
+			p23.nodes.push(p231);	
+			p23.nodes.push(p232);
+			p23.nodes.push(p233);
+			p23.nodes.push(p234);
+			p23.nodes.push(p235);
+			
+			var p241 = new TreeNode("手机");
+			var p242 = new TreeNode("平板");
+			var p243 = new TreeNode("智能电视");
+			var p244 = new TreeNode("智能手表");
+			var p245 = new TreeNode("智能手环");
+			p24.nodes = new Array();
+			p24.nodes.push(p241);	
+			p24.nodes.push(p242);
+			p24.nodes.push(p243);
+			p24.nodes.push(p244);
+			p24.nodes.push(p245);
+			
+			var p251 = new TreeNode("音乐");
+			var p252 = new TreeNode("美颜");
+			var p253 = new TreeNode("老人机");
+			var p254 = new TreeNode("摄影手机");
+			var p255 = new TreeNode("高端商务");
+			var p256 = new TreeNode("高性价比");
+			p25.nodes = new Array();
+			p25.nodes.push(p251);	
+			p25.nodes.push(p252);
+			p25.nodes.push(p253);
+			p25.nodes.push(p254);
+			p25.nodes.push(p255);
+			p25.nodes.push(p256);
+			
+			var p261 = new TreeNode("3.5英寸");
+			var p262 = new TreeNode("4.0英寸");
+			var p263 = new TreeNode("5.0英寸");
+			p26.nodes = new Array();
+			p26.nodes.push(p261);	
+			p26.nodes.push(p262);
+			p26.nodes.push(p263);
+			
+			var p271 = new TreeNode("iOS");
+			var p272 = new TreeNode("WP");
+			var p273 = new TreeNode("Android");
+			p27.nodes = new Array();
+			p27.nodes.push(p271);	
+			p27.nodes.push(p272);
+			p27.nodes.push(p273);
+			
+			var p281 = new TreeNode("8核芯片");
+			var p282 = new TreeNode("陀螺仪");
+			var p283 = new TreeNode("NFC芯片");
+			var p284 = new TreeNode("蓝牙");
+			var p285 = new TreeNode("双卡双待");
+			p28.nodes = new Array();
+			p28.nodes.push(p281);	
+			p28.nodes.push(p282);
+			p28.nodes.push(p283);
+			p28.nodes.push(p284);
+			p28.nodes.push(p285);
+			
+			var p291 = new TreeNode("中国移动");
+			var p292 = new TreeNode("中国联通");
+			var p293 = new TreeNode("中国电信");
+			p29.nodes = new Array();
+			p29.nodes.push(p291);	
+			p29.nodes.push(p292);
+			p29.nodes.push(p293);
+			
+			var p2_10_1 = new TreeNode("WIFI");
+			var p2_10_2 = new TreeNode("4G");
+			var p2_10_3 = new TreeNode("3G");
+			var p2_10_4 = new TreeNode("2G");
+			p2_10.nodes = new Array();
+			p2_10.nodes.push(p2_10_1);	
+			p2_10.nodes.push(p2_10_2);
+			p2_10.nodes.push(p2_10_3);
+			p2_10.nodes.push(p2_10_4);
+			
+			
 
+			return JSON.stringify(treeNodes);
+        }
+		
+		var $tree;
+		
         $(function() {
             $("#cityselectiondiv").css("display", "none");
             $("#phonebrandselectiondiv").css("display", "none");
@@ -1054,6 +1352,7 @@
             $("#cityinput").bind("keyup", function() {
                 //searchcity($(this).val());
             });
+			
             $("#cityunlimited").bind("click", function() {
                 deleteAllSelected();
                 $("#cityselectiondiv").css("display", "none");
@@ -1076,13 +1375,137 @@
 				$("#selectstartendtimediv").css("display", "none");
             });
 			
-            /*$('#tree').treeview({
-                data: getTree()
-            });*/
+            $tree = $('#sourcetree').treeview({
+                data: getTree(),
+				 multiSelect:true,
+				 levels:1
+            });
+			
+			$('#sourcetree').on('nodeSelected', function(event, data) {
+			  treeNodeSelected(data);
+			});
+			$('#sourcetree').on('nodeUnselected', function(event, data) {
+			  treeNodeUnSelected(data);
+			});
+			
+			//$("#peopleconditiondiv").css("display", "block");
+			$("#peopleunlimited").bind("click", function(){
+				$("#peopleconditiondiv").css("display", "none");
+				//TODO
+				// empty selectedNodes
+			});
+			$("#includepeopleid").bind("click", function(){
+				$("#peopleconditiondiv").css("display", "block");
+			});
+			$("#excludepeopleid").bind("click", function(){
+				$("#peopleconditiondiv").css("display", "block");
+			});
         });
+		
+		var selectedNodes = new Array();
+		function findNode(arr, node) {
+			if (arr == null || arr.length == 0) {
+				return null;	
+			}
+			for (var i = 0; i < arr.length; i++) {
+				if (arr[i].nodeId == node.nodeId) {
+					return arr[i];	
+				}
+			}
+			for (var i = 0; i < arr.length; i++) {
+				var foundNode = findNode(arr[i].nodes, node);
+				if (foundNode != null) {
+					return foundNode;
+				}
+			}
+			return null;
+		}
+		
+		function treeNodeSelected(data) {								
+			var parentNodes = new Array();
+			parentNodes.push(data);		
+			var tempNode = data;
+			var nodeInSelArray;
+
+			while (true) {
+				var parentNode = $tree.treeview('getParent', tempNode);
+				nodeInSelArray = findNode(selectedNodes, parentNode);	
+				if (nodeInSelArray != null) {
+					break;
+				} 		
+				if (typeof parentNode.nodeId == "undefined") {
+					break;
+				}	
+			    parentNodes.push(parentNode);			
+				tempNode = parentNode;
+			}
+
+			var lastPNode = nodeInSelArray;			
+			while (parentNodes.length > 0) {
+				var pNode = parentNodes.pop();
+				if (lastPNode == null) {
+					// root node is not in the selectedNodes array
+					var node = new TreeNode(pNode.text);
+					node.nodeId = pNode.nodeId;
+					selectedNodes.push(node);
+					node.nodes = new Array();
+					lastPNode = node;
+				} else {
+					var node = new TreeNode(pNode.text);
+					node.nodeId = pNode.nodeId;
+					if (nodeInSelArray == null || nodeInSelArray.text != pNode.text) {
+						if (parentNodes.length > 0) {
+							node.nodes = new Array();	
+						}						
+					}
+					lastPNode.nodes.push(node);
+					lastPNode = node;
+				}
+			}	
+
+			$("selectedtree").treeview("remove");
+			$('#selectedtree').treeview({
+                data: JSON.stringify(selectedNodes)
+			});
+		}
+		
+		function removeNode(arr, node) {
+			var index = -1;
+			for (var i = 0; i < arr.length; i++) {
+				if (arr[i].nodeId == node.nodeId) {
+					index = i;
+					break;
+				}
+			}
+			if (index > -1) {
+				arr.splice(index, 1);	
+			}
+		}
+		
+		function treeNodeUnSelected(data) {
+			removeUnselectedNode(data);
+			$("selectedtree").treeview("remove");
+			$('#selectedtree').treeview({
+                data: JSON.stringify(selectedNodes)
+			});
+		}
+		
+		function removeUnselectedNode(node) {
+			var parentNode = $tree.treeview('getParent', node);
+			var parentNodeInSelArray = findNode(selectedNodes, parentNode);
+	
+			if (parentNodeInSelArray == null) {
+				removeNode(selectedNodes, node);
+				return 0;
+			} else if (parentNodeInSelArray.nodes.length > 1) {
+				removeNode(parentNodeInSelArray.nodes, node);
+				return 0;
+			} else {
+				return removeUnselectedNode(parentNode);
+			}
+		}
 
         var num = 0;
-
         function addCategory(obj) {
             if (num == 10) {
                 alert("最多选择10个品牌");
