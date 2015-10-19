@@ -40,9 +40,7 @@ func (this *ReportController) GetPdbMediaReportData() {
 	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
-	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
-
-	beego.Debug("startDate: ", request.StartDate)
+	report, count, err := models.GetGroupedPmpDailyRequestReport(request.Dimension, request.Medias, getLocalDate(request.StartDate), getLocalDate(request.EndDate), request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
 
 	if err != nil {
 		beego.Debug("failed to get pmp daily report")
@@ -71,7 +69,7 @@ func (this *ReportController) GetPdbDspReportData() {
 	request := ReportQueryRequest{}
 	this.ParseForm(&request)
 
-	report, count, err := models.GetGroupedPmpDemandDailyReport(request.Dimension, request.Medias, request.StartDate, request.EndDate, request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
+	report, count, err := models.GetGroupedPmpDemandDailyReport(request.Dimension, request.Medias, getLocalDate(request.StartDate), getLocalDate(request.EndDate), request.Sortby, request.Order, (request.Page-1)*request.Rows, request.Rows)
 
 	if err != nil {
 		beego.Debug("failed to get pmp demand daily report")
@@ -92,4 +90,10 @@ func (this *ReportController) GetPdbDspReportData() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
 	}
 	this.ServeJson()
+}
+
+func getLocalDate(date time.Time) time.Time {
+    format := "2006-1-2"
+    t, _ := time.ParseInLocation(format, date.Format(format), time.Local)
+    return t
 }
