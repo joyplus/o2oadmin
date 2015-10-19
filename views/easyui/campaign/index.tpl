@@ -977,8 +977,6 @@
             </div>
         </div>
     </div>
-    <div class="G-frameFooter" style="display: block;">© 2012 - 2015 Biddingx 粤ICP备12093772号-1 - <a
-            href="#privacy">隐私政策</a></div>
     <div class="M-hotkey">
         <div class="M-hotkeyHead"><em class="closeTip"></em>
 
@@ -1055,49 +1053,5 @@
             </table>
         </div>
     </div>
-    <div class="M-popwin M-popwinBoxReflect M-login-logoHack"
-         style="width: 600px; z-index: 1000; display: none; top: 141px; margin: 0px 0px 0px -300px;">
-        <div class="M-popwinHead">
-            <div class="popwinTitle" style="display: none;"></div>
-        </div>
-        <form action="fake_login" target="hiddenLoginFrame" method="post">
-            <div class="M-popwinBody M-login">
-                <div class="M-login-title"><img src="http://manager.biddingx.com/main/resources/images/dsp_logo_c.png"
-                                                alt="biddingx 广告整合优化平台"></div>
-                <div class="M-login-name"><label for="LoginForm_email">邮箱：</label><input type="text"
-                                                                                         name="LoginForm[email]"
-                                                                                         id="LoginForm_email"
-                                                                                         data-name="userName"
-                                                                                         placeholder="请输入您的邮箱" class=""><span
-                        class="M-login-tip">请输入合法的电子邮箱</span></div>
-                <div class="M-login-pws"><label for="LoginForm_password">密码：</label><input type="password"
-                                                                                           name="LoginForm[password]"
-                                                                                           id="LoginForm_password"
-                                                                                           data-name="userPws"
-                                                                                           placeholder="请输入您的密码"><span
-                        class="M-login-tip">密码不能为空或密码前后不能带空格。</span></div>
-                <div class="M-login-addFunctions"><input type="checkbox" id="rememberMe_66_67"><label
-                        for="rememberMe_66_67">记住用户名和密码</label></div>
-            </div>
-        </form>
-        <div class="M-popwinFoot M-login-foot"><input class="btnBigGreen" type="button" value="登录" data-action="onOk">
-        </div>
-        <iframe name="hiddenLoginFrame" style="display:none;"></iframe>
-    </div>
-    <div class="M-tip" type="info" style="width: 200px;">
-        <div class="tipInner">
-            <div class="M-tipHead">
-                <div class="popwinTitle" style="display: none;"></div>
-            </div>
-            <div class="M-tipBody P-campaignBudgetPopBody">
-                <div class="noticeIcon noticeInfo"></div>
-                <div class="noticeBody"></div>
-            </div>
-            <div class="P-campaignBudgetPopFoot"><input class="btnGreen" type="button" value="确定"
-                                                        data-action="onOk"><input class="btnNormal" type="button"
-                                                                                  value="取消" data-action="onCancel">
-            </div>
-        </div>
-        <b class="tipArrow"></b></div>
 </body>
 </html>
