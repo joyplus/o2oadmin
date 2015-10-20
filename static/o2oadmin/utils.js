@@ -31,3 +31,14 @@ $.fn.datebox.defaults.parser = function(s){
         return new Date();
     }
 }
+
+function getDropdownCheckedValues(dropdown) {
+    var checkedItems = dropdown.dropdownCheckbox("checked");
+    var vals = [];
+    if (checkedItems) {
+        $.each(checkedItems, function (idx) {
+            vals.push(checkedItems[idx].id);
+        });
+    }
+    return vals;
+}

@@ -3,28 +3,7 @@
 <table id="dg" class="easyui-datagrid" title="" style="width:1000px;height:480px">
 </table>
 <div id="tb" style="padding:2px 5px;">
-    <input class="easyui-combobox"
-           name="dimension" id="dimension" style="width: 240px"
-           data-options="
-                    method:'get',
-                    valueField:'id',
-                    textField:'text',
-                    data: [{
-                        id: 0,
-                        text: 'DSP'
-                    },{
-                        id: 1,
-                        text: 'DSP广告位'
-                    },{
-                        id: 2,
-                        text: 'PDB媒体'
-                    },{
-                        id: 3,
-                        text: 'PDB广告位'
-                    }],
-                    multiple:true,
-                    panelHeight:'auto'
-            ">
+    <div class="dimensions"></div>
     从：<input id="startDate" name="startDate" class="easyui-datebox"></input>
     到：<input id="endDate" name="endDate" class="easyui-datebox"></input>
     <a href="#" class="easyui-linkbutton" iconCls="icon-search" id="searchBtn">查询</a>
@@ -34,16 +13,40 @@
 
     $(function () {
 
+        var dimensionData = [{
+            id: 0,
+            label: 'DSP',
+            isChecked: true
+        },{
+            id: 1,
+            label: 'DSP广告位',
+            isChecked: true
+        },{
+            id: 2,
+            label: 'PDB媒体',
+            isChecked: true
+        },{
+            id: 3,
+            label: 'PDB广告位',
+            isChecked: true
+        }];
+        $(".dimensions").dropdownCheckbox({
+            data: dimensionData,
+            title: "二级维度"
+        });
+
         // 页面首次加载时选中两个选项
         var dynaFields = ["DemandName", "DemandAdSpaceName", "PdbMediaName", "PdbAdSpaceName"];
-        $('#dimension').combobox({
-           onSelect: function (rec) {
-               $('#dg').datagrid('showColumn', dynaFields[rec.id]);
-           },
-            onUnselect: function (rec) {
-                $('#dg').datagrid('hideColumn', dynaFields[rec.id]);
-            }
-        }).combobox('setValues', [0, 1, 2, 3]);
+        $(".dimensions").on('checked', function(val){
+            var items = $(".dimensions").dropdownCheckbox('items');
+            $.each(items, function(idx) {
+                if (items[idx].isChecked) {
+                    $('#dg').datagrid('showColumn', dynaFields[items[idx].id]);
+                } else {
+                    $('#dg').datagrid('hideColumn', dynaFields[items[idx].id]);
+                }
+            });
+        });
 
 
         $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('MM/dd/yyyy'));
@@ -80,7 +83,7 @@
             dg.datagrid('loadData',[]);
 
             dg.datagrid('load', {
-                dimension: $('#dimension').combobox('getValues'),
+                dimension: getDropdownCheckedValues($('.dimensions')),
                 startDate: $('#startDate').datebox("getValue"),
                 endDate: $('#endDate').datebox("getValue")
             });
