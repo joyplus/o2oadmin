@@ -179,9 +179,11 @@ li {
   font-weight: 400;
   vertical-align: middle;
   cursor: pointer;
+  width:50%;
+  float:left;
 }
 
 .M-formItem span{
-	/*width: 62px;*/
+	width: 62px;
     line-height: 30px;
 }
