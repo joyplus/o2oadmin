@@ -1365,7 +1365,6 @@ function treeNodeSelected(data) {
 		}
 	}	
 
-	$("selectedtree").treeview("remove");
 	$('#selectedtree').treeview({
         data: JSON.stringify(selectedNodes),
 		levels:4
@@ -1387,7 +1386,6 @@ function removeNode(arr, node) {
 
 function treeNodeUnSelected(data) {
 	removeUnselectedNode(data);
-	$("selectedtree").treeview("remove");
 	$('#selectedtree').treeview({
         data: JSON.stringify(selectedNodes),
 		levels:4
@@ -1409,6 +1407,27 @@ function removeUnselectedNode(node) {
 	}
 }
 
+function deleteAllSelectedNodes() {	
+	
+	$tree = $("#sourcetree").treeview({
+                data: getTree(),
+				 multiSelect:true,
+				 levels:1
+            });
+	$('#sourcetree').on('nodeSelected', function(event, data) {
+	  treeNodeSelected(data);
+	});
+			
+	$('#sourcetree').on('nodeUnselected', function(event, data) {
+	  treeNodeUnSelected(data);
+	});
+	if (selectedNodes.length > 0) {
+		$("#selectedtree").treeview("remove");
+	}	
+	selectedNodes = new Array();
+}
+
+// phone brand related js start
 var num = 0;
 function addCategory(obj) {
    if (num == 10) {
@@ -1450,6 +1469,7 @@ function activatecategory(item) {
    var filter = ":contains('" + item + "')";
    $("#sourcecategorylist").find(filter).removeClass("category-selected");
 }
+// phone brand related js end
 
 function uncheckallplateform() {
 	$("#allplateform").attr("checked", false);

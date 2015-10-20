@@ -1032,7 +1032,7 @@
 			                </div>
 			
 			                <div class="column-side right-side">
-			                    <div class="column-header">已选择</div>
+			                    <div class="column-header">已选择 <span style="float:right;"><a class="custom-btn btn-primary" onclick="deleteAllSelectedNodes();">删除所有</a></span></div>
 								<div style="max-height:408px;overflow-y:scroll;" id="selectedtree"></div>
 								<!--
 								<div class="column-body">
@@ -1121,7 +1121,7 @@
             });
 			
             $tree = $('#sourcetree').treeview({
-                data: getTree(),
+                 data: getTree(),
 				 multiSelect:true,
 				 levels:1
             });
