@@ -25,8 +25,8 @@
         base: BASE("/static/campaign/"),
         alias: {
             // 目录缩写
-            "core":			BASE("core"),
-            "libs":			BASE("libs"),
+            "core":			BASE("/static/campaign/core"),
+            "libs":			BASE("/static/campaign/libs"),
 
             // 基本模块缩写
             "sys_config":	BASE("/static/campaign/core/config.js"),
@@ -40,7 +40,7 @@
             "jquery-ui":	BASE("/static/campaign/libs/jquery/jquery-ui-1.9.2.custom.min.js"),
             "raphael":		BASE("/static/campaign/libs/raphael/raphael.2.1.0.js"),
             // kindeditor编辑器
-            "kindEditor": BASE('libs/kindeditor/kindeditor-min.js')
+            "kindEditor": BASE('/static/campaign/libs/kindeditor/kindeditor-min.js')
         },
         map: [
             [/^.*$/, function(url){

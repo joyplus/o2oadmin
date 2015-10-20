@@ -8,7 +8,7 @@ define(function(require){
         "title":_T('biddingx 广告整合优化平台'),
         "logo":"resources/images/dsp_logo.png",
         "big_logo":"resources/images/dsp_logo_c.png",
-        "copyright":_T('&copy; 2012 - '+(new Date()).getFullYear()+' Biddingx 粤ICP备12093772号-1'),
+        "copyright":_T('&copy; 2012 - '+(new Date()).getFullYear()+' '),
         "show_privacy":1,
         "domain":"manager.biddingx.com",
         "custom_domain": "stuff.cdn.biddingx.com",
@@ -42,9 +42,9 @@ define(function(require){
         // 代码中心1像素图片／Flash版PDMP代码收集
         app_custom_domainB: default_info.custom_domainB,
         // 控制器所在目录
-        app_base: BASE('app/'),
+        app_base: BASE('/static/campaign/app/'),
         // 模板文件基础路径
-        tpl_base: BASE('tpl/'),
+        tpl_base: BASE('/static/campaign/tpl/'),
         // 预览文件地址
         preview_page: BASE('preview.html?Path={1}&Height={2}&Width={3}&FileType={4}'),
         // 活动创意模拟预览
