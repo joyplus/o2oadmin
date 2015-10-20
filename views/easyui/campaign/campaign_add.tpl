@@ -58,29 +58,32 @@
                 <div class="col-sm-8">
                     {{range index .lovmaps "ad_type"}} {{if eq .DispOrder 0}}
                     <label class="radio-inline">
-                        <input type="radio" name="ad_type" value="{{.LovKey}}" checked="checked"> {{.LovValue}}
+                        <input type="radio" name="ad_type" value="{{.LovKey}}" checked="checked" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
                     </label>
                     {{else}}
                     <label class="radio-inline">
-                        <input type="radio" name="ad_type" value="{{.LovKey}}"> {{.LovValue}}
+                        <input type="radio" name="ad_type" value="{{.LovKey}}" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
                     </label>
                     {{end}} {{end}}
                 </div>
             </div>
-
+			
+			<!--开屏：640 x 960,640 x 1136,750 x 1334,1242×2208 信息流：228 x 150，690 x 286 焦点图：640 x 200，640 x 100 -->
             <div class="form-group">
                 <label class="col-sm-3 control-label">信息流展示图片</label>
-                <div class="col-sm-8">
+                <div class="col-sm-8" id="sucaiguigediv">
                     <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="2" checked="checked"> 小图(228x150)
+                        <input type="radio" name="sucaiguige" value="2" checked="checked"> 640 x 960
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="3"> 大图(690x286)
+                        <input type="radio" name="sucaiguige" value="3"> 640 x 1136
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="4"> 组图(228x150)
+                        <input type="radio" name="sucaiguige" value="4"> 750 x 1334
                     </label>
-
+					<label class="radio-inline">
+                        <input type="radio" name="sucaiguige" value="4"> 1242×2208
+                    </label>
                 </div>
             </div>
 
@@ -887,10 +890,8 @@
                     <span ng-show="baseInfo.image_mode==4" class="ng-hide">0.39</span> 元/点击)
                     </span>
                     <span id="estimation_bid" style="display: inline;">建议出价大于
-                            <span ng-show="baseInfo.image_mode==2" id="cpc_small">0.75</span>
-                    <span ng-show="baseInfo.image_mode==3" id="cpc_large" class="ng-hide">1.36</span>
-                    <span ng-show="baseInfo.image_mode==4" id="cpc_group" class="ng-hide">0.98</span> 元.
-                    <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="建议出价金额是根据定向受众和竞争广告的出价而确定的"></i>
+                         <span ng-show="baseInfo.image_mode==2" id="cpc_small">0.75</span> 元.
+                    		<i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="建议出价金额是根据定向受众和竞争广告的出价而确定的"></i>
                     </span>
                     </span>
                 </div>
