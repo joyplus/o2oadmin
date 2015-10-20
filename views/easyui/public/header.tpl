@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/easyui/jquery-easyui/themes/icon.css" />
 
     <link rel="stylesheet" type="text/css" href="/static/css/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-dropdown-checkbox.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
 
     <!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />-->
@@ -25,6 +26,7 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/moment.min.js"></script>
     <script type="text/javascript" src="/static/js/daterangepicker.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-dropdown-checkbox.js"></script>
 
     <script type="text/javascript" src="/static/echartsjs/echarts-all.js"></script>
 

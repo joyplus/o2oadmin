@@ -3,33 +3,8 @@
 <table id="dg" class="easyui-datagrid" title="" style="width:1000px;height:480px">
 </table>
 <div id="tb" style="padding:2px 5px;">
-    <input class="easyui-combobox"
-           name="dimension" id="dimension"
-           data-options="
-                    method:'get',
-                    valueField:'id',
-                    textField:'text',
-                    data: [{
-                        id: 0,
-                        text: 'PDB广告位'
-                    },{
-                        id: 1,
-                        text: '日期'
-                    }],
-                    multiple:true,
-                    panelHeight:'auto'
-            ">
-    媒体:
-    <input class="easyui-combobox"
-           name="media" id="media"
-           data-options="
-                    url:'/pmp/adspace/medias',
-                    method:'get',
-                    valueField:'Id',
-                    textField:'Text',
-                    multiple:true,
-                    panelHeight:'auto'
-            ">
+    <div class="dimensions"></div>
+    <div class="medias"></div>
     从：<input id="startDate" name="startDate" class="easyui-datebox"></input>
     到：<input id="endDate" name="endDate" class="easyui-datebox"></input>
     <a href="#" class="easyui-linkbutton" iconCls="icon-search" id="searchBtn">查询</a>
@@ -39,17 +14,42 @@
 
     $(function () {
 
-        // 页面首次加载时选中两个选项
-        var dynaFields = ["PdbAdSpaceName", "AdDate"];
-        $('#dimension').combobox({
-           onSelect: function (rec) {
-               $('#dg').datagrid('showColumn', dynaFields[rec.id]);
-           },
-            onUnselect: function (rec) {
-                $('#dg').datagrid('hideColumn', dynaFields[rec.id]);
-            }
-        }).combobox('setValues', ['0', '1']);
+        var myData = [{id: 0, label: "PDB广告位", isChecked: true },{id: 1, label: "日期", isChecked: true}];
+        $(".dimensions").dropdownCheckbox({
+            data: myData,
+            title: "二级维度"
+        });
+        $(".dimensions").on('checked', function(val){
+            var items = $(".dimensions").dropdownCheckbox('items');
+            $.each(items, function(idx) {
+               if (items[idx].isChecked) {
+                   $('#dg').datagrid('showColumn', dynaFields[items[idx].id]);
+               } else {
+                   $('#dg').datagrid('hideColumn', dynaFields[items[idx].id]);
+               }
+            });
+        });
 
+        $.ajax({
+            url: '/pmp/adspace/medias',
+            type: 'GET',
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var mediaData = [];//[{id: 0, label: "PDB广告位", isChecked: true },{id: 1, label: "日期", isChecked: true}];
+                $.each(data, function (idx) {
+                   var item = data[idx];
+                   mediaData.push({
+                       id: item.Id,
+                       label: item.Text,
+                       isChecked: true
+                   });
+                });
+                $(".medias").dropdownCheckbox({
+                    data: mediaData,
+                    title: "媒体"
+                });
+            }
+        });
 
         $('#startDate').datebox('setValue', new Date(new Date().getTime() - 7*24*60*60*1000).format('MM/dd/yyyy'));
         $('#endDate').datebox('setValue', new Date().format('MM/dd/yyyy'));
@@ -79,8 +79,8 @@
             dg.datagrid('loadData',[]);
 
             dg.datagrid('load', {
-                dimension: $('#dimension').combobox('getValues'),
-                media: $('#media').combobox('getValues'),
+                dimension: getDropdownCheckedValues($('.dimensions')),
+                media: getDropdownCheckedValues($('.medias')),
                 startDate: $('#startDate').datebox("getValue"),
                 endDate: $('#endDate').datebox("getValue")
             });
