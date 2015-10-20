@@ -623,7 +623,7 @@
 
 		if (node.state.disabled) return '';
 
-		var color = node.color;
+		var color = '#333';
 		var backColor = node.backColor;
 
 		if (this.options.highlightSelected && node.state.selected) {
