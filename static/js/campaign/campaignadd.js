@@ -1481,3 +1481,27 @@ function checkallplateform() {
 	});
 	$("#allplateform").prop("checked", true);
 }
+
+// 素材规格动态变化
+function SucaiTemplate() {
+	this.tpl = '<label class="radio-inline"></label>';
+	this.input = '<input type="radio" name="sucaiguige" value="">';
+}
+var sucaiArray = new Array();
+sucaiArray.push("640 x 960,640 x 1136,750 x 1334,1242×2208"); //开屏
+sucaiArray.push("228 x 150,690 x 286");//信息流
+sucaiArray.push("640 x 200,640 x 100");//焦点图
+sucaiArray.push("468 x 60,728 x 90");//banner
+
+function changeAdType(typeKey) {
+	var sucaiTpl = new SucaiTemplate();
+	var sucais = sucaiArray[typeKey].split(",");
+	$("#sucaiguigediv").html("");
+	for (var i = 0; i < sucais.length; i ++) {
+		var str = sucaiTpl.input + sucais[i]+ "</input>";
+		var $guigeinput = $(str);
+		$guige = $(sucaiTpl.tpl);
+		$guige.append($guigeinput);
+		$("#sucaiguigediv").append($guige);
+	}
+}
