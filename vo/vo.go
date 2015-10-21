@@ -69,7 +69,7 @@ type PmpCampaignVO struct {
 	BudgetType      int       
 	Budget          int      
 	BidPrice        float32  
-	AdCategory 		int
+	AdCategory[] 		int
 }
 
 type PmpCampaignCreativeVO struct {

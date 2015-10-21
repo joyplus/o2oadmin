@@ -16,9 +16,11 @@ type CampaignController struct {
 func (this *CampaignController) Add() {
 	save := this.GetString("save")
 	if save == "true" {
-		var campaignPageVo vo.CampaingnPageVO
-		this.ParseForm(&campaignPageVo)
-		beego.Info("****** ", campaignPageVo.Campaign.LandingUrl)
+		var campaignPageVo = vo.CampaingnPageVO{}
+		var campaignVo vo.PmpCampaignVO
+		this.ParseForm(&campaignVo)
+		beego.Info("****** Campaign Id Parsed:", campaignVo.Id)
+		campaignPageVo.Campaign = campaignVo
 		err := models.SaveOrCreateCampaign(campaignPageVo)
 		if err == nil {
 			this.Data["json"] = "ok"
@@ -29,6 +31,7 @@ func (this *CampaignController) Add() {
 	} else {
 		categorys, _ := models.GetPmpAdCategoryOne()
 		this.Data["categoryones"] = categorys
+		this.Data["campaignid"] = 0
 		lovMaps := this.GetPmpLovs()
 		this.Data["lovmaps"] = &lovMaps
 		this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
@@ -38,12 +41,28 @@ func (this *CampaignController) Add() {
 
 // @router /edit [*]
 func (this *CampaignController) Edit() {
-	
+	campaignId, err := this.GetInt("Id")
+	if err != nil {
+		beego.Error(err)
+		this.Data["json"] = "failed"
+		this.ServeJson()
+		return
+	}
+	beego.Info("Campaign Id:", campaignId)
+	campaignVo := models.GetPmpCampaignById(campaignId)
+	beego.Info(campaignVo)
+	this.Data["campaignid"] = campaignId
+	this.Data["campaignvo"] = &campaignVo
+	categorys, _ := models.GetPmpAdCategoryOne()
+	this.Data["categoryones"] = categorys
+	lovMaps := this.GetPmpLovs()
+	this.Data["lovmaps"] = &lovMaps
+	this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"	
 }
 
 // @router /upload [*]
 func (this *CampaignController) Upload() {
-	_, header, err := this.GetFile("images")
+	_, header, err := this.GetFile("file_upload_1")
 	if err != nil {
 		beego.Error("upload file error:", err)
 	} else {
