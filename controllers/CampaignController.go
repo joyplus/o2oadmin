@@ -14,9 +14,11 @@ type CampaignController struct {
 
 // @router /add [*]
 func (this *CampaignController) Add() {
-	if this.IsAjax() {
+	save := this.GetString("save")
+	if save == "true" {
 		var campaignPageVo vo.CampaingnPageVO
 		this.ParseForm(&campaignPageVo)
+		beego.Info("****** ", campaignPageVo.Campaign.LandingUrl)
 		err := models.SaveOrCreateCampaign(campaignPageVo)
 		if err == nil {
 			this.Data["json"] = "ok"
