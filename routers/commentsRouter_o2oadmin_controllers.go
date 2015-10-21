@@ -15,6 +15,20 @@ func init() {
 
 	beego.GlobalControllerRouter["o2oadmin/controllers:CampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:CampaignController"],
 		beego.ControllerComments{
+			"Edit",
+			`/edit`,
+			[]string{"*"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:CampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:CampaignController"],
+		beego.ControllerComments{
+			"Upload",
+			`/upload`,
+			[]string{"*"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:CampaignController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:CampaignController"],
+		beego.ControllerComments{
 			"NewCampaignCreative",
 			`/newCreative`,
 			[]string{"*"},
