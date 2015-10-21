@@ -64,7 +64,7 @@
 
 
     <form id="loginform" class="form-signin" action="#" method="post">
-        <h2 class="form-signin-heading">移动DSP平台</h2>
+        <h2 class="form-signin-heading">移动营销协作平台</h2>
 
         <div class="login-wrap">
             <input type="text" class="form-control" placeholder="用户名" name="username" id="user_login" autofocus>
