@@ -34,6 +34,22 @@ func (this *CampaignController) Add() {
 
 }
 
+// @router /edit [*]
+func (this *CampaignController) Edit() {
+	
+}
+
+// @router /upload [*]
+func (this *CampaignController) Upload() {
+	_, header, err := this.GetFile("images")
+	if err != nil {
+		beego.Error("upload file error:", err)
+	} else {
+	    beego.Info("filename", header.Filename)
+	}
+	this.ServeJson()
+}
+
 // @router /newCreative [*]
 func (this *CampaignController) NewCampaignCreative() {
 	v := models.PmpCampaignCreative{}

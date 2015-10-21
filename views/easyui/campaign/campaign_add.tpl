@@ -14,6 +14,7 @@
     <link href="/static/css/phonebrand.css" rel="stylesheet">
     <link href="/static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="/static/css/bootstrap-treeview.css" rel="stylesheet">
+	<link href="/static/css/uploadify.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -93,13 +94,8 @@
                     <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="多个图片标题组合，给用户展示最匹配的创意，提高点击效果"></i>
                 </label>
                 <div class="col-sm-8">
-                    <ul class="creative-list clearfix">
-                        <!-- todo -->
-                        <li ng-click="addCreative()" alt="新增创意" title="新增创意">
-                            <i class="fa fa-plus-square-o btn-add-creative"></i>
-                            <div>新增创意</div>
-                        </li>
-                    </ul>
+					<input id="file_upload_1" name="images"></input>
+                    
                     <input type="hidden" name="creative_info" ng-value="creativeInfo|json" value="[]">
 
                     <!-- 此区域用于存储模板回填的数据 -->
@@ -1029,12 +1025,12 @@
 			            <div class="column-wrap clearfix ng-isolate-scope" title="所有条目" selected="selected">
 			                <div class="column-side left-side">
 			                    <div class="column-header ng-binding">所有条目</div>
-								<div style="max-height:408px;overflow-y:scroll;" id="sourcetree"></div>		                    
+								<div style="max-height:408px;overflow:scroll;" id="sourcetree"></div>		                    
 			                </div>
 			
 			                <div class="column-side right-side">
 			                    <div class="column-header">已选择 <span style="float:right;"><a class="custom-btn btn-primary" onclick="deleteAllSelectedNodes();">删除所有</a></span></div>
-								<div style="max-height:408px;overflow-y:scroll;" id="selectedtree"></div>
+								<div style="max-height:408px;overflow:scroll;" id="selectedtree"></div>
 								<!--
 								<div class="column-body">
                                     <div class="category-list">  </div>
@@ -1066,7 +1062,8 @@
     <script src="/static/js/campaign_weektime.js"></script>
     <script src="/static/js/campaign/campaignadd.js"></script>
     <script src="/static/js/bootstrap-treeview.js"></script>
-
+	<script src="/static/js/jquery.uploadify.min.js"></script>
+	
     <script type="text/javascript">
         $('#start_time').datetimepicker({
             format: 'YYYY-MM-DD HH:mm'
@@ -1087,6 +1084,14 @@
         });	
 		
         $(function() {
+			$("#file_upload_1").uploadify({
+				height        : 30,
+				swf           : '/static/images/uploadify.swf',
+				uploader      : '/pmp/campaign/upload',
+				width         : 120,
+				buttonText: '新增创意'
+			});
+			
             $("#cityselectiondiv").css("display", "none");
             $("#phonebrandselectiondiv").css("display", "none");
             bindCategoryChange();
