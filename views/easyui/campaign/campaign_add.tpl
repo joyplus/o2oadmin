@@ -29,7 +29,7 @@
         <div class="page-header">
             <h3 id="download" class="text-center">基本信息</h3>
         </div>
-        <form class="form-horizontal" role="form" method="POST" id="create_form" action="#" autocomplete="off">
+        <form class="form-horizontal" role="form" method="POST" id="create_form" action="/pmp/campaign/add?save=true" autocomplete="off">
             <div class="form-group" input-name="ad_category" input-value="" ng-controller="CategoryCtrl">
                 <label class="col-sm-3 control-label" label-for="ad_category">广告分类</label>
                 <div class="category-selects append-bottom-10 category-wrap">
@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">落地页链接</label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12 form-control" placeholder="http://" value="" name="external_url" type="text">
+                    <input class="col-sm-12 form-control" placeholder="http://" value="" name="Campaign.LandingUrl" type="text">
                 </div><span class="help-block valierr" style="color:#FF9966">*</span>
             </div>
 
@@ -59,11 +59,11 @@
                 <div class="col-sm-8">
                     {{range index .lovmaps "ad_type"}} {{if eq .DispOrder 0}}
                     <label class="radio-inline">
-                        <input type="radio" name="ad_type" value="{{.LovKey}}" checked="checked" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
+                        <input type="radio" name="Campaign.AdType" value="{{.LovKey}}" checked="checked" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
                     </label>
                     {{else}}
                     <label class="radio-inline">
-                        <input type="radio" name="ad_type" value="{{.LovKey}}" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
+                        <input type="radio" name="Campaign.AdType" value="{{.LovKey}}" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
                     </label>
                     {{end}} {{end}}
                 </div>
@@ -71,7 +71,7 @@
 			
 			<!--开屏：640 x 960,640 x 1136,750 x 1334,1242×2208 信息流：228 x 150，690 x 286 焦点图：640 x 200，640 x 100 -->
             <div class="form-group">
-                <label class="col-sm-3 control-label">信息流展示图片</label>
+                <label class="col-sm-3 control-label" id="sucaititleid">开屏展示图片</label>
                 <div class="col-sm-8" id="sucaiguigediv">
                     <label class="radio-inline">
                         <input type="radio" name="sucaiguige" value="2" checked="checked"> 640 x 960
@@ -148,25 +148,6 @@
                     {{end}} {{end}}
                 </div>
             </div>
-
-            <!--
-            <div class="form-group audience-group">
-                <label for="" class="col-sm-3 control-label">性别</label>
-                <div class="col-sm-8">
-					{{range index .lovmaps "gender"}}
-						{{if eq .DispOrder 0}}
-							<label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-		                        <input type="radio" name="gender" checked="checked" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
-		                    </label>
-						{{else}}
-							<label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-		                        <input type="radio" name="gender" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
-		                    </label>
-						{{end}}
-					{{end}}
-                </div>
-            </div>
-			-->
 
             <div class="form-group audience-group">
                 <label for="" class="col-sm-3 control-label">地域</label>

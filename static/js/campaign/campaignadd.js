@@ -1493,14 +1493,24 @@ sucaiArray.push("228 x 150,690 x 286");//信息流
 sucaiArray.push("640 x 200,640 x 100");//焦点图
 sucaiArray.push("468 x 60,728 x 90");//banner
 
+var sucaiTitleArray = new Array();
+sucaiTitleArray.push("开屏展示图片");
+sucaiTitleArray.push("信息流展示图片");
+sucaiTitleArray.push("焦点图展示图片");
+sucaiTitleArray.push("banner展示图片");
+
 function changeAdType(typeKey) {
 	var sucaiTpl = new SucaiTemplate();
 	var sucais = sucaiArray[typeKey].split(",");
 	$("#sucaiguigediv").html("");
+	$("#sucaititleid").html(sucaiTitleArray[typeKey]);
 	for (var i = 0; i < sucais.length; i ++) {
 		var str = sucaiTpl.input + sucais[i]+ "</input>";
 		var $guigeinput = $(str);
 		$guige = $(sucaiTpl.tpl);
+		if (i == 0) {
+			$guigeinput.attr("checked", "checked");	
+		}
 		$guige.append($guigeinput);
 		$("#sucaiguigediv").append($guige);
 	}
