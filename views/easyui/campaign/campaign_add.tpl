@@ -30,6 +30,8 @@
             <h3 id="download" class="text-center">基本信息</h3>
         </div>
         <form class="form-horizontal" role="form" method="POST" id="create_form" action="/pmp/campaign/add?save=true" autocomplete="off">
+			<input type="hidden" name="Id" value="{{.campaignid}}"/>
+			
             <div class="form-group" input-name="ad_category" input-value="" ng-controller="CategoryCtrl">
                 <label class="col-sm-3 control-label" label-for="ad_category">广告分类</label>
                 <div class="category-selects append-bottom-10 category-wrap">
@@ -39,10 +41,10 @@
                         <option value="{{.Id}}">{{.Name}}</option>
                         {{end}}
                     </select>
-                    <select class="form-control" id="category_two_id" style="display:none;" name="">
+                    <select class="form-control" id="category_two_id" style="display:none;" name="AdCategory">
                         <option value="">请选择二级分类</option>
                     </select>
-                    <select class="form-control" id="category_three_id" style="display:none;" name="">
+                    <select class="form-control" id="category_three_id" style="display:none;" name="AdCategory">
                         <option value="">请选择三级分类</option>
                     </select>
                 </div>
@@ -50,7 +52,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">落地页链接</label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12 form-control" placeholder="http://" value="" name="Campaign.LandingUrl" type="text">
+                    <input class="col-sm-12 form-control" placeholder="http://" value="{{.campaignvo.LandingUrl}}" name="LandingUrl" type="text">
                 </div><span class="help-block valierr" style="color:#FF9966">*</span>
             </div>
 
@@ -59,11 +61,11 @@
                 <div class="col-sm-8">
                     {{range index .lovmaps "ad_type"}} {{if eq .DispOrder 0}}
                     <label class="radio-inline">
-                        <input type="radio" name="Campaign.AdType" value="{{.LovKey}}" checked="checked" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
+                        <input type="radio" name="AdType" value="{{.LovKey}}" checked="checked" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
                     </label>
                     {{else}}
                     <label class="radio-inline">
-                        <input type="radio" name="Campaign.AdType" value="{{.LovKey}}" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
+                        <input type="radio" name="AdType" value="{{.LovKey}}" onclick="changeAdType({{.LovKey}})"> {{.LovValue}}
                     </label>
                     {{end}} {{end}}
                 </div>
@@ -94,10 +96,7 @@
                     <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="多个图片标题组合，给用户展示最匹配的创意，提高点击效果"></i>
                 </label>
                 <div class="col-sm-8">
-					<input id="file_upload_1" name="images"></input>
-                    
-                    <input type="hidden" name="creative_info" ng-value="creativeInfo|json" value="[]">
-
+					<input id="file_upload_1" name="images"></input>                                  
                     <!-- 此区域用于存储模板回填的数据 -->
                     <input type="hidden" id="creative-data" value="">
                     <input type="hidden" id="image-mode-data" value="">
@@ -112,7 +111,7 @@
                 <div class="col-sm-9 ng-scope">
                     <div class="row has-feedback url-detect">
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="track_url" placeholder="http://" value="">
+                            <input type="text" class="form-control" name="ImpTrackingUrl" placeholder="http://" value="{{.campaignvo.ImpTrackingUrl}}">
                         </div>
                     </div>
                 </div>
@@ -125,7 +124,7 @@
                 <div class="col-sm-9 ng-scope">
                     <div class="row has-feedback url-detect">
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="track_url" placeholder="http://" value="">
+                            <input type="text" class="form-control" name="ClkTrackingUrl" placeholder="http://" value="{{.campaignvo.ClkTrackingUrl}}">
                         </div>
                     </div>
                 </div>
@@ -138,14 +137,15 @@
                 <label for="" class="col-sm-3 control-label">匹配精度</label>
                 <div class="col-sm-8">
                     {{range index .lovmaps "accurate_type"}} {{if eq .DispOrder 0}}
-                    <label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-                        <input type="radio" name="Campaign.AccurateType" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}" checked="checked"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
-                    </label>
-                    {{else}}
-                    <label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
-                        <input type="radio" name="Campaign.AccurateType" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
-                    </label>
-                    {{end}} {{end}}
+	                    <label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
+	                        <input type="radio" name="AccurateType" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}" checked="checked"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
+	                    </label>
+	                    {{else}}
+	                    <label class="radio-inline ng-scope" ng-repeat="item in audienceItems.gender">
+	                        <input type="radio" name="AccurateType" ng-value="item.value" ng-model="model.gender" class="ng-pristine ng-untouched ng-valid" value="{{.LovKey}}"><span ng-bind="item.label" class="ng-binding">{{.LovValue}}</span>
+	                    </label>
+	                    {{end}} 
+					{{end}}
                 </div>
             </div>
 
@@ -177,21 +177,21 @@
                 <label for="" class="col-sm-3 control-label">平台</label>
                 <div class="col-sm-8" id="osdiv">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="allplateform" name="platform" value="" checked="checked" onclick="checkallplateform()" class="ng-isolate-scope"> 不限
+                        <input type="checkbox" id="allplateform" name="Plateform" value="" checked="checked" onclick="checkallplateform()" class="ng-isolate-scope"> 不限
                     </label>
                     <!-- ngRepeat: item in audienceItems.platform -->
                     <label class="checkbox-inline ng-scope" ng-repeat="item in audienceItems.platform">
-                        <input type="checkbox" name="platform" onclick="uncheckallplateform()" checklist-value="item.value" ng-value="item.value"  class="ng-scope ng-pristine ng-untouched ng-valid" value="2">
+                        <input type="checkbox" name="Plateform" onclick="uncheckallplateform()" checklist-value="item.value" ng-value="item.value"  class="ng-scope ng-pristine ng-untouched ng-valid" value="2">
                         <span ng-bind="item.label" class="ng-binding">iPhone</span>
                     </label>
                     <!-- end ngRepeat: item in audienceItems.platform -->
                     <label class="checkbox-inline ng-scope" ng-repeat="item in audienceItems.platform">
-                        <input type="checkbox" name="platform" onclick="uncheckallplateform()" checklist-value="item.value" ng-value="item.value"  class="ng-scope ng-pristine ng-untouched ng-valid" value="1">
+                        <input type="checkbox" name="Plateform" onclick="uncheckallplateform()" checklist-value="item.value" ng-value="item.value"  class="ng-scope ng-pristine ng-untouched ng-valid" value="1">
                         <span ng-bind="item.label" class="ng-binding">Android</span>
                     </label>
                     <!-- end ngRepeat: item in audienceItems.platform -->
                     <label class="checkbox-inline ng-scope" ng-repeat="item in audienceItems.platform">
-                        <input type="checkbox" name="platform" onclick="uncheckallplateform()" checklist-value="item.value" ng-value="item.value"  class="ng-scope ng-pristine ng-untouched ng-valid" value="8">
+                        <input type="checkbox" name="Plateform" onclick="uncheckallplateform()" checklist-value="item.value" ng-value="item.value"  class="ng-scope ng-pristine ng-untouched ng-valid" value="8">
                         <span ng-bind="item.label" class="ng-binding">手机网站</span>
                     </label>
                     <!-- end ngRepeat: item in audienceItems.platform -->
@@ -202,10 +202,10 @@
                 <label for="" class="col-sm-3 control-label">手机品牌定向</label>
                 <div class="col-sm-8">
                     <label class="radio-inline">
-                        <input type="radio" name="phone_brand" checked="checked" value="0" ng-model="phone_brand" id="phonebrandunlimited" class="ng-pristine ng-untouched ng-valid"> 不限
+                        <input type="radio" name="PhoneBrand" checked="checked" value="0" ng-model="phone_brand" id="phonebrandunlimited" class="ng-pristine ng-untouched ng-valid"> 不限
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="phone_brand" value="1" ng-model="phone_brand" id="phonebrandid" class="ng-valid ng-dirty ng-valid-parse ng-touched"> 按品牌
+                        <input type="radio" name="PhoneBrand" value="1" ng-model="phone_brand" id="phonebrandid" class="ng-valid ng-dirty ng-valid-parse ng-touched"> 按品牌
                     </label>
                     <div class="prepend-top-15" ng-show="phone_brand == 1" id="phonebrandselectiondiv">
                         <div class="column-wrap clearfix ng-isolate-scope" categories="categories" preset="preset" title="品牌选择" selected="selected">
@@ -340,10 +340,10 @@
                 <label class="col-sm-3 control-label">网络定向</label>
                 <div class="col-sm-8">
                     <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="2" checked="checked"> 不限
+                        <input type="radio" name="Internet" value="0" checked="checked"> 不限
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="image_mode" value="3"> WIFI
+                        <input type="radio" name="Internet" value="1"> WIFI
                     </label>
 
                 </div>
@@ -355,20 +355,23 @@
             <div class="form-group" id="campaign_input_group">
                 <label for="" class="col-sm-3 control-label">新广告组名称</label>
                 <div class="col-sm-8">
-                    <input placeholder="请输入新广告组名称" type="text" class="col-sm-4 form-control" name="campaign_name" value="" id="campaign_name_input" style="width: 300px; margin-right: 4px; float:left">
-                    <input type="hidden" name="campaign_id" id="campaign_id_input" value="">
+                    <input placeholder="请输入新广告组名称" type="text" class="col-sm-4 form-control" name="GroupName" value="{{.campaignvo.GroupName}}" id="campaign_name_input" style="width: 300px; margin-right: 4px; float:left">               
                     <a class="btn btn-primary" id="toggle_campaign_name_selector" style="width:120px">使用现有广告组</a>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-3 control-label">出价方式</label>
                 <div class="col-sm-8" style="position:relative">
+					<label class="radio-inline" id="PricingTypeCPM">
+                        <input type="radio" name="PricingType" value="0" checked="checked"> GD
+                        <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="GD"></i>
+                    </label>
                     <label class="radio-inline" id="PricingTypeCPM">
-                        <input type="radio" name="pricing" value="1"> 按千次展示(CPM)
+                        <input type="radio" name="PricingType" value="1" checked="checked"> 按千次展示(CPM)
                         <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="CPM：按每千次展现付费"></i>
                     </label>
                     <label class="radio-inline" id="PricingTypeCPC">
-                        <input type="radio" name="pricing" value="2" checked=""> 按点击(CPC)
+                        <input type="radio" name="PricingType" value="2"> 按点击(CPC)
                         <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="CPC ：按每次点击付费"></i>
                     </label>
                 </div>
@@ -820,15 +823,15 @@
                 <label for="" class="col-sm-3 control-label">投放策略</label>
                 <div class="col-sm-8">
                     <label class="radio-inline">
-                        <input type="radio" name="flow_control_mode" value="0"> 尽快投放
+                        <input type="radio" name="StrategyType" value="0" checked="checked"> 尽快投放
                         <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="尽可能快的获取展现"></i>
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="flow_control_mode" value="1"> 平均投放
+                        <input type="radio" name="StrategyType" value="1"> 平均投放
                         <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="根据所选时间段的流量，匀速投放"></i>
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="flow_control_mode" value="2"> 按小时投放
+                        <input type="radio" name="StrategyType" value="2"> 按小时投放
                         <i class="fa fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="根据预算和流量，平均到每个小时进行投放"></i>
                     </label>
                 </div>
@@ -837,23 +840,29 @@
                 <label for="" class="col-sm-3 control-label">预算方式</label>
                 <div class="col-sm-8">
                     {{range index .lovmaps "budget_type"}}
-                    <label class="radio-inline">
-                        <input type="radio" name="budget_mode" class="budget-radio" value="{{.LovKey}}"> {{.LovValue}}
-                    </label>
+						{{if eq .DispOrder 0}}
+							<label class="radio-inline">
+	                        		<input type="radio" name="BudgetType" checked="checked" class="budget-radio" value="{{.LovKey}}"> {{.LovValue}}
+	                    		</label>
+						{{else}}
+							<label class="radio-inline">
+	                        		<input type="radio" name="BudgetType" class="budget-radio" value="{{.LovKey}}"> {{.LovValue}}
+	                    		</label>
+						{{end}}                    
                     {{end}}
                 </div>
             </div>
             <div class="form-group" for-radio="pricing" data-value="1,2" id="PricingBudget" style="display: block;">
                 <label for="" class="col-sm-3 control-label">预算</label>
                 <div class="col-sm-5">
-                    <input class="form-control form-control-inline" name="budget" type="text" onclick="this.select()" value="" placeholder="¥" data-ga="budget">
+                    <input class="form-control form-control-inline" name="Budget" type="text" value="{{.campaignvo.Budget}}" placeholder="¥" data-ga="budget">
                     <span>(最低预算100元)</span>
                 </div>
             </div>
             <div class="form-group" for-radio="pricing" data-value="1,2" id="PricingBid" style="display: block;">
                 <label for="" class="col-sm-3 control-label">出价</label>
                 <div class="col-sm-8">
-                    <input class="form-control form-control-inline" name="bid" type="text" onclick="this.select()" placeholder="¥" value="">
+                    <input class="form-control form-control-inline" name="BidPrice" type="text" placeholder="¥" value="{{.campaignvo.BidPrice}}">
 
                     <span for-radio="pricing" data-value="1" style="display: none;">(最低出价
                         <span ng-show="baseInfo.image_mode==2">10</span>
@@ -1024,8 +1033,9 @@
 			    </div>
 			</div>
 			<!-- tree view end-->
-			
-            <div class="form-group" id="create-submit-group">
+			<!-- <div><a href="#" onclick="window.location='/pmp/campaign/edit?Id=6';">Test Edit</a></div>
+            -->
+			<div class="form-group" id="create-submit-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-primary" id="creat_submit">提交</button>
                 </div>

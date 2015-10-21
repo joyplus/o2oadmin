@@ -75,11 +75,12 @@ func SaveOrCreateCampaign(campaignPageVo vo.CampaingnPageVO) (err error) {
 			return	
 		}	
 		groupId := int(id)
+		adCat := campaignPageVo.Campaign.AdCategory[len(campaignPageVo.Campaign.AdCategory) -1]
 		// create new Campaign			
 		campaign := PmpCampaign{GroupId:groupId, CampaignStatus:0, ImpTrackingUrl:campaignPageVo.Campaign.ImpTrackingUrl,
 					ClkTrackingUrl:campaignPageVo.Campaign.ClkTrackingUrl, LandingUrl:campaignPageVo.Campaign.LandingUrl, AdType:campaignPageVo.Campaign.AdType, AccurateType:campaignPageVo.Campaign.AccurateType,
 					PricingType:campaignPageVo.Campaign.PricingType, StrategyType:campaignPageVo.Campaign.StrategyType, BudgetType:campaignPageVo.Campaign.BudgetType,
-					Budget:campaignPageVo.Campaign.Budget, BidPrice:campaignPageVo.Campaign.BidPrice, AdCategory:campaignPageVo.Campaign.AdCategory}
+					Budget:campaignPageVo.Campaign.Budget, BidPrice:campaignPageVo.Campaign.BidPrice, AdCategory:adCat}
 					
 		if campaignPageVo.Campaign.StartDate != "" {
 			startDate, er := campaign.ParseDate(campaignPageVo.Campaign.StartDate)
@@ -98,6 +99,9 @@ func SaveOrCreateCampaign(campaignPageVo vo.CampaingnPageVO) (err error) {
 			o.Rollback();
 			return
 		}
+		// For test, won't try to insert or update targeting data
+		o.Commit()
+		return nil
 		
 		// create new PmpCampaignTargeting
 		campaignId := int(id)
@@ -163,7 +167,7 @@ func SaveOrCreateCampaign(campaignPageVo vo.CampaingnPageVO) (err error) {
 		campaign.BudgetType = campaignPageVo.Campaign.BudgetType
 		campaign.Budget = campaignPageVo.Campaign.Budget
 		campaign.BidPrice = campaignPageVo.Campaign.BidPrice
-		campaign.AdCategory = campaignPageVo.Campaign.AdCategory
+		campaign.AdCategory = campaignPageVo.Campaign.AdCategory[len(campaignPageVo.Campaign.AdCategory) -1]
 					
 		if campaignPageVo.Campaign.StartDate != "" {
 			startDate, er := campaign.ParseDate(campaignPageVo.Campaign.StartDate)
@@ -182,6 +186,10 @@ func SaveOrCreateCampaign(campaignPageVo vo.CampaingnPageVO) (err error) {
 			o.Rollback();
 			return
 		}
+		
+		// For test, won't try to insert or update targeting data
+		o.Commit()
+		return nil
 		
 		// update new PmpCampaignTargeting
 		// delete existed campaign targetings
@@ -267,15 +275,25 @@ func AddPmpCampaign(m *PmpCampaign) (id int64, err error) {
 	return
 }
 
-// GetPmpCampaignById retrieves PmpCampaign by Id. Returns error if
-// Id doesn't exist
-func GetPmpCampaignById(id int) (v *PmpCampaign, err error) {
+// GetPmpCampaignById retrieves PmpCampaign by Id. 
+func GetPmpCampaignById(id int) (v vo.PmpCampaignVO) {
 	o := orm.NewOrm()
-	v = &PmpCampaign{Id: id}
-	if err = o.Read(v); err == nil {
-		return v, nil
+	campaign := PmpCampaign{Id: id}
+	if err := o.Read(&campaign); err != nil {
+		return vo.PmpCampaignVO{Id:0}
 	}
-	return nil, err
+	v = vo.PmpCampaignVO{Id:id, GroupId:campaign.GroupId, Name:campaign.Name, CampaignStatus:campaign.CampaignStatus,
+		DemandAdspaceId:campaign.DemandAdspaceId, ImpTrackingUrl:campaign.ImpTrackingUrl, ClkTrackingUrl:campaign.ClkTrackingUrl,
+		LandingUrl:campaign.LandingUrl, AdType:campaign.AdType,CampaignType:campaign.CampaignType,AccurateType:campaign.AccurateType,
+		PricingType:campaign.PricingType, StrategyType:campaign.StrategyType, BudgetType:campaign.BudgetType, Budget:campaign.Budget,
+		BidPrice:campaign.BidPrice}
+	group := PmpCampaignGroup{Id:campaign.GroupId}
+	o.Read(&group)
+	v.GroupName = group.Name
+	adCat := make([]int, 1)
+	adCat = append(adCat, campaign.AdCategory)
+	v.AdCategory = adCat
+	return v
 }
 
 // UpdatePmpCampaign updates PmpCampaign by Id and returns error if
