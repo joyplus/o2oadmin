@@ -19,7 +19,7 @@
         </div>
         <div class="creat_area1 creat_area2">
             <div>
-                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">组名</span><span>第一单</span></div>
+                <div class="are_unit are_unitb"><span class="unit_title unit_titleb">组名</span><span>优贷通</span></div>
                 <div class="are_unit are_unitb"><span class="unit_title unit_titleb">预算</span><span>50000</span></div>
             </div>
         </div>
