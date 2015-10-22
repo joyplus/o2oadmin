@@ -29,7 +29,7 @@
 											vs = value.split(",");
 											var html = "预估曝光量: "+ accounting.formatNumber(vs[0]) + "<br/>";
 											html += "预估点击量: " + accounting.formatNumber(vs[1]) + "<br/>";
-											html += "预估点击率: " + parseFloat(vs[2]).toFixed(2) * 100 + "%";
+											html += "预估点击率: " + (parseFloat(vs[2]) * 100).toFixed(2) + "%";
 											return html;
 											
 										} else {
