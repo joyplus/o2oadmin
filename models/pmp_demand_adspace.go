@@ -13,17 +13,21 @@ import (
 
 type PmpDemandAdspace struct {
 	Id               int       `orm:"column(id);auto"`
-	Name             string    `orm:"column(name);size(255)"`
-	Description   	  string    `orm:"column(description);size(500);null"`
+	Name             string    `orm:"column(name);size(255)"`	
 	DelFlg           int8      `orm:"column(del_flg);default(0)"`
 	CreateUser       int       `orm:"column(create_user);null"`
 	CreateTime       time.Time `orm:"column(create_time);type(timestamp);null"`
 	UpdateUser       int       `orm:"column(update_user);null"`
 	UpdateTime       time.Time `orm:"column(update_time);type(timestamp);null"`
 	SecretKey        string    `orm:"column(secret_key);size(50);null"`
+	RealAdspaceKey   string    `orm:"column(real_adspace_key);size(50);not null"`
 	DemandAdspaceKey string    `orm:"column(demand_adspace_key);size(50);not null;unique"`
 	DemandId         int       `orm:"column(demand_id)"`
-	RealAdspaceKey   string    `orm:"column(real_adspace_key);size(50);not null"`
+	AppId			 int 	   `orm:"column(app_id);null"`
+	AdspaceType		 int	   `orm:"column(adspace_type);null"`
+	Cpm				 float32   `orm:"column(cpm);null"`
+	Cpc				 float32   `orm:"column(cpc);null"`
+	PricingType	 	 int	   `orm:"column(pricing_type)";null`
 }
 
 // only contains the columns that need to be displayed in client
@@ -34,7 +38,7 @@ type DemandAdspaceVo struct {
 	DemandId int
 	SecretKey string
 	RealAdspaceKey string
-	Description string
+//	Description string
 }
 
 func (t *PmpDemandAdspace) TableName() string {
@@ -52,7 +56,7 @@ func AddPmpDemandAdspace(m *DemandAdspaceVo) (id int64, err error) {
 	fmt.Println("time string:", time.Now().String())	
 	// generate PmpDemandAdspaceKey automatically
 	pmpDemandAdspaceKey := lib.GetMd5String(m.RealAdspaceKey + "#" + time.Now().String())
-	entity := &PmpDemandAdspace{Name:m.Name, DemandId:m.DemandId, Description:m.Description, SecretKey:m.SecretKey, RealAdspaceKey:m.RealAdspaceKey, DemandAdspaceKey:pmpDemandAdspaceKey}	
+	entity := &PmpDemandAdspace{Name:m.Name, DemandId:m.DemandId, SecretKey:m.SecretKey, RealAdspaceKey:m.RealAdspaceKey, DemandAdspaceKey:pmpDemandAdspaceKey}	
 	id, err = o.Insert(entity)
 	return
 }
@@ -65,7 +69,7 @@ func UpdatePmpDemandAdspace(m *DemandAdspaceVo) (err error) {
     if err = o.Read(&tempv); err == nil {
         var num int64  
 		tempv.Name = m.Name
-		tempv.Description = m.Description
+		//tempv.Description = m.Description
 		tempv.SecretKey = m.SecretKey      
         if num, err = o.Update(&tempv); err == nil {
             fmt.Println("Number of records updated in database:", num)

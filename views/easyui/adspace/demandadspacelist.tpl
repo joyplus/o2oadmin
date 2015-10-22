@@ -29,9 +29,7 @@
 							{
 								field:"RealAdspaceKey", title:"Ad space key", width:150
 							},
-							{
-								field:"Description", title:"备注", width:300
-							},
+							
 							{
 								field:"DemandId", hidden:true
 							}														
@@ -68,16 +66,16 @@
 					
 				}	
 				
-				function saveNew() {
-					$("#form1").form('submit',{
-                    url:'/pmp/adspace/updatedemandadspace',
-                    onSubmit:function(){
-                        return $("#form1").form('validate');
-                    },
-                    success:function(r){
-						$("#dd").dialog("close");
-                       $("#dg").datagrid('reload');
-                    }
+				function saveNew() {			
+					$("#demandadspaceform").form('submit',{
+                    	url:'/pmp/adspace/updatedemandadspace',
+                    	onSubmit:function(){
+                        	return $("#demandadspaceform").form('validate');
+                    	},
+                    	success:function(r){
+						   	$("#dd").dialog("close");
+	                       	$("#dg").datagrid('reload');
+                    	}
 					});
 				}
 				
@@ -108,7 +106,7 @@
 					//$('#realadspacekeyid').removeClass('easyui-validatebox');
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
-					$("#form1").form('load', row);
+					$("#demandadspaceform").form('load', row);
 					
 				}
 				
@@ -121,7 +119,7 @@
 					//$('#realadspacekeyid').removeClass('easyui-validatebox');
 					$("#dd").dialog('open');
 					var row = $('#dg').datagrid('getSelected');
-					$("#form1").form('load', row);
+					$("#demandadspaceform").form('load', row);
 				}
 				
 				function deleteRow() {
@@ -178,7 +176,7 @@
 						<th field="DemandName" width="150">所属需求方平台</th>
 						<th field="SecretKey" width="150">Secret Key</th>
 						<th field="RealAdspaceKey" width="150">Ad space key</th>
-		                <th field="Description" width="300">备注</th>
+		                <!-- <th field="Description" width="300">备注</th> -->
 		            </tr>
 		        </thead>
 		    </table>
@@ -186,7 +184,7 @@
 			<div id="dd" class="easyui-dialog" title="新建广告位" style="width:400px;height:400px;padding-top:10px;"
 			        data-options="resizable:true,modal:true,closed:true,buttons:'#bb'">
 				<div style="padding:20px 20px 40px 80px;" >
-			    <form id="form1" method="post">
+			    <form id="demandadspaceform" method="post">
 		            <table>
 						<tr><input name="Id" hidden="true"/> </tr>
 						
@@ -206,10 +204,12 @@
 		                    <td>Ad space Key:</td>
 		                    <td><input id="realadspacekeyid" class="easyui-validatebox" name="RealAdspaceKey" required="true"/></td>
 		                </tr>
+						<!--
 		                <tr>
 		                    <td>备注：</td>
 		                    <td><textarea style="height:150px;" name="Description" class="easyui-validatebox" validType="length[0,1000]"></textarea></td>
 		                </tr>
+						-->
 		            </table>
 		        </form>
 				</div>

@@ -85,7 +85,7 @@
                         return $("#form1").form('validate');
                     },
                     success:function(r){
-						$("#dd").dialog("close");
+					   $("#dd").dialog("close");
                        $("#dg").datagrid('reload');
                     }
 					});
