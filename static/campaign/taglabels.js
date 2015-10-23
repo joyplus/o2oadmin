@@ -563,6 +563,8 @@ define(function(require, exports){
 
                     this.removeAllTags();
 
+                    data = JSON.parse('{"items":[],"total":0,"items_child_count":0}');
+
                     this.len = data.total;
                     this.data = data.items;
                     var _all;
@@ -1209,6 +1211,8 @@ define(function(require, exports){
             ChannelLabels.master(this, 'init', arguments);
         },
         onData: function(err, data){
+            data = '{"items":[],"total":0,"desc":{"Define":{"Name":"渠道"}}}';
+            data = JSON.parse(data);
             if (!err){
                 util.each(data.items, function(item){
                     return {'id': item.Id, 'name': item.Name, 'agent': true};

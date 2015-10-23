@@ -1,13 +1,69 @@
 <html>
 <head>
     <script type="text/javascript">var APP_DEPLOY = "main/", APP_THEME = null;</script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/daterangepicker-bs3.css" />
     <link type="text/css" charset="utf-8" rel="stylesheet"
           href="/static/campaign/css/app.css">
-    <script type="text/javascript" src="/static/campaign/js/sea.js"></script>
-    <script type="text/javascript" src="/static/campaign/base.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/moment.min.js"></script>
+    <script type="text/javascript" src="/static/js/daterangepicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+                var isDisplayed = false;
+                $('.custom-click-btn').click(function () {
+                    if (!isDisplayed) {
+                        $('.M-tableCustomColumn').show();
+                        isDisplayed = true;
+                    } else {
+                        $('.M-tableCustomColumn').hide();
+                        isDisplayed = false;
+                    }
+                });
+                var collapseBtn = $('#channelDiv').next();
+                collapseBtn.click(function(){
+                    var chDiv = $('#channelDiv');
+                    if (chDiv.css('height') == '18px') {
+                        chDiv.css('height', '100px');
+                        collapseBtn.text('收起');
+                    } else {
+                        chDiv.css('height', '18px')
+                        collapseBtn.text('更多');
+                    }
+                });
+
+                $('#reservation').daterangepicker({
+                    opens: 'right',
+                    //format: 'YYYY-MM-DD',
+                    "ranges": {
+                        "Last 7 Days": [
+                            "09/14/2015",
+                            "09/20/2015"
+                        ],
+                        "Last 30 Days": [
+                            "08/22/2015",
+                            "09/20/2015"
+                        ],
+                        "Last Month": [
+                            "08/01/2015",
+                            "08/31/2015"
+                        ]
+                    },
+                    dateLimit: { days: 180 }
+                }, function(st, ed, label) {
+                    start = st.format('YYYY-MM-DD');
+                    end = ed.format('YYYY-MM-DD');
+                    showUserSearch();
+                    //console.log(start.toISOString(), end.toISOString(), label);
+                });
+            }
+        )
+    </script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/> -->
-    <title>活动 - biddingx 广告整合优化平台</title>
+    <title>广告优化平台</title>
 </head>
 <body class="i18n_zh_CN" data-pinterest-extension-installed="sa1.37.01">
 <noscript class="weNeedScript">本系统需要javascript的支持。请先启用浏览器javascript再刷新页面。</noscript>
@@ -26,34 +82,16 @@
                 <div class="G-showArea">
                     <div></div>
                     <div class="P-campaignList" style="display: block;">
-                        <div class="M-dateBar"><span style="display: none;"></span><span class="G-buttonGroup"><input
-                                class="btn selected" type="button" data-id="0" value="今天"><input class="btn"
-                                                                                                 type="button"
-                                                                                                 data-id="1" value="昨天"><input
-                                class="btn" type="button" data-id="2" value="前天"><input class="btn" type="button"
-                                                                                        data-id="3" value="上周六"><input
-                                class="btn" type="button" data-id="4" value="最近7天"><input class="btn" type="button"
-                                                                                          data-id="5"
-                                                                                          value="最近30天"><input
-                                class="btn" type="button" data-id="6" value="本月"></span><span
-                                class="G-buttonGroup"><input class="btn" type="button" data-id="0" value="前一天"><input
-                                class="btn" type="button" data-id="1" value="后一天"></span><span><input type="input"
-                                                                                                      class="M-commonDate btn"
-                                                                                                      readonly=""
-                                                                                                      style="width: 180px;"></span><span></span>
-                        </div>
-                        <div class="P-campaignListCon">
-                            <div class="M-tagLabelsSimpleContainer M-tagLabels-allowCollapse"><label
-                                    class="spLabelTitle">类型：</label>
 
-                                <div class="tagLoading"></div>
-                                <div>
-                                    <div class="wraper" style="height: 18px;">
-                                        <div><span data-all="1" class="act">所有活动</span><span
-                                                data-id="1">PC广告</span><span data-id="2">广告监测</span><span data-id="4">移动广告</span>
-                                        </div>
+                        <div class="P-campaignListCon">
+                            <div style="float:left;font-size:16px;width:250px;position: relative;">
+                                <div style="float:left">
+                                    <div class="input-prepend input-group" style="height:32px;">
+                                    <span class="add-on input-group-addon"><i
+                                            class="glyphicon glyphicon-calendar fa fa-calendar"></i></span><input
+                                            type="text" style="width: 200px;height:32px;" name="reservation"
+                                            id="reservation" class="form-control" value="08/23/2015 - 09/21/2015"/>
                                     </div>
-                                    <em class="ctrlBnt" data-open="更多" data-close="收起" style="display: none;">更多</em>
                                 </div>
                             </div>
                             <div class="M-tagLabelsSimpleContainer M-tagLabels-allowCollapse"><label
@@ -61,7 +99,7 @@
 
                                 <div class="tagLoading"></div>
                                 <div>
-                                    <div class="wraper" style="height: 18px;">
+                                    <div id="channelDiv" class="wraper" style="height: 18px;">
                                         <div><span data-all="1" class="act">所有渠道</span><span
                                                 data-id="1">TanX</span><span data-id="2">优酷</span><span
                                                 data-id="3">百度</span><span data-id="4">聚效</span><span
@@ -91,15 +129,6 @@
                                                 data-id="59">中天移动</span></div>
                                     </div>
                                     <em class="ctrlBnt" data-open="更多" data-close="收起" style="display: inline;">更多</em>
-                                </div>
-                            </div>
-                            <div class="M-tagLabels" type="CampaignLabel">
-                                <div class="M-tagLabelsSimpleContainer M-tagLabels-allowCollapse"><label
-                                        class="spLabelTitle">标签：</label>
-
-                                    <div class="wraper" style="height: 19px;"><span class="act" data-name="__all__">所有标签<em>(0)</em></span>
-                                    </div>
-                                    <em class="ctrlBnt" data-open="更多" data-close="收起" style="display: none;">更多</em>
                                 </div>
                             </div>
                             <div class="P-campaignListConStatus">
@@ -193,7 +222,6 @@
                                                         data-name="default">默认<span class="custom-click-btn"></span>
                                                     </li>
                                                     <li class="M-tableTabItem" data-name="creative">前端</li>
-                                                    <li class="M-tableTabItem" data-name="whisky">落地页</li>
                                                     <li class="M-tableTabItem" data-name="transform">转化</li>
                                                     <li class="M-tableTabItem" data-name="cost">成本</li>
                                                     <li class="M-tableTabItem" data-name="bid">竞价</li>
@@ -319,8 +347,6 @@
                                 </div>
                             </div>
                             <div class="M-chartAdvCollapse">
-                                <div><p data-close="0" class="M-chartAdvCollapseClose">
-                                    <em></em><b></b><span></span><i></i></p></div>
                             </div>
                             <div class="M-commonLoading"
                                  style="z-index: 9999; display: none; left: 0px; top: -10px; width: 1128px; height: 11px;">
@@ -364,9 +390,86 @@
                                 <div class="M-gridLayoutCellLeft">
                                     <ul class="M-tableTab">
                                         <li class="M-tableTabItem M-tableTabActive M-tableTabCustom"
-                                            data-name="default">默认<span class="custom-click-btn"></span></li>
+                                            data-name="default">默认<span class="custom-click-btn"></span>
+
+                                            <div class="M-tableCustomColumn"
+                                                 style="left: -1px; top: 31px; display: none;">
+                                                <div class="M-dialogOptionBody">
+                                                    <table>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td><strong>前端</strong><label><input type="checkbox" checked
+                                                                                                 value="impressions">展示量</label><label><input
+                                                                    type="checkbox"
+                                                                    value="new_impressions">新访客展示量</label><label><input
+                                                                    type="checkbox"
+                                                                    value="old_impressions">老访客展示量</label><label><input
+                                                                    type="checkbox"
+                                                                    value="visitors">独立访客量</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="clicks">点击量</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="click_rate">点击率</label><label><input
+                                                                    type="checkbox"
+                                                                    value="old_visitors">老访客量</label><label><input
+                                                                    type="checkbox"
+                                                                    value="new_visitors">新访客量</label><label><input
+                                                                    type="checkbox"
+                                                                    value="new_visitor_rate">新访客比例</label><label><input
+                                                                    type="checkbox"
+                                                                    value="old_visitor_rate">老访客比例</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="click_reach_rate">点击到达率</label></td>
+                                                            <td><strong>转化</strong><label><input type="checkbox" checked
+                                                                                                 value="back_regs">注册量</label><label><input
+                                                                    type="checkbox"
+                                                                    value="back_reg_click_rate">点击注册率</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="back_reg_rate">B_注册率</label><label><input
+                                                                    type="checkbox"
+                                                                    value="back_logins">登录量</label><label><input
+                                                                    type="checkbox" value="back_login_click_rate">点击登录率</label><label><input
+                                                                    type="checkbox" value="reg_per_mile">千次展现注册率</label><label><input
+                                                                    type="checkbox"
+                                                                    value="login_per_mile">千次展现登录率</label></td>
+                                                            <td><strong>成本</strong><label><input type="checkbox" checked
+                                                                                                 value="avg_click_cost">CPC(元)</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="cpm">CPM(元)</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="avg_reg_cost">CPA(元)</label><label><input
+                                                                    type="checkbox"
+                                                                    value="back_reach_cost">到达单价(元)</label><label><input
+                                                                    type="checkbox" checked value="cost">总消费(元)</label></td>
+                                                            <td><strong>竞价</strong><label><input type="checkbox"
+                                                                                                 value="bid_num">出价数</label><label><input
+                                                                    type="checkbox"
+                                                                    value="win_num">竞得数</label><label><input
+                                                                    type="checkbox" checked
+                                                                    value="win_rate">竞得率</label><label><input
+                                                                    type="checkbox" checked value="top_price">出价</label></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="M-dialogOptionFoot">
+                                                    <div class="M-dialogOptionAll"><input type="checkbox"
+                                                                                          data-name="all"
+                                                                                          id="label95_all"><label
+                                                            for="label95_all">全选</label></div>
+                                                    <div class="M-dialogOptionInvert"><input type="checkbox"
+                                                                                             data-name="invert"
+                                                                                             id="label95_invert"><label
+                                                            for="label95_invert">反选</label></div>
+                                                    <input type="button" class="M-dialogOptionEmpty" data-name="empty"
+                                                           value="清空"><input type="button" class="M-dialogOptionDefault"
+                                                                             data-name="default" value="默认"><input
+                                                        type="button" class="M-dialogOptionOk" data-name="ok"
+                                                        value="确定"><input type="button" class="M-dialogOptionCancel"
+                                                                          data-name="cancel" value="取消"><em></em></div>
+                                            </div>
+                                        </li>
                                         <li class="M-tableTabItem" data-name="creative">前端</li>
-                                        <li class="M-tableTabItem" data-name="whisky">落地页</li>
                                         <li class="M-tableTabItem" data-name="transform">转化</li>
                                         <li class="M-tableTabItem" data-name="cost">成本</li>
                                         <li class="M-tableTabItem" data-name="bid">竞价</li>
@@ -977,8 +1080,6 @@
             </div>
         </div>
     </div>
-    <div class="G-frameFooter" style="display: block;">© 2012 - 2015 Biddingx 粤ICP备12093772号-1 - <a
-            href="#privacy">隐私政策</a></div>
     <div class="M-hotkey">
         <div class="M-hotkeyHead"><em class="closeTip"></em>
 
@@ -1055,49 +1156,5 @@
             </table>
         </div>
     </div>
-    <div class="M-popwin M-popwinBoxReflect M-login-logoHack"
-         style="width: 600px; z-index: 1000; display: none; top: 141px; margin: 0px 0px 0px -300px;">
-        <div class="M-popwinHead">
-            <div class="popwinTitle" style="display: none;"></div>
-        </div>
-        <form action="fake_login" target="hiddenLoginFrame" method="post">
-            <div class="M-popwinBody M-login">
-                <div class="M-login-title"><img src="http://manager.biddingx.com/main/resources/images/dsp_logo_c.png"
-                                                alt="biddingx 广告整合优化平台"></div>
-                <div class="M-login-name"><label for="LoginForm_email">邮箱：</label><input type="text"
-                                                                                         name="LoginForm[email]"
-                                                                                         id="LoginForm_email"
-                                                                                         data-name="userName"
-                                                                                         placeholder="请输入您的邮箱" class=""><span
-                        class="M-login-tip">请输入合法的电子邮箱</span></div>
-                <div class="M-login-pws"><label for="LoginForm_password">密码：</label><input type="password"
-                                                                                           name="LoginForm[password]"
-                                                                                           id="LoginForm_password"
-                                                                                           data-name="userPws"
-                                                                                           placeholder="请输入您的密码"><span
-                        class="M-login-tip">密码不能为空或密码前后不能带空格。</span></div>
-                <div class="M-login-addFunctions"><input type="checkbox" id="rememberMe_66_67"><label
-                        for="rememberMe_66_67">记住用户名和密码</label></div>
-            </div>
-        </form>
-        <div class="M-popwinFoot M-login-foot"><input class="btnBigGreen" type="button" value="登录" data-action="onOk">
-        </div>
-        <iframe name="hiddenLoginFrame" style="display:none;"></iframe>
-    </div>
-    <div class="M-tip" type="info" style="width: 200px;">
-        <div class="tipInner">
-            <div class="M-tipHead">
-                <div class="popwinTitle" style="display: none;"></div>
-            </div>
-            <div class="M-tipBody P-campaignBudgetPopBody">
-                <div class="noticeIcon noticeInfo"></div>
-                <div class="noticeBody"></div>
-            </div>
-            <div class="P-campaignBudgetPopFoot"><input class="btnGreen" type="button" value="确定"
-                                                        data-action="onOk"><input class="btnNormal" type="button"
-                                                                                  value="取消" data-action="onCancel">
-            </div>
-        </div>
-        <b class="tipArrow"></b></div>
 </body>
 </html>

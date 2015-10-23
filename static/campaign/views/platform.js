@@ -1865,13 +1865,13 @@ define(function(require,exports) {
                 );
 
                 // 创建头部视图实例
-                this.head = this.create(
-                    "mainHead"
-                    ,Head
-                    ,{
-                        "target":this.layout.get(0,1)
-                    }
-                );
+                //this.head = this.create(
+                //    "mainHead"
+                //    ,Head
+                //    ,{
+                //        "target":this.layout.get(0,1)
+                //    }
+                //);
 
                 // 主内容视图
                 this.body = this.create(
@@ -1949,7 +1949,7 @@ define(function(require,exports) {
              * @return {Undefined}         无返回值
              */
             ,selectChannel:function(channel){
-                this.head.nav.setAct(channel);
+                //this.head.nav.setAct(channel);
             }
             /**
              * 设置子菜单
@@ -2020,13 +2020,13 @@ define(function(require,exports) {
             }
             ,onUserLogin: function(){
                 var user = app.getUser();
-                this.head.toggleItem('#product', (user && user.type != 2));
-                this.head.toggleItem('#collect', (user && !user.ufo && user.campany_type == 4));
-                this.head.toggleItem('#admin', (user && user.auth == 3 && !user.ufo));
+                //this.head.toggleItem('#product', (user && user.type != 2));
+                //this.head.toggleItem('#collect', (user && !user.ufo && user.campany_type == 4));
+                //this.head.toggleItem('#admin', (user && user.auth == 3 && !user.ufo));
             }
             ,onUserLogout: function(){
-                this.head.toggleItem('#admin', false);
-                this.head.toggleItem('#collect', false);
+                //this.head.toggleItem('#admin', false);
+                //this.head.toggleItem('#collect', false);
             }
         }
     );
