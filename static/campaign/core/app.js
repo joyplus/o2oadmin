@@ -702,8 +702,8 @@ define(function(require, exports){
                 if (data && data.success) {
                     data = data.result;
                 }else {
-                    error = data || {success:false, message:LANG('服务器返回信息无效'), code:-10};
-                    data = null;
+                    //error = data || {success:false, message:LANG('服务器返回信息无效'), code:-10};
+                    //data = null;
                 }
 
                 // 回调数据接口

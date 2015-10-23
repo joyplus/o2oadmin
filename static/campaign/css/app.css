@@ -1014,7 +1014,7 @@ input[disabled] {
     padding-top: 12px;
     clear: both;
     position: relative;
-    background-color: #d9eff7;
+    background-color: #F9F9F9;
     -moz-box-shadow: rgba(0, 0, 0, 0.6) 0 0.4em 0.6em;
     -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0 0.4em 0.6em;
     min-width: 1200px;
@@ -7356,7 +7356,7 @@ body.fullSize .G-frameBodyInnner {
 .M-messagePlaceholder {
     display: none;
     height: 22px;
-    background: #D9EFF7;
+    background: #F9F9F9;
 }
 .M-messageBar {
     display: none;
@@ -12618,4 +12618,15 @@ table tbody td .ing {
 
 .M-tableCustomColumn table {
     font-size: 12px;
+}
+
+* {
+    box-sizing: content-box;
+}
+.daterangepicker {
+    box-sizing: border-box;
+}
+
+.M-tagLabelsSimpleContainer {
+    clear: both;
 }

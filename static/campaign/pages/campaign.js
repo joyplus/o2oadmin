@@ -83,12 +83,12 @@ define(function(require, exports){
         build:function(){
             // 所有活动和单个活动切换按钮
             var titleCon = $('<div class="P-campaignTitle"/>').appendTo(this.el);
-            this.create('buttonGroup', common.buttonGroup, {
-                'target': titleCon,
-                'label': null,
-                'items': [LANG('所有活动'), LANG('单个活动')],
-                'selected':0
-            });
+            //this.create('buttonGroup', common.buttonGroup, {
+            //    'target': titleCon,
+            //    'label': null,
+            //    'items': [LANG('所有活动'), LANG('单个活动')],
+            //    'selected':0
+            //});
             // 时间段控件
             this.date = this.create('date', date.datepicker, {target: this.el});
 
@@ -866,7 +866,7 @@ define(function(require, exports){
             return false;
         }
         ,reset: function(){
-            this.$.buttonGroup.setData(0);
+            //this.$.buttonGroup.setData(0);
             return this;
         }
     });
@@ -9048,15 +9048,15 @@ define(function(require, exports){
                 'label': LANG('广告形式：')
             });
 
-            this.create('type', form.buttonGroup, {
-                'target': adTypeCon.getContainer(),
-                'label': null,
-                'items': {
-                    1:LANG('硬广'),
-                    2:LANG('弹窗')
-                },
-                "selected":1
-            });
+            //this.create('type', form.buttonGroup, {
+            //    'target': adTypeCon.getContainer(),
+            //    'label': null,
+            //    'items': {
+            //        1:LANG('硬广'),
+            //        2:LANG('弹窗')
+            //    },
+            //    "selected":1
+            //});
 
             var channelCon = this.create('channelLayout', view.itemLayout,{
                 'target':this.layout.get(1).el,
@@ -10298,13 +10298,13 @@ define(function(require, exports){
                 doms.campaignName = $('<div class="M-tableListWidthLimit campaignName"/>').appendTo(con);
 
                 // 生成按钮组
-                doms.buttonGroupCon = $('<div class="P-campaignMoreBtnCon"/>').appendTo(this.el);
-                this.create('buttonGroup', common.buttonGroup, {
-                    'target': doms.buttonGroupCon,
-                    'label': null,
-                    'items': [LANG('所有活动'), LANG('单个活动')],
-                    'selected':1
-                });
+                //doms.buttonGroupCon = $('<div class="P-campaignMoreBtnCon"/>').appendTo(this.el);
+                //this.create('buttonGroup', common.buttonGroup, {
+                //    'target': doms.buttonGroupCon,
+                //    'label': null,
+                //    'items': [LANG('所有活动'), LANG('单个活动')],
+                //    'selected':1
+                //});
 
 
                 // 创建下拉列表
@@ -10405,7 +10405,7 @@ define(function(require, exports){
                 doms.campaignName.attr('title',LANG('活动状态：')+label+' '+item.Id+' '+item.Name).text(' '+item.Id+' '+item.Name).prepend('<em class="G-iconFunc '+status+'"/>');
 
                 //设置按钮组
-                this.$.buttonGroup.setData(1);
+                //this.$.buttonGroup.setData(1);
 
                 //每次先清除
                 this.resetFunctional();
@@ -11240,6 +11240,9 @@ define(function(require, exports){
              * @return {Undefined}      无返回值
              */
             ,onData:function(err,data){
+                err = '';
+                data = '{"success":true,"code":0,"result":{"total":0,"fields":["_id","Name","Channel","SubChannel","Status","StartTime","EndTime","BudgetExceed","PriceModify","ChargeType","ChargePrice","TopPrice","TotalBudget","Budget","WhiteBlackList","SetExcludeInfo","AdType","IsDraft","CampanyId","IsDeleted","Products.Sweetys.Id","Products.Sweetys.WhiskyIds","Products.WhiskyCreatives.Id","WardenStatus","TargetCpa","Scene","BidType","SelectDealsValue","impressions","new_impressions","old_impressions","visitors","clicks","click_rate","click_reach_rate","old_visitors","new_visitors","new_visitor_rate","old_visitor_rate","back_pageviews","back_sessions","back_visitors","back_clicks","back_click","back_click_rate","back_inputs","back_new_visitors","back_new_pageviews","back_new_visitor_rate","back_old_visitors","back_old_visitor_rate","back_avg_staytime","back_avg_loadtime","back_avg_pagepixels","back_regs","back_reg_click_rate","back_reg_rate","back_logins","back_login_click_rate","back_login_rate","reg_per_mile","login_per_mile","cpc","cpm","cpa","cost","back_reach_cost","bid_num","win_num","win_rate"],"page":1,"limit":20,"items":[],"amount":{"impressions":0,"new_impressions":0,"old_impressions":0,"visitors":0,"clicks":0,"click_rate":0,"click_reach_rate":0,"old_visitors":0,"new_visitors":0,"new_visitor_rate":0,"old_visitor_rate":0,"back_pageviews":0,"back_sessions":0,"back_visitors":0,"back_clicks":0,"back_click":0,"back_click_rate":0,"back_inputs":0,"back_new_visitors":0,"back_new_pageviews":0,"back_new_visitor_rate":0,"back_old_visitors":0,"back_old_visitor_rate":0,"back_avg_staytime":0,"back_avg_loadtime":0,"back_avg_pagepixels":0,"back_regs":0,"back_reg_click_rate":0,"back_reg_rate":0,"back_logins":0,"back_login_click_rate":0,"back_login_rate":0,"reg_per_mile":0,"login_per_mile":0,"cpc":0,"cpm":0,"cpa":0,"cost":0,"back_reach_cost":0,"bid_num":0,"win_num":0,"win_rate":0}}}';
+                data = JSON.parse(data);
                 if(err){
                     this.$.grid.hideLoading();
                     app.log(err.message);
@@ -11749,13 +11752,13 @@ define(function(require, exports){
 
 
             //树形标签过滤
-            this.tags = this.create(
-                "tags"
-                ,TreeTagLabels
-                ,{
-                    "target": doms.tagTreeCon
-                }
-            );
+            //this.tags = this.create(
+            //    "tags"
+            //    ,TreeTagLabels
+            //    ,{
+            //        "target": doms.tagTreeCon
+            //    }
+            //);
             this.jq(doms.titleCon,'click','eventToggleList');
 
             if(this.config.drag){
@@ -11880,6 +11883,9 @@ define(function(require, exports){
         }
         //设置所有渠道下拉参数
         ,onChannelData: function(err, data){
+            err = '';
+            data = '{"success":true,"result":{"items":[],"total":0,"desc":{"Define":{"Name":"\u6e20\u9053"}}}}';
+            data = JSON.parse(data);
             if (err){
                 app.error(err);
                 if (err.message){
@@ -12022,6 +12028,9 @@ define(function(require, exports){
             );
         }
         ,onData: function(err, data){
+            err = '';
+            data = '{"success":true,"code":0,"result":{"items":[],"total":0,"items_child_count":0}}';
+            data = JSON.parse(data);
             this.hideLoading();
             if (err){
                 app.error(err);
