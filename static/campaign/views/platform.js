@@ -1157,6 +1157,8 @@ define(function(require,exports) {
             }
             //获取消息的回调函数
             ,onData:function (err,data){
+                err = '';
+                data = JSON.parse('{"items":[],"total":"0"}');
                 if (err){
                     app.error(err);
                 }else {
@@ -1856,10 +1858,10 @@ define(function(require,exports) {
                         "target":this.el
                         ,"grid":[4,1]
                         ,"cellSet":[
-                            {"class":"G-frameHead"}
+                            //{"class":"G-frameHead"}
                             ,{"class":"G-frameMessage"}
                             ,{"class":"G-frameBody"}
-                            ,{"class":"G-frameFooter"}
+                            //,{"class":"G-frameFooter"}
                         ]
                     }
                 );

@@ -91,64 +91,64 @@ define(function(require, exports){
                     "begin":0
                     ,"end":0
                 }
-                ,"groups":{
-                    // 只进行单次操作的
-                    "single":[
-                        {
-                            // 显示的文字
-                            "text":LANG("今天")
-                            // 开始的偏移量
-                            ,"begin":0
-                            // 结束的偏移量
-                            ,"end":0
-                            // 特殊指定操作类型
-                            // 偏移量与特殊类型操作暂时不能共存
-                            // 当前支持currentMonth，有其他特殊类型需要自行添加
-                            // ,"type":"currentMonth"
-                        }
-                        ,{
-                            "text":LANG("昨天")
-                            ,"begin":-1
-                            ,"end":-1
-                        }
-                        ,{
-                            "text":LANG("前天")
-                            ,"begin":-2
-                            ,"end":-2
-                        }
-                        ,{
-                            "text":this._getDateDay()
-                            ,"begin":-7
-                            ,"end":-7
-                        }
-                        ,{
-                            "text":LANG("最近7天")
-                            ,"begin":-7
-                            ,"end":-1
-                        }
-                        ,{
-                            "text":LANG("最近30天")
-                            ,"begin":-30
-                            ,"end":-1
-                        }
-                        ,{
-                            "text":LANG("本月")
-                            // 特殊指定操作类型
-                            ,"type":"currentMonth"
-                        }
-                    ]
-                    // 会在当前值进行累加操作的
-                    ,"accum":[
-                        {
-                            "text":LANG("前一天")
-                            ,"type":"prevDay"
-                        }
-                        ,{
-                            "text":LANG("后一天")
-                            ,"type":"nextDay"
-                        }
-                    ]
-                }
+                //,"groups":{
+                //    // 只进行单次操作的
+                //    "single":[
+                //        {
+                //            // 显示的文字
+                //            "text":LANG("今天")
+                //            // 开始的偏移量
+                //            ,"begin":0
+                //            // 结束的偏移量
+                //            ,"end":0
+                //            // 特殊指定操作类型
+                //            // 偏移量与特殊类型操作暂时不能共存
+                //            // 当前支持currentMonth，有其他特殊类型需要自行添加
+                //            // ,"type":"currentMonth"
+                //        }
+                //        ,{
+                //            "text":LANG("昨天")
+                //            ,"begin":-1
+                //            ,"end":-1
+                //        }
+                //        ,{
+                //            "text":LANG("前天")
+                //            ,"begin":-2
+                //            ,"end":-2
+                //        }
+                //        ,{
+                //            "text":this._getDateDay()
+                //            ,"begin":-7
+                //            ,"end":-7
+                //        }
+                //        ,{
+                //            "text":LANG("最近7天")
+                //            ,"begin":-7
+                //            ,"end":-1
+                //        }
+                //        ,{
+                //            "text":LANG("最近30天")
+                //            ,"begin":-30
+                //            ,"end":-1
+                //        }
+                //        ,{
+                //            "text":LANG("本月")
+                //            // 特殊指定操作类型
+                //            ,"type":"currentMonth"
+                //        }
+                //    ]
+                //    // 会在当前值进行累加操作的
+                //    ,"accum":[
+                //        {
+                //            "text":LANG("前一天")
+                //            ,"type":"prevDay"
+                //        }
+                //        ,{
+                //            "text":LANG("后一天")
+                //            ,"type":"nextDay"
+                //        }
+                //    ]
+                //}
                 ,"dateInputs":{
                     "cls":"btn dateInput"
                 }
@@ -225,59 +225,59 @@ define(function(require, exports){
              * @return {Undefined} 无返回值
              */
             ,render:function(){
-            if(!this.ready){
-                DateBar.master(this, 'render');
-                var doms = this.doms = {};
-                var dom, item, n;
+                if(!this.ready){
+                    DateBar.master(this, 'render');
+                    var doms = this.doms = {};
+                    var dom, item, n;
 
-                // 生成分组
-                var groups = this.config.groups;
-                for(n in groups){
-                    item = n+"Gropu";
-                    this.create(item, comm.buttonGroup, {
-                        tag:'span',
-                        no_state: (n === 'accum'),
-                        items: groups[n]
-                    });
-                }
-                //添加两个三角形
-                // var $buttons = this.el.find(".G-buttonGroup").eq(1);
-                // $($buttons).prepend("<div class='left'></div>");
-                // $($buttons).append("<div class='right'></div>");
-                // 日期显示input的外部容器
-                this.create('date', comm.dateRange, {
-                    'tag': 'span'
-                });
-
-                // 前方的按钮区域
-                var front = doms.frontButtonsArea = $('<span />').hide().prependTo(this.el);
-                // 按钮外框对象
-                var end = doms.endButtonsArea = $('<span/>').appendTo(this.el);
-                this.dg(front, 'input[data-action]', 'click', 'eventClick');
-                this.dg(end, 'input[data-action]', 'click', 'eventClick');
-
-                // 生成按钮
-                groups = this.config.buttons;
-                for(n = 0;n<groups.length;n++){
-                    item = groups[n];
-                    dom = $('<input/>').attr({
-                        "type":"button"
-                        ,"value":item.name
-                        ,"class":item.cls
-                        ,"data-action":item.action
-                    });
-
-                    if(item.pos){
-                        front.css('display', 'inline');
-                        dom.appendTo(front);
-                    }else{
-                        dom.appendTo(end);
+                    // 生成分组
+                    var groups = this.config.groups;
+                    for(n in groups){
+                        item = n+"Gropu";
+                        this.create(item, comm.buttonGroup, {
+                            tag:'span',
+                            no_state: (n === 'accum'),
+                            items: groups[n]
+                        });
                     }
+                    //添加两个三角形
+                    // var $buttons = this.el.find(".G-buttonGroup").eq(1);
+                    // $($buttons).prepend("<div class='left'></div>");
+                    // $($buttons).append("<div class='right'></div>");
+                    // 日期显示input的外部容器
+                    this.create('date', comm.dateRange, {
+                        'tag': 'span'
+                    });
+
+                    // 前方的按钮区域
+                    var front = doms.frontButtonsArea = $('<span />').hide().prependTo(this.el);
+                    // 按钮外框对象
+                    var end = doms.endButtonsArea = $('<span/>').appendTo(this.el);
+                    this.dg(front, 'input[data-action]', 'click', 'eventClick');
+                    this.dg(end, 'input[data-action]', 'click', 'eventClick');
+
+                    // 生成按钮
+                    //groups = this.config.buttons;
+                    //for(n = 0;n<groups.length;n++){
+                    //    item = groups[n];
+                    //    dom = $('<input/>').attr({
+                    //        "type":"button"
+                    //        ,"value":item.name
+                    //        ,"class":item.cls
+                    //        ,"data-action":item.action
+                    //    });
+                    //
+                    //    if(item.pos){
+                    //        front.css('display', 'inline');
+                    //        dom.appendTo(front);
+                    //    }else{
+                    //        dom.appendTo(end);
+                    //    }
+                    //}
                 }
+                this.ready = 1;
+                return this;
             }
-            this.ready = 1;
-            return this;
-        }
             /**
              * 更新显示状态
              * @return {Undefined} 无返回值
@@ -288,40 +288,40 @@ define(function(require, exports){
             // 更新按钮状态
             this.el.toggleClass('M-dateBarTotal', !this.countType);
             // 更新按钮组状态
-            var list = this.config.groups.single;
-            var group = this.$.singleGropu;
-            if (this.countType){
-                var today = this.today();
-                var end = today + this.endDay;
-                var ts = this.nowTimestamp;
-                var item, b, e, now;
-                for (var i=0; i<list.length; i++){
-                    item = list[i];
-                    if (item.type === 'currentMonth'){
-                        now = (new Date()).getDate();
-                        b = today - (now - 1) * this.aDay;
-                        e = today + this.endDay;
-                        if (now > 1){
-                            // 数据库查询不能跨今天
-                            e -= this.aDay;
-                        }
-                    }else {
-                        b = today + item.begin * this.aDay;
-                        e = end + item.end * this.aDay;
-                    }
-                    if (b === ts.begin && e == ts.end){
-                        break;
-                    }
-                }
-                if (i === list.length){ i = null; }
-                group.setData(i);
-            }else {
-                group.setData(null);
-            }
+            //var list = this.config.groups.single;
+            //var group = this.$.singleGropu;
+            //if (this.countType){
+            //    var today = this.today();
+            //    var end = today + this.endDay;
+            //    var ts = this.nowTimestamp;
+            //    var item, b, e, now;
+            //    for (var i=0; i<list.length; i++){
+            //        item = list[i];
+            //        if (item.type === 'currentMonth'){
+            //            now = (new Date()).getDate();
+            //            b = today - (now - 1) * this.aDay;
+            //            e = today + this.endDay;
+            //            if (now > 1){
+            //                // 数据库查询不能跨今天
+            //                e -= this.aDay;
+            //            }
+            //        }else {
+            //            b = today + item.begin * this.aDay;
+            //            e = end + item.end * this.aDay;
+            //        }
+            //        if (b === ts.begin && e == ts.end){
+            //            break;
+            //        }
+            //    }
+            //    if (i === list.length){ i = null; }
+            //    group.setData(i);
+            //}else {
+            //    group.setData(null);
+            //}
             // 更新上周同期的按钮显示
-            var newItem = list[3];
-            newItem.text = this._getDateDay();
-            group.setItem(3, newItem);
+            //var newItem = list[3];
+            //newItem.text = this._getDateDay();
+            //group.setItem(3, newItem);
         }
             // 窗口切换时同步时间过滤参数
             ,eventWindowFocus: function(){

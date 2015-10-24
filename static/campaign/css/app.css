@@ -1509,11 +1509,11 @@ body.fullSize .G-frameBodyInnner {
     color: #fff!important;
     background-color: #3d88ce;
     background-repeat: no-repeat;
-    background-image: -webkit-linear-gradient(#2e98eb, #3d88ce);
-    background-image: -moz-linear-gradient(top, #2e98eb, #3d88ce);
-    background-image: -ms-linear-gradient(#2e98eb, #3d88ce);
-    background-image: -o-linear-gradient(#2e98eb, #3d88ce);
-    background-image: linear-gradient(#2e98eb, #3d88ce);
+    background-image: -webkit-linear-gradient(#C5DFEA, #272A2D);
+    background-image: -moz-linear-gradient(top, #C5DFEA, #272A2D);
+    background-image: -ms-linear-gradient(#C5DFEA, #272A2D);
+    background-image: -o-linear-gradient(#C5DFEA, #272A2D);
+    background-image: linear-gradient(#C5DFEA, #181F23);
     filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#2e98eb', endColorstr='#3d88ce', GradientType=0)";
     border-color: #00559e;
     overflow: hidden\9;
@@ -1523,11 +1523,11 @@ body.fullSize .G-frameBodyInnner {
 .primary:hover {
     background-color: #0e75b7;
     background-repeat: no-repeat;
-    background-image: -webkit-linear-gradient(#1281bd, #0e75b7);
-    background-image: -moz-linear-gradient(top, #1281bd, #0e75b7);
-    background-image: -ms-linear-gradient(#1281bd, #0e75b7);
-    background-image: -o-linear-gradient(#1281bd, #0e75b7);
-    background-image: linear-gradient(#1281bd, #0e75b7);
+    background-image: -webkit-linear-gradient(#91e8ea, #3661b7);
+    background-image: -moz-linear-gradient(top, #91e8ea, #3661b7);
+    background-image: -ms-linear-gradient(#91e8ea, #3661b7);
+    background-image: -o-linear-gradient(#91e8ea, #3661b7);
+    background-image: linear-gradient(#91e8ea, #3661b7);
     filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#1281bd', endColorstr='#0e75b7', GradientType=0)";
     background-position: 0;
 }
@@ -1736,14 +1736,14 @@ body.fullSize .G-frameBodyInnner {
     border-radius: 3px;
     letter-spacing: .25em;
     padding: 0 .25em 0 .5em;
-    border: 1px solid #1ea84c;
-    background-color: #67a443;
+    border: 1px solid #ddefff;
+    background-color: #ddefff;
     background-repeat: no-repeat;
-    background-image: -webkit-linear-gradient(#7bb354, #67a443);
-    background-image: -moz-linear-gradient(top, #7bb354, #67a443);
-    background-image: -ms-linear-gradient(#7bb354, #67a443);
-    background-image: -o-linear-gradient(#7bb354, #67a443);
-    background-image: linear-gradient(#7bb354, #67a443);
+    background-image: -webkit-linear-gradient(#ddefff, #66707d);
+    background-image: -moz-linear-gradient(top, #ddefff, #66707d);
+    background-image: -ms-linear-gradient(#ddefff, #66707d);
+    background-image: -o-linear-gradient(#ddefff, #66707d);
+    background-image: linear-gradient(#ddefff, #66707d);
     filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bb354', endColorstr='#67a443', GradientType=0)";
     box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
     overflow: hidden;
@@ -1763,7 +1763,7 @@ body.fullSize .G-frameBodyInnner {
     padding: 0 6px;
     background-image: url("images/icons.png?1205");
     background-repeat: no-repeat;
-    background-position: -235px -300px;
+    /*background-position: -235px -300px;*/
     width: 16px;
     height: 16px;
     padding-top: 0px;
@@ -3399,7 +3399,7 @@ body.fullSize .G-frameBodyInnner {
     width: 100%;
     overflow: hidden;
     position: absolute;
-    background: #2faeeb;
+    background: #98ACB5;
     -moz-transition: height 0.3s ease-in-out;
     transition: height 0.3s ease-in-out;
 }
@@ -3640,7 +3640,8 @@ body.fullSize .G-frameBodyInnner {
 .M-tableListSubGridStatusFilter span:hover,
 .M-tableListSubGridStatusFilter .act {
     color: #FFF;
-    background-color: #2FAEEB;
+    /*background-color: #98ACB5;*/
+    background-color: #98ACB5;
 }
 .M-tableListSubGridStatusFilter .act {
     cursor: default;
@@ -3699,17 +3700,17 @@ body.fullSize .G-frameBodyInnner {
     padding: 0 3px;
 }
 .M-tableListMark {
-    border-left: solid #2faeeb 3px!important;
+    border-left: solid #98ACB5 3px!important;
 }
 .M-tableListMarkAct {
-    background-color: #2faeeb;
+    background-color: #98ACB5;
 }
 .M-tableListCellFn {
     cursor: pointer!important;
     background: transparent none center no-repeat;
 }
 .M-tableListCellFnAct {
-    background: #2faeeb url("images/td_trend.png") center no-repeat;
+    background: #98ACB5 url("images/td_trend.png") center no-repeat;
 }
 .M-tableListCellFnAct span {
     opacity: 0;
@@ -6394,7 +6395,7 @@ body.fullSize .G-frameBodyInnner {
 .M-tagLabelsContainer span:hover,
 .M-tagLabelsSimpleContainer span:hover {
     color: #fff;
-    background-color: #2FAEEB;
+    background-color: #98ACB5;
 }
 .M-tagLabelsContainer span:hover em,
 .M-tagLabelsSimpleContainer span:hover em {
@@ -6414,7 +6415,7 @@ body.fullSize .G-frameBodyInnner {
 .M-tagLabelsContainer .act,
 .M-tagLabelsSimpleContainer .act {
     color: #FFF;
-    background-color: #2FAEEB;
+    background-color: #98ACB5;
 }
 .M-tagLabelsContainer .act em,
 .M-tagLabelsSimpleContainer .act em {
@@ -6480,7 +6481,7 @@ body.fullSize .G-frameBodyInnner {
 }
 .M-tagLabelsMultiContainer .theLabelRow span:hover {
     color: #fff;
-    background-color: #2FAEEB;
+    background-color: #98ACB5;
 }
 .M-tagLabelsMultiContainer .theLabelRow span:hover em {
     color: #fff;
@@ -7028,19 +7029,19 @@ body.fullSize .G-frameBodyInnner {
     border-color: #999 transparent transparent transparent;
 }
 .M-chartAdv .actCol div {
-    border-top: 1px solid #2faeeb;
+    border-top: 1px solid #98ACB5;
 }
 .M-chartAdv .actCol em {
     border-color: transparent transparent #fff transparent;
 }
 .M-chartAdv .actCol span {
-    background: #2faeeb;
+    background: #98ACB5;
 }
 .M-chartAdv .actCol b {
-    border-color: transparent #2faeeb transparent transparent;
+    border-color: transparent #98ACB5 transparent transparent;
 }
 .M-chartAdv .actCol i {
-    border-color: transparent transparent transparent #2faeeb;
+    border-color: transparent transparent transparent #98ACB5;
 }
 .M-chartAdv .actCol .M-chartAdvCollapseClose em {
     border-color: #fff transparent transparent transparent;
@@ -8003,7 +8004,7 @@ body.fullSize .G-frameBodyInnner {
     line-height: 30px;
 }
 .M-chargeRulesChannelWin .act {
-    color: #2FAEEB;
+    color: #98ACB5;
 }
 .M-chargeRulesDomainWin .domainCon {
     margin: 10px auto 20px 20px;
@@ -8322,7 +8323,7 @@ body.fullSize .G-frameBodyInnner {
 }
 .P-campaignListConStatus .archive.act,
 .P-campaignListConStatus .archive:hover {
-    color: #2FAEEB;
+    color: #98ACB5;
     background-color: transparent !important;
 }
 .P-campaignListConStatus .archive.act em,
@@ -10285,7 +10286,7 @@ body.fullSize .G-frameBodyInnner {
 }
 .M-treeTagLabelsSimpleContainer .wrapper .tagList .item:hover {
     color: #fff;
-    background-color: #2FAEEB;
+    background-color: #98ACB5;
 }
 .P-pageCon {
     margin: 0 0 20px;
@@ -12076,7 +12077,7 @@ table tbody td .ing {
 }
 .P-collectList .archive.act,
 .P-collectList .archive:hover {
-    color: #2FAEEB;
+    color: #98ACB5;
     background-color: transparent !important;
 }
 .P-collectList .archive.act em,
