@@ -9,7 +9,7 @@ define(function(require){
         "logo":"resources/images/dsp_logo.png",
         "big_logo":"resources/images/dsp_logo_c.png",
         "copyright":_T('&copy; 2012 - '+(new Date()).getFullYear()+' '),
-        "show_privacy":1,
+        "show_privacy":0,
         "domain":"manager.biddingx.com",
         "custom_domain": "stuff.cdn.biddingx.com",
         "custom_domainA": "whisky.ana.biddingx.com",

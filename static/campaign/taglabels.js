@@ -1230,15 +1230,15 @@ define(function(require, exports){
                 case 1: // RTB
                     list.push.apply(list, this.$rtbs);
                     break;
-                case 2: // 代理
-                    list.push.apply(list, data);
-                    break;
-                case 3: // 直投
-                    break;
-                case 4: // 移动端
+                //case 2: // 代理
+                //    list.push.apply(list, data);
+                //    break;
+                //case 3: // 直投
+                //    break;
+                case 2: // 移动端
                     list.push.apply(list, this.$rtbsMT);
                     break;
-                case 5: // RTB+移动
+                case 3: // RTB+移动
                     list.push.apply(list, this.$rtbs.concat(this.$rtbsMT));
                     break;
             }

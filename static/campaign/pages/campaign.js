@@ -54,7 +54,7 @@ define(function(require, exports){
                         "batch":{
                             "enable":true
                         },
-                        'hasAdvancedSearch': true,
+                        'hasAdvancedSearch': false,
                         // 更新活动全局信息
                         'updateGlobal': true,
                         'hasFrozen': false
@@ -99,7 +99,7 @@ define(function(require, exports){
                 {
                     'target':div,
                     'all_label':LANG('所有活动'),
-                    'data': [null, LANG('PC广告'), LANG('广告监测'),/*, LANG('直投')*/'', LANG('移动广告')]
+                    'data': [null, /* LANG('PC广告'), LANG('广告监测'),, LANG('直投')*/'', LANG('移动广告')]
                 }
             );
 
@@ -151,14 +151,14 @@ define(function(require, exports){
             )[app.getUserAuth(app.config('auth/hide_creative'), 'isEmployee') ? 'hide' : 'show']();
 
             // 标签过滤
-            this.tags = this.create(
-                "tags"
-                ,taglabels.simple
-                ,{
-                    "target":div
-                    ,"type":'CampaignLabel'
-                }
-            )[app.getUserAuth(app.config('auth/hide_creative'), 'isEmployee') ? 'hide' : 'show']();
+            //this.tags = this.create(
+            //    "tags"
+            //    ,taglabels.simple
+            //    ,{
+            //        "target":div
+            //        ,"type":'CampaignLabel'
+            //    }
+            //)[app.getUserAuth(app.config('auth/hide_creative'), 'isEmployee') ? 'hide' : 'show']();
 
             // 活动状态过滤
             div = $('<div class="P-campaignListConStatus"/>').appendTo(div);
@@ -183,14 +183,14 @@ define(function(require, exports){
                 tmp = this.date.getData();
                 tmp = tmp.date ? {"nowDate":tmp.date} : null;
             }
-            this.create(
-                "chart"
-                ,chart.advChart
-                ,{
-                    "target":this.el
-                }
-            );
-            this.$.chart.changeTitle(tmp);
+            //this.create(
+            //    "chart"
+            //    ,chart.advChart
+            //    ,{
+            //        "target":this.el
+            //    }
+            //);
+            //this.$.chart.changeTitle(tmp);
             tmp = null;
 
             var addCon = $('<div class="P-campaignAddBtnOther" />').appendTo(this.el);
@@ -206,17 +206,17 @@ define(function(require, exports){
                     ,"html":"<em></em>"+LANG('添加创意包')
                 }
             );
-            this.addBtnWhisky = this.create(
-                "addBtnWhisky"
-                ,view.container
-                ,{
-                    "target":addCon
-                    ,"tag":"button"
-                    ,"class":"btnAddGreen ml20 whiskyAddBtn"
-                    ,"html":"<em></em>"+LANG('添加落地页')
-                    ,"data-action":"addWhisky"
-                }
-            );
+            //this.addBtnWhisky = this.create(
+            //    "addBtnWhisky"
+            //    ,view.container
+            //    ,{
+            //        "target":addCon
+            //        ,"tag":"button"
+            //        ,"class":"btnAddGreen ml20 whiskyAddBtn"
+            //        ,"html":"<em></em>"+LANG('添加落地页')
+            //        ,"data-action":"addWhisky"
+            //    }
+            //);
 
             // 添加按钮
             this.addBtn = this.create('addBtn', form.campaignButton, {
@@ -224,7 +224,7 @@ define(function(require, exports){
             });
 
             this.jq(this.addBtnCreative.el,"click","onButtonClick");
-            this.jq(this.addBtnWhisky.el,"click","onButtonClick");
+            //this.jq(this.addBtnWhisky.el,"click","onButtonClick");
 
 
             // 运行状态过滤
@@ -237,7 +237,8 @@ define(function(require, exports){
             this.create("campaignBudget", popwin.campaignBudget);
 
             // 手动更新一次状态
-            this.onUserChange();
+            // 这个会隐藏添加活动的按钮
+            //this.onUserChange();
         },
         // 过滤RTB类型
         filterRtbType: function() {
@@ -11752,13 +11753,13 @@ define(function(require, exports){
 
 
             //树形标签过滤
-            //this.tags = this.create(
-            //    "tags"
-            //    ,TreeTagLabels
-            //    ,{
-            //        "target": doms.tagTreeCon
-            //    }
-            //);
+            this.tags = this.create(
+                "tags"
+                ,TreeTagLabels
+                ,{
+                    "target": doms.tagTreeCon
+                }
+            );
             this.jq(doms.titleCon,'click','eventToggleList');
 
             if(this.config.drag){

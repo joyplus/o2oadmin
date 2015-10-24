@@ -4872,50 +4872,50 @@ define(function(require, exports){
             config = $.extend({
                 'class':'M-formCampaignButton',
                 'items': [
-                    {
-                        text: LANG('PC广告'),
-                        link: '#campaign/edit?BidType=0',
-                        items: [
-                            {
-                                text: LANG('公开竞价活动'),
-                                link: '#campaign/edit?BidType=0'
-                            },
-                            {
-                                text: LANG('首选交易活动'),
-                                link: '#campaign/edit?BidType=1',
-                                type: 'pref'
-                            },
-                            {
-                                text: LANG('私下竞价活动'),
-                                link: '#campaign/edit?BidType=2',
-                                type: 'priv'
-                            }
-                        ]
-                    },
-                    {
-                        text: LANG('移动广告'),
-                        link: '#campaign/MTEdit?BidType=0',
-                        items: [
-                            {
-                                text: LANG('公开竞价活动'),
-                                link: '#campaign/MTEdit?BidType=0'
-                            },
-                            {
-                                text: LANG('首选交易活动'),
-                                link: '#campaign/MTEdit?BidType=1',
-                                type: 'pref'
-                            },
-                            {
-                                text: LANG('私下竞价活动'),
-                                link: '#campaign/MTEdit?BidType=2',
-                                type: 'priv'
-                            }
-                        ]
-                    },
-                    {
-                        text: LANG('广告监测'),
-                        link: '#campaign/agentEdit'
-                    }
+                    //{
+                    //    text: LANG('PC广告'),
+                    //    link: '#campaign/edit?BidType=0',
+                    //    items: [
+                    //        {
+                    //            text: LANG('公开竞价活动'),
+                    //            link: '#campaign/edit?BidType=0'
+                    //        },
+                    //        {
+                    //            text: LANG('首选交易活动'),
+                    //            link: '#campaign/edit?BidType=1',
+                    //            type: 'pref'
+                    //        },
+                    //        {
+                    //            text: LANG('私下竞价活动'),
+                    //            link: '#campaign/edit?BidType=2',
+                    //            type: 'priv'
+                    //        }
+                    //    ]
+                    //},
+                    //{
+                    //    text: LANG('移动广告'),
+                    //    link: '#campaign/MTEdit?BidType=0',
+                    //    items: [
+                    //        {
+                    //            text: LANG('公开竞价活动'),
+                    //            link: '#campaign/MTEdit?BidType=0'
+                    //        },
+                    //        {
+                    //            text: LANG('首选交易活动'),
+                    //            link: '#campaign/MTEdit?BidType=1',
+                    //            type: 'pref'
+                    //        },
+                    //        {
+                    //            text: LANG('私下竞价活动'),
+                    //            link: '#campaign/MTEdit?BidType=2',
+                    //            type: 'priv'
+                    //        }
+                    //    ]
+                    //},
+                    //{
+                    //    text: LANG('广告监测'),
+                    //    link: '#campaign/agentEdit'
+                    //}
                 ]
             },config);
 
@@ -4923,6 +4923,10 @@ define(function(require, exports){
             CampaignButton.master(this, 'init', arguments);
 
             this.build();
+        },
+        onAddCampaignBtnClick: function(){
+            //window.open('/pmp/campaign/edit?Id=6');
+            window.location.href='/pmp/campaign/edit?Id=6';
         },
         build: function(){
             var self = this;
@@ -4936,6 +4940,7 @@ define(function(require, exports){
                 'class':'btnAddGreen',
                 'html':'<em></em>'+LANG('添加活动')+'<span></span>'
             });
+            this.jq(this.addBtn.el,"click","onAddCampaignBtnClick");
 
             var groupCon = this.groupCon = $('<ul class="group"/>').appendTo(el);
 

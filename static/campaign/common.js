@@ -3247,7 +3247,7 @@ define(function(require, exports){
             'min':0,
             'buttons': null,
             // 不根据参照物自动计算，改为固定在选择容器的下方出现
-            'pos':'bR',
+            'pos':'bL',
             'width': 180
         }, config);
 
