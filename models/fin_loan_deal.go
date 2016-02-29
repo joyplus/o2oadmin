@@ -10,60 +10,51 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type FeSupplierMaster struct {
-	Id                int       `orm:"column(id);auto"`
-	Name              string    `orm:"column(name);size(45)"`
-	Address           string    `orm:"column(address);size(500);null"`
-	ScaleType         string    `orm:"column(scale_type);size(3);null"`
-	Delflg            int8      `orm:"column(delflg);null"`
-	MerchantType      string    `orm:"column(merchant_type);size(3);null"`
-	CreateUser        int       `orm:"column(create_user);null"`
-	UpdateUser        int       `orm:"column(update_user);null"`
-	CreateTime        time.Time `orm:"column(create_time);type(timestamp);null"`
-	UpdateTime        time.Time `orm:"column(update_time);type(timestamp);null;auto_now"`
-	ProvinceCode      int       `orm:"column(province_code);null"`
-	CityCode          int       `orm:"column(city_code);null"`
-	DistrictCode      int       `orm:"column(district_code);null"`
-	LicenseNumber     string    `orm:"column(license_number);size(50);null"`
-	ContactPhone      string    `orm:"column(contact_phone);size(45);null"`
-	LicenseNumberUrl  string    `orm:"column(license_number_url);size(200);null"`
-	SecurityNumber    string    `orm:"column(security_number);size(50);null"`
-	SecurityNumberUrl string    `orm:"column(security_number_url);size(200);null"`
-	Rating            int       `orm:"column(rating);null"`
-	OnTimeRate        float32   `orm:"column(on_time_rate);null"`
-	OperationTypeCode string    `orm:"column(operation_type_code);size(3);null"`
-	PaymentDuration   int       `orm:"column(payment_duration);null"`
+type FinLoanDeal struct {
+	Id              int       `orm:"column(id);auto"`
+	BorrowerId      int       `orm:"column(borrower_id)"`
+	SupplyOrgId     int       `orm:"column(supply_org_id)"`
+	DemandOrgId     int       `orm:"column(demand_org_id)"`
+	LovDealStatus   int8      `orm:"column(lov_deal_status)"`
+	LoanAmount      float32   `orm:"column(loan_amount);null"`
+	LovDurationType int8      `orm:"column(lov_duration_type);null"`
+	Duration        int       `orm:"column(duration);null"`
+	LovReturnMethod int8      `orm:"column(lov_return_method);null"`
+	FirstDueDate    time.Time `orm:"column(first_due_date);type(date);null"`
+	LastDueDate     time.Time `orm:"column(last_due_date);type(date);null"`
+	Remark          string    `orm:"column(remark);size(500);null"`
+	LovLoanType     int8      `orm:"column(lov_loan_type);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(FeSupplierMaster))
+	orm.RegisterModel(new(FinLoanDeal))
 }
 
-// AddFeSupplierMaster insert a new FeSupplierMaster into database and returns
+// AddFinLoanDeal insert a new FinLoanDeal into database and returns
 // last inserted Id on success.
-func AddFeSupplierMaster(m *FeSupplierMaster) (id int64, err error) {
+func AddFinLoanDeal(m *FinLoanDeal) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetFeSupplierMasterById retrieves FeSupplierMaster by Id. Returns error if
+// GetFinLoanDealById retrieves FinLoanDeal by Id. Returns error if
 // Id doesn't exist
-func GetFeSupplierMasterById(id int) (v *FeSupplierMaster, err error) {
+func GetFinLoanDealById(id int) (v *FinLoanDeal, err error) {
 	o := orm.NewOrm()
-	v = &FeSupplierMaster{Id: id}
+	v = &FinLoanDeal{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllFeSupplierMaster retrieves all FeSupplierMaster matches certain condition. Returns empty list if
+// GetAllFinLoanDeal retrieves all FinLoanDeal matches certain condition. Returns empty list if
 // no records exist
-func GetAllFeSupplierMaster(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFinLoanDeal(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(FeSupplierMaster))
+	qs := o.QueryTable(new(FinLoanDeal))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -109,7 +100,7 @@ func GetAllFeSupplierMaster(query map[string]string, fields []string, sortby []s
 		}
 	}
 
-	var l []FeSupplierMaster
+	var l []FinLoanDeal
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -132,11 +123,11 @@ func GetAllFeSupplierMaster(query map[string]string, fields []string, sortby []s
 	return nil, err
 }
 
-// UpdateFeSupplierMaster updates FeSupplierMaster by Id and returns error if
+// UpdateFinLoanDeal updates FinLoanDeal by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateFeSupplierMasterById(m *FeSupplierMaster) (err error) {
+func UpdateFinLoanDealById(m *FinLoanDeal) (err error) {
 	o := orm.NewOrm()
-	v := FeSupplierMaster{Id: m.Id}
+	v := FinLoanDeal{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -147,15 +138,15 @@ func UpdateFeSupplierMasterById(m *FeSupplierMaster) (err error) {
 	return
 }
 
-// DeleteFeSupplierMaster deletes FeSupplierMaster by Id and returns error if
+// DeleteFinLoanDeal deletes FinLoanDeal by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteFeSupplierMaster(id int) (err error) {
+func DeleteFinLoanDeal(id int) (err error) {
 	o := orm.NewOrm()
-	v := FeSupplierMaster{Id: id}
+	v := FinLoanDeal{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&FeSupplierMaster{Id: id}); err == nil {
+		if num, err = o.Delete(&FinLoanDeal{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

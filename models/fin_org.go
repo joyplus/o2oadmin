@@ -9,43 +9,48 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type FeMixUserMatrix struct {
-	Id         int    `orm:"column(id);auto"`
-	MixId      int    `orm:"column(mix_id)"`
-	UserId     int    `orm:"column(user_id)"`
-	MixType    string `orm:"column(mix_type);size(3)"`
-	DefaultFlg int    `orm:"column(default_flg);null"`
+type FinOrg struct {
+	Id                  int    `orm:"column(id);auto"`
+	Name                string `orm:"column(name);size(100)"`
+	LovOrgType          int8   `orm:"column(lov_org_type)"`
+	Address             string `orm:"column(address);size(200);null"`
+	OrgPhoneNumber      string `orm:"column(org_phone_number);size(20);null"`
+	ContactName         string `orm:"column(contact_name);size(20);null"`
+	ContactMobileNumber string `orm:"column(contact_mobile_number);size(20);null"`
+	BaseCityId          int    `orm:"column(base_city_id);null"`
+	OrgLicenseNumber    string `orm:"column(org_license_number);size(45);null"`
+	OrgLicensePhotoUrl  string `orm:"column(org_license_photo_url);size(200);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(FeMixUserMatrix))
+	orm.RegisterModel(new(FinOrg))
 }
 
-// AddFeMixUserMatrix insert a new FeMixUserMatrix into database and returns
+// AddFinOrg insert a new FinOrg into database and returns
 // last inserted Id on success.
-func AddFeMixUserMatrix(m *FeMixUserMatrix) (id int64, err error) {
+func AddFinOrg(m *FinOrg) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetFeMixUserMatrixById retrieves FeMixUserMatrix by Id. Returns error if
+// GetFinOrgById retrieves FinOrg by Id. Returns error if
 // Id doesn't exist
-func GetFeMixUserMatrixById(id int) (v *FeMixUserMatrix, err error) {
+func GetFinOrgById(id int) (v *FinOrg, err error) {
 	o := orm.NewOrm()
-	v = &FeMixUserMatrix{Id: id}
+	v = &FinOrg{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllFeMixUserMatrix retrieves all FeMixUserMatrix matches certain condition. Returns empty list if
+// GetAllFinOrg retrieves all FinOrg matches certain condition. Returns empty list if
 // no records exist
-func GetAllFeMixUserMatrix(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFinOrg(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(FeMixUserMatrix))
+	qs := o.QueryTable(new(FinOrg))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -91,7 +96,7 @@ func GetAllFeMixUserMatrix(query map[string]string, fields []string, sortby []st
 		}
 	}
 
-	var l []FeMixUserMatrix
+	var l []FinOrg
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -114,11 +119,11 @@ func GetAllFeMixUserMatrix(query map[string]string, fields []string, sortby []st
 	return nil, err
 }
 
-// UpdateFeMixUserMatrix updates FeMixUserMatrix by Id and returns error if
+// UpdateFinOrg updates FinOrg by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateFeMixUserMatrixById(m *FeMixUserMatrix) (err error) {
+func UpdateFinOrgById(m *FinOrg) (err error) {
 	o := orm.NewOrm()
-	v := FeMixUserMatrix{Id: m.Id}
+	v := FinOrg{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -129,15 +134,15 @@ func UpdateFeMixUserMatrixById(m *FeMixUserMatrix) (err error) {
 	return
 }
 
-// DeleteFeMixUserMatrix deletes FeMixUserMatrix by Id and returns error if
+// DeleteFinOrg deletes FinOrg by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteFeMixUserMatrix(id int) (err error) {
+func DeleteFinOrg(id int) (err error) {
 	o := orm.NewOrm()
-	v := FeMixUserMatrix{Id: id}
+	v := FinOrg{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&FeMixUserMatrix{Id: id}); err == nil {
+		if num, err = o.Delete(&FinOrg{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

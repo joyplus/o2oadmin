@@ -5,53 +5,50 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type BeMerchantQueryResponseHeader struct {
-	Id               int       `orm:"column(id);auto"`
-	SupplierId       int       `orm:"column(supplier_id)"`
-	RequestId        int       `orm:"column(request_id)"`
-	CategoryKey      string    `orm:"column(category_key);size(3)"`
-	ResponseDatetime time.Time `orm:"column(response_datetime);type(datetime);null"`
-	ResponseFlg      int       `orm:"column(response_flg);null"`
-	CreateUser       int       `orm:"column(create_user);null"`
-	UpdateTime       time.Time `orm:"column(update_time);type(timestamp);null;auto_now"`
-	UpdateUser       int       `orm:"column(update_user);null"`
-	CreateTime       time.Time `orm:"column(create_time);type(timestamp);null"`
+type FinBorrower struct {
+	Id           int    `orm:"column(id);auto"`
+	SupplyOrgId  int    `orm:"column(supply_org_id);null"`
+	Name         string `orm:"column(name);size(20);null"`
+	IdNumber     string `orm:"column(id_number);size(20);null"`
+	MobileNumber string `orm:"column(mobile_number);size(20);null"`
+	Qq           string `orm:"column(qq);size(45);null"`
+	LovGender    int8   `orm:"column(lov_gender);null"`
+	DetailId     int    `orm:"column(detail_id);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(BeMerchantQueryResponseHeader))
+	orm.RegisterModel(new(FinBorrower))
 }
 
-// AddBeMerchantQueryResponseHeader insert a new BeMerchantQueryResponseHeader into database and returns
+// AddFinBorrower insert a new FinBorrower into database and returns
 // last inserted Id on success.
-func AddBeMerchantQueryResponseHeader(m *BeMerchantQueryResponseHeader) (id int64, err error) {
+func AddFinBorrower(m *FinBorrower) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetBeMerchantQueryResponseHeaderById retrieves BeMerchantQueryResponseHeader by Id. Returns error if
+// GetFinBorrowerById retrieves FinBorrower by Id. Returns error if
 // Id doesn't exist
-func GetBeMerchantQueryResponseHeaderById(id int) (v *BeMerchantQueryResponseHeader, err error) {
+func GetFinBorrowerById(id int) (v *FinBorrower, err error) {
 	o := orm.NewOrm()
-	v = &BeMerchantQueryResponseHeader{Id: id}
+	v = &FinBorrower{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllBeMerchantQueryResponseHeader retrieves all BeMerchantQueryResponseHeader matches certain condition. Returns empty list if
+// GetAllFinBorrower retrieves all FinBorrower matches certain condition. Returns empty list if
 // no records exist
-func GetAllBeMerchantQueryResponseHeader(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFinBorrower(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(BeMerchantQueryResponseHeader))
+	qs := o.QueryTable(new(FinBorrower))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -97,7 +94,7 @@ func GetAllBeMerchantQueryResponseHeader(query map[string]string, fields []strin
 		}
 	}
 
-	var l []BeMerchantQueryResponseHeader
+	var l []FinBorrower
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -120,11 +117,11 @@ func GetAllBeMerchantQueryResponseHeader(query map[string]string, fields []strin
 	return nil, err
 }
 
-// UpdateBeMerchantQueryResponseHeader updates BeMerchantQueryResponseHeader by Id and returns error if
+// UpdateFinBorrower updates FinBorrower by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateBeMerchantQueryResponseHeaderById(m *BeMerchantQueryResponseHeader) (err error) {
+func UpdateFinBorrowerById(m *FinBorrower) (err error) {
 	o := orm.NewOrm()
-	v := BeMerchantQueryResponseHeader{Id: m.Id}
+	v := FinBorrower{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -135,15 +132,15 @@ func UpdateBeMerchantQueryResponseHeaderById(m *BeMerchantQueryResponseHeader) (
 	return
 }
 
-// DeleteBeMerchantQueryResponseHeader deletes BeMerchantQueryResponseHeader by Id and returns error if
+// DeleteFinBorrower deletes FinBorrower by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteBeMerchantQueryResponseHeader(id int) (err error) {
+func DeleteFinBorrower(id int) (err error) {
 	o := orm.NewOrm()
-	v := BeMerchantQueryResponseHeader{Id: id}
+	v := FinBorrower{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&BeMerchantQueryResponseHeader{Id: id}); err == nil {
+		if num, err = o.Delete(&FinBorrower{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

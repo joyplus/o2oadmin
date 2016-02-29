@@ -9,44 +9,44 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type FeCategoryMaster struct {
-	Id       int    `orm:"column(id);auto"`
-	Name     string `orm:"column(name);size(50)"`
-	ImageUrl string `orm:"column(image_url);size(500);null"`
-	Priority int    `orm:"column(priority);null"`
-	ParentId int    `orm:"column(parent_id);null"`
-	Level    int    `orm:"column(level);null"`
+type FinOrgMember struct {
+	Id           int    `orm:"column(id);auto"`
+	OrgId        int    `orm:"column(org_id)"`
+	DisplayName  string `orm:"column(display_name);size(45)"`
+	MobileNumber string `orm:"column(mobile_number);size(20);null"`
+	IdNumber     string `orm:"column(id_number);size(20);null"`
+	UserId       int    `orm:"column(user_id);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(FeCategoryMaster))
+	orm.RegisterModel(new(FinOrgMember))
 }
 
-// AddFeCategoryMaster insert a new FeCategoryMaster into database and returns
+// AddFinOrgMember insert a new FinOrgMember into database and returns
 // last inserted Id on success.
-func AddFeCategoryMaster(m *FeCategoryMaster) (id int64, err error) {
+func AddFinOrgMember(m *FinOrgMember) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetFeCategoryMasterById retrieves FeCategoryMaster by Id. Returns error if
+// GetFinOrgMemberById retrieves FinOrgMember by Id. Returns error if
 // Id doesn't exist
-func GetFeCategoryMasterById(id int) (v *FeCategoryMaster, err error) {
+func GetFinOrgMemberById(id int) (v *FinOrgMember, err error) {
 	o := orm.NewOrm()
-	v = &FeCategoryMaster{Id: id}
+	v = &FinOrgMember{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllFeCategoryMaster retrieves all FeCategoryMaster matches certain condition. Returns empty list if
+// GetAllFinOrgMember retrieves all FinOrgMember matches certain condition. Returns empty list if
 // no records exist
-func GetAllFeCategoryMaster(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFinOrgMember(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(FeCategoryMaster))
+	qs := o.QueryTable(new(FinOrgMember))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -92,7 +92,7 @@ func GetAllFeCategoryMaster(query map[string]string, fields []string, sortby []s
 		}
 	}
 
-	var l []FeCategoryMaster
+	var l []FinOrgMember
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -115,11 +115,11 @@ func GetAllFeCategoryMaster(query map[string]string, fields []string, sortby []s
 	return nil, err
 }
 
-// UpdateFeCategoryMaster updates FeCategoryMaster by Id and returns error if
+// UpdateFinOrgMember updates FinOrgMember by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateFeCategoryMasterById(m *FeCategoryMaster) (err error) {
+func UpdateFinOrgMemberById(m *FinOrgMember) (err error) {
 	o := orm.NewOrm()
-	v := FeCategoryMaster{Id: m.Id}
+	v := FinOrgMember{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -130,15 +130,15 @@ func UpdateFeCategoryMasterById(m *FeCategoryMaster) (err error) {
 	return
 }
 
-// DeleteFeCategoryMaster deletes FeCategoryMaster by Id and returns error if
+// DeleteFinOrgMember deletes FinOrgMember by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteFeCategoryMaster(id int) (err error) {
+func DeleteFinOrgMember(id int) (err error) {
 	o := orm.NewOrm()
-	v := FeCategoryMaster{Id: id}
+	v := FinOrgMember{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&FeCategoryMaster{Id: id}); err == nil {
+		if num, err = o.Delete(&FinOrgMember{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
