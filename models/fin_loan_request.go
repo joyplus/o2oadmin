@@ -9,41 +9,50 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type FeMerchantMaterialMatrix struct {
-	Id         int `orm:"column(id);auto"`
-	MerchantId int `orm:"column(merchant_id)"`
-	MaterialId int `orm:"column(material_id)"`
+type FinLoanRequest struct {
+	Id                   int     `orm:"column(id);auto"`
+	SupplyOrgId          int     `orm:"column(supply_org_id)"`
+	SupplyOrgMemberId    int     `orm:"column(supply_org_member_id);null"`
+	BorrowerId           int     `orm:"column(borrower_id)"`
+	RequestLoanAmount    float32 `orm:"column(request_loan_amount)"`
+	LovDurationType      int8    `orm:"column(lov_duration_type)"`
+	Duration             int     `orm:"column(duration)"`
+	LovLoanUsage         int8    `orm:"column(lov_loan_usage)"`
+	IsHouseMortageable   int8    `orm:"column(is_house_mortageable)"`
+	IsVehicleMortageable int8    `orm:"column(is_vehicle_mortageable)"`
+	LovAuditStatus       int8    `orm:"column(lov_audit_status)"`
+	Remartk              string  `orm:"column(remartk);size(500);null"`
 }
 
 func init() {
-	orm.RegisterModel(new(FeMerchantMaterialMatrix))
+	orm.RegisterModel(new(FinLoanRequest))
 }
 
-// AddFeMerchantMaterialMatrix insert a new FeMerchantMaterialMatrix into database and returns
+// AddFinLoanRequest insert a new FinLoanRequest into database and returns
 // last inserted Id on success.
-func AddFeMerchantMaterialMatrix(m *FeMerchantMaterialMatrix) (id int64, err error) {
+func AddFinLoanRequest(m *FinLoanRequest) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetFeMerchantMaterialMatrixById retrieves FeMerchantMaterialMatrix by Id. Returns error if
+// GetFinLoanRequestById retrieves FinLoanRequest by Id. Returns error if
 // Id doesn't exist
-func GetFeMerchantMaterialMatrixById(id int) (v *FeMerchantMaterialMatrix, err error) {
+func GetFinLoanRequestById(id int) (v *FinLoanRequest, err error) {
 	o := orm.NewOrm()
-	v = &FeMerchantMaterialMatrix{Id: id}
+	v = &FinLoanRequest{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllFeMerchantMaterialMatrix retrieves all FeMerchantMaterialMatrix matches certain condition. Returns empty list if
+// GetAllFinLoanRequest retrieves all FinLoanRequest matches certain condition. Returns empty list if
 // no records exist
-func GetAllFeMerchantMaterialMatrix(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllFinLoanRequest(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(FeMerchantMaterialMatrix))
+	qs := o.QueryTable(new(FinLoanRequest))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -89,7 +98,7 @@ func GetAllFeMerchantMaterialMatrix(query map[string]string, fields []string, so
 		}
 	}
 
-	var l []FeMerchantMaterialMatrix
+	var l []FinLoanRequest
 	qs = qs.OrderBy(sortFields...)
 	if _, err := qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -112,11 +121,11 @@ func GetAllFeMerchantMaterialMatrix(query map[string]string, fields []string, so
 	return nil, err
 }
 
-// UpdateFeMerchantMaterialMatrix updates FeMerchantMaterialMatrix by Id and returns error if
+// UpdateFinLoanRequest updates FinLoanRequest by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateFeMerchantMaterialMatrixById(m *FeMerchantMaterialMatrix) (err error) {
+func UpdateFinLoanRequestById(m *FinLoanRequest) (err error) {
 	o := orm.NewOrm()
-	v := FeMerchantMaterialMatrix{Id: m.Id}
+	v := FinLoanRequest{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -127,15 +136,15 @@ func UpdateFeMerchantMaterialMatrixById(m *FeMerchantMaterialMatrix) (err error)
 	return
 }
 
-// DeleteFeMerchantMaterialMatrix deletes FeMerchantMaterialMatrix by Id and returns error if
+// DeleteFinLoanRequest deletes FinLoanRequest by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteFeMerchantMaterialMatrix(id int) (err error) {
+func DeleteFinLoanRequest(id int) (err error) {
 	o := orm.NewOrm()
-	v := FeMerchantMaterialMatrix{Id: id}
+	v := FinLoanRequest{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&FeMerchantMaterialMatrix{Id: id}); err == nil {
+		if num, err = o.Delete(&FinLoanRequest{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
