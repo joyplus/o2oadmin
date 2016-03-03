@@ -8,10 +8,10 @@ import (
 
 func init() {
 
-	beego.Router("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant")
-	beego.Router("/operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant")
-	beego.Router("/operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant")
-	beego.Router("/operation/merchant/index", &controllers.MerchantController{}, "*:Index")
+	//beego.Router("/operation/merchant/addMerchant", &controllers.MerchantController{}, "*:AddMerchant")
+	//beego.Router("/operation/merchant/updateMerchant", &controllers.MerchantController{}, "*:UpdateMerchant")
+	//beego.Router("/operation/merchant/deleteMerchant", &controllers.MerchantController{}, "*:DelMerchant")
+	//beego.Router("/operation/merchant/index", &controllers.MerchantController{}, "*:Index")
 
 	ns := beego.NewNamespace("/pmp",
 		beego.NSRouter("adspace/index", &controllers.PmpAdspaceController{}, "*:GetAdspaceList"),
