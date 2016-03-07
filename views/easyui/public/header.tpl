@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>PMP管理平台</title>
-    <link rel="stylesheet" type="text/css" href="/static/easyui/jquery-easyui/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/easyui/jquery-easyui/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="/static/easyui/jquery-easyui/themes/icon.css" />
 
     <link rel="stylesheet" type="text/css" href="/static/css/daterangepicker-bs3.css" />

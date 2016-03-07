@@ -62,6 +62,13 @@ func init() {
 			[]string{"get"},
 			nil})
 
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"],
+		beego.ControllerComments{
+			"Prepare",
+			`/prepare`,
+			[]string{"get"},
+			nil})
+
 	beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LtvAppController"],
 		beego.ControllerComments{
 			"Post",

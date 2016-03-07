@@ -77,7 +77,15 @@ func init() {
 		),
 	)
 
+	ns4loan := beego.NewNamespace("/loan",
+		beego.NSNamespace("/loanrequest",
+			beego.NSInclude(
+				&controllers.LoanRequestController{},
+			),
+		),
+	)
 	beego.AddNamespace(ns)
+	beego.AddNamespace(ns4loan)
 	admin.Run()
 
 	beego.Info("o2oadmin start")
