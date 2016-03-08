@@ -29,7 +29,7 @@
             success: function (r) {
                 var r = $.parseJSON(r);
                 if (r.status) {
-                    location.href = URL + "/index"
+                    location.href = "/admin/main"
                 } else {
                     vac.alert(r.info);
                 }

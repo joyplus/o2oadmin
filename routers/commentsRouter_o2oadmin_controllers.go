@@ -62,10 +62,52 @@ func init() {
 			[]string{"get"},
 			nil})
 
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanAssetController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanAssetController"],
+		beego.ControllerComments{
+			"GetOne",
+			`/:id`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanAssetController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanAssetController"],
+		beego.ControllerComments{
+			"Operate",
+			`/operate`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanAssetController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanAssetController"],
+		beego.ControllerComments{
+			"List",
+			`/list`,
+			[]string{"get"},
+			nil})
+
 	beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"],
 		beego.ControllerComments{
 			"Prepare",
 			`/prepare`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"],
+		beego.ControllerComments{
+			"Save",
+			`/save`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"],
+		beego.ControllerComments{
+			"List",
+			`/list`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"] = append(beego.GlobalControllerRouter["o2oadmin/controllers:LoanRequestController"],
+		beego.ControllerComments{
+			"Match",
+			`/match`,
 			[]string{"get"},
 			nil})
 

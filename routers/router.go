@@ -83,7 +83,15 @@ func init() {
 				&controllers.LoanRequestController{},
 			),
 		),
+		beego.NSNamespace("/asset",
+			beego.NSInclude(
+				&controllers.LoanAssetController{},
+			),
+		),
 	)
+
+	beego.Router("/admin/main", &controllers.AdminMainController{}, "*:Main")
+
 	beego.AddNamespace(ns)
 	beego.AddNamespace(ns4loan)
 	admin.Run()
