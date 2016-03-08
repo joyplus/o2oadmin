@@ -2,9 +2,16 @@
 	<body>
 	
 	        <form id="ff" class="easyui-form" method="post" data-options="novalidate:true">
+    <div id="tb" style="float:left; display:inline;padding:5px;">
+	    <a href="#" icon='icon-save' plain="true" onclick="saverow()" class="easyui-linkbutton" >保存</a>
+	    <a href="#" icon='icon-cancel' plain="true" onclick="delrow()" class="easyui-linkbutton" >删除</a>
+	    <a href="#" icon='icon-reload' plain="true" onclick="reloadrow()" class="easyui-linkbutton" >刷新</a>
+	</div>
+
 
     <div class="easyui-panel" title="基本信息" style="float:left; display:inline;width:100%">
-        <div style="padding:10px 60px 20px 60px">
+
+		<div style="padding:10px 60px 20px 60px">
             <table cellpadding="5">
                 <tr>
                     <td>期望金额:</td>
@@ -107,9 +114,6 @@
         </div>
     </div>
 	
-	   <div id="button-bar" class="easyui-panel" style="padding:5px;" >
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
-     </div>
 	        </form>
 	
     <script>

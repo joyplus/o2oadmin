@@ -1,7 +1,13 @@
 {{template "../public/header.tpl"}}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script type="text/javascript">
-var URL="/public"
+	window.onload = function(){ 
+		$('#tree').tree('collapseAll');
+	}; 
+	
+
+	var URL="/public";
+
     $( function() {
         //生成树
         $("#tree").tree({
