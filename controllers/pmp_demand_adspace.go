@@ -38,7 +38,7 @@ func (c *PmpDemandAdspaceController) GetOne() {
 	} else {
 		c.Data["json"] = v
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get All
@@ -86,7 +86,7 @@ func (c *PmpDemandAdspaceController) GetAll() {
 			kv := strings.Split(cond, ":")
 			if len(kv) != 2 {
 				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJson()
+				c.ServeJSON()
 				return
 			}
 			k, v := kv[0], kv[1]
@@ -100,7 +100,7 @@ func (c *PmpDemandAdspaceController) GetAll() {
 	} else {
 		c.Data["json"] = l
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Update
@@ -120,7 +120,7 @@ func (c *PmpDemandAdspaceController) Put() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -134,7 +134,7 @@ func (c *PmpDemandAdspaceController) Delete() {
 	beego.Info("param adspaceid:", c.GetString("adspaceid"))
 	if err != nil {
 		c.Data["json"] = err.Error()
-		c.ServeJson()
+		c.ServeJSON()
 		return
 	}
 	if err = models.DeletePmpDemandAdspace(id); err == nil {
@@ -142,7 +142,7 @@ func (c *PmpDemandAdspaceController) Delete() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // get demand adspace list by demand id
@@ -173,11 +173,11 @@ func (c *PmpDemandAdspaceController) GetDemandAdspaceListByDemand() {
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
-		c.TplNames = c.GetTemplatetype() + "/adspace/demandadspacelist.tpl"
+		c.TplName = c.GetTemplatetype() + "/adspace/demandadspacelist.tpl"
 		return
 	} else {
 		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaceVos}
-		c.ServeJson()
+		c.ServeJSON()
 	}
 }
 
@@ -199,5 +199,5 @@ func (c *PmpDemandAdspaceController) SaveOrUpdateDemandAdspace() {
 			c.Data["json"] = err.Error()
 		}
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }

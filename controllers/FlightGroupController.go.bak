@@ -51,7 +51,7 @@ func (c *LtvFlightGroupController) Post() {
 		}
 	}
 
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get
@@ -69,7 +69,7 @@ func (c *LtvFlightGroupController) GetOne() {
 	} else {
 		c.Data["json"] = v
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get All
@@ -117,7 +117,7 @@ func (c *LtvFlightGroupController) GetAll() {
 			kv := strings.Split(cond, ":")
 			if len(kv) != 2 {
 				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJson()
+				c.ServeJSON()
 				return
 			}
 			k, v := kv[0], kv[1]
@@ -131,7 +131,7 @@ func (c *LtvFlightGroupController) GetAll() {
 	} else {
 		c.Data["json"] = l
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Update
@@ -151,7 +151,7 @@ func (c *LtvFlightGroupController) Put() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -168,7 +168,7 @@ func (c *LtvFlightGroupController) Delete() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -191,36 +191,36 @@ func (c *LtvFlightGroupController) GetSummaryList() {
 	} else {
 		c.Data["json"] = &map[string]interface{}{"total": count, "rows": &result}
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // ~~~~~~~~~~~~~   below are custom methods  ~~~~~~~~~~~~~~~ //
 // @router /create [get]
 func (c *LtvFlightGroupController) Create() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_create.tpl"
+	c.TplName = c.GetTemplatetype() + "/performance/project_create.tpl"
 }
 
 // @router /Detail/:id [get]
 func (c *LtvFlightGroupController) Detail() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
+	c.TplName = c.GetTemplatetype() + "/performance/project_detail.tpl"
 }
 
 // @router /Edit/:id [get]
 func (c *LtvFlightGroupController) Edit() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_edit.tpl"
+	c.TplName = c.GetTemplatetype() + "/performance/project_edit.tpl"
 }
 
 // @router /Save [post]
 func (c *LtvFlightGroupController) Save() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_detail.tpl"
+	c.TplName = c.GetTemplatetype() + "/performance/project_detail.tpl"
 }
 
 // @router /fullReport/:id [get]
 func (c *LtvFlightGroupController) FullReportPage() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
+	c.TplName = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
 }
 
 // @router /fullReport [get]
 func (c *LtvFlightGroupController) FullReportPageAll() {
-	c.TplNames = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
+	c.TplName = c.GetTemplatetype() + "/performance/project_detail_full_report.tpl"
 }

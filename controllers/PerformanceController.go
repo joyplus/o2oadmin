@@ -11,5 +11,5 @@ func (this *PerformanceController) Get() {
 	if this.GetTemplatetype() != "easyui" {
 		this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 	}
-	this.TplNames = this.GetTemplatetype() + "/performance/index.tpl"
+	this.TplName = this.GetTemplatetype() + "/performance/index.tpl"
 }

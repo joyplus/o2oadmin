@@ -47,7 +47,7 @@ func (c *PmpAdspaceController) Post() {
 			c.Data["json"] = err.Error()
 		}
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // save or update adspace with param models.AdspaceVo
@@ -68,7 +68,7 @@ func (c *PmpAdspaceController) SaveOrUpdateAdspace() {
 			c.Data["json"] = err.Error()
 		}
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get
@@ -86,7 +86,7 @@ func (c *PmpAdspaceController) GetOne() {
 	} else {
 		c.Data["json"] = v
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get All
@@ -134,7 +134,7 @@ func (c *PmpAdspaceController) GetAll() {
 			kv := strings.Split(cond, ":")
 			if len(kv) != 2 {
 				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJson()
+				c.ServeJSON()
 				return
 			}
 			k, v := kv[0], kv[1]
@@ -148,7 +148,7 @@ func (c *PmpAdspaceController) GetAll() {
 	} else {
 		c.Data["json"] = l
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // get adspace list by page
@@ -181,14 +181,14 @@ func (this *PmpAdspaceController) GetAdspaceList() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &adspaces}
 		jsoncontent, _ := json.Marshal(this.Data["json"])
 		beego.Info("*********************" + string(jsoncontent) + "******************")
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		//this.Data["json"] = &adspaces
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/adspace/adspacemanage.tpl"
+		this.TplName = this.GetTemplatetype() + "/adspace/adspacemanage.tpl"
 	}
 }
 
@@ -209,7 +209,7 @@ func (c *PmpAdspaceController) Put() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -225,5 +225,5 @@ func (c *PmpAdspaceController) Delete() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }

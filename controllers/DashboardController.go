@@ -12,12 +12,12 @@ type LtvDashboardController struct {
 func (c *LtvDashboardController) GetTop5Campaign() {
 
 	c.Data["json"] = "10,20,30"
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @router /GetTop5Channel [get]
 func (c *LtvDashboardController) GetTop5Channel() {
 
 	c.Data["json"] = "save sucessful"
-	c.ServeJson()
+	c.ServeJSON()
 }

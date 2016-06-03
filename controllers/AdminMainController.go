@@ -23,7 +23,7 @@ func (this *AdminMainController) Main() {
 	tree := this.GetTree(userinfo)
 	if this.IsAjax() {
 		this.Data["json"] = &tree
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		groups := m.GroupList()
@@ -33,6 +33,6 @@ func (this *AdminMainController) Main() {
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/public/index.tpl"
+		this.TplName = this.GetTemplatetype() + "/public/index.tpl"
 	}
 }

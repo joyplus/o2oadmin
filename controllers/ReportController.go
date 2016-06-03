@@ -31,7 +31,7 @@ type DspRequest struct {
 
 func (this *ReportController) GetPdbMediaReport() {
 
-	this.TplNames = this.GetTemplatetype() + "/report/pmp_media_report.tpl"
+	this.TplName = this.GetTemplatetype() + "/report/pmp_media_report.tpl"
 
 }
 
@@ -57,12 +57,12 @@ func (this *ReportController) GetPdbMediaReportData() {
 
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
 	}
-	this.ServeJson()
+	this.ServeJSON()
 
 }
 
 func (this *ReportController) GetPdbDspReport() {
-	this.TplNames = this.GetTemplatetype() + "/report/pmp_dsp_report.tpl"
+	this.TplName = this.GetTemplatetype() + "/report/pmp_dsp_report.tpl"
 }
 
 func (this *ReportController) GetPdbDspReportData() {
@@ -89,11 +89,11 @@ func (this *ReportController) GetPdbDspReportData() {
 
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
 	}
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 func getLocalDate(date time.Time) time.Time {
-    format := "2006-1-2"
-    t, _ := time.ParseInLocation(format, date.Format(format), time.Local)
-    return t
+	format := "2006-1-2"
+	t, _ := time.ParseInLocation(format, date.Format(format), time.Local)
+	return t
 }

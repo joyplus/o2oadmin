@@ -45,14 +45,14 @@ func (this *PmpDemandPlatformDeskController) GetDemandList() {
 	demands, count := models.GetDemandList(page, page_size, sort, name)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &demands}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		//		this.Data["json"] = &demands
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/adspace/demandmanage.tpl"
+		this.TplName = this.GetTemplatetype() + "/adspace/demandmanage.tpl"
 	}
 }
 
@@ -77,7 +77,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandsMappingInfo() {
 		c.Data["json"] = &demandMappingVos
 	}
 	beego.Info("********** demands mapping information:", demandMappingVos)
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 type DemandVo struct {
@@ -112,7 +112,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 		if c.GetTemplatetype() != "easyui" {
 			c.Layout = c.GetTemplatetype() + "/public/layout.tpl"
 		}
-		c.TplNames = c.GetTemplatetype() + "/adspace/demand-easyui.tpl"
+		c.TplName = c.GetTemplatetype() + "/adspace/demand-easyui.tpl"
 		return
 	}
 	const layout = "2006-1-2"
@@ -172,7 +172,7 @@ func (c *PmpDemandPlatformDeskController) GetDemandByAdspace() {
 	}
 	beego.Info("**** demandVos:", demandVos)
 	c.Data["json"] = &map[string]interface{}{"total": len(demandVos), "rows": &demandVos}
-	c.ServeJson()
+	c.ServeJSON()
 
 }
 
@@ -228,7 +228,7 @@ func (c *PmpDemandPlatformDeskController) Post() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // save or upate demand
@@ -249,7 +249,7 @@ func (c *PmpDemandPlatformDeskController) SaveOrUpdateDemand() {
 			c.Data["json"] = err.Error()
 		}
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get
@@ -267,7 +267,7 @@ func (c *PmpDemandPlatformDeskController) GetOne() {
 	} else {
 		c.Data["json"] = v
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get All
@@ -315,7 +315,7 @@ func (c *PmpDemandPlatformDeskController) GetAll() {
 			kv := strings.Split(cond, ":")
 			if len(kv) != 2 {
 				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJson()
+				c.ServeJSON()
 				return
 			}
 			k, v := kv[0], kv[1]
@@ -329,7 +329,7 @@ func (c *PmpDemandPlatformDeskController) GetAll() {
 	} else {
 		c.Data["json"] = l
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Update
@@ -349,7 +349,7 @@ func (c *PmpDemandPlatformDeskController) Put() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -366,5 +366,5 @@ func (c *PmpDemandPlatformDeskController) Delete() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }

@@ -37,7 +37,7 @@ func (c *PmpAdspaceMatrixController) Post() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get
@@ -55,7 +55,7 @@ func (c *PmpAdspaceMatrixController) GetOne() {
 	} else {
 		c.Data["json"] = v
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get All
@@ -103,7 +103,7 @@ func (c *PmpAdspaceMatrixController) GetAll() {
 			kv := strings.Split(cond, ":")
 			if len(kv) != 2 {
 				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJson()
+				c.ServeJSON()
 				return
 			}
 			k, v := kv[0], kv[1]
@@ -117,7 +117,7 @@ func (c *PmpAdspaceMatrixController) GetAll() {
 	} else {
 		c.Data["json"] = l
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Update
@@ -137,7 +137,7 @@ func (c *PmpAdspaceMatrixController) Put() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -154,19 +154,19 @@ func (c *PmpAdspaceMatrixController) Delete() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // delete mapping relation by demand id and adspace id
 func (c *PmpAdspaceMatrixController) DeleteByDemandIdAndAdspaceId() {
-	demandid,_ := c.GetInt("demandid")
-	adspaceid,_ := c.GetInt("adspaceid")
+	demandid, _ := c.GetInt("demandid")
+	adspaceid, _ := c.GetInt("adspaceid")
 	if err := models.DeletePmpAdspaceMatrixByAdspaceIdAndDemandId(demandid, adspaceid); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // Update demand & adspace maps
@@ -179,5 +179,5 @@ func (c *PmpAdspaceMatrixController) UpdateAdspaceMatrix() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }

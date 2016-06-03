@@ -27,14 +27,14 @@ func (this *CampaignController) Add() {
 		} else {
 			this.Data["json"] = "failed"
 		}
-		this.ServeJson()
+		this.ServeJSON()
 	} else {
 		categorys, _ := models.GetPmpAdCategoryOne()
 		this.Data["categoryones"] = categorys
 		this.Data["campaignid"] = 0
 		lovMaps := this.GetPmpLovs()
 		this.Data["lovmaps"] = &lovMaps
-		this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
+		this.TplName = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
 	}
 
 }
@@ -45,7 +45,7 @@ func (this *CampaignController) Edit() {
 	if err != nil {
 		beego.Error(err)
 		this.Data["json"] = "failed"
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	}
 	beego.Info("Campaign Id:", campaignId)
@@ -57,7 +57,7 @@ func (this *CampaignController) Edit() {
 	this.Data["categoryones"] = categorys
 	lovMaps := this.GetPmpLovs()
 	this.Data["lovmaps"] = &lovMaps
-	this.TplNames = this.GetTemplatetype() + "/campaign/campaign_add.tpl"	
+	this.TplName = this.GetTemplatetype() + "/campaign/campaign_add.tpl"
 }
 
 // @router /upload [*]
@@ -66,9 +66,9 @@ func (this *CampaignController) Upload() {
 	if err != nil {
 		beego.Error("upload file error:", err)
 	} else {
-	    beego.Info("filename", header.Filename)
+		beego.Info("filename", header.Filename)
 	}
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 // @router /newCreative [*]
@@ -81,7 +81,7 @@ func (this *CampaignController) NewCampaignCreative() {
 	} else {
 		this.Data["json"] = "failed"
 	}
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 // @router /getCategoryByParentId [get]
@@ -90,7 +90,7 @@ func (this *CampaignController) GetCategoryByParentId() {
 	beego.Info("*** parentId:", parentId)
 	categorys, _ := models.GetPmpAdCategoryByParentId(parentId)
 	this.Data["json"] = categorys
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 func (this *CampaignController) GetPmpLovs() map[string][]models.PmpLov {
@@ -115,7 +115,7 @@ func (this *CampaignController) GetPmpLovs() map[string][]models.PmpLov {
 func (this *CampaignController) GetAllGroups() {
 	groups := models.GetAllCampaignGroup()
 	this.Data["groups"] = &groups
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 // @router /getCampaignReport [get]
@@ -144,11 +144,11 @@ func (this *CampaignController) GetCampaignReport() {
 
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &report}
 	}
-	this.ServeJson()
+	this.ServeJSON()
 
 }
 
 // @router /index [get]
 func (this *CampaignController) Index() {
-	this.TplNames = this.GetTemplatetype() + "/campaign/index.tpl"
+	this.TplName = this.GetTemplatetype() + "/campaign/index.tpl"
 }

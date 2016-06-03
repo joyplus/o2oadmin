@@ -14,7 +14,7 @@ type LoanAssetController struct {
 
 // @router /:id [get]
 func (this *LoanAssetController) GetOne() {
-	this.TplNames = this.GetTemplatetype() + "/loan/asset_detail.tpl"
+	this.TplName = this.GetTemplatetype() + "/loan/asset_detail.tpl"
 }
 
 // @router /operate [post]
@@ -24,5 +24,5 @@ func (this *LoanAssetController) Operate() {
 
 // @router /list [get]
 func (this *LoanAssetController) List() {
-	this.TplNames = this.GetTemplatetype() + "/loan/asset_list.tpl"
+	this.TplName = this.GetTemplatetype() + "/loan/asset_list.tpl"
 }

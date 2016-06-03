@@ -42,7 +42,7 @@ func (c *PmpMediaController) SaveOrUpdateMedia() {
 			c.Data["json"] = err.Error()
 		}
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Post
@@ -60,7 +60,7 @@ func (c *PmpMediaController) Post() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Get
@@ -78,7 +78,7 @@ func (c *PmpMediaController) GetOne() {
 	} else {
 		c.Data["json"] = v
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // Get the media list
@@ -104,14 +104,14 @@ func (this *PmpMediaController) GetMediaList() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &medias}
 		jsoncontent, _ := json.Marshal(this.Data["json"])
 		beego.Info("*********************" + string(jsoncontent) + "******************")
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		//this.Data["json"] = &medias
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/adspace/mediamanage.tpl"
+		this.TplName = this.GetTemplatetype() + "/adspace/mediamanage.tpl"
 	}
 }
 
@@ -165,7 +165,7 @@ func (c *PmpMediaController) GetAll() {
 			kv := strings.Split(cond, ":")
 			if len(kv) != 2 {
 				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJson()
+				c.ServeJSON()
 				return
 			}
 			k, v := kv[0], kv[1]
@@ -188,7 +188,7 @@ func (c *PmpMediaController) GetAll() {
 		}
 		c.Data["json"] = &medias
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Update
@@ -208,7 +208,7 @@ func (c *PmpMediaController) Put() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }
 
 // @Title Delete
@@ -225,5 +225,5 @@ func (c *PmpMediaController) Delete() {
 	} else {
 		c.Data["json"] = err.Error()
 	}
-	c.ServeJson()
+	c.ServeJSON()
 }

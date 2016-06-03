@@ -18,7 +18,7 @@ func (this *LoanRequestController) Prepare() {
 	memberInfo := this.GetSession("memberinfo")
 	beego.Debug(memberInfo.(vo.MemberVo).DisplayName)
 
-	this.TplNames = this.GetTemplatetype() + "/loan/request_input.tpl"
+	this.TplName = this.GetTemplatetype() + "/loan/request_input.tpl"
 }
 
 // @router /save [post]
@@ -28,10 +28,10 @@ func (this *LoanRequestController) Save() {
 
 // @router /list [get]
 func (this *LoanRequestController) List() {
-	this.TplNames = this.GetTemplatetype() + "/loan/request_list.tpl"
+	this.TplName = this.GetTemplatetype() + "/loan/request_list.tpl"
 }
 
 // @router /match [get]
 func (this *LoanRequestController) Match() {
-	this.TplNames = this.GetTemplatetype() + "/loan/request_match.tpl"
+	this.TplName = this.GetTemplatetype() + "/loan/request_match.tpl"
 }
